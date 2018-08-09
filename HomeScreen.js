@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
-import {StyleSheet, Text, View} from "react-native";
+import React, {Component} from 'react'
+import {StyleSheet, Text, View} from "react-native"
 
 class HomeScreen extends Component {
 
     render() {
-        const {navigation} = this.props;
-        const user = navigation.getParam('user');
+        const {navigation} = this.props
+        const user = navigation.getParam('user')
         return (
             <View style={styles.container}>
                 <Text>Tasks for {user.id} will be here</Text>
@@ -21,6 +21,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-});
+})
 
-export default HomeScreen;
+export default HomeScreen

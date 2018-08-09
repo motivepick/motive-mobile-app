@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import {Image, StyleSheet, Text, View} from "react-native";
-import {AccessToken, GraphRequest, GraphRequestManager, LoginButton} from "react-native-fbsdk";
+import React, {Component} from 'react'
+import {Image, StyleSheet, Text, View} from "react-native"
+import {AccessToken, GraphRequest, GraphRequestManager, LoginButton} from "react-native-fbsdk"
 
 class LoginScreen extends Component {
 
@@ -16,10 +16,10 @@ class LoginScreen extends Component {
                     onLoginFinished={
                         (error, result) => {
                             if (error) {
-                                this.setState({error: error});
-                                alert("Login failed with error: " + error.message);
+                                this.setState({error: error})
+                                alert("Login failed with error: " + error.message)
                             } else if (result.isCancelled) {
-                                alert("Login was cancelled");
+                                alert("Login was cancelled")
                             } else {
                                 AccessToken.getCurrentAccessToken().then(
                                     () => {
@@ -27,10 +27,10 @@ class LoginScreen extends Component {
                                             httpMethod: 'GET',
                                             version: 'v2.5'
                                         }, (err, response) => {
-                                            const id = response.id;
+                                            const id = response.id
                                             this.props.navigation.navigate('Home', {user: {id}})
-                                        });
-                                        new GraphRequestManager().addRequest(request).start();
+                                        })
+                                        new GraphRequestManager().addRequest(request).start()
                                     }
                                 )
                             }
@@ -38,7 +38,7 @@ class LoginScreen extends Component {
                     }
                     onLogoutFinished={() => alert("User logged out")}/>
             </View>
-        );
+        )
     }
 }
 
@@ -49,6 +49,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-});
+})
 
-export default LoginScreen;
+export default LoginScreen
