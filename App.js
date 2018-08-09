@@ -1,11 +1,16 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {LoginButton} from 'react-native-fbsdk';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import {AccessToken, LoginButton} from 'react-native-fbsdk';
 
 export default class App extends React.Component {
+
     render() {
         return (
             <View style={styles.container}>
+                <Image source={require('./logo.png')}/>
+                <Text>Welcome to Motive!</Text>
+                <Text>A minimalistic application which is going to</Text>
+                <Text>defeat your laziness</Text>
                 <LoginButton
                     readPermissions={["email"]}
                     onLoginFinished={
@@ -16,7 +21,12 @@ export default class App extends React.Component {
                             } else if (result.isCancelled) {
                                 alert("Login was cancelled");
                             } else {
-                                alert("Login was successful with permissions: " + result.grantedPermissions)
+                                AccessToken.getCurrentAccessToken().then(
+                                    (data) => {
+                                        const {accessToken} = data;
+                                        alert("Login was successful " + accessToken);
+                                    }
+                                )
                             }
                         }
                     }
