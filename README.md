@@ -20,3 +20,4 @@
 - Click on project root: make sure FBSDKCoreKit.framework, FBSDKLoginKit.framework, FBSDKShareKit.framework are in the `Build phases`
 - Check `Build Settings`: Link to `~/Documents/FacebookSDK/` must be added in search paths.
 - Now find in the project a file: `info.plist`. Make sure it has `FacebookAppID` mentioned.
+8. react-native link
