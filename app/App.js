@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {createStackNavigator} from 'react-navigation'
-import LoginScreen from "./LoginScreen"
-import HomeScreen from "./HomeScreen"
+import LoginScreen from "./screens/LoginScreen"
+import HomeScreen from "./screens/HomeScreen"
 
 const RootStack = createStackNavigator({
     Login: LoginScreen,

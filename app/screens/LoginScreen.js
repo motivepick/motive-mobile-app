@@ -8,7 +8,7 @@ class LoginScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Image source={require('./logo.png')}/>
+                <Image source={require('../assets/images/logo.png')}/>
                 <Text>Welcome to Motive!</Text>
                 <Text>A minimalistic application which is going to</Text>
                 <Text>defeat your laziness</Text>

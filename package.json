@@ -14,13 +14,23 @@
     "ios": "react-native run-ios",
     "test": "jest"
   },
+  "rnpm": {
+    "assets": [
+      "./app/assets/fonts"
+    ]
+  },
   "jest": {
     "preset": "react-native"
   },
   "dependencies": {
+    "moment": "^2.22.2",
+    "font-awesome": "^4.7.0",
     "react": "16.3.1",
     "react-native": "~0.55.2",
     "react-native-fbsdk": "^0.7.0",
-    "react-navigation": "^2.11.2"
+    "react-native-fontawesome": "^5.7.0",
+    "react-navigation": "^2.11.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0"
   }
 }
