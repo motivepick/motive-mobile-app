@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Image, Text, View} from 'react-native'
+import {AsyncStorage, Image, Text, View} from 'react-native'
 import {AccessToken, GraphRequest, GraphRequestManager, LoginButton} from 'react-native-fbsdk'
 import {styles} from './styles'
 
@@ -27,9 +27,11 @@ class LoginScreen extends Component {
                                         const request = new GraphRequest('/me', {
                                             httpMethod: 'GET',
                                             version: 'v2.5'
-                                        }, (err, response) => {
+                                        }, async (err, response) => {
                                             const id = response.id
-                                            this.props.navigation.navigate('Home', {user: {id}})
+                                            const user = {id}
+                                            await AsyncStorage.setItem('accountId', id)
+                                            this.props.navigation.navigate('Home', {user})
                                         })
                                         new GraphRequestManager().addRequest(request).start()
                                     }

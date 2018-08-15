@@ -1,24 +1,14 @@
 import React, {Component} from 'react'
-import {TextInput, View,} from 'react-native'
+import {AsyncStorage, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import moment from 'moment'
 import {handleDueDateOf} from '../utils/parser'
 import Task from '../components/Task'
 import Config from 'react-native-config'
+import {LoginManager} from 'react-native-fbsdk'
 
 class HomeScreen extends Component {
 
-    constructor(props) {
-        super(props)
-
-        const {navigation} = this.props
-        this.user = navigation.getParam('user')
-
-        this.state = {
-            newTask: '',
-            error: null,
-            tasks: []
-        }
-    }
+    state = {newTask: '', error: null, tasks: []}
 
     static ordered(tasks) {
         const dueDateOf = task => moment(task.dueDate, moment.ISO_8601)
@@ -38,8 +28,8 @@ class HomeScreen extends Component {
         })
     }
 
-    componentDidMount() {
-        const {id} = this.user;
+    async componentDidMount() {
+        const id = await AsyncStorage.getItem('accountId')
         fetch(`${Config.API_URL}/tasks/list/${id}`)
             .then(response => response.json())
             .then(
@@ -49,14 +39,14 @@ class HomeScreen extends Component {
     }
 
 
-    onAddNewTask = () => {
+    onAddNewTask = async () => {
         const input = this.taskNameInput
         const {newTask} = this.state;
         if (newTask.trim() !== '') {
-            const {id} = this.user
+            const id = await AsyncStorage.getItem('accountId')
             const task = handleDueDateOf({accountId: id, name: newTask.trim()})
             input.disabled = true
-            fetch(`${Config.API_URL}/tasks`, {
+            const response = await fetch(`${Config.API_URL}/tasks`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -64,33 +54,34 @@ class HomeScreen extends Component {
                 },
                 body: JSON.stringify(task)
             })
-                .then(response => response.json())
-                .then(
-                    taskWithId => {
-                        this.setState({newTask: '', tasks: [taskWithId].concat(this.state.tasks)})
-                    }, error => {
-                        this.setState({error})
-                        input.disabled = false
-                    }
-                )
+            const taskWithId = await response.json()
+            this.setState({newTask: '', tasks: [taskWithId].concat(this.state.tasks)})
+            input.disabled = false
         }
     }
 
-    onCloseTask = (id) => {
-        fetch(`${Config.API_URL}/tasks/${id}/close`, {
-            method: 'PUT'
-        })
-            .then(response => response.json())
-            .then(
-                taskWithId => this.setState({tasks: this.state.tasks.filter(t => t.id !== taskWithId.id)}),
-                error => this.setState({error})
-            )
+    onCloseTask = async (id) => {
+        const response = await fetch(`${Config.API_URL}/tasks/${id}/close`, {method: 'PUT'})
+        const taskWithId = await response.json()
+        this.setState({tasks: this.state.tasks.filter(t => t.id !== taskWithId.id)})
     }
+
+    logout = async () => {
+        const {navigation} = this.props;
+        LoginManager.logOut()
+        await AsyncStorage.removeItem('accountId')
+        navigation.navigate('Login')
+    };
 
     render() {
         const {tasks} = this.state
         return (
             <View style={{flex: 1, flexDirection: 'column'}}>
+                <View>
+                    <TouchableOpacity onPress={this.logout}>
+                        <Text>Logout</Text>
+                    </TouchableOpacity>
+                </View>
                 <View>
                     <TextInput
                         keyboardType="default"
