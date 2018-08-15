@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import {Text, View, TouchableHighlight} from 'react-native'
 import moment from 'moment'
-import FontAwesome, { Icons } from 'react-native-fontawesome';
+import FontAwesome, { Icons } from 'react-native-fontawesome'
 import { handleDueDateOf } from '../utils/parser'
+import Config from 'react-native-config'
 
 class Task extends Component {
 
@@ -65,7 +66,7 @@ class Task extends Component {
     }
 
     static updateTask(id, newTask) {
-        fetch(`http://localhost:8080/tasks/${id}`, {
+        fetch(`${Config.API_URL}/tasks/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

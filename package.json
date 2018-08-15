@@ -23,10 +23,11 @@
     "preset": "react-native"
   },
   "dependencies": {
-    "moment": "^2.22.2",
     "font-awesome": "^4.7.0",
+    "moment": "^2.22.2",
     "react": "16.3.1",
     "react-native": "~0.55.2",
+    "react-native-config": "^0.11.5",
     "react-native-fbsdk": "^0.7.0",
     "react-native-fontawesome": "^5.7.0",
     "react-navigation": "^2.11.2",

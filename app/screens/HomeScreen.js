@@ -3,6 +3,7 @@ import {TextInput, View,} from 'react-native'
 import moment from 'moment'
 import {handleDueDateOf} from '../utils/parser'
 import Task from '../components/Task'
+import Config from 'react-native-config'
 
 class HomeScreen extends Component {
 
@@ -37,9 +38,9 @@ class HomeScreen extends Component {
         })
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const {id} = this.user;
-        fetch(`http://localhost:8080/tasks/list/${id}`)
+        fetch(`${Config.API_URL}/tasks/list/${id}`)
             .then(response => response.json())
             .then(
                 tasks => this.setState({tasks: HomeScreen.ordered(tasks)}),
@@ -53,9 +54,9 @@ class HomeScreen extends Component {
         const {newTask} = this.state;
         if (newTask.trim() !== '') {
             const {id} = this.user
-            const task = handleDueDateOf({userId: id, name: newTask.trim()})
+            const task = handleDueDateOf({accountId: id, name: newTask.trim()})
             input.disabled = true
-            fetch(`http://localhost:8080/tasks`, {
+            fetch(`${Config.API_URL}/tasks`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,7 +77,7 @@ class HomeScreen extends Component {
     }
 
     onCloseTask = (id) => {
-        fetch(`http://localhost:8080/tasks/${id}/close`, {
+        fetch(`${Config.API_URL}/tasks/${id}/close`, {
             method: 'PUT'
         })
             .then(response => response.json())
