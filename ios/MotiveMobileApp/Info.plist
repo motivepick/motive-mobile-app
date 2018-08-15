@@ -25,14 +25,14 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb2126656117583758</string>
+				<string>__RN_CONFIG_FACEBOOK_CUSTOM_URL_SCHEME</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>FacebookAppID</key>
-	<string>2126656117583758</string>
+	<string>__RN_CONFIG_FACEBOOK_CLIENT_ID</string>
 	<key>FacebookDisplayName</key>
 	<string>Motiv</string>
 	<key>LSApplicationQueriesSchemes</key>

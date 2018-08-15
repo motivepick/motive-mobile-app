@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Motive</string>
-    <string name="facebook_app_id">2126656117583758</string>
+    <string name="facebook_app_id">@string/FACEBOOK_CLIENT_ID</string>
 </resources>

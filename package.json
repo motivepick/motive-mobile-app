@@ -12,7 +12,10 @@
     "start": "react-native start",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "test": "jest"
+    "test": "jest",
+    "android-dev": "ENVFILE=.env.development react-native run-android",
+    "android-prod": "ENVFILE=.env.production react-native run-android",
+    "build-android-prod": "export ENVFILE=.env.production && cd android && ./gradlew assembleRelease && cd .."
   },
   "rnpm": {
     "assets": [
