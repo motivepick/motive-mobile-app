@@ -4,6 +4,10 @@
 
 1. Make sure `react-native` is installed. If it is not, install it with `npm install -g react-native-cli`. See details [here](https://facebook.github.io/react-native/docs/getting-started.html).
 2. Run `ENVFILE=.env.development react-native run-ios` in the project root directory.
+3. If you are using xCode:
+    * Go to Product. Then Clean. Then Build.
+    * Go to Product > Scheme and select 'Development'
+    * Run
 
 ## Other steps
 
@@ -20,3 +24,4 @@
 - Check `Build Settings`: Link to `~/Documents/FacebookSDK/` must be added in search paths.
 - Now find in the project a file: `info.plist`. Make sure it has `FacebookAppID` mentioned.
 8. react-native link
+9. react-native link react-native-config
