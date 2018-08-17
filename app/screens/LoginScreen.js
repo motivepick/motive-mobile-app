@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {AsyncStorage, Image, Text, View} from 'react-native'
 import {AccessToken, GraphRequest, GraphRequestManager, LoginButton} from 'react-native-fbsdk'
 import {styles} from './styles'
+import {NavigationActions, StackActions} from 'react-navigation';
 
 class LoginScreen extends Component {
 
@@ -31,7 +32,12 @@ class LoginScreen extends Component {
                                             const id = response.id
                                             const user = {id}
                                             await AsyncStorage.setItem('accountId', id)
-                                            this.props.navigation.navigate('Home', {user})
+                                            this.props.navigation.dispatch(StackActions.reset({
+                                                index: 0,
+                                                actions: [
+                                                    NavigationActions.navigate({routeName: 'Home', params: {user}})
+                                                ]
+                                            }));
                                         })
                                         new GraphRequestManager().addRequest(request).start()
                                     }

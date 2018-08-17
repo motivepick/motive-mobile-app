@@ -5,6 +5,7 @@ import {handleDueDateOf} from '../utils/parser'
 import Task from '../components/Task'
 import Config from 'react-native-config'
 import {LoginManager} from 'react-native-fbsdk'
+import {NavigationActions, StackActions} from "react-navigation";
 
 class HomeScreen extends Component {
 
@@ -67,10 +68,14 @@ class HomeScreen extends Component {
     }
 
     logout = async () => {
-        const {navigation} = this.props;
         LoginManager.logOut()
         await AsyncStorage.removeItem('accountId')
-        navigation.navigate('Login')
+        this.props.navigation.dispatch(StackActions.reset({
+            index: 0,
+            actions: [
+                NavigationActions.navigate({routeName: 'Login'})
+            ]
+        }));
     };
 
     render() {
