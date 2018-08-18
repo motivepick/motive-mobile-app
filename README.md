@@ -3,12 +3,12 @@
 ## To Run This Application Locally
 
 1. Make sure `react-native` is installed. If it is not, install it with `npm install -g react-native-cli`. See details [here](https://facebook.github.io/react-native/docs/getting-started.html).
-2. For Android run `npm run android-dev` in the project root directory.
+2. For Android. As on an Android device `localhost` is mapped to the device itself, first of all you have to change `API_URL` in `.env.development` to point it to an IP address of your back-end. If you run the back-end locally, you can find the IP address using `ifconfig | grep inet`. It should look something like `192.168.0.15`. Then run `npm run android-dev` in the project root directory. Note: before running the above command make sure you either have an Android device connected to your computer or you have a simulator running. 
 3. For iOS:
     * Open Xcode
     * Go to Product. Then Clean. Then Build.
     * Go to Product > Scheme and select 'Development'
-    * Run
+    * Press "Build and then run the current schema"
 
 ## Other steps
 
