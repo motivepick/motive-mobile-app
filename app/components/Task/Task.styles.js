@@ -11,12 +11,10 @@ export const styles = StyleSheet.create({
         height: 80,
         flex: 1,
         marginTop: 7,
-        marginBottom: 12,
         borderRadius: 4,
 
         ...Platform.select({
             ios: {
-                width: window.width - 30 * 2,
                 shadowColor: 'rgba(0,0,0,0.2)',
                 shadowOpacity: 1,
                 shadowOffset: { height: 2, width: 2 },
@@ -24,7 +22,6 @@ export const styles = StyleSheet.create({
             },
 
             android: {
-                width: window.width - 30 * 2,
                 elevation: 0,
                 marginHorizontal: 30
             }

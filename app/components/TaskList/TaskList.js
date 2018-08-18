@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, AsyncStorage } from 'react-native'
+import { AsyncStorage, Text, TextInput, View } from 'react-native'
 import SortableList from 'react-native-sortable-list'
 
 import Task from '../Task/Task'
@@ -73,6 +73,7 @@ export class TaskList extends Component {
                 tasks: [taskWithId].concat(this.state.tasks)
             })
             input.disabled = false
+            input.focus()
         }
     }
 
@@ -109,6 +110,15 @@ export class TaskList extends Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>TO-DO list</Text>
+                <View style={{ paddingHorizontal: 10 }}>
+                    <TextInput
+                        style={styles.input}
+                        onChangeText={newTask => this.setState({ newTask })}
+                        value={this.state.newTask}
+                        onSubmitEditing={this.onAddNewTask}
+                        ref={input => this.taskNameInput = input}
+                        placeholder={'What needs to be done?'}/>
+                </View>
                 <SortableList
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
