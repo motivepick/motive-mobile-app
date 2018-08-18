@@ -1,6 +1,4 @@
-import { StyleSheet, Platform, Dimensions } from 'react-native'
-
-const window = Dimensions.get('window')
+import { Platform, StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
     row: {

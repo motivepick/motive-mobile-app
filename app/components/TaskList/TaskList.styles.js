@@ -4,10 +4,9 @@ const window = Dimensions.get('window')
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 0.8,
         justifyContent: 'center',
         alignItems: 'stretch',
-        backgroundColor: '#eee',
 
         ...Platform.select({
             ios: {
