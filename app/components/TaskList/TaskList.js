@@ -4,8 +4,6 @@ import SortableList from 'react-native-sortable-list'
 
 import Task from '../Task/Task'
 import styles from './TaskList.styles'
-
-import moment from 'moment'
 import { handleDueDateOf } from '../../utils/parser'
 
 import Config from 'react-native-config'

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { createStackNavigator } from 'react-navigation'
 import LoginScreen from './screens/LoginScreen'
 import SplashScreen from './screens/SplashScreen'
@@ -10,9 +10,6 @@ const RootStack = createStackNavigator({
     Home: HomeScreen
 })
 
-export default class App extends Component {
+const App = () => <RootStack/>
 
-    render() {
-        return <RootStack/>
-    }
-}
+export default App
