@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import styles from './CheckBox.styles';
+import React, { Component } from 'react'
+import { TouchableOpacity, View } from 'react-native'
+import styles from './CheckBox.styles'
 
 export class CheckBox extends Component {
-  constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+        super(props)
+    }
 
-  render() {
-    const { isCompleted, onAction } = this.props;
+    render() {
+        const { isCompleted, onAction } = this.props
 
-    return (
-      <TouchableOpacity onPress={onAction}>
-        <View
-          style={[
-            styles.circle,
-            isCompleted ? styles.completeCircle : styles.incompleteCircle
-          ]}
-        />
-      </TouchableOpacity>
-    );
-  }
+        return (
+            <TouchableOpacity onPress={onAction}>
+                <View
+                    style={[
+                        styles.circle,
+                        isCompleted ? styles.completeCircle : styles.incompleteCircle
+                    ]}
+                />
+            </TouchableOpacity>
+        )
+    }
 }
 
-export default CheckBox;
+export default CheckBox

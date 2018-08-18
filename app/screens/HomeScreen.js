@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { AsyncStorage, Text, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
-import TaskList from '../components/TaskList/TaskList';
+import TaskList from '../components/TaskList/TaskList'
 
 export class HomeScreen extends Component {
     logout = async () => {
@@ -19,7 +19,7 @@ export class HomeScreen extends Component {
                         <Text>Logout</Text>
                     </TouchableOpacity>
                 </View>
-                <TaskList />
+                <TaskList/>
             </View>
         )
     }
