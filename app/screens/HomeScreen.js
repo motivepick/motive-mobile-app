@@ -47,7 +47,7 @@ export class HomeScreen extends Component {
                         <Text>Logout</Text>
                     </TouchableOpacity>
                 </View>
-                { isLoading ? <Text>Loading</Text> : <TaskList data={tasks} listName='Todo list'/> }
+                {isLoading ? <Text>Loading</Text> : <TaskList data={tasks} listName='Todo list'/>}
             </View>
         )
     }
