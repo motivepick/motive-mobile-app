@@ -70,7 +70,7 @@ export class TaskList extends Component {
                         ref={input => this.taskNameInput = input}
                         placeholder={tasks.length ? 'What needs to be done?' : 'How about a fresh hot task?'}/>
                 </View>
-                {tasks.length && <SortableList style={styles.list} contentContainerStyle={styles.contentContainer} data={tasks} renderRow={this._renderRow}/>}
+                {tasks.length && <SortableList style={styles.list} contentContainerStyle={styles.contentContainer} data={tasks} sortingEnabled={this.props.isSortable === undefined ? true : this.props.isSortable} renderRow={this._renderRow}/>}
             </View>
         )
     }
