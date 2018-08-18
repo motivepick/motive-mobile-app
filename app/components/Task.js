@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Text, View, TouchableHighlight} from 'react-native'
+import { Text, TouchableHighlight, View } from 'react-native'
 import moment from 'moment'
 import FontAwesome, { Icons } from 'react-native-fontawesome'
 import { handleDueDateOf } from '../utils/parser'
@@ -15,8 +15,7 @@ class Task extends Component {
     }
 
     render() {
-        const { value, onClose, t } = this.props
-        const { dueDate } = this.state
+        const { value, onClose } = this.props
 
         return (
             <View style={{
@@ -25,14 +24,14 @@ class Task extends Component {
                 justifyContent: 'flex-start',
                 alignItems: 'baseline',
             }}>
-                <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
+                <View style={{ flex: 1, justifyContent: 'space-evenly', alignItems: 'center' }}>
                     <TouchableHighlight onPress={() => onClose(value.id)}>
                         <Text>
                             <FontAwesome>{Icons.check}</FontAwesome>
                         </Text>
                     </TouchableHighlight>
                 </View>
-                <View style={{marginRight: 'auto', flex: 6, alignSelf: 'flex-start'}}>
+                <View style={{ marginRight: 'auto', flex: 6, alignSelf: 'flex-start' }}>
                     <Text>{this.state.name}</Text>
                 </View>
             </View>

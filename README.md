@@ -3,8 +3,9 @@
 ## To Run This Application Locally
 
 1. Make sure `react-native` is installed. If it is not, install it with `npm install -g react-native-cli`. See details [here](https://facebook.github.io/react-native/docs/getting-started.html).
-2. Run `ENVFILE=.env.development react-native run-ios` in the project root directory.
-3. If you are using xCode:
+2. For Android run `npm run android-dev` in the project root directory.
+3. For iOS:
+    * Open Xcode
     * Go to Product. Then Clean. Then Build.
     * Go to Product > Scheme and select 'Development'
     * Run
