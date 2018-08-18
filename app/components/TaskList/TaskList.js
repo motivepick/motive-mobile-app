@@ -98,15 +98,6 @@ export class TaskList extends Component {
             )
         }
 
-        if (!tasks.length) {
-            return (
-                <View style={styles.container}>
-                    <Text style={styles.title}>TO-DO list</Text>
-                    <Text>Howdy! How about a fresh hot task and a meaty goal?</Text>
-                </View>
-            )
-        }
-
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>TO-DO list</Text>
@@ -119,11 +110,12 @@ export class TaskList extends Component {
                         ref={input => this.taskNameInput = input}
                         placeholder={'What needs to be done?'}/>
                 </View>
-                <SortableList
+                {tasks.length && <SortableList
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
                     data={tasks}
-                    renderRow={this._renderRow}/>
+                    renderRow={this._renderRow}/>}
+                {!tasks.length && <Text style={{ textAlign: 'center' }}>Howdy! How about a fresh hot task and a meaty goal?</Text>}
             </View>
         )
     }
