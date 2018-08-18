@@ -20,9 +20,16 @@ export class HomeScreen extends Component {
 
     async componentDidMount() {
         const id = await AsyncStorage.getItem('accountId')
-        const response = await fetch(`${Config.API_URL}/tasks/list/${id}`)
-        const tasks = await response.json()
-        this.setState({ tasks: orderTasksByDate(tasks), isLoading: false })
+        try {
+            const response = await fetch(`${Config.API_URL}/tasks/list/${id}`);
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            const tasks = await response.json();
+            this.setState({ tasks: orderTasksByDate(tasks), isLoading: false })
+        } catch (error) {
+            console.log(error); // TODO: fallback to an error screen
+        }
     }
 
     render() {
