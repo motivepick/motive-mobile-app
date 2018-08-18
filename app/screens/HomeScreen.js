@@ -10,15 +10,7 @@ import { orderTasksByDate } from '../utils/order'
 
 export class HomeScreen extends Component {
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            error: null,
-            tasks: [],
-            isLoading: true
-        }
-    }
+    state = { error: null, tasks: [], isLoading: true }
 
     logout = async () => {
         LoginManager.logOut()
@@ -28,13 +20,9 @@ export class HomeScreen extends Component {
 
     async componentDidMount() {
         const id = await AsyncStorage.getItem('accountId')
-
-        fetch(`${Config.API_URL}/tasks/list/${id}`)
-            .then(response => response.json())
-            .then(
-                tasks => this.setState({ tasks: orderTasksByDate(tasks), isLoading: false }),
-                error => this.setState({ error })
-            )
+        const response = await fetch(`${Config.API_URL}/tasks/list/${id}`)
+        const tasks = await response.json()
+        this.setState({ tasks: orderTasksByDate(tasks), isLoading: false })
     }
 
     render() {

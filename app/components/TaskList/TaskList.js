@@ -55,6 +55,8 @@ export class TaskList extends Component {
 
     render() {
         const { tasks } = this.state
+        const { isSortable } = this.props
+        const sortingEnabled = isSortable === undefined ? true : isSortable
 
         return (
             <View style={styles.container}>
@@ -68,15 +70,16 @@ export class TaskList extends Component {
                         ref={input => this.taskNameInput = input}
                         placeholder={tasks.length ? 'What needs to be done?' : 'How about a fresh hot task?'}/>
                 </View>
-                {tasks.length && <SortableList style={styles.list} contentContainerStyle={styles.contentContainer} data={tasks}
-                    sortingEnabled={this.props.isSortable === undefined ? true : this.props.isSortable} renderRow={this._renderRow}/>}
+                {tasks.length && this.list(tasks, sortingEnabled)}
             </View>
         )
     }
 
-    _renderRow = ({ data, active }) => {
-        return <Task data={data} active={active} onClose={this.onCloseTask}/>
-    }
+    list = (tasks, sortingEnabled) =>
+        <SortableList style={styles.list} contentContainerStyle={styles.contentContainer}
+            data={tasks} sortingEnabled={sortingEnabled} renderRow={this._renderRow}/>
+
+    _renderRow = ({ data, active }) => <Task data={data} active={active} onClose={this.onCloseTask}/>
 }
 
 export default TaskList
