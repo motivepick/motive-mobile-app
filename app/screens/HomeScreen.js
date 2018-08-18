@@ -6,7 +6,7 @@ import TaskList from '../components/TaskList/TaskList'
 
 import Config from 'react-native-config'
 
-import { orderTasksByDate } from '../utils/order';
+import { orderTasksByDate } from '../utils/order'
 
 export class HomeScreen extends Component {
 
