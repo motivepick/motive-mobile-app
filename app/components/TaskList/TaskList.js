@@ -16,40 +16,8 @@ export class TaskList extends Component {
 
         this.state = {
             newTask: '',
-            error: null,
-            tasks: [],
-            isLoading: true
+            tasks: props.data
         }
-    }
-
-    static ordered(tasks) {
-        const dueDateOf = task => moment(task.dueDate, moment.ISO_8601)
-        const absent = value => !value
-        const present = value => !absent(value)
-
-        return tasks.sort((a, b) => {
-            if (absent(a.dueDate) && absent(b.dueDate)) {
-                return 0
-            } else if (absent(a.dueDate) && present(b.dueDate)) {
-                return 1
-            } else if (present(a.dueDate) && absent(b.dueDate)) {
-                return -1
-            } else {
-                return dueDateOf(a).isAfter(dueDateOf(b)) ? 1 : -1
-            }
-        })
-    }
-
-    async componentWillMount() {
-        const id = await AsyncStorage.getItem('accountId')
-
-        fetch(`${Config.API_URL}/tasks/list/${id}`)
-            .then(response => response.json())
-            .then(
-                tasks =>
-                    this.setState({ tasks: TaskList.ordered(tasks), isLoading: false }),
-                error => this.setState({ error })
-            )
     }
 
     onAddNewTask = async () => {
@@ -88,19 +56,11 @@ export class TaskList extends Component {
     }
 
     render() {
-        const { tasks, isLoading } = this.state
-
-        if (isLoading) {
-            return (
-                <View style={styles.container}>
-                    <Text>Loading</Text>
-                </View>
-            )
-        }
+        const { tasks } = this.state
 
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>TO-DO list</Text>
+                <Text style={styles.title}>{this.props.listName}</Text>
                 <View style={{ paddingHorizontal: 10 }}>
                     <TextInput
                         style={styles.input}
