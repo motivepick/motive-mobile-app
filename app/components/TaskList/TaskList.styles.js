@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        paddingVertical: 20,
+        paddingBottom: 20,
         color: '#999999',
         textAlign: 'center'
     },

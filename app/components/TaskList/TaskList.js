@@ -108,14 +108,9 @@ export class TaskList extends Component {
                         value={this.state.newTask}
                         onSubmitEditing={this.onAddNewTask}
                         ref={input => this.taskNameInput = input}
-                        placeholder={'What needs to be done?'}/>
+                        placeholder={tasks.length ? 'What needs to be done?' : 'How about a fresh hot task?'}/>
                 </View>
-                {tasks.length && <SortableList
-                    style={styles.list}
-                    contentContainerStyle={styles.contentContainer}
-                    data={tasks}
-                    renderRow={this._renderRow}/>}
-                {!tasks.length && <Text style={{ textAlign: 'center' }}>Howdy! How about a fresh hot task and a meaty goal?</Text>}
+                {tasks.length && <SortableList style={styles.list} contentContainerStyle={styles.contentContainer} data={tasks} renderRow={this._renderRow}/>}
             </View>
         )
     }
