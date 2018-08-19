@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { AsyncStorage, TextInput, View } from 'react-native'
 import { handleDueDateOf } from '../utils/parser'
-import Config from 'react-native-config'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
-import { changeNewGoalName } from '../actions/goalActions'
+import { changeNewGoalName, createNewGoal } from '../actions/goalActions'
 
 class NewGoalScreen extends Component {
 
@@ -20,21 +19,12 @@ class NewGoalScreen extends Component {
 
     onAddNewGoal = async () => {
         const input = this.goalNameInput
-        const { newGoal } = this.state
-        if (newGoal.trim() !== '') {
+        const { newGoalName, createNewGoal } = this.props
+        if (newGoalName.trim() !== '') {
             const id = await AsyncStorage.getItem('accountId')
-            const goal = handleDueDateOf({ accountId: id, name: newGoal })
+            const goal = handleDueDateOf({ accountId: id, name: newGoalName })
             input.disabled = true
-            const response = await fetch(`${Config.API_URL}/goals`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json'
-                },
-                body: JSON.stringify(goal)
-            })
-            const goalWithId = await response.json()
-            this.setState({ newGoal: '' })
+            createNewGoal(goal)
             input.disabled = false
             this.props.navigation.dispatch(NavigationActions.back())
         }
@@ -46,7 +36,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-    changeNewGoalName
+    changeNewGoalName,
+    createNewGoal
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewGoalScreen)
