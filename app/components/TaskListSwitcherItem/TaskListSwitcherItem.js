@@ -63,13 +63,13 @@ class TaskListSwitcherItem extends Component {
     }
 
     render() {
-        const { data: { id, type, name }, onSwitchTaskList } = this.props
+        const { data: { id, type, name, colorTag }, onSwitchTaskList } = this.props
 
         return (
             <Animated.View style={[styles.row, this._style]}>
                 <TouchableOpacity style={styles.taskListSwitcherItem} onPress={() => type === 'newGoal' ? this.openNewGoalScreen() : onSwitchTaskList(id)}>
                     <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
-                    <ColorIndicator color={id ? 'blue' : null}/>
+                    <ColorIndicator color={colorTag}/>
                 </TouchableOpacity>
             </Animated.View>
         )
