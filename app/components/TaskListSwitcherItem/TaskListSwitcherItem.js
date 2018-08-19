@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
-import {
-    Animated,
-    Easing,
-    Platform,
-    TouchableOpacity,
-    Text
-} from 'react-native'
+import { Animated, Easing, Platform, Text, TouchableOpacity } from 'react-native'
 
 import ColorIndicator from '../ColorIndicator/ColorIndicator'
 
 import styles from './TaskListSwitcherItem.styles'
+
+import { withNavigation } from 'react-navigation'
 
 class TaskListSwitcherItem extends Component {
     state = {
@@ -67,17 +63,22 @@ class TaskListSwitcherItem extends Component {
     }
 
     render() {
-        const { data: { name, id }, onSwitchTaskList } = this.props
+        const { data: { id, type, name }, onSwitchTaskList } = this.props
 
         return (
             <Animated.View style={[styles.row, this._style]}>
-                <TouchableOpacity style={styles.taskListSwitcherItem} onPress={() => onSwitchTaskList(id)}>
+                <TouchableOpacity style={styles.taskListSwitcherItem} onPress={() => type === 'newGoal' ? this.openNewGoalScreen() : onSwitchTaskList(id)}>
                     <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
                     <ColorIndicator color={id ? 'blue' : null}/>
                 </TouchableOpacity>
             </Animated.View>
         )
     }
+
+    openNewGoalScreen = () => {
+        const { navigation } = this.props
+        navigation.navigate('NewGoal')
+    }
 }
 
-export default TaskListSwitcherItem
+export default withNavigation(TaskListSwitcherItem)

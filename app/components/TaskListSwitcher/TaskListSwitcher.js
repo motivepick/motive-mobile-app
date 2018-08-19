@@ -25,15 +25,11 @@ export class TaskListSwitcher extends Component {
                     horizontal
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
-                    data={goals}
-                    sortingEnabled={false} 
-                    renderRow={this._renderRow} />
+                    data={goals.concat({ type: 'newGoal', name: 'New Goal' })}
+                    sortingEnabled={false}
+                    renderRow={({ data, active }) => <TaskListSwitcherItem data={data} active={active} onSwitchTaskList={this.props.onSwitchTaskList}/>}/>
             </View>
         )
-    }
-
-    _renderRow = ({ data, active }) => {
-        return <TaskListSwitcherItem data={data} active={active} onSwitchTaskList={this.props.onSwitchTaskList}/>
     }
 }
 
