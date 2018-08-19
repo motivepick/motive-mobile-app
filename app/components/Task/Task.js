@@ -95,7 +95,7 @@ class Task extends Component {
                     </Text>
                     {dueDate && <Text style={[styles.textMuted]}>{dueDate}</Text>}
                 </TouchableOpacity>
-                <ColorIndicator color={goal && goal.colorTag}/>
+                <ColorIndicator color={goal && goal.colorTag} styler={{ marginLeft: 20 }}/>
             </Animated.View>
         )
     }
