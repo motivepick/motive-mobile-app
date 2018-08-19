@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Text, View } from 'react-native'
+import { AsyncStorage, View } from 'react-native'
 import SortableList from 'react-native-sortable-list'
 
 import Goal from '../Goal/Goal'
