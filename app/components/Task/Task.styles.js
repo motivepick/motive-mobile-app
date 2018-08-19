@@ -33,7 +33,8 @@ export const styles = StyleSheet.create({
     textMuted: {
         // color: '#778899',
         color: '#bbb',
-        fontSize: 8
+        fontSize: 10,
+        fontWeight: 'bold',
     },
     strikeText: {
         color: '#bbb',
