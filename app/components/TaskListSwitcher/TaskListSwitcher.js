@@ -33,7 +33,7 @@ export class TaskListSwitcher extends Component {
     }
 
     _renderRow = ({ data, active }) => {
-        return <TaskListSwitcherItem data={data} active={active}/>
+        return <TaskListSwitcherItem data={data} active={active} onSwitchTaskList={this.props.onSwitchTaskList}/>
     }
 }
 

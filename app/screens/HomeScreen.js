@@ -22,18 +22,36 @@ export class HomeScreen extends Component {
     async componentDidMount() {
         const id = await AsyncStorage.getItem('accountId')
         try {
-            const responses = await Promise.all([fetch(`${Config.API_URL}/tasks/list/${id}`), fetch(`${Config.API_URL}/goals/list/${id}`)]);
+            const responses = await Promise.all([fetch(`${Config.API_URL}/tasks/list/${id}`), fetch(`${Config.API_URL}/goals/list/${id}`)])
 
             const results = await Promise.all(responses.map(response => {
                 if (!response.ok) {
-                    throw new Error(response.statusText);
+                    throw new Error(response.statusText)
                 }
-                return response.json();
-            }));
+                return response.json()
+            }))
 
             this.setState({ tasks: orderTasksByDate(results[0]), goals: results[1], isLoading: false })
         } catch (error) {
-            console.log(error); // TODO: fallback to an error screen
+            // TODO: fallback to an error screen
+        }
+    }
+
+    async switchTaskList(id) {
+        this.setState({ isLoading: true })
+
+        try {
+            const response = await fetch(`${Config.API_URL}/goals/${id}/tasks`)
+
+            if (!response.ok) {
+                throw new Error(response.statusText)
+            }
+
+            const tasks = response.json()
+
+            this.setState({ tasks: orderTasksByDate(tasks), isLoading: false })
+        } catch (error) {
+            // TODO: fallback to an error screen
         }
     }
 
@@ -49,7 +67,7 @@ export class HomeScreen extends Component {
                         <Text>Logout</Text>
                     </TouchableOpacity>
                 </View>
-                <TaskListSwitcher data={goals} />
+                <TaskListSwitcher data={goals} onSwitchTaskList={this.switchTaskList}/>
                 <TaskList data={tasks} listName='Todo list' />
             </View>
         )
