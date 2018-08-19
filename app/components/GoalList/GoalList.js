@@ -22,7 +22,6 @@ export class GoalList extends Component {
 
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Goals</Text>
                 <SortableList
                     horizontal
                     style={styles.list}

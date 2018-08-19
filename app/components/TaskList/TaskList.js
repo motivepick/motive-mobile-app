@@ -52,7 +52,7 @@ export class TaskList extends Component {
 
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>{listName}</Text>
+                {listName && <Text style={styles.title}>{listName}</Text>}
                 <View style={{ paddingHorizontal: 10 }}>
                     <TextInput
                         style={styles.input}

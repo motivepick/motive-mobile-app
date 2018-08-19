@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     input: {
-        height: 80, borderColor: '#fff', borderWidth: 1, fontSize: 24, padding: 16, backgroundColor: '#fff', shadowColor: 'rgba(0,0,0,0.2)',
+        height: 50, borderColor: '#fff', borderWidth: 1, fontSize: 12, fontWeight: 'bold', padding: 16, backgroundColor: '#fff', shadowColor: 'rgba(0,0,0,0.2)',
         shadowOpacity: 1,
         shadowOffset: { height: 2, width: 2 },
         shadowRadius: 2

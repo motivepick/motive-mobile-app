@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 16,
         width: 110,
-        height: 150,
+        height: 70,
         marginHorizontal: 10,
         borderRadius: 4,
 
@@ -26,7 +26,8 @@ export const styles = StyleSheet.create({
         })
     },
     text: {
-        fontSize: 15,
+        fontSize: 12,
+        fontWeight: 'bold',
         color: '#222222',
         textAlign: 'center'
     },

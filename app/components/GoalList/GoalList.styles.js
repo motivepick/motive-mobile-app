@@ -4,24 +4,11 @@ const window = Dimensions.get('window')
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#eee',
-
-        ...Platform.select({
-            ios: {
-                paddingTop: 20
-            }
-        })
-    },
-    title: {
-        fontSize: 20,
-        paddingVertical: 20,
-        color: '#999999'
+        alignItems: 'center'
     },
     list: {
-        height: 210,
+        height: 110,
         width: window.width
     },
     contentContainer: {
@@ -29,7 +16,6 @@ export const styles = StyleSheet.create({
             ios: {
                 paddingVertical: 30
             },
-
             android: {
                 paddingVertical: 0
             }

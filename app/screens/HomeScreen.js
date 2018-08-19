@@ -37,7 +37,7 @@ export class HomeScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <GoalList/>
-                <TaskList listName='Todo list'/>
+                <TaskList/>
             </View>
         )
     }

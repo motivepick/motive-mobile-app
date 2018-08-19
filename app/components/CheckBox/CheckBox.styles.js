@@ -2,11 +2,11 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
     circle: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
+        width: 20,
+        height: 20,
+        borderRadius: 10,
 
-        borderWidth: 3,
+        borderWidth: 2,
         marginRight: 20
     },
     completeCircle: {

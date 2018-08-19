@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         padding: 16,
-        height: 80,
+        height: 50,
         flex: 1,
         marginTop: 7,
         borderRadius: 4,
@@ -26,13 +26,14 @@ export const styles = StyleSheet.create({
         })
     },
     text: {
-        fontSize: 24,
+        fontSize: 12,
+        fontWeight: 'bold',
         color: '#222222'
     },
     textMuted: {
         // color: '#778899',
         color: '#bbb',
-        fontSize: 12
+        fontSize: 8
     },
     strikeText: {
         color: '#bbb',
