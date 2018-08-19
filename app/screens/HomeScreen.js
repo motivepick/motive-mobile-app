@@ -37,9 +37,8 @@ export class HomeScreen extends Component {
         }
     }
 
-    async switchTaskList(id) {
-        this.setState({ isLoading: true })
-
+    // TODO: get rid of the temporary solution by migration to Redux
+    switchTaskList = (homeScreen) => async (id) => {
         try {
             const response = await fetch(`${Config.API_URL}/goals/${id}/tasks`)
 
@@ -49,7 +48,7 @@ export class HomeScreen extends Component {
 
             const tasks = response.json()
 
-            this.setState({ tasks: orderTasksByDate(tasks), isLoading: false })
+            homeScreen.setState({ tasks: orderTasksByDate(tasks), isLoading: false })
         } catch (error) {
             // TODO: fallback to an error screen
         }
@@ -58,7 +57,7 @@ export class HomeScreen extends Component {
     render() {
         const { tasks, goals, isLoading } = this.state
 
-        if (isLoading) return <Text>Loading</Text>;
+        if (isLoading) return <Text>Loading</Text>
 
         return (
             <View style={{ flex: 1, flexDirection: 'column' }}>
@@ -67,8 +66,8 @@ export class HomeScreen extends Component {
                         <Text>Logout</Text>
                     </TouchableOpacity>
                 </View>
-                <TaskListSwitcher data={goals} onSwitchTaskList={this.switchTaskList}/>
-                <TaskList data={tasks} listName='Todo list' />
+                <TaskListSwitcher data={goals} onSwitchTaskList={this.switchTaskList(this)}/>
+                <TaskList data={tasks} listName='Todo list'/>
             </View>
         )
     }
