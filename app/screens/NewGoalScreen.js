@@ -3,15 +3,16 @@ import { AsyncStorage, TextInput, View } from 'react-native'
 import { handleDueDateOf } from '../utils/parser'
 import Config from 'react-native-config'
 import { NavigationActions } from 'react-navigation'
+import { connect } from 'react-redux'
+import { changeNewGoalName } from '../actions/goalActions'
 
 class NewGoalScreen extends Component {
 
-    state = { newGoal: '' }
-
     render() {
+        const { newGoalName, changeNewGoalName } = this.props
         return (
             <View>
-                <TextInput onChangeText={newGoal => this.setState({ newGoal })} value={this.state.newGoal} onSubmitEditing={this.onAddNewGoal}
+                <TextInput onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal}
                     ref={input => this.goalNameInput = input} placeholder={'What is your goal?'}/>
             </View>
         )
@@ -40,4 +41,12 @@ class NewGoalScreen extends Component {
     }
 }
 
-export default NewGoalScreen
+const mapStateToProps = state => ({
+    newGoalName: state.goals.newGoalName
+})
+
+const mapDispatchToProps = {
+    changeNewGoalName
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewGoalScreen)
