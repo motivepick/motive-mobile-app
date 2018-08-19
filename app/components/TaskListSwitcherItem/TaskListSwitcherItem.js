@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { Animated, Easing, Platform, Text, TouchableOpacity } from 'react-native'
+import { Animated, Platform, Text, TouchableOpacity } from 'react-native'
 
 import ColorIndicator from '../ColorIndicator/ColorIndicator'
 
 import styles from './TaskListSwitcherItem.styles'
 
 import { withNavigation } from 'react-navigation'
+import connect from 'react-redux/es/connect/connect'
+import Config from 'react-native-config'
+import { updateUserTasks } from '../../actions/taskActions'
 
 class TaskListSwitcherItem extends Component {
     state = {
@@ -52,22 +55,12 @@ class TaskListSwitcherItem extends Component {
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.props.active !== nextProps.active) {
-            Animated.timing(this._active, {
-                duration: 300,
-                easing: Easing.bounce,
-                toValue: Number(nextProps.active)
-            }).start()
-        }
-    }
-
     render() {
-        const { data: { id, type, name, colorTag }, onSwitchTaskList } = this.props
+        const { data: { id, type, name, colorTag }, setGoal } = this.props
 
         return (
             <Animated.View style={[styles.row, this._style]}>
-                <TouchableOpacity style={styles.taskListSwitcherItem} onPress={() => type === 'newGoal' ? this.openNewGoalScreen() : onSwitchTaskList(id)}>
+                <TouchableOpacity style={styles.taskListSwitcherItem} onPress={() => type === 'newGoal' ? this.openNewGoalScreen() : setGoal(id)}>
                     <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
                     <ColorIndicator color={colorTag}/>
                 </TouchableOpacity>
@@ -81,4 +74,14 @@ class TaskListSwitcherItem extends Component {
     }
 }
 
-export default withNavigation(TaskListSwitcherItem)
+const mapStateToProps = () => ({})
+
+const mapDispatchToProps = dispatch => ({
+    setGoal: async (id) => {
+        const response = await fetch(`${Config.API_URL}/goals/${id}/tasks`)
+        const tasks = await response.json()
+        dispatch(updateUserTasks({ $set: tasks }))
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(TaskListSwitcherItem))
