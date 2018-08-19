@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         padding: 16,
         width: 110,
         height: 70,
-        marginHorizontal: 10,
+        marginHorizontal: 4,
         borderRadius: 4,
 
         ...Platform.select({

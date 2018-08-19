@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
     },
     list: {
         height: 110,
-        width: window.width
+        width: window.width,
+        paddingHorizontal: 6
     },
     contentContainer: {
         ...Platform.select({
