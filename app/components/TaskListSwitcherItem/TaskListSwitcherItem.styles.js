@@ -27,7 +27,8 @@ export const styles = StyleSheet.create({
     },
     text: {
         fontSize: 15,
-        color: '#222222'
+        color: '#222222',
+        textAlign: 'center'
     },
     taskListSwitcherItem: {
         flex: 1,

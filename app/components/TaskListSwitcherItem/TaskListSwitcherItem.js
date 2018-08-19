@@ -79,7 +79,7 @@ class TaskListSwitcherItem extends Component {
         return (
             <Animated.View style={[styles.row, this._style]}>
                 <TouchableOpacity style={styles.taskListSwitcherItem} onPress={this.handleTaskListSwitcherItemClick}>
-                    <Text ellipsizeMode='tail' numberOfLines={1} style={styles.text}>{name}</Text>
+                    <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
                     <ColorIndicator color={id ? 'blue' : null}/>
                 </TouchableOpacity>
             </Animated.View>
