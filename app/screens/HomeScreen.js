@@ -11,7 +11,7 @@ import { orderTasksByDate } from '../utils/order'
 
 export class HomeScreen extends Component {
 
-    state = { error: null, tasks: [], goals: [], isLoading: true }
+    state = { error: null, tasks: [], goals: [], isLoading: true, test: 'PIPKA' }
 
     logout = async () => {
         LoginManager.logOut()
@@ -25,10 +25,10 @@ export class HomeScreen extends Component {
             const responses = await Promise.all([fetch(`${Config.API_URL}/tasks/list/${id}`), fetch(`${Config.API_URL}/goals/list/${id}`)])
 
             const results = await Promise.all(responses.map(response => {
-                if (!response.ok) {
-                    throw new Error(response.statusText)
+                if (response.ok) {
+                    return response.json()
                 }
-                return response.json()
+                throw new Error(response.statusText)
             }))
 
             this.setState({ tasks: orderTasksByDate(results[0]), goals: results[1], isLoading: false })
@@ -46,9 +46,8 @@ export class HomeScreen extends Component {
                 throw new Error(response.statusText)
             }
 
-            const tasks = response.json()
-
-            homeScreen.setState({ tasks: orderTasksByDate(tasks), isLoading: false })
+            const tasks = await response.json()
+            homeScreen.setState({ tasks: orderTasksByDate(tasks) })
         } catch (error) {
             // TODO: fallback to an error screen
         }
@@ -67,7 +66,8 @@ export class HomeScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <TaskListSwitcher data={goals} onSwitchTaskList={this.switchTaskList(this)}/>
-                <TaskList data={tasks} listName='Todo list'/>
+                <TaskList tasks={tasks} onAddNewTask={newTask => this.setState({ tasks: [newTask].concat(tasks) })}
+                    onCloseTask={taskId => this.setState({ tasks: tasks.filter(t => t.id !== taskId) })} listName='Todo list'/>
             </View>
         )
     }

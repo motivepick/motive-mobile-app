@@ -9,18 +9,13 @@ import { handleDueDateOf } from '../../utils/parser'
 import Config from 'react-native-config'
 
 export class TaskList extends Component {
-    constructor(props) {
-        super(props)
 
-        this.state = {
-            newTask: '',
-            tasks: props.data
-        }
-    }
+    state = { newTask: '' }
 
     onAddNewTask = async () => {
         const input = this.taskNameInput
         const { newTask } = this.state
+        const { onAddNewTask } = this.props
         if (newTask.trim() !== '') {
             const id = await AsyncStorage.getItem('accountId')
             const task = handleDueDateOf({ accountId: id, name: newTask.trim() })
@@ -34,28 +29,24 @@ export class TaskList extends Component {
                 body: JSON.stringify(task)
             })
             const taskWithId = await response.json()
-            this.setState({
-                newTask: '',
-                tasks: [taskWithId].concat(this.state.tasks)
-            })
+            onAddNewTask(taskWithId)
+            this.setState({ newTask: '' })
             input.disabled = false
             input.focus()
         }
     }
 
     onCloseTask = async id => {
+        const { onCloseTask } = this.props
         const response = await fetch(`${Config.API_URL}/tasks/${id}/close`, {
             method: 'PUT'
         })
         const taskWithId = await response.json()
-        this.setState({
-            tasks: this.state.tasks.filter(t => t.id !== taskWithId.id)
-        })
+        onCloseTask(taskWithId.id)
     }
 
     render() {
-        const { tasks } = this.state
-        const { isSortable } = this.props
+        const { isSortable, tasks } = this.props
         const sortingEnabled = isSortable === undefined ? true : isSortable
 
         return (
