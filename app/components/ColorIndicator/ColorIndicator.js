@@ -5,10 +5,10 @@ import styles from './ColorIndicator.styles'
 export class ColorIndicator extends Component {
 
     render() {
-        const { color } = this.props
+        const { color, styler } = this.props
 
         return (
-            <View style={[styles.colorTagCircle, color ? { backgroundColor: color } : {}]}/>
+            <View style={[styles.colorTagCircle, color ? { backgroundColor: color } : {}, styler]}/>
         )
     }
 }
