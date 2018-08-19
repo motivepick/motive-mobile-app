@@ -3,14 +3,14 @@ import { Animated, Platform, Text, TouchableOpacity } from 'react-native'
 
 import ColorIndicator from '../ColorIndicator/ColorIndicator'
 
-import styles from './TaskListSwitcherItem.styles'
+import styles from './Goal.styles'
 
 import { withNavigation } from 'react-navigation'
 import connect from 'react-redux/es/connect/connect'
 import Config from 'react-native-config'
 import { updateUserTasks } from '../../actions/taskActions'
 
-class TaskListSwitcherItem extends Component {
+class Goal extends Component {
     state = {
         name: this.props.data.name
     }
@@ -60,7 +60,7 @@ class TaskListSwitcherItem extends Component {
 
         return (
             <Animated.View style={[styles.row, this._style]}>
-                <TouchableOpacity style={styles.taskListSwitcherItem} onPress={() => type === 'newGoal' ? this.openNewGoalScreen() : setGoal(id)}>
+                <TouchableOpacity style={styles.goal} onPress={() => type === 'newGoal' ? this.openNewGoalScreen() : setGoal(id)}>
                     <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
                     <ColorIndicator color={colorTag}/>
                 </TouchableOpacity>
@@ -84,4 +84,4 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(TaskListSwitcherItem))
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(Goal))

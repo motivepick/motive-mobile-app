@@ -30,7 +30,7 @@ export const styles = StyleSheet.create({
         color: '#222222',
         textAlign: 'center'
     },
-    taskListSwitcherItem: {
+    goal: {
         flex: 1,
         flexDirection: 'column',
         alignItems: 'center',

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { AsyncStorage, Text, View } from 'react-native'
 import SortableList from 'react-native-sortable-list'
 
-import TaskListSwitcherItem from '../TaskListSwitcherItem/TaskListSwitcherItem'
+import Goal from '../Goal/Goal'
 import styles from './GoalList.styles'
 import connect from 'react-redux/es/connect/connect'
 import { searchUserGoals, showError, updateUserGoals } from '../../actions/goalActions'
@@ -29,7 +29,7 @@ export class GoalList extends Component {
                     contentContainerStyle={styles.contentContainer}
                     data={goals}
                     sortingEnabled={false}
-                    renderRow={({ data, active }) => <TaskListSwitcherItem data={data} active={active}/>}/>
+                    renderRow={({ data, active }) => <Goal data={data} active={active}/>}/>
             </View>
         )
     }
