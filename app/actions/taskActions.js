@@ -1,6 +1,5 @@
 import request from 'superagent'
 import { API_URL } from '../const'
-import Config from 'react-native-config'
 import { AsyncStorage } from 'react-native'
 
 export const CHANGE_NEW_TASK_NAME = 'CHANGE_NEW_TASK_NAME'
@@ -30,22 +29,13 @@ export const createTask = async task => {
 
 export const closeTask = async (taskId) => {
     const accountId = await AsyncStorage.getItem('accountId')
-    const response = await fetch(`${Config.API_URL}/tasks/${taskId}`,
-        {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-Account-Id': accountId
-            },
-            body: JSON.stringify({ closed: true })
-        }
-    )
-    const task = await response.json()
+    const response = await request.put(`${API_URL}/tasks/${taskId}`).set('X-Account-Id', accountId).send({ closed: true })
+    const task = response.body
     return { type: CLOSE_TASK, payload: task.id }
 }
 
-export const updateTask = (taskId, task) => {
-    const response = request.put(`${API_URL}/tasks/${taskId}`).send(task)
+export const updateTask = async (taskId, task) => {
+    const accountId = await AsyncStorage.getItem('accountId')
+    const response = request.put(`${API_URL}/tasks/${taskId}`).set('X-Account-Id', accountId).send(task)
     return { type: UPDATE_TASK, payload: response }
 }

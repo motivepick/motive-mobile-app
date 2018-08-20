@@ -4,7 +4,7 @@ import SortableList from 'react-native-sortable-list'
 import Task from '../Task/Task'
 import styles from './TaskList.styles'
 import { handleDueDateOf } from '../../utils/parser'
-import { changeNewTaskName, closeTask, createTask, searchUserTasks, showError, updateTask, updateUserTasks } from '../../actions/taskActions'
+import { changeNewTaskName, closeTask, createTask, searchUserTasks, showError, updateUserTasks } from '../../actions/taskActions'
 import { connect } from 'react-redux'
 import { orderTasksByDate } from '../../utils/order'
 
@@ -86,7 +86,6 @@ const mapDispatchToProps = {
     updateUserTasks,
     createTask,
     closeTask,
-    updateTask,
     showError
 }
 

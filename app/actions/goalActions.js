@@ -12,16 +12,8 @@ export const changeNewGoalName = newGoalName => ({ type: CHANGE_NEW_GOAL_NAME, p
 
 export const createNewGoal = async goal => {
     const accountId = await AsyncStorage.getItem('accountId')
-    const response = await fetch(`${Config.API_URL}/goals`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-Account-Id': accountId
-        },
-        body: JSON.stringify(goal)
-    })
-    const goalWithId = await response.json()
+    const response = await request.post(`${Config.API_URL}/goals`).set('X-Account-Id', accountId).send(goal)
+    const goalWithId = response.body
     return { type: CREATE_NEW_GOAL, payload: goalWithId }
 }
 

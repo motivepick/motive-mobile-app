@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import { Animated, AsyncStorage, Platform, Text, TouchableOpacity } from 'react-native'
-
 import ColorIndicator from '../ColorIndicator/ColorIndicator'
-
 import styles from './Goal.styles'
-
 import { withNavigation } from 'react-navigation'
 import connect from 'react-redux/es/connect/connect'
 import Config from 'react-native-config'
 import { updateUserTasks } from '../../actions/taskActions'
+import request from 'superagent'
 
 class Goal extends Component {
     state = {
@@ -77,10 +75,11 @@ class Goal extends Component {
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => ({
+
     setGoal: async (id) => {
         const accountId = await AsyncStorage.getItem('accountId')
-        const response = await fetch(`${Config.API_URL}/goals/${id}/tasks`, { headers: { 'X-Account-Id': accountId } })
-        const tasks = await response.json()
+        const response = await request.get(`${Config.API_URL}/goals/${id}/tasks`).set('X-Account-Id', accountId)
+        const tasks = response.body
         dispatch(updateUserTasks({ $set: tasks }))
     }
 })

@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage, Easing, Platform, Text, TouchableOpacity } from 'react-native'
+import { Animated, Easing, Platform, Text, TouchableOpacity } from 'react-native'
 import moment from 'moment'
 import { handleDueDateOf } from '../../utils/parser'
-import Config from 'react-native-config'
 
 import CheckBox from '../CheckBox/CheckBox'
 import ColorIndicator from '../ColorIndicator/ColorIndicator'
 
 import styles from './Task.styles'
+import { connect } from 'react-redux'
+import { updateTask } from '../../actions/taskActions'
 
 class Task extends Component {
     state = {
@@ -108,32 +109,19 @@ class Task extends Component {
     }
 
     saveName = () => {
-        const { value } = this.props
+        const { value, updateTask } = this.props
         const task = handleDueDateOf({ name: this.state.name.trim() })
         this.setState({
             name: task.name,
             dueDate: task.dueDate || this.state.dueDate
         })
-        Task.updateTask(value.id, { ...task })
+        updateTask(value.id, { ...task })
     }
 
     saveDescription = () => {
-        const { value } = this.props
+        const { value, updateTask } = this.props
         this.setState({ description: this.state.description.trim() })
-        Task.updateTask(value.id, { description: this.state.description })
-    }
-
-    static async updateTask(id, newTask) {
-        const accountId = await AsyncStorage.getItem('accountId')
-        fetch(`${Config.API_URL}/tasks/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'X-Account-Id': accountId
-            },
-            body: JSON.stringify(newTask)
-        })
+        updateTask(value.id, { description: this.state.description })
     }
 
     static classOf(dueDate) {
@@ -156,4 +144,10 @@ class Task extends Component {
     }
 }
 
-export default Task
+const mapStateToProps = () => ({})
+
+const mapDispatchToProps = {
+    updateTask
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Task)
