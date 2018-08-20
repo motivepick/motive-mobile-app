@@ -13,31 +13,17 @@ export const UPDATE_TASK = 'UPDATE_TASK'
 export const changeNewTaskName = newTaskName => ({ type: CHANGE_NEW_TASK_NAME, payload: newTaskName })
 
 export const searchUserTasks = accountId => {
-    const req = request.get(`${API_URL}/tasks/list/${accountId}`)
-
-    return {
-        type: SEARCH_USER_TASKS,
-        payload: req
-    }
+    const response = request.get(`${API_URL}/tasks/list/${accountId}`)
+    return { type: SEARCH_USER_TASKS, payload: response }
 }
 
-export const updateUserTasks = query => ({
-    type: UPDATE_USER_TASKS,
-    query: query
-})
+export const updateUserTasks = query => ({ type: UPDATE_USER_TASKS, query: query })
 
-export const showError = error => ({
-    type: SHOW_ERROR,
-    error
-})
+export const showError = error => ({ type: SHOW_ERROR, error })
 
 export const createTask = task => {
-    const req = request.post(`${API_URL}/tasks`).send(task)
-
-    return {
-        type: CREATE_TASK,
-        payload: req
-    }
+    const response = request.post(`${API_URL}/tasks`).send(task)
+    return { type: CREATE_TASK, payload: response }
 }
 
 export const closeTask = async (taskId) => {
@@ -47,10 +33,6 @@ export const closeTask = async (taskId) => {
 }
 
 export const updateTask = (taskId, task) => {
-    const req = request.put(`${API_URL}/tasks/${taskId}`).send(task)
-
-    return {
-        type: UPDATE_TASK,
-        payload: req
-    }
+    const response = request.put(`${API_URL}/tasks/${taskId}`).send(task)
+    return { type: UPDATE_TASK, payload: response }
 }
