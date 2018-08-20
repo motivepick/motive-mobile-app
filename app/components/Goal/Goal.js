@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, Platform, Text, TouchableOpacity } from 'react-native'
+import { Animated, AsyncStorage, Platform, Text, TouchableOpacity } from 'react-native'
 
 import ColorIndicator from '../ColorIndicator/ColorIndicator'
 
@@ -78,7 +78,8 @@ const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => ({
     setGoal: async (id) => {
-        const response = await fetch(`${Config.API_URL}/goals/${id}/tasks`)
+        const accountId = await AsyncStorage.getItem('accountId')
+        const response = await fetch(`${Config.API_URL}/goals/${id}/tasks`, { headers: { 'X-Account-Id': accountId } })
         const tasks = await response.json()
         dispatch(updateUserTasks({ $set: tasks }))
     }

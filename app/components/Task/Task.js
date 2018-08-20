@@ -1,11 +1,5 @@
 import React, { Component } from 'react'
-import {
-    Animated,
-    Easing,
-    Platform,
-    TouchableOpacity,
-    Text
-} from 'react-native'
+import { Animated, AsyncStorage, Easing, Platform, Text, TouchableOpacity } from 'react-native'
 import moment from 'moment'
 import { handleDueDateOf } from '../../utils/parser'
 import Config from 'react-native-config'
@@ -129,12 +123,14 @@ class Task extends Component {
         Task.updateTask(value.id, { description: this.state.description })
     }
 
-    static updateTask(id, newTask) {
+    static async updateTask(id, newTask) {
+        const accountId = await AsyncStorage.getItem('accountId')
         fetch(`${Config.API_URL}/tasks/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                Accept: 'application/json'
+                'Accept': 'application/json',
+                'X-Account-Id': accountId
             },
             body: JSON.stringify(newTask)
         })
