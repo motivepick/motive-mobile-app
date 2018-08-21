@@ -54,11 +54,11 @@ class Goal extends Component {
     }
 
     render() {
-        const { data: { type, name, colorTag }, setGoal } = this.props
+        const { data: { type, name, colorTag } } = this.props
 
         return (
             <Animated.View style={[styles.row, this._style]}>
-                <TouchableOpacity style={styles.goal} onPress={() => type === 'newGoal' ? this.openNewGoalScreen() : setGoal()}>
+                <TouchableOpacity style={styles.goal} onPress={() => this.handleGoalSelect(type)}>
                     <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
                     <ColorIndicator color={colorTag}/>
                 </TouchableOpacity>
@@ -70,13 +70,31 @@ class Goal extends Component {
         const { navigation } = this.props
         navigation.navigate('NewGoal')
     }
+
+    handleGoalSelect = (type) => {
+        const { unsetGoal, setUserDefinedGoal } = this.props
+        if (type === 'newGoal') {
+            this.openNewGoalScreen()
+        } else if (type === 'all') {
+            unsetGoal()
+        } else {
+            setUserDefinedGoal()
+        }
+    }
 }
 
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 
-    setGoal: async () => {
+    unsetGoal: async () => {
+        const accountId = await AsyncStorage.getItem('accountId')
+        const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
+        const tasks = response.body
+        dispatch(updateUserTasks({ $set: tasks }))
+    },
+
+    setUserDefinedGoal: async () => {
         const { data } = ownProps
         const accountId = await AsyncStorage.getItem('accountId')
         const response = await request.get(`${Config.API_URL}/goals/${data.id}/tasks`).set('X-Account-Id', accountId)
