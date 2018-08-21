@@ -65,11 +65,13 @@ class Goal extends Component {
     }
 
     handleGoalSelect = (type) => {
-        const { unsetGoal, setTodayGoal, setUserDefinedGoal } = this.props
+        const { unsetGoal, setTodayGoal, setThisWeekGoal, setUserDefinedGoal } = this.props
         if (type === 'all') {
             unsetGoal()
         } else if (type === 'today') {
             setTodayGoal()
+        } else if (type === 'thisWeek') {
+            setThisWeekGoal()
         } else if (type === 'newGoal') {
             const { navigation } = this.props
             navigation.navigate('NewGoal')
@@ -95,8 +97,17 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
         const tasks = response.body
         const startOfDay = moment().startOf('day')
-        const endOfDay = moment().startOf('day')
+        const endOfDay = moment().endOf('day')
         dispatch(updateUserTasks({ $set: tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfDay, endOfDay, null, '[]')) }))
+    },
+
+    setThisWeekGoal: async () => {
+        const accountId = await AsyncStorage.getItem('accountId')
+        const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
+        const tasks = response.body
+        const startOfWeek = moment().startOf('week')
+        const endOfWeek = moment().endOf('week')
+        dispatch(updateUserTasks({ $set: tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfWeek, endOfWeek, null, '[]')) }))
     },
 
     setUserDefinedGoal: async () => {

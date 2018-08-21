@@ -14,7 +14,7 @@ export class GoalList extends Component {
         const id = await AsyncStorage.getItem('accountId')
         searchUserGoals(id)
             .then(response => {
-                const defaultGoals = [{ type: 'all', name: 'All' }, { type: 'today', name: 'Today' }, { type: 'week', name: 'This Week' }]
+                const defaultGoals = [{ type: 'all', name: 'All' }, { type: 'today', name: 'Today' }, { type: 'thisWeek', name: 'This Week' }]
                 return updateUserGoals({ $push: defaultGoals.concat(response.payload.body).concat({ type: 'newGoal', name: 'New Goal' }) })
             })
             .catch(error => showError(error))
