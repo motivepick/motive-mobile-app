@@ -7,11 +7,9 @@ import connect from 'react-redux/es/connect/connect'
 import Config from 'react-native-config'
 import { updateUserTasks } from '../../actions/taskActions'
 import request from 'superagent'
+import moment from 'moment'
 
 class Goal extends Component {
-    state = {
-        name: this.props.data.name
-    }
 
     constructor(props) {
         super(props)
@@ -66,17 +64,15 @@ class Goal extends Component {
         )
     }
 
-    openNewGoalScreen = () => {
-        const { navigation } = this.props
-        navigation.navigate('NewGoal')
-    }
-
     handleGoalSelect = (type) => {
-        const { unsetGoal, setUserDefinedGoal } = this.props
-        if (type === 'newGoal') {
-            this.openNewGoalScreen()
-        } else if (type === 'all') {
+        const { unsetGoal, setTodayGoal, setUserDefinedGoal } = this.props
+        if (type === 'all') {
             unsetGoal()
+        } else if (type === 'today') {
+            setTodayGoal()
+        } else if (type === 'newGoal') {
+            const { navigation } = this.props
+            navigation.navigate('NewGoal')
         } else {
             setUserDefinedGoal()
         }
@@ -92,6 +88,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
         const tasks = response.body
         dispatch(updateUserTasks({ $set: tasks }))
+    },
+
+    setTodayGoal: async () => {
+        const accountId = await AsyncStorage.getItem('accountId')
+        const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
+        const tasks = response.body
+        const startOfDay = moment().startOf('day')
+        const endOfDay = moment().startOf('day')
+        dispatch(updateUserTasks({ $set: tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfDay, endOfDay, null, '[]')) }))
     },
 
     setUserDefinedGoal: async () => {
