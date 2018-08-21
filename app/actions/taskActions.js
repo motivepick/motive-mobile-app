@@ -17,12 +17,7 @@ export const showError = error => ({ type: SHOW_ERROR, error })
 
 export const createTask = task => ({ type: CREATE_TASK, payload: task })
 
-export const closeTask = async (taskId) => {
-    const accountId = await AsyncStorage.getItem('accountId')
-    const response = await request.put(`${API_URL}/tasks/${taskId}`).set('X-Account-Id', accountId).send({ closed: true })
-    const task = response.body
-    return { type: CLOSE_TASK, payload: task.id }
-}
+export const closeTask = id => ({ type: CLOSE_TASK, payload: id })
 
 export const updateTask = async (taskId, task) => {
     const accountId = await AsyncStorage.getItem('accountId')

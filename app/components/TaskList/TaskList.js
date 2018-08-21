@@ -99,7 +99,12 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
         input.focus()
     },
 
-    closeTask: (id) => (dispatch) => dispatch(closeTask(id)),
+    closeTask: (id) => async (dispatch) => {
+        const accountId = await AsyncStorage.getItem('accountId')
+        const response = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
+        const task = response.body
+        return dispatch(closeTask(task.id))
+    },
 
     showError: (error) => (dispatch) => dispatch(showError(error))
 }, dispatch)
