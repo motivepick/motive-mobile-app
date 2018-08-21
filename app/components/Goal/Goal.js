@@ -110,7 +110,7 @@ const mapDispatchToProps = (dispatch, { data }) => ({
         const tasks = response.body
         const startOfWeek = moment().startOf('week')
         const endOfWeek = moment().endOf('week')
-        dispatch(setGoal(null, 'week'))
+        dispatch(setGoal(null, 'thisWeek'))
         dispatch(updateUserTasks(tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfWeek, endOfWeek, null, '[]'))))
     },
 

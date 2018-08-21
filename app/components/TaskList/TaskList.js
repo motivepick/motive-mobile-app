@@ -10,6 +10,7 @@ import { orderTasksByDate } from '../../utils/order'
 import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import { API_URL } from '../../const'
+import moment from 'moment'
 
 export class TaskList extends Component {
 
@@ -90,9 +91,15 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
         if (goal.id) {
             const response = await request.post(`${API_URL}/goals/${goal.id}/tasks`).set('X-Account-Id', accountId).send(task)
             dispatch(createTask(response.body))
+        } else if (goal.type === 'today') {
+            const response = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('day') })
+            dispatch(createTask(response.body))
+        } else if (goal.type === 'thisWeek') {
+            const response = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('week') })
+            dispatch(createTask(response.body))
         } else {
             const response = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send(task)
-            dispatch(createTask(response.body)) // TODO: set due date based on goal type
+            dispatch(createTask(response.body))
         }
         dispatch(changeNewTaskName(''))
         input.disabled = false
