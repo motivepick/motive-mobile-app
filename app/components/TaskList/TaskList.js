@@ -49,10 +49,16 @@ export class TaskList extends Component {
     render() {
         const { isSortable, tasks, newTaskName, changeNewTaskName, listName } = this.props
         const sortingEnabled = isSortable === undefined ? true : isSortable
+        const tasksTotal = tasks.length
+        const tasksClosed = tasks.filter(t => t.closed).length
+        const tasksClosedPercent = tasksClosed / tasksTotal * 100 || 0
 
         return (
             <View style={styles.container}>
                 {listName && <Text style={styles.title}>{listName}</Text>}
+                <Text style={styles.title}>{`${tasksClosed} / ${tasksTotal}`}</Text>
+                <Text style={styles.title}>You can do it! {`${Math.round(tasksClosedPercent)}% done`}</Text>
+
                 <View style={{ paddingHorizontal: 10 }}>
                     <TextInput
                         style={styles.input}
