@@ -1,18 +1,17 @@
-import { CHANGE_NEW_GOAL_NAME, CREATE_NEW_GOAL, SEARCH_USER_GOALS, UPDATE_USER_GOALS } from '../actions/goalActions'
-import update from 'immutability-helper'
+import { CHANGE_NEW_GOAL_NAME, CREATE_NEW_GOAL, SET_GOAL, UPDATE_USER_GOALS } from '../actions/goalActions'
 
-const INITIAL_STATE = { goals: [] }
+const INITIAL_STATE = { goal: {}, goals: [] }
 
 export default function (state = INITIAL_STATE, action) {
-    const { type } = action
-    if (type === SEARCH_USER_GOALS) {
-        return { ...state }
-    } else if (type === CHANGE_NEW_GOAL_NAME) {
-        return { ...state, newGoalName: action.payload }
+    const { type, payload } = action
+    if (type === CHANGE_NEW_GOAL_NAME) {
+        return { ...state, newGoalName: payload }
     } else if (type === CREATE_NEW_GOAL) {
-        return { ...state, goals: [action.payload].concat(state.goals) }
+        return { ...state, goals: [payload].concat(state.goals) }
     } else if (type === UPDATE_USER_GOALS) {
-        return { ...state, goals: update(state.goals, action.query) }
+        return { ...state, goals: payload }
+    } else if (type === SET_GOAL) {
+        return { ...state, goal: { id: payload.id, type: payload.type } }
     } else {
         return state
     }

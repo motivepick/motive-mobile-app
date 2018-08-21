@@ -1,6 +1,4 @@
-import update from 'immutability-helper'
-
-import { CHANGE_NEW_TASK_NAME, CLOSE_TASK, CREATE_TASK, SEARCH_USER_TASKS, SHOW_ERROR, UPDATE_TASK, UPDATE_USER_TASKS } from '../actions/taskActions'
+import { CHANGE_NEW_TASK_NAME, CLOSE_TASK, CREATE_TASK, SHOW_ERROR, UPDATE_USER_TASKS } from '../actions/taskActions'
 
 const INITIAL_STATE = {
     tasks: [],
@@ -9,12 +7,12 @@ const INITIAL_STATE = {
 }
 export default function (state = INITIAL_STATE, action) {
     const { type } = action
-    if (type === SEARCH_USER_TASKS || type === CREATE_TASK || type === UPDATE_TASK) {
-        return { ...state }
-    } else if (type === CHANGE_NEW_TASK_NAME) {
+    if (type === CHANGE_NEW_TASK_NAME) {
         return { ...state, newTaskName: action.payload }
+    } else if (type === CREATE_TASK) {
+        return { ...state, tasks: [action.payload].concat(state.tasks) }
     } else if (type === UPDATE_USER_TASKS) {
-        return { ...state, tasks: update(state.tasks, action.query) }
+        return { ...state, tasks: action.payload }
     } else if (type === SHOW_ERROR) {
         return { ...state, error: action.error }
     } else if (type === CLOSE_TASK) {

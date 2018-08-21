@@ -8,6 +8,7 @@ import Config from 'react-native-config'
 import { updateUserTasks } from '../../actions/taskActions'
 import request from 'superagent'
 import moment from 'moment'
+import { setGoal } from '../../actions/goalActions'
 
 class Goal extends Component {
 
@@ -83,13 +84,14 @@ class Goal extends Component {
 
 const mapStateToProps = () => ({})
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch, { data }) => ({
 
     unsetGoal: async () => {
         const accountId = await AsyncStorage.getItem('accountId')
         const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
         const tasks = response.body
-        dispatch(updateUserTasks({ $set: tasks }))
+        dispatch(setGoal(null, null))
+        dispatch(updateUserTasks(tasks))
     },
 
     setTodayGoal: async () => {
@@ -98,7 +100,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         const tasks = response.body
         const startOfDay = moment().startOf('day')
         const endOfDay = moment().endOf('day')
-        dispatch(updateUserTasks({ $set: tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfDay, endOfDay, null, '[]')) }))
+        dispatch(setGoal(null, 'today'))
+        dispatch(updateUserTasks(tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfDay, endOfDay, null, '[]'))))
     },
 
     setThisWeekGoal: async () => {
@@ -107,15 +110,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         const tasks = response.body
         const startOfWeek = moment().startOf('week')
         const endOfWeek = moment().endOf('week')
-        dispatch(updateUserTasks({ $set: tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfWeek, endOfWeek, null, '[]')) }))
+        dispatch(setGoal(null, 'week'))
+        dispatch(updateUserTasks(tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfWeek, endOfWeek, null, '[]'))))
     },
 
     setUserDefinedGoal: async () => {
-        const { data } = ownProps
         const accountId = await AsyncStorage.getItem('accountId')
         const response = await request.get(`${Config.API_URL}/goals/${data.id}/tasks`).set('X-Account-Id', accountId)
-        const tasks = response.body
-        dispatch(updateUserTasks({ $set: tasks }))
+        dispatch(setGoal(data.id, null))
+        dispatch(updateUserTasks(response.body))
     }
 })
 

@@ -5,19 +5,16 @@ import SortableList from 'react-native-sortable-list'
 import Goal from '../Goal/Goal'
 import styles from './GoalList.styles'
 import connect from 'react-redux/es/connect/connect'
-import { searchUserGoals, showError, updateUserGoals } from '../../actions/goalActions'
+import { updateUserGoals } from '../../actions/goalActions'
+import request from 'superagent'
+import Config from 'react-native-config'
 
 export class GoalList extends Component {
 
     async componentDidMount() {
-        const { searchUserGoals, updateUserGoals, showError } = this.props
-        const id = await AsyncStorage.getItem('accountId')
-        searchUserGoals(id)
-            .then(response => {
-                const defaultGoals = [{ type: 'all', name: 'All' }, { type: 'today', name: 'Today' }, { type: 'thisWeek', name: 'This Week' }]
-                return updateUserGoals({ $push: defaultGoals.concat(response.payload.body).concat({ type: 'newGoal', name: 'New Goal' }) })
-            })
-            .catch(error => showError(error))
+        const { updateUserGoals } = this.props
+        const accountId = await AsyncStorage.getItem('accountId')
+        updateUserGoals(accountId)
     }
 
     render() {
@@ -41,10 +38,13 @@ const mapStateToProps = state => ({
     goals: state.goals.goals
 })
 
-const mapDispatchToProps = {
-    searchUserGoals,
-    updateUserGoals,
-    showError
-}
+const mapDispatchToProps = dispatch => ({
+
+    updateUserGoals: async (accountId) => {
+        const response = await request.get(`${Config.API_URL}/goals`).set('X-Account-Id', accountId)
+        const defaultGoals = [{ type: 'all', name: 'All' }, { type: 'today', name: 'Today' }, { type: 'thisWeek', name: 'This Week' }]
+        dispatch(updateUserGoals(defaultGoals.concat(response.body).concat({ type: 'newGoal', name: 'New Goal' })))
+    }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(GoalList)
