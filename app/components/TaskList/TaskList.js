@@ -4,7 +4,7 @@ import SortableList from 'react-native-sortable-list'
 import Task from '../Task/Task'
 import styles from './TaskList.styles'
 import { handleDueDateOf } from '../../utils/parser'
-import { changeNewTaskName, closeTask, createTask, createTaskForGoal, showError, updateUserTasks } from '../../actions/taskActions'
+import { changeNewTaskName, closeTask, createTask, endCreatingTask, showError, startCreatingTask, updateUserTasks } from '../../actions/taskActions'
 import { connect } from 'react-redux'
 import { orderTasksByDate } from '../../utils/order'
 import { bindActionCreators } from 'redux'
@@ -35,7 +35,7 @@ export class TaskList extends Component {
     }
 
     render() {
-        const { isSortable, tasks, newTaskName, changeNewTaskName, listName } = this.props
+        const { isSortable, tasks, newTaskName, changeNewTaskName, creatingTask, listName } = this.props
         const sortingEnabled = isSortable === undefined ? true : isSortable
         const tasksTotal = tasks.length
         const tasksClosed = tasks.filter(t => t.closed).length
@@ -54,6 +54,7 @@ export class TaskList extends Component {
                         value={newTaskName}
                         onSubmitEditing={this.onAddNewTask}
                         ref={input => this.taskNameInput = input}
+                        editable={!creatingTask}
                         placeholder={tasks.length ? 'What needs to be done?' : 'How about a fresh hot task?'}/>
                 </View>
                 {tasks.length && this.list(tasks, sortingEnabled)}
@@ -71,49 +72,50 @@ export class TaskList extends Component {
 const mapStateToProps = state => ({
     user: state.user.user,
     tasks: state.tasks.tasks,
-    newTaskName: state.tasks.newTaskName
+    newTaskName: state.tasks.newTaskName,
+    creatingTask: state.tasks.creatingTask
 })
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
+const mapDispatchToProps = dispatch => bindActionCreators({
 
-    changeNewTaskName: (newTaskName) => (dispatch) => dispatch(changeNewTaskName(newTaskName)),
+    changeNewTaskName: newTaskName => dispatch => dispatch(changeNewTaskName(newTaskName)),
 
-    updateUserTasks: (accountId) => async (dispatch) => {
+    updateUserTasks: accountId => async dispatch => {
         const response = await request.get(`${API_URL}/tasks`).set('X-Account-Id', accountId)
         dispatch(updateUserTasks(orderTasksByDate(response.body)))
     },
 
     createTask: (task, input) => async (dispatch, getState) => {
-        input.disabled = true
+        dispatch(startCreatingTask())
         const state = getState()
         const goal = state.goals.goal
         const accountId = await AsyncStorage.getItem('accountId')
         if (goal.id) {
-            const response = await request.post(`${API_URL}/goals/${goal.id}/tasks`).set('X-Account-Id', accountId).send(task)
-            dispatch(createTask(response.body))
+            const { body } = await request.post(`${API_URL}/goals/${goal.id}/tasks`).set('X-Account-Id', accountId).send(task)
+            dispatch(createTask(body))
         } else if (goal.type === 'today') {
-            const response = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('day') })
-            dispatch(createTask(response.body))
+            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('day') })
+            dispatch(createTask(body))
         } else if (goal.type === 'thisWeek') {
-            const response = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('week') })
-            dispatch(createTask(response.body))
+            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('week') })
+            dispatch(createTask(body))
         } else {
-            const response = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send(task)
-            dispatch(createTask(response.body))
+            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send(task)
+            dispatch(createTask(body))
         }
         dispatch(changeNewTaskName(''))
-        input.disabled = false
+        dispatch(endCreatingTask())
         input.focus()
     },
 
-    closeTask: (id) => async (dispatch) => {
+    closeTask: id => async dispatch => {
         const accountId = await AsyncStorage.getItem('accountId')
         const response = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
         const task = response.body
         return dispatch(closeTask(task.id))
     },
 
-    showError: (error) => (dispatch) => dispatch(showError(error))
+    showError: error => dispatch => dispatch(showError(error))
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskList)

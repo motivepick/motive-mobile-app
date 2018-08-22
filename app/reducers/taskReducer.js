@@ -1,8 +1,9 @@
-import { CHANGE_NEW_TASK_NAME, CLOSE_TASK, CREATE_TASK, SHOW_ERROR, UPDATE_USER_TASKS } from '../actions/taskActions'
+import { CHANGE_NEW_TASK_NAME, CLOSE_TASK, CREATE_TASK, END_CREATING_TASK, SHOW_ERROR, START_CREATING_TASK, UPDATE_USER_TASKS } from '../actions/taskActions'
 
 const INITIAL_STATE = {
     tasks: [],
     newTaskName: '',
+    newTaskNameInputDisabled: false,
     error: null
 }
 export default function (state = INITIAL_STATE, action) {
@@ -11,6 +12,10 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, newTaskName: action.payload }
     } else if (type === CREATE_TASK) {
         return { ...state, tasks: [action.payload].concat(state.tasks) }
+    } else if (type === START_CREATING_TASK) {
+        return { ...state, creatingTask: true }
+    } else if (type === END_CREATING_TASK) {
+        return { ...state, creatingTask: false }
     } else if (type === UPDATE_USER_TASKS) {
         return { ...state, tasks: action.payload }
     } else if (type === SHOW_ERROR) {
