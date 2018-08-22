@@ -14,7 +14,7 @@ const RootStack = StackNavigator({
     Login: LoginScreen,
     Home: HomeScreen,
     NewGoal: NewGoalScreen
-}, { headerMode: 'none' })
+})
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 

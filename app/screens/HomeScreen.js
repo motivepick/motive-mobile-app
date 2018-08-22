@@ -7,6 +7,10 @@ import GoalList from '../components/GoalList/GoalList'
 
 export class HomeScreen extends Component {
 
+    static navigationOptions = {
+        header: null
+    }
+
     logout = async () => {
         LoginManager.logOut()
         await AsyncStorage.removeItem('accountId')
