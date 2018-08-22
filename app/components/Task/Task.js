@@ -74,6 +74,8 @@ class Task extends Component {
             onClose
         } = this.props
 
+        const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).local().calendar() : null
+
         return (
             <Animated.View style={[styles.row, this._style]}>
                 <CheckBox isCompleted={closed} onAction={() => onClose(id)}/>
@@ -88,7 +90,7 @@ class Task extends Component {
                     >
                         {name}
                     </Text>
-                    {dueDate && <Text style={[styles.textMuted]}>{dueDate}</Text>}
+                    {formattedDueDate && <Text style={[styles.textMuted]}>{formattedDueDate}</Text>}
                 </TouchableOpacity>
                 <ColorIndicator color={goal && goal.colorTag} styler={{ marginLeft: 20 }}/>
             </Animated.View>
