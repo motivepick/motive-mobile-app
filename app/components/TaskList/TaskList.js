@@ -14,10 +14,9 @@ import moment from 'moment'
 
 export class TaskList extends Component {
 
-    async componentDidMount() {
+    componentDidMount() {
         const { updateUserTasks } = this.props
-        const accountId = await AsyncStorage.getItem('accountId')
-        updateUserTasks(accountId)
+        updateUserTasks()
     }
 
     onAddNewTask = async () => {
@@ -80,7 +79,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
     changeNewTaskName: newTaskName => dispatch => dispatch(changeNewTaskName(newTaskName)),
 
-    updateUserTasks: accountId => async dispatch => {
+    updateUserTasks: () => async dispatch => {
+        const accountId = await AsyncStorage.getItem('accountId')
         const response = await request.get(`${API_URL}/tasks`).set('X-Account-Id', accountId)
         dispatch(updateUserTasks(orderTasksByDate(response.body)))
     },
@@ -110,9 +110,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
     closeTask: id => async dispatch => {
         const accountId = await AsyncStorage.getItem('accountId')
-        const response = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
-        const task = response.body
-        return dispatch(closeTask(task.id))
+        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
+        dispatch(closeTask(body.id))
     },
 
     showError: error => dispatch => dispatch(showError(error))
