@@ -81,8 +81,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
     updateUserTasks: () => async dispatch => {
         const accountId = await AsyncStorage.getItem('accountId')
-        const response = await request.get(`${API_URL}/tasks`).set('X-Account-Id', accountId)
-        dispatch(updateUserTasks(orderTasksByDate(response.body)))
+        const { body } = await request.get(`${API_URL}/tasks`).set('X-Account-Id', accountId)
+        dispatch(updateUserTasks(orderTasksByDate(body)))
     },
 
     createTask: (task, input) => async (dispatch, getState) => {
