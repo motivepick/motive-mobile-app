@@ -23,10 +23,12 @@ export const styles = StyleSheet.create({
         flex: 1
     },
     input: {
-        height: 50, borderColor: '#fff', borderWidth: 1, fontSize: 12, fontWeight: 'bold', padding: 16, backgroundColor: '#fff', shadowColor: 'rgba(0,0,0,0.2)',
-        shadowOpacity: 1,
-        shadowOffset: { height: 2, width: 2 },
-        shadowRadius: 2
+        borderBottomColor: '#3d3d3d',
+        borderBottomWidth: 1,
+        height: 50,
+        fontSize: 12,
+        fontWeight: 'bold',
+        padding: 16,
     },
     contentContainer: {
         width: window.width,
