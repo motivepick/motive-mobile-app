@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Animated, Easing, Platform, Text, TouchableOpacity } from 'react-native'
 import moment from 'moment'
+import FontAwesome, { Icons } from 'react-native-fontawesome'
 import { handleDueDateOf } from '../../utils/parser'
 
 import CheckBox from '../CheckBox/CheckBox'
@@ -90,7 +91,7 @@ class Task extends Component {
                     >
                         {name}
                     </Text>
-                    {formattedDueDate && <Text style={[styles.textMuted]}>{formattedDueDate}</Text>}
+                    {formattedDueDate && <Text style={[styles.textMuted]}><FontAwesome>{Icons.calendarO}</FontAwesome> {formattedDueDate}</Text>}
                 </TouchableOpacity>
                 <ColorIndicator color={goal && goal.colorTag} styler={{ marginLeft: 20 }}/>
             </Animated.View>
