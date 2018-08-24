@@ -5,10 +5,10 @@ import styles from './Goal.styles'
 import { withNavigation } from 'react-navigation'
 import connect from 'react-redux/es/connect/connect'
 import Config from 'react-native-config'
-import { updateUserTasks } from '../../actions/taskActions'
+import { updateUserTasks } from '../../actions/tasksActions'
 import request from 'superagent'
 import moment from 'moment'
-import { setGoal } from '../../actions/goalActions'
+import { setGoal } from '../../actions/goalsActions'
 
 class Goal extends Component {
 

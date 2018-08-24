@@ -6,6 +6,10 @@ import { navigateWithReset } from './navigationWithReset'
 
 class LoginScreen extends Component {
 
+    static navigationOptions = {
+        header: null
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -29,9 +33,8 @@ class LoginScreen extends Component {
                                             version: 'v2.5'
                                         }, async (err, response) => {
                                             const id = response.id
-                                            const user = { id }
                                             await AsyncStorage.setItem('accountId', id)
-                                            navigateWithReset(this.props.navigation, 'Home', { user })
+                                            navigateWithReset(this.props.navigation, 'Home')
                                         })
                                         new GraphRequestManager().addRequest(request).start()
                                     }

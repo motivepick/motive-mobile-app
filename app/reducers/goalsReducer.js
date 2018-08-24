@@ -1,4 +1,4 @@
-import { CHANGE_NEW_GOAL_NAME, CREATE_NEW_GOAL, SET_GOAL, UPDATE_USER_GOALS } from '../actions/goalActions'
+import { CHANGE_NEW_GOAL_NAME, CREATE_NEW_GOAL, SET_GOAL, UPDATE_USER_GOALS } from '../actions/goalsActions'
 
 const INITIAL_STATE = { goal: {}, goals: [] }
 

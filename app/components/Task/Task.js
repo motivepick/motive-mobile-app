@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import { Animated, Easing, Platform, Text, TouchableOpacity } from 'react-native'
 import moment from 'moment'
 import FontAwesome, { Icons } from 'react-native-fontawesome'
-import { handleDueDateOf } from '../../utils/parser'
 
 import CheckBox from '../CheckBox/CheckBox'
 import ColorIndicator from '../ColorIndicator/ColorIndicator'
 
 import styles from './Task.styles'
 import { connect } from 'react-redux'
-import { updateTask } from '../../actions/taskActions'
+import { withNavigation } from 'react-navigation'
 
 class Task extends Component {
     state = {
@@ -99,47 +98,8 @@ class Task extends Component {
     }
 
     handleTaskClick = () => {
-        const { opened } = this.state
-        this.setState({ opened: !opened })
-    }
-
-    handleNameChange = ({ target }) => {
-        this.setState({ name: target.value })
-    }
-
-    handleDescriptionChange = ({ target }) => {
-        this.setState({ description: target.value })
-    }
-
-    saveName = () => {
-        const { value, updateTask } = this.props
-        const task = handleDueDateOf({ name: this.state.name.trim() })
-        this.setState({
-            name: task.name,
-            dueDate: task.dueDate || this.state.dueDate
-        })
-        updateTask(value.id, { ...task })
-    }
-
-    saveDescription = () => {
-        const { value, updateTask } = this.props
-        this.setState({ description: this.state.description.trim() })
-        updateTask(value.id, { description: this.state.description })
-    }
-
-    static classOf(dueDate) {
-        if (dueDate) {
-            const now = new Date()
-            if (dueDate.isBefore(now, 'day')) {
-                return 'text-danger'
-            } else if (dueDate.isSame(now, 'day')) {
-                return 'text-primary'
-            } else {
-                return ''
-            }
-        } else {
-            return ''
-        }
+        const { data, navigation } = this.props
+        navigation.navigate('Task', { task: data })
     }
 
     static format(dueDate) {
@@ -150,7 +110,6 @@ class Task extends Component {
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
-    updateTask
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Task)
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(Task))

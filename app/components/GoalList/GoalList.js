@@ -5,7 +5,7 @@ import SortableList from 'react-native-sortable-list'
 import Goal from '../Goal/Goal'
 import styles from './GoalList.styles'
 import connect from 'react-redux/es/connect/connect'
-import { updateUserGoals } from '../../actions/goalActions'
+import { updateUserGoals } from '../../actions/goalsActions'
 import request from 'superagent'
 import Config from 'react-native-config'
 

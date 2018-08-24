@@ -3,7 +3,7 @@ import { AsyncStorage, TextInput, View } from 'react-native'
 import { handleDueDateOf } from '../utils/parser'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
-import { changeNewGoalName, createNewGoal } from '../actions/goalActions'
+import { changeNewGoalName, createNewGoal } from '../actions/goalsActions'
 
 class NewGoalScreen extends Component {
 

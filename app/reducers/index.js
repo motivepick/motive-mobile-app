@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
 import UserReducer from './userReducer'
+import TasksReducer from './tasksReducer'
+import GoalsReducer from './goalsReducer'
 import TaskReducer from './taskReducer'
-import GoalReducer from './goalReducer'
 import * as moment from 'moment'
 
 moment.updateLocale('en', {
@@ -17,8 +18,9 @@ moment.updateLocale('en', {
 
 const rootReducer = combineReducers({
     user: UserReducer,
-    tasks: TaskReducer,
-    goals: GoalReducer
+    tasks: TasksReducer,
+    task: TaskReducer,
+    goals: GoalsReducer
 })
 
 export default rootReducer

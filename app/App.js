@@ -8,12 +8,14 @@ import NewGoalScreen from './screens/NewGoalScreen'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import { applyMiddleware, createStore } from 'redux'
+import TaskScreen from './screens/TaskScreen'
 
 const RootStack = StackNavigator({
     Splash: SplashScreen,
     Login: LoginScreen,
     Home: HomeScreen,
-    NewGoal: NewGoalScreen
+    NewGoal: NewGoalScreen,
+    Task: TaskScreen
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
