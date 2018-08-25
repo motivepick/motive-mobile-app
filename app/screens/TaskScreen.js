@@ -29,11 +29,11 @@ class TaskScreen extends Component {
                 <Content>
                     <Form>
                         <Item floatingLabel>
-                            <Label>Task</Label>
+                            <Label>{t('labels.task')}</Label>
                             <Input onChangeText={changeTaskName} value={task.name} onSubmitEditing={this.saveTaskName}/>
                         </Item>
                         <Item floatingLabel>
-                            <Label>Description</Label>
+                            <Label>{t('labels.description')}</Label>
                             <Input onChangeText={changeTaskDescription} value={task.description} onSubmitEditing={this.saveTaskDescription} style={{ height: 200 }} multiline={true} numberOfLines={5}/>
                         </Item>
                         <Item>

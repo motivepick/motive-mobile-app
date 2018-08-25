@@ -17,7 +17,9 @@ i18n.use(languageDetector).init({
                     all: 'All',
                     today: 'Today',
                     thisWeek: 'This Week',
-                    newGoal: 'New Goal'
+                    newGoal: 'New Goal',
+                    task: 'Task',
+                    description: 'Description'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -33,7 +35,9 @@ i18n.use(languageDetector).init({
                     all: 'Все',
                     today: 'Сегодня',
                     thisWeek: 'На неделе',
-                    newGoal: 'Новая цель'
+                    newGoal: 'Новая цель',
+                    task: 'Задача',
+                    description: 'Описание'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -49,7 +53,9 @@ i18n.use(languageDetector).init({
                     all: 'All',
                     today: 'Today',
                     thisWeek: 'This Week',
-                    newGoal: 'New Goal'
+                    newGoal: 'New Goal',
+                    task: 'Task',
+                    description: 'Description'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
