@@ -7,10 +7,15 @@ import { changeNewGoalName, createNewGoal } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 
 import { Container, Content, Form, Input, Item, Label } from 'native-base'
+// import { Header, Left, Body, Right, Button, Title, Text } from 'native-base'
 import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
 import ColorPicker from '../components/ColorPicker/ColorPicker'
 
 class NewGoalScreen extends Component {
+
+    static navigationOptions = {
+        title: 'Create goal'
+    }
 
     onAddNewGoal = async () => {
         const input = this.goalNameInput
@@ -30,6 +35,21 @@ class NewGoalScreen extends Component {
         return (
             <Container>
                 <Content>
+                    {/*<Header>*/}
+                        {/*<Left>*/}
+                            {/*<Button hasText transparent>*/}
+                                {/*<Text>Back</Text>*/}
+                            {/*</Button>*/}
+                        {/*</Left>*/}
+                        {/*<Body>*/}
+                            {/*<Title>Create goal</Title>*/}
+                        {/*</Body>*/}
+                        {/*<Right>*/}
+                            {/*<Button hasText transparent>*/}
+                                {/*<Text>Create</Text>*/}
+                            {/*</Button>*/}
+                        {/*</Right>*/}
+                    {/*</Header>*/}
                     <Form>
                         <Item floatingLabel>
                             <Label>Goal</Label>
