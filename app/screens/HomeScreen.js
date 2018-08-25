@@ -4,6 +4,7 @@ import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
 import GoalList from '../components/GoalList/GoalList'
+import { Container, Content } from 'native-base'
 
 export class HomeScreen extends Component {
 
@@ -19,10 +20,14 @@ export class HomeScreen extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
-                <GoalList/>
-                <TaskList/>
-            </View>
+            <Container>
+                <Content>
+                    <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
+                        <GoalList/>
+                        <TaskList/>
+                    </View>
+                </Content>
+            </Container>
         )
     }
 }
