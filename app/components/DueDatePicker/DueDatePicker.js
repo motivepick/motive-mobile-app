@@ -32,7 +32,7 @@ export class DueDatePicker extends Component {
                 style={{ width: window.width }}
                 date={this.state.date}
                 mode='date'
-                placeholder=' '
+                placeholder={t('placeholders.whenIsItDue')}
                 format={dateFormat}
                 minDate={today}
                 confirmBtnText={t('labels.set')}
