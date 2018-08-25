@@ -1,5 +1,6 @@
 import i18n from 'i18next'
 import { locale } from './utils/locale'
+import React from 'react'
 
 const languageDetector = {
     type: 'languageDetector',
@@ -20,7 +21,9 @@ i18n.use(languageDetector).init({
                     newGoal: 'New Goal',
                     goal: 'Goal',
                     task: 'Task',
-                    description: 'Description'
+                    description: 'Description',
+                    set: 'Set',
+                    cancel: 'Cancel'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -39,7 +42,9 @@ i18n.use(languageDetector).init({
                     newGoal: 'Новая цель',
                     goal: 'Цель',
                     task: 'Задача',
-                    description: 'Описание'
+                    description: 'Описание',
+                    set: 'Сохранить',
+                    cancel: 'Отменить'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -58,7 +63,9 @@ i18n.use(languageDetector).init({
                     newGoal: 'New Goal',
                     goal: 'Goal',
                     task: 'Task',
-                    description: 'Description'
+                    description: 'Description',
+                    set: 'Set',
+                    cancel: 'Cancel'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
