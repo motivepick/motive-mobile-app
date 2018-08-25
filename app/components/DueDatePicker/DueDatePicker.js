@@ -31,7 +31,7 @@ export class DueDatePicker extends Component {
                 maxDate="2019-06-01"
                 confirmBtnText="Set"
                 cancelBtnText="Cancel"
-                iconComponent={<Icon active name='ios-calendar'/>}
+                iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
                 onDateChange={(date) => {
                     this.setState({ date: date })
                 }}
