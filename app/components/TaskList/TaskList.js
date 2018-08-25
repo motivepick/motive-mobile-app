@@ -45,7 +45,7 @@ export class TaskList extends Component {
             <View style={styles.container}>
                 {listName && <Text style={styles.title}>{listName}</Text>}
                 <Text style={styles.title}>{`${tasksClosed} / ${tasksTotal}`}</Text>
-                <Text style={styles.title}>{t('labels.statistics', { percent: tasksClosedPercent })}</Text>
+                <Text style={styles.title}>{t('labels.statistics', { percent: tasksClosedPercent.toFixed(0) })}</Text>
 
                 <View style={{ paddingHorizontal: 10 }}>
                     <TextInput
