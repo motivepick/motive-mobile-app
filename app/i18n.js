@@ -18,6 +18,7 @@ i18n.use(languageDetector).init({
                     today: 'Today',
                     thisWeek: 'This Week',
                     newGoal: 'New Goal',
+                    goal: 'Goal',
                     task: 'Task',
                     description: 'Description'
                 },
@@ -36,6 +37,7 @@ i18n.use(languageDetector).init({
                     today: 'Сегодня',
                     thisWeek: 'На неделе',
                     newGoal: 'Новая цель',
+                    goal: 'Цель',
                     task: 'Задача',
                     description: 'Описание'
                 },
@@ -54,6 +56,7 @@ i18n.use(languageDetector).init({
                     today: 'Today',
                     thisWeek: 'This Week',
                     newGoal: 'New Goal',
+                    goal: 'Goal',
                     task: 'Task',
                     description: 'Description'
                 },

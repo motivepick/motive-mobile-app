@@ -52,11 +52,11 @@ class NewGoalScreen extends Component {
                     {/*</Header>*/}
                     <Form>
                         <Item floatingLabel>
-                            <Label>Goal</Label>
+                            <Label>{t('labels.goal')}</Label>
                             <Input onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal} ref={input => this.goalNameInput = input}/>
                         </Item>
                         <Item floatingLabel>
-                            <Label>Description</Label>
+                            <Label>{t('labels.description')}</Label>
                             <Input style={{ height: 200 }} multiline={true} numberOfLines={5}/>
                         </Item>
                         <Item>
