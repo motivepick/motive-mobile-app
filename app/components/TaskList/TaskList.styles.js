@@ -27,8 +27,7 @@ export const styles = StyleSheet.create({
         borderBottomWidth: 1,
         height: 50,
         fontSize: 14,
-        fontWeight: 'bold',
-        padding: 16,
+        padding: 16
     },
     contentContainer: {
         width: window.width,

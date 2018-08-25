@@ -11,14 +11,11 @@ export const styles = StyleSheet.create({
         borderRadius: 4
     },
     text: {
-        fontSize: 14,
-        fontWeight: 'bold'
+        fontSize: 14
     },
     textMuted: {
-        // color: '#778899',
         color: '#bbb',
-        fontSize: 11,
-        fontWeight: 'bold',
+        fontSize: 11
     },
     strikeText: {
         color: '#bbb',
