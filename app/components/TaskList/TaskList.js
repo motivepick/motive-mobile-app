@@ -45,7 +45,7 @@ export class TaskList extends Component {
             <View style={styles.container}>
                 {listName && <Text style={styles.title}>{listName}</Text>}
                 <Text style={styles.title}>{`${tasksClosed} / ${tasksTotal}`}</Text>
-                <Text style={styles.title}>You can do it! {`${Math.round(tasksClosedPercent)}% done`}</Text>
+                <Text style={styles.title}>{t('labels.statistics', { percent: tasksClosedPercent })}</Text>
 
                 <View style={{ paddingHorizontal: 10 }}>
                     <TextInput
@@ -55,7 +55,7 @@ export class TaskList extends Component {
                         onSubmitEditing={this.onAddNewTask}
                         ref={input => this.taskNameInput = input}
                         editable={!creatingTask}
-                        placeholder={tasks.length > 0 ? t('placeholders.newTaskName') : t('placeholders.newFirstTaskName')}/>
+                        placeholder={tasks.length > 0 ? t('placeholders.taskName') : t('placeholders.firstTaskName')}/>
                 </View>
                 {tasks.length > 0 && this.list(tasks, sortingEnabled)}
             </View>

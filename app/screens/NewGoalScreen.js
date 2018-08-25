@@ -4,15 +4,16 @@ import { handleDueDateOf } from '../utils/parser'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { changeNewGoalName, createNewGoal } from '../actions/goalsActions'
+import { translate } from 'react-i18next'
 
 class NewGoalScreen extends Component {
 
     render() {
-        const { newGoalName, changeNewGoalName } = this.props
+        const { newGoalName, changeNewGoalName, t } = this.props
         return (
             <View>
                 <TextInput onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal}
-                    ref={input => this.goalNameInput = input} placeholder={'What is your goal?'}/>
+                    ref={input => this.goalNameInput = input} placeholder={t('placeholders.goalName')}/>
             </View>
         )
     }
@@ -40,4 +41,4 @@ const mapDispatchToProps = {
     createNewGoal
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewGoalScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(NewGoalScreen))

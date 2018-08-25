@@ -12,25 +12,52 @@ i18n.use(languageDetector).init({
     resources: {
         en: {
             translations: {
+                labels: {
+                    statistics: 'You can do it! {{percent}}% done',
+                    all: 'All',
+                    today: 'Today',
+                    thisWeek: 'This Week',
+                    newGoal: 'New Goal'
+                },
                 placeholders: {
-                    newTaskName: 'What needs to be done?',
-                    newFirstTaskName: 'How about a fresh hot task?'
+                    taskName: 'What needs to be done?',
+                    firstTaskName: 'How about a fresh hot task?',
+                    taskDescription: 'What are the important details?',
+                    goalName: 'What is your goal?'
                 }
             }
         },
         ru: {
             translations: {
+                labels: {
+                    statistics: 'Соберись! {{percent}}% готово',
+                    all: 'Все',
+                    today: 'Сегодня',
+                    thisWeek: 'На неделе',
+                    newGoal: 'Новая цель'
+                },
                 placeholders: {
-                    newTaskName: 'О чём нужно не забыть?',
-                    newFirstTaskName: 'Как насчёт первой мега-задачи?'
+                    taskName: 'О чём нужно не забыть?',
+                    firstTaskName: 'Как насчёт первой мега-задачи?',
+                    taskDescription: 'What are the important details?',
+                    goalName: 'На что вы нацелились?'
                 }
             }
         },
         zh: {
             translations: {
+                labels: {
+                    statistics: 'You can do it! {{percent}}% done',
+                    all: 'All',
+                    today: 'Today',
+                    thisWeek: 'This Week',
+                    newGoal: 'New Goal'
+                },
                 placeholders: {
-                    newTaskName: 'What needs to be done?',
-                    newFirstTaskName: 'How about a fresh hot task?'
+                    taskName: 'What needs to be done?',
+                    firstTaskName: 'How about a fresh hot task?',
+                    taskDescription: 'What are the important details?',
+                    goalName: 'What is your goal?'
                 }
             }
         }
