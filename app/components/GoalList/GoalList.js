@@ -8,13 +8,14 @@ import connect from 'react-redux/es/connect/connect'
 import { updateUserGoals } from '../../actions/goalsActions'
 import request from 'superagent'
 import Config from 'react-native-config'
+import { translate } from 'react-i18next'
 
 export class GoalList extends Component {
 
     async componentDidMount() {
-        const { updateUserGoals } = this.props
+        const { updateUserGoals, t } = this.props
         const accountId = await AsyncStorage.getItem('accountId')
-        updateUserGoals(accountId)
+        updateUserGoals(accountId, t)
     }
 
     render() {
@@ -40,11 +41,15 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 
-    updateUserGoals: async (accountId) => {
+    updateUserGoals: async (accountId, t) => {
         const response = await request.get(`${Config.API_URL}/goals`).set('X-Account-Id', accountId)
-        const defaultGoals = [{ type: 'all', name: 'All' }, { type: 'today', name: 'Today' }, { type: 'thisWeek', name: 'This Week' }]
-        dispatch(updateUserGoals(defaultGoals.concat(response.body).concat({ type: 'newGoal', name: 'New Goal' })))
+        const defaultGoals = [
+            { type: 'all', name: t('labels.all') },
+            { type: 'today', name: t('labels.today') },
+            { type: 'thisWeek', name: t('labels.thisWeek') }
+        ]
+        dispatch(updateUserGoals(defaultGoals.concat(response.body).concat({ type: 'newGoal', name: t('labels.newGoal') })))
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(GoalList)
+export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(GoalList))

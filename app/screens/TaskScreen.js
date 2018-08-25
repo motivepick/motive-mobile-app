@@ -7,6 +7,7 @@ import { changeTaskDescriptionAction, changeTaskNameAction, saveTaskAction, setT
 import request from 'superagent'
 import { API_URL } from '../const'
 import { updateTaskAction } from '../actions/tasksActions'
+import { translate } from 'react-i18next'
 
 class TaskScreen extends Component {
 
@@ -17,7 +18,7 @@ class TaskScreen extends Component {
     }
 
     render() {
-        const { task, changeTaskName, changeTaskDescription } = this.props
+        const { task, changeTaskName, changeTaskDescription, t } = this.props
         return (
             <View>
                 <TextInput
@@ -25,13 +26,13 @@ class TaskScreen extends Component {
                     onChangeText={changeTaskName}
                     value={task.name}
                     onSubmitEditing={this.saveTaskName}
-                    placeholder={'What needs to be done?'}/>
+                    placeholder={t('placeholders.taskName')}/>
                 <TextInput
                     style={styles.input /* TODO: use correct styles */}
                     onChangeText={changeTaskDescription}
                     value={task.description}
                     onSubmitEditing={this.saveTaskDescription}
-                    placeholder={'What are the important details?'}/>
+                    placeholder={t('placeholders.taskDescription')}/>
             </View>
         )
     }
@@ -76,4 +77,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     }
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(TaskScreen))

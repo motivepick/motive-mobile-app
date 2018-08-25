@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import { API_URL } from '../../const'
 import moment from 'moment'
+import { translate } from 'react-i18next'
 
 export class TaskList extends Component {
 
@@ -34,7 +35,7 @@ export class TaskList extends Component {
     }
 
     render() {
-        const { isSortable, tasks, newTaskName, changeNewTaskName, creatingTask, listName } = this.props
+        const { isSortable, tasks, newTaskName, changeNewTaskName, creatingTask, listName, t } = this.props
         const sortingEnabled = isSortable === undefined ? true : isSortable
         const tasksTotal = tasks.length
         const tasksClosed = tasks.filter(t => t.closed).length
@@ -44,7 +45,7 @@ export class TaskList extends Component {
             <View style={styles.container}>
                 {listName && <Text style={styles.title}>{listName}</Text>}
                 <Text style={styles.title}>{`${tasksClosed} / ${tasksTotal}`}</Text>
-                <Text style={styles.title}>You can do it! {`${Math.round(tasksClosedPercent)}% done`}</Text>
+                <Text style={styles.title}>{t('labels.statistics', { percent: tasksClosedPercent.toFixed(0) })}</Text>
 
                 <View style={{ paddingHorizontal: 10 }}>
                     <TextInput
@@ -54,9 +55,9 @@ export class TaskList extends Component {
                         onSubmitEditing={this.onAddNewTask}
                         ref={input => this.taskNameInput = input}
                         editable={!creatingTask}
-                        placeholder={tasks.length ? 'What needs to be done?' : 'How about a fresh hot task?'}/>
+                        placeholder={tasks.length > 0 ? t('placeholders.taskName') : t('placeholders.firstTaskName')}/>
                 </View>
-                {tasks.length && this.list(tasks, sortingEnabled)}
+                {tasks.length > 0 && this.list(tasks, sortingEnabled)}
             </View>
         )
     }
@@ -117,4 +118,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     showError: error => dispatch => dispatch(showError(error))
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskList)
+export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(TaskList))

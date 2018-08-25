@@ -4,6 +4,7 @@ import { handleDueDateOf } from '../utils/parser'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { changeNewGoalName, createNewGoal } from '../actions/goalsActions'
+import { translate } from 'react-i18next'
 
 import { Container, Content, Form, Input, Item, Label } from 'native-base'
 import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
@@ -24,25 +25,15 @@ class NewGoalScreen extends Component {
         }
     }
 
-    render2() {
-        const { newGoalName, changeNewGoalName } = this.props
-        return (
-            <View>
-                <TextInput onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal}
-                    ref={input => this.goalNameInput = input} placeholder={'What is your goal?'}/>
-            </View>
-        )
-    }
-
     render() {
-        const { newGoalName, changeNewGoalName } = this.props
+        const { newGoalName, changeNewGoalName, t } = this.props
         return (
             <Container>
                 <Content>
                     <Form>
                         <Item floatingLabel>
                             <Label>Goal</Label>
-                            <Input onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal} ref={input => this.goalNameInput = input}/>
+                            <Input onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal} ref={input => this.goalNameInput = input} placeholder={t('placeholders.goalName')}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>Description</Label>
@@ -68,4 +59,4 @@ const mapDispatchToProps = {
     createNewGoal
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewGoalScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(NewGoalScreen))
