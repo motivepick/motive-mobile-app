@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
         borderBottomColor: '#3d3d3d',
         borderBottomWidth: 1,
         height: 50,
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: 'bold',
         padding: 16,
     },
