@@ -54,9 +54,9 @@ export class TaskList extends Component {
                         onSubmitEditing={this.onAddNewTask}
                         ref={input => this.taskNameInput = input}
                         editable={!creatingTask}
-                        placeholder={tasks.length ? 'What needs to be done?' : 'How about a fresh hot task?'}/>
+                        placeholder={tasks.length > 0 ? 'What needs to be done?' : 'How about a fresh hot task?'}/>
                 </View>
-                {tasks.length && this.list(tasks, sortingEnabled)}
+                {tasks.length > 0 && this.list(tasks, sortingEnabled)}
             </View>
         )
     }

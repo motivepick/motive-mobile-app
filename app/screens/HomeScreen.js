@@ -19,7 +19,7 @@ export class HomeScreen extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff', color: '#3d3d3d' }}>
+            <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
                 <GoalList/>
                 <TaskList/>
             </View>
