@@ -3,6 +3,8 @@ import { Dimensions } from 'react-native'
 import DatePicker from 'react-native-datepicker'
 import { Icon } from 'native-base'
 
+import moment from 'moment'
+
 const window = Dimensions.get('window')
 
 export class DueDatePicker extends Component {
@@ -16,6 +18,9 @@ export class DueDatePicker extends Component {
     }
 
     render() {
+        const dateFormat = 'YYYY-MM-DD'
+        const today = moment().format(dateFormat)
+
         return (
             <DatePicker
                 customStyles={{
@@ -24,13 +29,12 @@ export class DueDatePicker extends Component {
                 }}
                 style={{ width: window.width }}
                 date={this.state.date}
-                mode="date"
-                placeholder=" "
-                format="YYYY-MM-DD"
-                minDate="2016-05-01"
-                maxDate="2019-06-01"
-                confirmBtnText="Set"
-                cancelBtnText="Cancel"
+                mode='date'
+                placeholder=' '
+                format={dateFormat}
+                minDate={today}
+                confirmBtnText='Set'
+                cancelBtnText='Cancel'
                 iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
                 onDateChange={(date) => {
                     this.setState({ date: date })
