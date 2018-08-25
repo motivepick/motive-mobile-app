@@ -22,8 +22,7 @@ i18n.use(languageDetector).init({
                 placeholders: {
                     taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
-                    taskDescription: 'What are the important details?',
-                    goalName: 'What is your goal?'
+                    taskDescription: 'What are the important details?'
                 }
             }
         },
@@ -39,8 +38,7 @@ i18n.use(languageDetector).init({
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
                     firstTaskName: 'Как насчёт первой мега-задачи?',
-                    taskDescription: 'What are the important details?',
-                    goalName: 'На что вы нацелились?'
+                    taskDescription: 'What are the important details?'
                 }
             }
         },
@@ -56,8 +54,7 @@ i18n.use(languageDetector).init({
                 placeholders: {
                     taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
-                    taskDescription: 'What are the important details?',
-                    goalName: 'What is your goal?'
+                    taskDescription: 'What are the important details?'
                 }
             }
         }

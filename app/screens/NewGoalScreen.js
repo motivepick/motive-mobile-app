@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, TextInput, View } from 'react-native'
+import { AsyncStorage } from 'react-native'
 import { handleDueDateOf } from '../utils/parser'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
@@ -33,7 +33,7 @@ class NewGoalScreen extends Component {
                     <Form>
                         <Item floatingLabel>
                             <Label>Goal</Label>
-                            <Input onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal} ref={input => this.goalNameInput = input} placeholder={t('placeholders.goalName')}/>
+                            <Input onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal} ref={input => this.goalNameInput = input}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>Description</Label>
