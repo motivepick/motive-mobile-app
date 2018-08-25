@@ -11,6 +11,8 @@ target 'MotiveMobileApp' do
   pod 'FBSDKShareKit', '~> 4.35.0'
   pod 'Bolts', '~> 1.9.0'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'MotiveMobileAppTests' do
     inherit! :search_paths
     # Pods for testing
