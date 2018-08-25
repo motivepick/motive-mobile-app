@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import { API_URL } from '../../const'
 import moment from 'moment'
+import { translate } from 'react-i18next'
 
 export class TaskList extends Component {
 
@@ -34,7 +35,7 @@ export class TaskList extends Component {
     }
 
     render() {
-        const { isSortable, tasks, newTaskName, changeNewTaskName, creatingTask, listName } = this.props
+        const { isSortable, tasks, newTaskName, changeNewTaskName, creatingTask, listName, t } = this.props
         const sortingEnabled = isSortable === undefined ? true : isSortable
         const tasksTotal = tasks.length
         const tasksClosed = tasks.filter(t => t.closed).length
@@ -54,7 +55,7 @@ export class TaskList extends Component {
                         onSubmitEditing={this.onAddNewTask}
                         ref={input => this.taskNameInput = input}
                         editable={!creatingTask}
-                        placeholder={tasks.length > 0 ? 'What needs to be done?' : 'How about a fresh hot task?'}/>
+                        placeholder={tasks.length > 0 ? t('placeholders.newTaskName') : t('placeholders.newFirstTaskName')}/>
                 </View>
                 {tasks.length > 0 && this.list(tasks, sortingEnabled)}
             </View>
@@ -117,4 +118,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     showError: error => dispatch => dispatch(showError(error))
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskList)
+export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(TaskList))
