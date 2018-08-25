@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, TextInput, View } from 'react-native'
-import styles from '../components/TaskList/TaskList.styles'
+import { AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { changeTaskDescriptionAction, changeTaskNameAction, saveTaskAction, setTaskAction } from '../actions/taskActions'
@@ -8,8 +7,14 @@ import request from 'superagent'
 import { API_URL } from '../const'
 import { updateTaskAction } from '../actions/tasksActions'
 import { translate } from 'react-i18next'
+import { Container, Content, Form, Input, Item, Label } from 'native-base'
+import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
 
 class TaskScreen extends Component {
+
+    static navigationOptions = {
+        title: 'Edit task' // Can use this screen for 'Create task', too.
+    }
 
     componentDidMount() {
         const { navigation, setTask } = this.props
@@ -20,20 +25,23 @@ class TaskScreen extends Component {
     render() {
         const { task, changeTaskName, changeTaskDescription, t } = this.props
         return (
-            <View>
-                <TextInput
-                    style={styles.input /* TODO: use correct styles */}
-                    onChangeText={changeTaskName}
-                    value={task.name}
-                    onSubmitEditing={this.saveTaskName}
-                    placeholder={t('placeholders.taskName')}/>
-                <TextInput
-                    style={styles.input /* TODO: use correct styles */}
-                    onChangeText={changeTaskDescription}
-                    value={task.description}
-                    onSubmitEditing={this.saveTaskDescription}
-                    placeholder={t('placeholders.taskDescription')}/>
-            </View>
+            <Container>
+                <Content>
+                    <Form>
+                        <Item floatingLabel>
+                            <Label>Task</Label>
+                            <Input onChangeText={changeTaskName} value={task.name} onSubmitEditing={this.saveTaskName}/>
+                        </Item>
+                        <Item floatingLabel>
+                            <Label>Description</Label>
+                            <Input onChangeText={changeTaskDescription} value={task.description} onSubmitEditing={this.saveTaskDescription} style={{ height: 200 }} multiline={true} numberOfLines={5}/>
+                        </Item>
+                        <Item>
+                            <DueDatePicker/>
+                        </Item>
+                    </Form>
+                </Content>
+            </Container>
         )
     }
 

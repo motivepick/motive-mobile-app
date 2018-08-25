@@ -20,9 +20,7 @@ i18n.use(languageDetector).init({
                     newGoal: 'New Goal'
                 },
                 placeholders: {
-                    taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
-                    taskDescription: 'What are the important details?',
                     goalName: 'What is your goal?'
                 }
             }
@@ -37,9 +35,7 @@ i18n.use(languageDetector).init({
                     newGoal: 'Новая цель'
                 },
                 placeholders: {
-                    taskName: 'О чём нужно не забыть?',
                     firstTaskName: 'Как насчёт первой мега-задачи?',
-                    taskDescription: 'What are the important details?',
                     goalName: 'На что вы нацелились?'
                 }
             }
@@ -54,9 +50,7 @@ i18n.use(languageDetector).init({
                     newGoal: 'New Goal'
                 },
                 placeholders: {
-                    taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
-                    taskDescription: 'What are the important details?',
                     goalName: 'What is your goal?'
                 }
             }
