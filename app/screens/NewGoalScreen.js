@@ -8,6 +8,7 @@ import { translate } from 'react-i18next'
 
 import { Container, Content, Form, Input, Item, Label } from 'native-base'
 import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
+import ColorPicker from '../components/ColorPicker/ColorPicker'
 
 class NewGoalScreen extends Component {
 
@@ -41,6 +42,7 @@ class NewGoalScreen extends Component {
                         <Item>
                             <DueDatePicker/>
                         </Item>
+                        <ColorPicker/>
                     </Form>
                 </Content>
             </Container>
