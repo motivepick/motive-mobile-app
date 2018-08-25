@@ -1,22 +1,15 @@
 import React, { Component } from 'react'
-import { AsyncStorage, TextInput, View } from 'react-native'
+import { AsyncStorage } from 'react-native'
 import { handleDueDateOf } from '../utils/parser'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { changeNewGoalName, createNewGoal } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 
-class NewGoalScreen extends Component {
+import { Container, Content, Form, Input, Item, Label } from 'native-base'
+import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
 
-    render() {
-        const { newGoalName, changeNewGoalName, t } = this.props
-        return (
-            <View>
-                <TextInput onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal}
-                    ref={input => this.goalNameInput = input} placeholder={t('placeholders.goalName')}/>
-            </View>
-        )
-    }
+class NewGoalScreen extends Component {
 
     onAddNewGoal = async () => {
         const input = this.goalNameInput
@@ -29,6 +22,29 @@ class NewGoalScreen extends Component {
             input.disabled = false
             this.props.navigation.dispatch(NavigationActions.back())
         }
+    }
+
+    render() {
+        const { newGoalName, changeNewGoalName, t } = this.props
+        return (
+            <Container>
+                <Content>
+                    <Form>
+                        <Item floatingLabel>
+                            <Label>Goal</Label>
+                            <Input onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal} ref={input => this.goalNameInput = input}/>
+                        </Item>
+                        <Item floatingLabel>
+                            <Label>Description</Label>
+                            <Input style={{ height: 200 }} multiline={true} numberOfLines={5}/>
+                        </Item>
+                        <Item>
+                            <DueDatePicker/>
+                        </Item>
+                    </Form>
+                </Content>
+            </Container>
+        )
     }
 }
 
