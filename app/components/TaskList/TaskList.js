@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Text, TextInput, View } from 'react-native'
+import { AsyncStorage, Text, View } from 'react-native'
 import SortableList from 'react-native-sortable-list'
 import Task from '../Task/Task'
 import styles from './TaskList.styles'
@@ -12,6 +12,7 @@ import request from 'superagent'
 import { API_URL } from '../../const'
 import moment from 'moment'
 import { translate } from 'react-i18next'
+import { Form, Input, Item } from 'native-base'
 
 export class TaskList extends Component {
 
@@ -46,17 +47,17 @@ export class TaskList extends Component {
                 {listName && <Text style={styles.title}>{listName}</Text>}
                 <Text style={styles.title}>{`${tasksClosed} / ${tasksTotal}`}</Text>
                 <Text style={styles.title}>{t('labels.statistics', { percent: tasksClosedPercent.toFixed(0) })}</Text>
-
-                <View style={{ paddingHorizontal: 10 }}>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={changeNewTaskName}
-                        value={newTaskName}
-                        onSubmitEditing={this.onAddNewTask}
-                        ref={input => this.taskNameInput = input}
-                        editable={!creatingTask}
-                        placeholder={tasks.length > 0 ? t('placeholders.taskName') : t('placeholders.firstTaskName')}/>
-                </View>
+                <Form>
+                    <Item last>
+                        <Input
+                            onChangeText={changeNewTaskName}
+                            value={newTaskName}
+                            onSubmitEditing={this.onAddNewTask}
+                            ref={input => this.taskNameInput = input}
+                            editable={!creatingTask}
+                            placeholder={tasks.length > 0 ? t('placeholders.taskName') : t('placeholders.firstTaskName')}/>
+                    </Item>
+                </Form>
                 {tasks.length > 0 && this.list(tasks, sortingEnabled)}
             </View>
         )
