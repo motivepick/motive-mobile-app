@@ -11,16 +11,9 @@ const palette = {
 }
 
 class ColorPicker extends Component {
-    onColorSelect = color => {
-        const selectedColor = this.state.selectedColor === color ? '' : color
-        this.setState({ selectedColor })
-    }
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            selectedColor: ''
-        }
+    state = {
+        selectedColor: ''
     }
 
     render() {
@@ -29,11 +22,17 @@ class ColorPicker extends Component {
                 <Icon name='ios-color-fill'/>
                 {Object.keys(palette).map(color =>
                     <Button key={color} value={color} transparent onPress={() => this.onColorSelect(color)}>
-                        <Icon type='MaterialCommunityIcons' name={this.state.selectedColor === color ? 'check-circle' : 'circle'} style={{ color: palette[color] }}/>
+                        <Icon type='MaterialCommunityIcons' name={this.state.selectedColor === color ? 'check-circle' : 'circle'}
+                            style={{ color: palette[color] }}/>
                     </Button>
                 )}
             </Item>
         )
+    }
+
+    onColorSelect = color => {
+        const selectedColor = this.state.selectedColor === color ? '' : color
+        this.setState({ selectedColor })
     }
 }
 

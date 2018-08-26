@@ -1,16 +1,10 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { View } from 'react-native'
 import styles from './ColorIndicator.styles'
 
-export class ColorIndicator extends Component {
-
-    render() {
-        const { color, styler } = this.props
-
-        return (
-            <View style={[styles.colorTagCircle, color ? { backgroundColor: color } : {}, styler]}/>
-        )
-    }
+export const ColorIndicator = (props) => {
+    const { color, styler } = props
+    return <View style={[styles.colorTagCircle, color ? { backgroundColor: color } : {}, styler]}/>
 }
 
 export default ColorIndicator

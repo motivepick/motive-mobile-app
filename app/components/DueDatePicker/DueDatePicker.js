@@ -10,13 +10,7 @@ const window = Dimensions.get('window')
 
 export class DueDatePicker extends Component {
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            date: ''
-        }
-    }
+    state = { date: '' }
 
     render() {
         const dateFormat = 'YYYY-MM-DD'
@@ -38,9 +32,7 @@ export class DueDatePicker extends Component {
                 confirmBtnText={t('labels.set')}
                 cancelBtnText={t('labels.cancel')}
                 iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
-                onDateChange={(date) => {
-                    this.setState({ date: date })
-                }}
+                onDateChange={date => this.setState({ date })}
             />
         )
     }

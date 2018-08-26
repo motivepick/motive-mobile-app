@@ -3,12 +3,15 @@ import { AsyncStorage } from 'react-native'
 import { handleDueDateOf } from '../utils/parser'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
-import { changeNewGoalName, createNewGoal } from '../actions/goalsActions'
+import { changeNewGoalNameAction, createNewGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 
 import { Body, Button, Container, Content, Form, Header, Input, Item, Label, Left, Right, Text, Title } from 'native-base'
 import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
 import ColorPicker from '../components/ColorPicker/ColorPicker'
+import { bindActionCreators } from 'redux'
+import request from 'superagent'
+import Config from 'react-native-config'
 
 class NewGoalScreen extends Component {
 
@@ -17,14 +20,11 @@ class NewGoalScreen extends Component {
     }
 
     onAddNewGoal = async () => {
-        const input = this.goalNameInput
         const { newGoalName, createNewGoal } = this.props
         if (newGoalName.trim() !== '') {
             const id = await AsyncStorage.getItem('accountId')
             const goal = handleDueDateOf({ accountId: id, name: newGoalName })
-            input.disabled = true
             createNewGoal(goal)
-            input.disabled = false
             this.props.navigation.dispatch(NavigationActions.back())
         }
     }
@@ -52,7 +52,7 @@ class NewGoalScreen extends Component {
                     <Form>
                         <Item floatingLabel>
                             <Label>{t('labels.goal')}</Label>
-                            <Input onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal} ref={input => this.goalNameInput = input}/>
+                            <Input onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>{t('labels.description')}</Label>
@@ -73,9 +73,17 @@ const mapStateToProps = state => ({
     newGoalName: state.goals.newGoalName
 })
 
-const mapDispatchToProps = {
-    changeNewGoalName,
-    createNewGoal
-}
+const mapDispatchToProps = dispatch => bindActionCreators({
+
+    changeNewGoalName: newGoalName => dispatch => {
+        dispatch(changeNewGoalNameAction(newGoalName))
+    },
+
+    createNewGoal: goal => async dispatch => {
+        const accountId = await AsyncStorage.getItem('accountId')
+        const { body } = await request.post(`${Config.API_URL}/goals`).set('X-Account-Id', accountId).send(goal)
+        dispatch(createNewGoalAction(body))
+    }
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(NewGoalScreen))
