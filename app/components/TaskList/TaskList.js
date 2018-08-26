@@ -26,7 +26,7 @@ export class TaskList extends Component {
         if (newTaskName.trim() !== '') {
             const id = await AsyncStorage.getItem('accountId')
             const task = handleDueDateOf({ accountId: id, name: newTaskName.trim() })
-            createTask(task, this.taskNameInput)
+            createTask(task)
         }
     }
 
@@ -54,7 +54,6 @@ export class TaskList extends Component {
                             onChangeText={changeNewTaskName}
                             value={newTaskName}
                             onSubmitEditing={this.onAddNewTask}
-                            ref={input => this.taskNameInput = input}
                             editable={!creatingTask}
                         />
                     </Item>
@@ -88,7 +87,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
         dispatch(updateUserTasks(orderTasksByDate(body)))
     },
 
-    createTask: (task, input) => async (dispatch, getState) => {
+    createTask: task => async (dispatch, getState) => {
         dispatch(startCreatingTask())
         const state = getState()
         const goal = state.goals.goal
@@ -108,7 +107,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
         }
         dispatch(changeNewTaskName(''))
         dispatch(endCreatingTask())
-        input.focus()
     },
 
     closeTask: id => async dispatch => {

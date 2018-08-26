@@ -13,8 +13,8 @@ export class DueDatePicker extends Component {
     state = { date: '' }
 
     render() {
-        const dateFormat = 'YYYY-MM-DD'
-        const today = moment().format(dateFormat)
+        const format = moment().creationData().locale.longDateFormat('L')
+        const today = moment().format(format)
         const { t } = this.props
 
         return (
@@ -27,14 +27,20 @@ export class DueDatePicker extends Component {
                 date={this.state.date}
                 mode='date'
                 placeholder={t('placeholders.whenIsItDue')}
-                format={dateFormat}
+                format={format}
                 minDate={today}
                 confirmBtnText={t('labels.set')}
                 cancelBtnText={t('labels.cancel')}
                 iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
-                onDateChange={date => this.setState({ date })}
+                onDateChange={date => this.handleDateChange(moment(date, format))}
             />
         )
+    }
+
+    handleDateChange = (date) => {
+        const { onChangeDate } = this.props
+        this.setState({ date })
+        onChangeDate(date)
     }
 }
 

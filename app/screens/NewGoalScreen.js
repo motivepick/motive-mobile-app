@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 import { handleDueDateOf } from '../utils/parser'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
-import { changeGoalColorAction, changeGoalDescriptionAction, changeGoalNameAction, createNewGoalAction } from '../actions/goalsActions'
+import { changeGoalColorAction, changeGoalDescriptionAction, changeGoalDueDateAction, changeGoalNameAction, createNewGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 import { Body, Button, Container, Content, Form, Header, Input, Item, Label, Left, Right, Text, Title } from 'native-base'
 import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
@@ -19,17 +19,17 @@ class NewGoalScreen extends Component {
     }
 
     onAddNewGoal = async () => {
-        const { goalName, goalDescription, goalColor, createNewGoal } = this.props
+        const { goalName, goalDescription, goalColor, goalDueDate, createNewGoal } = this.props
         if (goalName.trim() !== '') {
             const id = await AsyncStorage.getItem('accountId')
-            const goal = handleDueDateOf({ accountId: id, name: goalName, description: goalDescription, colorTag: goalColor })
+            const goal = handleDueDateOf({ accountId: id, name: goalName, description: goalDescription, colorTag: goalColor, dueDate: goalDueDate })
             createNewGoal(goal)
             this.props.navigation.dispatch(NavigationActions.back())
         }
     }
 
     render() {
-        const { navigation, goalName, goalDescription, changeGoalName, changeGoalDescription, changeGoalColor, t } = this.props
+        const { navigation, goalName, goalDescription, changeGoalName, changeGoalDescription, changeGoalColor, changeGoalDueDate, t } = this.props
         return (
             <Container>
                 <Content>
@@ -59,7 +59,7 @@ class NewGoalScreen extends Component {
                                 style={{ height: 200 }} multiline={true} numberOfLines={5}/>
                         </Item>
                         <Item>
-                            <DueDatePicker/>
+                            <DueDatePicker onChangeDate={changeGoalDueDate}/>
                         </Item>
                         <ColorPicker onChangeColor={changeGoalColor}/>
                     </Form>
@@ -72,7 +72,8 @@ class NewGoalScreen extends Component {
 const mapStateToProps = state => ({
     goalName: state.goals.goalName,
     goalDescription: state.goals.goalDescription,
-    goalColor: state.goals.goalColor
+    goalColor: state.goals.goalColor,
+    goalDueDate: state.goals.goalDueDate
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -82,6 +83,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     changeGoalDescription: goalDescription => dispatch => dispatch(changeGoalDescriptionAction(goalDescription)),
 
     changeGoalColor: goalColor => dispatch => dispatch(changeGoalColorAction(goalColor)),
+
+    changeGoalDueDate: goalDueDate => dispatch => dispatch(changeGoalDueDateAction(goalDueDate)),
 
     createNewGoal: goal => async dispatch => {
         const accountId = await AsyncStorage.getItem('accountId')
