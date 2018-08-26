@@ -26,7 +26,9 @@ i18n.use(languageDetector).init({
                     cancel: 'Cancel',
                     back: 'Back',
                     save: 'Save',
-                    newTask: 'New task'
+                    newTask: 'New task',
+                    showClosedTasks: 'Show Closed Tasks',
+                    hideClosedTasks: 'Hide Closed Tasks'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -51,7 +53,9 @@ i18n.use(languageDetector).init({
                     cancel: 'Отменить',
                     back: 'Назад',
                     save: 'Сохранить',
-                    newTask: 'Новая задача'
+                    newTask: 'Новая задача',
+                    showClosedTasks: 'Показать завершённые задачи',
+                    hideClosedTasks: 'Скрыть завершённые задачи'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -76,7 +80,9 @@ i18n.use(languageDetector).init({
                     cancel: 'Cancel',
                     back: 'Back',
                     save: 'Save',
-                    newTask: 'New task'
+                    newTask: 'New task',
+                    showClosedTasks: 'Show Closed Tasks',
+                    hideClosedTasks: 'Hide Closed Tasks'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',

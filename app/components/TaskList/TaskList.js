@@ -1,25 +1,18 @@
 import React, { Component } from 'react'
 import { AsyncStorage, Text, View } from 'react-native'
-import SortableList from 'react-native-sortable-list'
-import Task from '../Task/Task'
 import styles from './TaskList.styles'
 import { handleDueDateOf } from '../../utils/parser'
-import { changeNewTaskName, closeTask, createTask, endCreatingTask, showError, startCreatingTask, updateUserTasks } from '../../actions/tasksActions'
+import { changeNewTaskName, closeTask, createTask, endCreatingTask, showError, startCreatingTask } from '../../actions/tasksActions'
 import { connect } from 'react-redux'
-import { orderTasksByDate } from '../../utils/order'
 import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import { API_URL } from '../../const'
 import moment from 'moment'
 import { translate } from 'react-i18next'
 import { Form, Input, Item, Label } from 'native-base'
+import Tasks from './Tasks'
 
 export class TaskList extends Component {
-
-    componentDidMount() {
-        const { updateUserTasks } = this.props
-        updateUserTasks()
-    }
 
     onAddNewTask = async () => {
         const { newTaskName, createTask } = this.props
@@ -30,21 +23,14 @@ export class TaskList extends Component {
         }
     }
 
-    onCloseTask = async id => {
-        const { closeTask } = this.props
-        closeTask(id)
-    }
-
     render() {
-        const { isSortable, tasks, newTaskName, changeNewTaskName, creatingTask, listName, t } = this.props
-        const sortingEnabled = isSortable === undefined ? true : isSortable
+        const { isSortable, tasks, newTaskName, changeNewTaskName, creatingTask, closeTask, t } = this.props
         const tasksTotal = tasks.length
         const tasksClosed = tasks.filter(t => t.closed).length
         const tasksClosedPercent = tasksClosed / tasksTotal * 100 || 0
 
         return (
             <View style={styles.container}>
-                {listName && <Text style={styles.title}>{listName}</Text>}
                 <Text style={styles.title}>{`${tasksClosed} / ${tasksTotal}`}</Text>
                 <Text style={styles.title}>{t('labels.statistics', { percent: tasksClosedPercent.toFixed(0) })}</Text>
                 <Form>
@@ -58,21 +44,13 @@ export class TaskList extends Component {
                         />
                     </Item>
                 </Form>
-                {tasks.length > 0 && this.list(tasks, sortingEnabled)}
+                <Tasks tasks={tasks} onCloseTask={id => closeTask(id)} isSortable={isSortable}/>
             </View>
         )
     }
-
-    list = (tasks, sortingEnabled) =>
-        <SortableList style={styles.list} contentContainerStyle={styles.contentContainer}
-            data={tasks} sortingEnabled={sortingEnabled} renderRow={this._renderRow}/>
-
-    _renderRow = ({ data, active }) => <Task data={data} active={active} onClose={this.onCloseTask}/>
 }
 
 const mapStateToProps = state => ({
-    user: state.user.user,
-    tasks: state.tasks.tasks,
     newTaskName: state.tasks.newTaskName,
     creatingTask: state.tasks.creatingTask
 })
@@ -80,12 +58,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
 
     changeNewTaskName: newTaskName => dispatch => dispatch(changeNewTaskName(newTaskName)),
-
-    updateUserTasks: () => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.get(`${API_URL}/tasks`).set('X-Account-Id', accountId)
-        dispatch(updateUserTasks(orderTasksByDate(body)))
-    },
 
     createTask: task => async (dispatch, getState) => {
         dispatch(startCreatingTask())

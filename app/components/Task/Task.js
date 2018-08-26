@@ -86,8 +86,7 @@ class Task extends Component {
                         style={[
                             styles.text,
                             closed ? styles.strikeText : styles.unstrikeText
-                        ]}
-                    >
+                        ]}>
                         {name}
                     </Text>
                     {formattedDueDate && <Text style={[styles.textMuted]}><FontAwesome>{Icons.calendarO}</FontAwesome> {formattedDueDate}</Text>}
@@ -109,7 +108,6 @@ class Task extends Component {
 
 const mapStateToProps = () => ({})
 
-const mapDispatchToProps = {
-}
+const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(Task))

@@ -5,7 +5,7 @@ import styles from './Goal.styles'
 import { withNavigation } from 'react-navigation'
 import connect from 'react-redux/es/connect/connect'
 import Config from 'react-native-config'
-import { updateUserTasks } from '../../actions/tasksActions'
+import { updateUserTasksAction } from '../../actions/tasksActions'
 import request from 'superagent'
 import moment from 'moment'
 import { setGoal } from '../../actions/goalsActions'
@@ -91,7 +91,7 @@ const mapDispatchToProps = (dispatch, { data }) => ({
         const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
         const tasks = response.body
         dispatch(setGoal(null, null))
-        dispatch(updateUserTasks(tasks))
+        dispatch(updateUserTasksAction(tasks))
     },
 
     setTodayGoal: async () => {
@@ -101,7 +101,7 @@ const mapDispatchToProps = (dispatch, { data }) => ({
         const startOfDay = moment().startOf('day')
         const endOfDay = moment().endOf('day')
         dispatch(setGoal(null, 'today'))
-        dispatch(updateUserTasks(tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfDay, endOfDay, null, '[]'))))
+        dispatch(updateUserTasksAction(tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfDay, endOfDay, null, '[]'))))
     },
 
     setThisWeekGoal: async () => {
@@ -111,14 +111,14 @@ const mapDispatchToProps = (dispatch, { data }) => ({
         const startOfWeek = moment().startOf('week')
         const endOfWeek = moment().endOf('week')
         dispatch(setGoal(null, 'thisWeek'))
-        dispatch(updateUserTasks(tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfWeek, endOfWeek, null, '[]'))))
+        dispatch(updateUserTasksAction(tasks.filter(t => t.dueDate && moment(t.dueDate).isBetween(startOfWeek, endOfWeek, null, '[]'))))
     },
 
     setUserDefinedGoal: async () => {
         const accountId = await AsyncStorage.getItem('accountId')
         const response = await request.get(`${Config.API_URL}/goals/${data.id}/tasks`).set('X-Account-Id', accountId)
         dispatch(setGoal(data.id, null))
-        dispatch(updateUserTasks(response.body))
+        dispatch(updateUserTasksAction(response.body))
     }
 })
 
