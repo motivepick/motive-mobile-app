@@ -3,9 +3,8 @@ import { AsyncStorage } from 'react-native'
 import { handleDueDateOf } from '../utils/parser'
 import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
-import { changeNewGoalNameAction, createNewGoalAction } from '../actions/goalsActions'
+import { changeGoalColorAction, changeGoalDescriptionAction, changeGoalNameAction, createNewGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
-
 import { Body, Button, Container, Content, Form, Header, Input, Item, Label, Left, Right, Text, Title } from 'native-base'
 import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
 import ColorPicker from '../components/ColorPicker/ColorPicker'
@@ -20,17 +19,17 @@ class NewGoalScreen extends Component {
     }
 
     onAddNewGoal = async () => {
-        const { newGoalName, createNewGoal } = this.props
-        if (newGoalName.trim() !== '') {
+        const { goalName, goalDescription, goalColor, createNewGoal } = this.props
+        if (goalName.trim() !== '') {
             const id = await AsyncStorage.getItem('accountId')
-            const goal = handleDueDateOf({ accountId: id, name: newGoalName })
+            const goal = handleDueDateOf({ accountId: id, name: goalName, description: goalDescription, colorTag: goalColor })
             createNewGoal(goal)
             this.props.navigation.dispatch(NavigationActions.back())
         }
     }
 
     render() {
-        const { navigation, newGoalName, changeNewGoalName, t } = this.props
+        const { navigation, goalName, goalDescription, changeGoalName, changeGoalDescription, changeGoalColor, t } = this.props
         return (
             <Container>
                 <Content>
@@ -52,16 +51,17 @@ class NewGoalScreen extends Component {
                     <Form>
                         <Item floatingLabel>
                             <Label>{t('labels.goal')}</Label>
-                            <Input onChangeText={changeNewGoalName} value={newGoalName} onSubmitEditing={this.onAddNewGoal}/>
+                            <Input onChangeText={changeGoalName} value={goalName}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>{t('labels.description')}</Label>
-                            <Input style={{ height: 200 }} multiline={true} numberOfLines={5}/>
+                            <Input onChangeText={changeGoalDescription} value={goalDescription}
+                                style={{ height: 200 }} multiline={true} numberOfLines={5}/>
                         </Item>
                         <Item>
                             <DueDatePicker/>
                         </Item>
-                        <ColorPicker/>
+                        <ColorPicker onChangeColor={changeGoalColor}/>
                     </Form>
                 </Content>
             </Container>
@@ -70,14 +70,18 @@ class NewGoalScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-    newGoalName: state.goals.newGoalName
+    goalName: state.goals.goalName,
+    goalDescription: state.goals.goalDescription,
+    goalColor: state.goals.goalColor
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
-    changeNewGoalName: newGoalName => dispatch => {
-        dispatch(changeNewGoalNameAction(newGoalName))
-    },
+    changeGoalName: goalName => dispatch => dispatch(changeGoalNameAction(goalName)),
+
+    changeGoalDescription: goalDescription => dispatch => dispatch(changeGoalDescriptionAction(goalDescription)),
+
+    changeGoalColor: goalColor => dispatch => dispatch(changeGoalColorAction(goalColor)),
 
     createNewGoal: goal => async dispatch => {
         const accountId = await AsyncStorage.getItem('accountId')

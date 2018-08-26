@@ -33,6 +33,8 @@ class ColorPicker extends Component {
     onColorSelect = color => {
         const selectedColor = this.state.selectedColor === color ? '' : color
         this.setState({ selectedColor })
+        const { onChangeColor } = this.props
+        onChangeColor(selectedColor)
     }
 }
 
