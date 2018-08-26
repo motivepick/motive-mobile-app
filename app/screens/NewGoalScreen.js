@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { changeNewGoalName, createNewGoal } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 
-import { Body, Button, Container, Content, Form, Header, Icon, Input, Item, Label, Left, Right, Title } from 'native-base'
+import { Body, Button, Container, Content, Form, Header, Input, Item, Label, Left, Right, Text, Title } from 'native-base'
 import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
 import ColorPicker from '../components/ColorPicker/ColorPicker'
 
@@ -37,15 +37,15 @@ class NewGoalScreen extends Component {
                     <Header>
                         <Left>
                             <Button transparent onPress={() => navigation.goBack()}>
-                                <Icon name="ios-arrow-back" />
+                                <Text>{t('labels.back')}</Text>
                             </Button>
                         </Left>
                         <Body>
-                            <Title>New goal</Title>
+                            <Title>{t('labels.newGoal')}</Title>
                         </Body>
                         <Right>
                             <Button transparent onPress={this.onAddNewGoal}>
-                                <Icon name="md-add" style={{ fontSize: 32 }}/>
+                                <Text>{t('labels.save')}</Text>
                             </Button>
                         </Right>
                     </Header>
