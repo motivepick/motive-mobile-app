@@ -25,7 +25,8 @@ i18n.use(languageDetector).init({
                     set: 'Set',
                     cancel: 'Cancel',
                     back: 'Back',
-                    save: 'Save'
+                    save: 'Save',
+                    newTask: 'New task'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -49,7 +50,8 @@ i18n.use(languageDetector).init({
                     set: 'Сохранить',
                     cancel: 'Отменить',
                     back: 'Назад',
-                    save: 'Сохранить'
+                    save: 'Сохранить',
+                    newTask: 'Новая задача'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -73,7 +75,8 @@ i18n.use(languageDetector).init({
                     set: 'Set',
                     cancel: 'Cancel',
                     back: 'Back',
-                    save: 'Save'
+                    save: 'Save',
+                    newTask: 'New task'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
