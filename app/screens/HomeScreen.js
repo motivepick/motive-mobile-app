@@ -60,17 +60,17 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
     updateUserTasks: closed => async (dispatch, getState) => {
         const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.get(`${API_URL}/tasks`).query({ closed }).set('X-Account-Id', accountId)
         if (closed) {
-            const state = getState()
-            const closedTasksAreShown = state.tasks.closedTasksAreShown
+            const { closedTasksAreShown } = getState().tasks
             if (closedTasksAreShown) {
                 dispatch(hideClosedTasksAction())
             } else {
+                const { body } = await request.get(`${API_URL}/tasks`).query({ closed: true }).set('X-Account-Id', accountId)
                 dispatch(updateClosedUserTasksAction(orderTasksByDate(body)))
                 dispatch(showClosedTasksAction())
             }
         } else {
+            const { body } = await request.get(`${API_URL}/tasks`).query({ closed: false }).set('X-Account-Id', accountId)
             dispatch(updateUserTasksAction(orderTasksByDate(body)))
         }
     },
