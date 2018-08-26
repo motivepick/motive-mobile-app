@@ -6,15 +6,14 @@ import { connect } from 'react-redux'
 import { changeNewGoalName, createNewGoal } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 
-import { Container, Content, Form, Input, Item, Label } from 'native-base'
-// import { Header, Left, Body, Right, Button, Title, Text } from 'native-base'
+import { Body, Button, Container, Content, Form, Header, Icon, Input, Item, Label, Left, Right, Title } from 'native-base'
 import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
 import ColorPicker from '../components/ColorPicker/ColorPicker'
 
 class NewGoalScreen extends Component {
 
     static navigationOptions = {
-        title: 'Create goal'
+        header: null
     }
 
     onAddNewGoal = async () => {
@@ -31,25 +30,25 @@ class NewGoalScreen extends Component {
     }
 
     render() {
-        const { newGoalName, changeNewGoalName, t } = this.props
+        const { navigation, newGoalName, changeNewGoalName, t } = this.props
         return (
             <Container>
                 <Content>
-                    {/*<Header>*/}
-                        {/*<Left>*/}
-                            {/*<Button hasText transparent>*/}
-                                {/*<Text>Back</Text>*/}
-                            {/*</Button>*/}
-                        {/*</Left>*/}
-                        {/*<Body>*/}
-                            {/*<Title>Create goal</Title>*/}
-                        {/*</Body>*/}
-                        {/*<Right>*/}
-                            {/*<Button hasText transparent>*/}
-                                {/*<Text>Create</Text>*/}
-                            {/*</Button>*/}
-                        {/*</Right>*/}
-                    {/*</Header>*/}
+                    <Header>
+                        <Left>
+                            <Button transparent onPress={() => navigation.goBack()}>
+                                <Icon name="ios-arrow-back" />
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title>New goal</Title>
+                        </Body>
+                        <Right>
+                            <Button transparent onPress={this.onAddNewGoal}>
+                                <Icon name="md-add" style={{ fontSize: 32 }}/>
+                            </Button>
+                        </Right>
+                    </Header>
                     <Form>
                         <Item floatingLabel>
                             <Label>{t('labels.goal')}</Label>
