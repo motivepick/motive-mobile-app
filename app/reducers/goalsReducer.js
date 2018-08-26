@@ -7,7 +7,10 @@ export default function (state = INITIAL_STATE, action) {
     if (type === CHANGE_NEW_GOAL_NAME) {
         return { ...state, newGoalName: payload }
     } else if (type === CREATE_NEW_GOAL) {
-        return { ...state, goals: [payload].concat(state.goals) }
+        const [allBtn, todayBtn, weekBtn, ...otherGoals] = state.goals
+        const newGoalBtn = otherGoals.pop()
+        const goals = otherGoals.slice(0, -1)
+        return { ...state, goals: [allBtn, todayBtn, weekBtn, ...goals, payload, newGoalBtn] }
     } else if (type === UPDATE_USER_GOALS) {
         return { ...state, goals: payload }
     } else if (type === SET_GOAL) {

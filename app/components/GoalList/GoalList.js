@@ -48,7 +48,7 @@ const mapDispatchToProps = dispatch => ({
             { type: 'today', name: t('labels.today') },
             { type: 'thisWeek', name: t('labels.thisWeek') }
         ]
-        dispatch(updateUserGoals(defaultGoals.concat(response.body).concat({ type: 'newGoal', name: t('labels.newGoal') })))
+        dispatch(updateUserGoals([ ...defaultGoals, ...response.body, { type: 'newGoal', name: t('labels.newGoal') }]))
     }
 })
 
