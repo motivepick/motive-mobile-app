@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { AsyncStorage } from 'react-native'
 import { handleDueDateOf } from '../utils/parser'
-import { NavigationActions } from 'react-navigation'
 import { connect } from 'react-redux'
 import { changeGoalColorAction, changeGoalDescriptionAction, changeGoalDueDateAction, changeGoalNameAction, createNewGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
-import { Body, Button, Container, Content, Form, Header, Input, Item, Label, Left, Right, Text, Title } from 'native-base'
+import { Container, Content, Form, Input, Item, Label } from 'native-base'
 import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
 import ColorPicker from '../components/ColorPicker/ColorPicker'
 import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import Config from 'react-native-config'
+import Header from '../components/CustomHeader/CustomHeader'
 
 class NewGoalScreen extends Component {
 
@@ -19,35 +19,21 @@ class NewGoalScreen extends Component {
     }
 
     onAddNewGoal = async () => {
-        const { goalName, goalDescription, goalColor, goalDueDate, createNewGoal } = this.props
+        const { goalName, goalDescription, goalColor, goalDueDate, navigation, createNewGoal } = this.props
         if (goalName.trim() !== '') {
             const id = await AsyncStorage.getItem('accountId')
             const goal = handleDueDateOf({ accountId: id, name: goalName, description: goalDescription, colorTag: goalColor, dueDate: goalDueDate })
             createNewGoal(goal)
-            this.props.navigation.dispatch(NavigationActions.back())
+            navigation.goBack()
         }
     }
 
     render() {
-        const { navigation, goalName, goalDescription, changeGoalName, changeGoalDescription, changeGoalColor, changeGoalDueDate, t } = this.props
+        const { navigation, goalName, goalDescription, goalDueDate, changeGoalName, changeGoalDescription, changeGoalColor, changeGoalDueDate, t } = this.props
         return (
             <Container>
                 <Content>
-                    <Header>
-                        <Left>
-                            <Button transparent onPress={() => navigation.goBack()}>
-                                <Text>{t('labels.back')}</Text>
-                            </Button>
-                        </Left>
-                        <Body>
-                            <Title>{t('labels.newGoal')}</Title>
-                        </Body>
-                        <Right>
-                            <Button transparent onPress={this.onAddNewGoal}>
-                                <Text>{t('labels.save')}</Text>
-                            </Button>
-                        </Right>
-                    </Header>
+                    <Header title={t('labels.newGoal')} onLeftButtonPress={() => navigation.goBack()} onRightButtonPress={() => this.onAddNewGoal()}/>
                     <Form>
                         <Item floatingLabel>
                             <Label>{t('labels.goal')}</Label>
@@ -59,7 +45,7 @@ class NewGoalScreen extends Component {
                                 style={{ height: 200 }} multiline={true} numberOfLines={5}/>
                         </Item>
                         <Item>
-                            <DueDatePicker onChangeDate={changeGoalDueDate}/>
+                            <DueDatePicker value={goalDueDate} onChangeDate={changeGoalDueDate}/>
                         </Item>
                         <ColorPicker onChangeColor={changeGoalColor}/>
                     </Form>

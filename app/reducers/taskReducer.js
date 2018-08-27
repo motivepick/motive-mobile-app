@@ -1,4 +1,4 @@
-import { CHANGE_TASK_DESCRIPTION, CHANGE_TASK_NAME, SAVE_TASK, SET_TASK } from '../actions/taskActions'
+import { CHANGE_TASK_DESCRIPTION, CHANGE_TASK_DUE_DATE, CHANGE_TASK_NAME, SET_TASK } from '../actions/taskActions'
 
 const INITIAL_STATE = {
     task: {},
@@ -10,14 +10,13 @@ export default (state = INITIAL_STATE, action) => {
         return { ...state, task: action.payload }
     } else if (type === CHANGE_TASK_NAME) {
         const task = { ...state.task, name: action.payload }
-        return { ...state, task: task }
+        return { ...state, task }
     } else if (type === CHANGE_TASK_DESCRIPTION) {
         const task = { ...state.task, description: action.payload }
-        return { ...state, task: task }
-    } else if (type === SAVE_TASK) {
-        const { name, description } = action.payload
-        const task = { ...state.task, name, description }
-        return { ...state, task: task }
+        return { ...state, task }
+    } else if (type === CHANGE_TASK_DUE_DATE) {
+        const task = { ...state.task, dueDate: action.payload }
+        return { ...state, task }
     } else {
         return state
     }

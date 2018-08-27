@@ -26,7 +26,8 @@ i18n.use(languageDetector).init({
                     cancel: 'Cancel',
                     back: 'Back',
                     save: 'Save',
-                    newTask: 'New task',
+                    newTask: 'New Task',
+                    editTask: 'Edit Task',
                     showClosedTasks: 'Show Closed Tasks',
                     hideClosedTasks: 'Hide Closed Tasks'
                 },
@@ -54,6 +55,7 @@ i18n.use(languageDetector).init({
                     back: 'Назад',
                     save: 'Сохранить',
                     newTask: 'Новая задача',
+                    editTask: 'Редактировать задачу',
                     showClosedTasks: 'Показать завершённые задачи',
                     hideClosedTasks: 'Скрыть завершённые задачи'
                 },
@@ -80,7 +82,8 @@ i18n.use(languageDetector).init({
                     cancel: 'Cancel',
                     back: 'Back',
                     save: 'Save',
-                    newTask: 'New task',
+                    newTask: 'New Task',
+                    editTask: 'Edit Task',
                     showClosedTasks: 'Show Closed Tasks',
                     hideClosedTasks: 'Hide Closed Tasks'
                 },

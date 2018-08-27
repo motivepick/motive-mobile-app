@@ -10,10 +10,14 @@ const window = Dimensions.get('window')
 
 export class DueDatePicker extends Component {
 
-    state = { date: '' }
+    constructor(props) {
+        super(props)
+        const { value } = props
+        this.state = { value: value ? moment(value, moment.ISO_8601).format(this.format()) : '' }
+    }
 
     render() {
-        const format = moment().creationData().locale.longDateFormat('L')
+        const format = this.format()
         const today = moment().format(format)
         const { t } = this.props
 
@@ -24,7 +28,7 @@ export class DueDatePicker extends Component {
                     dateTouchBody: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start' }
                 }}
                 style={{ width: window.width }}
-                date={this.state.date}
+                date={this.state.value}
                 mode='date'
                 placeholder={t('placeholders.whenIsItDue')}
                 format={format}
@@ -39,9 +43,11 @@ export class DueDatePicker extends Component {
 
     handleDateChange = (date) => {
         const { onChangeDate } = this.props
-        this.setState({ date })
+        this.setState({ value: date })
         onChangeDate(date)
     }
+
+    format = () => moment().creationData().locale.longDateFormat('L')
 }
 
 export default translate('translations')(DueDatePicker)
