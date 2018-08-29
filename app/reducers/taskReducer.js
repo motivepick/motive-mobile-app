@@ -16,6 +16,7 @@ export default (state = INITIAL_STATE, action) => {
         return { ...state, task }
     } else if (type === CHANGE_TASK_DUE_DATE) {
         const task = { ...state.task, dueDate: action.payload }
+        console.log('GOING TO CHANGE STATE TO', action.payload)
         return { ...state, task }
     } else {
         return state
