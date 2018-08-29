@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Text } from 'react-native'
+import { AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { changeTaskDescriptionAction, changeTaskDueDateAction, changeTaskNameAction, setTaskAction } from '../actions/taskActions'
+import { changeTaskDescriptionAction, changeTaskNameAction, setTaskAction } from '../actions/taskActions'
 import request from 'superagent'
 import { API_URL } from '../const'
 import { updateTaskAction } from '../actions/tasksActions'
@@ -24,17 +24,16 @@ class TaskScreen extends Component {
     }
 
     render() {
-        let { task, navigation, changeTaskName, changeTaskDescription, changeTaskDueDate, saveTask, t } = this.props
-        let { id, name, description, dueDate } = task
+        const { task, navigation, changeTaskName, changeTaskDescription, saveTask, t } = this.props
+        const { id, name, description, dueDate } = task
         return (
             <Container>
                 <Content>
                     <Header title={t('labels.editTask')} onLeftButtonPress={() => navigation.goBack()}/>
                     <Form>
-                        <Text>{dueDate}</Text>
                         <Item floatingLabel>
                             <Label>{t('labels.task')}</Label>
-                            <Input onChangeText={changeTaskName} value={name} onSubmitEditing={this.saveTask}/>
+                            <Input value={name} onChangeText={changeTaskName} onSubmitEditing={() => saveTask({ id, name })} returnKeyType={'done'}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>{t('labels.description')}</Label>
@@ -42,29 +41,12 @@ class TaskScreen extends Component {
                                 style={{ height: 200 }} multiline={true} numberOfLines={5}/>
                         </Item>
                         <Item>
-                            <DueDatePicker onChangeDate={this.handleChangeDate}/>
+                            <DueDatePicker value={dueDate} onChangeDate={dueDate => saveTask({ id, dueDate })}/>
                         </Item>
                     </Form>
                 </Content>
             </Container>
         )
-    }
-
-    saveTask = () => {
-        const { task, saveTask } = this.props
-        saveTask(task)
-    }
-
-    handleChangeDate = dueDate => {
-        const { task, changeTaskDueDate, saveTask } = this.props
-        changeTaskDueDate(dueDate)
-        saveTask(task)
-    }
-}
-
-function sleep(seconds) {
-    var e = new Date().getTime() + (seconds * 1000)
-    while (new Date().getTime() <= e) {
     }
 }
 
@@ -80,13 +62,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
     changeTaskDescription: taskDescription => dispatch => dispatch(changeTaskDescriptionAction(taskDescription)),
 
-    changeTaskDueDate: dueDate => dispatch => dispatch(changeTaskDueDateAction(dueDate)),
-
     saveTask: task => async dispatch => {
-        sleep(5)
         const accountId = await AsyncStorage.getItem('accountId')
         const { id, name, description, dueDate } = task
-        console.log('GOVNO', dueDate, typeof dueDate)
         const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ name, description, dueDate })
         dispatch(updateTaskAction(body))
     },

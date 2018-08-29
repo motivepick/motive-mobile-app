@@ -37,7 +37,7 @@ class NewGoalScreen extends Component {
                     <Form>
                         <Item floatingLabel>
                             <Label>{t('labels.goal')}</Label>
-                            <Input onChangeText={changeGoalName} value={goalName}/>
+                            <Input onChangeText={changeGoalName} value={goalName} returnKeyType={'done'}/>
                         </Item>
                         <Item floatingLabel>
                             <Label>{t('labels.description')}</Label>

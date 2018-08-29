@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Text, View } from 'react-native'
+import { AsyncStorage, View } from 'react-native'
 import styles from './TaskList.styles'
 import { handleDueDateOf } from '../../utils/parser'
 import { changeNewTaskName, closeTask, createTask, endCreatingTask, showError, startCreatingTask } from '../../actions/tasksActions'
@@ -36,6 +36,7 @@ export class TaskList extends Component {
                             value={newTaskName}
                             onSubmitEditing={this.onAddNewTask}
                             editable={!creatingTask}
+                            returnKeyType={'done'}
                         />
                     </Item>
                 </Form>
