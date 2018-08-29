@@ -17,9 +17,10 @@ class CustomHeader extends Component {
                     <Title>{title}</Title>
                 </Body>
                 <Right>
+                    {!!onRightButtonPress &&
                     <Button transparent onPress={onRightButtonPress}>
                         <Text>{t('labels.save')}</Text>
-                    </Button>
+                    </Button>}
                 </Right>
             </Header>
         )

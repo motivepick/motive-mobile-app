@@ -13,7 +13,7 @@ export class DueDatePicker extends Component {
     constructor(props) {
         super(props)
         const { value } = props
-        this.state = { value: value ? moment(value, moment.ISO_8601).format(this.format()) : '' }
+        this.state = { dateAsStringInLocalFormat: this.dateAsStringInLocalFormat(value) }
     }
 
     render() {
@@ -28,7 +28,7 @@ export class DueDatePicker extends Component {
                     dateTouchBody: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start' }
                 }}
                 style={{ width: window.width }}
-                date={this.state.value}
+                date={this.state.dateAsStringInLocalFormat}
                 mode='date'
                 placeholder={t('placeholders.whenIsItDue')}
                 format={format}
@@ -36,15 +36,18 @@ export class DueDatePicker extends Component {
                 confirmBtnText={t('labels.set')}
                 cancelBtnText={t('labels.cancel')}
                 iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
-                onDateChange={date => this.handleDateChange(moment(date, format))}
+                onDateChange={dateAsStringInLocalFormat => this.handleDateChange(dateAsStringInLocalFormat)}
             />
         )
     }
 
-    handleDateChange = (date) => {
+    dateAsStringInLocalFormat = (isoDate) => isoDate ? moment(isoDate, 'YYYY-MM-DDTHH:mm:ss.SSS').format(this.format()) : ''
+
+    handleDateChange = (dateAsStringInLocalFormat) => {
         const { onChangeDate } = this.props
-        this.setState({ value: date })
-        onChangeDate(date)
+        const isoDate = moment(dateAsStringInLocalFormat, this.format()).format('YYYY-MM-DDTHH:mm:ss.SSS')
+        this.setState({ dateAsStringInLocalFormat: dateAsStringInLocalFormat })
+        onChangeDate(isoDate)
     }
 
     format = () => moment().creationData().locale.longDateFormat('L')
