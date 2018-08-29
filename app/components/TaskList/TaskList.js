@@ -25,14 +25,9 @@ export class TaskList extends Component {
 
     render() {
         const { isSortable, tasks, newTaskName, changeNewTaskName, creatingTask, closeTask, t } = this.props
-        const tasksTotal = tasks.length
-        const tasksClosed = tasks.filter(t => t.closed).length
-        const tasksClosedPercent = tasksClosed / tasksTotal * 100 || 0
 
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>{`${tasksClosed} / ${tasksTotal}`}</Text>
-                <Text style={styles.title}>{t('labels.statistics', { percent: tasksClosedPercent.toFixed(0) })}</Text>
                 <Form>
                     <Item last floatingLabel>
                         <Label>{t('labels.newTask')}</Label>
