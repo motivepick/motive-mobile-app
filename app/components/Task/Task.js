@@ -20,52 +20,6 @@ class Task extends Component {
 
     constructor(props) {
         super(props)
-
-        this._active = new Animated.Value(0)
-
-        this._style = {
-            ...Platform.select({
-                ios: {
-                    transform: [
-                        {
-                            scale: this._active.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [1, 1.1]
-                            })
-                        }
-                    ],
-                    shadowRadius: this._active.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [2, 10]
-                    })
-                },
-
-                android: {
-                    transform: [
-                        {
-                            scale: this._active.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [1, 1.07]
-                            })
-                        }
-                    ],
-                    elevation: this._active.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [2, 6]
-                    })
-                }
-            })
-        }
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (this.props.active !== nextProps.active) {
-            Animated.timing(this._active, {
-                duration: 300,
-                easing: Easing.bounce,
-                toValue: Number(nextProps.active)
-            }).start()
-        }
     }
 
     render() {
@@ -77,7 +31,7 @@ class Task extends Component {
         const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).local().calendar() : null
 
         return (
-            <Animated.View style={[styles.row, this._style]}>
+            <Animated.View style={styles.row}>
                 <CheckBox isCompleted={closed} onAction={() => onClose(id)}/>
                 <TouchableOpacity style={styles.task} onPress={this.handleTaskClick}>
                     <Text

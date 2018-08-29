@@ -30,17 +30,7 @@ export const styles = StyleSheet.create({
         padding: 16
     },
     contentContainer: {
-        width: window.width,
-
-        ...Platform.select({
-            ios: {
-                paddingHorizontal: 10
-            },
-
-            android: {
-                paddingHorizontal: 0
-            }
-        })
+        width: window.width
     }
 })
 

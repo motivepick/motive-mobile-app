@@ -24,7 +24,7 @@ export class TaskList extends Component {
     }
 
     render() {
-        const { isSortable, tasks, newTaskName, changeNewTaskName, creatingTask, closeTask, t } = this.props
+        const { tasks, newTaskName, changeNewTaskName, creatingTask, closeTask, t } = this.props
 
         return (
             <View style={styles.container}>
@@ -39,7 +39,7 @@ export class TaskList extends Component {
                         />
                     </Item>
                 </Form>
-                <Tasks tasks={tasks} onCloseTask={id => closeTask(id)} isSortable={isSortable}/>
+                <Tasks tasks={tasks} onCloseTask={id => closeTask(id)}/>
             </View>
         )
     }
