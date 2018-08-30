@@ -9,7 +9,7 @@ import request from 'superagent'
 import { API_URL } from '../../const'
 import moment from 'moment'
 import { translate } from 'react-i18next'
-import { Form, Input, Item } from 'native-base'
+import { Button, Form, Input, Item, Segment, Text } from 'native-base'
 import Tasks from './Tasks'
 
 export class TaskList extends Component {
@@ -23,6 +23,8 @@ export class TaskList extends Component {
         }
     }
 
+    // TODO: fix Segment btns look on Android (white text on white background)
+    // TODO: Segment must be actionable
     render() {
         const { tasks, newTaskName, changeNewTaskName, creatingTask, closeTask, t } = this.props
 
@@ -40,6 +42,17 @@ export class TaskList extends Component {
                         />
                     </Item>
                 </Form>
+                <Segment  style={{ width: '100%', marginBottom: 0, marginTop: 10}}>
+                    <Button first active={true}>
+                        <Text>All</Text>
+                    </Button>
+                    <Button active={false}>
+                        <Text>Today</Text>
+                    </Button>
+                    <Button last active={false}>
+                        <Text>Week</Text>
+                    </Button>
+                </Segment>
                 <Tasks tasks={tasks} onCloseTask={id => closeTask(id)}/>
             </View>
         )
