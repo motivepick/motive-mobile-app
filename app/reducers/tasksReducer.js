@@ -61,10 +61,10 @@ export default function (state = INITIAL_STATE, action) {
     } else if (type === UNDO_CLOSE_TASK) {
         return { ...state, tasks: updatedTasks(state, action.payload), closedTasks: state.closedTasks.filter(t => t.id !== action.payload) }
     } else if (type === UPDATE_TASK) {
-        const { id, name, description, dueDate } = action.payload
+        const { payload } = action
         const tasks = []
         for (const task of state.tasks) {
-            tasks.push(task.id === id ? { ...task, name, description, dueDate } : task)
+            tasks.push(task.id === payload.id ? { ...task, ...payload } : task)
         }
         return { ...state, tasks }
     } else {
