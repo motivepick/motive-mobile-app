@@ -4,7 +4,7 @@ import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
 import GoalList from '../components/GoalList/GoalList'
-import { Body, Button, Container, Content, Header, Left, Right, Tab, Tabs, Text, Title } from 'native-base'
+import { Button, Container, Content, Tab, Tabs, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -46,15 +46,8 @@ export class HomeScreen extends Component {
         const { tasks, closedTasks, closedTasksAreShown, updateUserTasks, createTask, undoCloseTask, t } = this.props
         return (
             <Container>
-                <Header hasTabs>
-                    <Left/>
-                    <Body>
-                        <Title>{'TODO'}</Title>
-                    </Body>
-                    <Right/>
-                </Header>
-                <Tabs locked>
-                    <Tab heading="Tasks">
+                <Tabs locked tabBarBackgroundColor={'#fff'} style={{ marginTop: 30 }}>
+                    <Tab heading="Tasks" activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
                                 <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}/>
@@ -65,7 +58,7 @@ export class HomeScreen extends Component {
                             </View>
                         </Content>
                     </Tab>
-                    <Tab heading="Goals">
+                    <Tab heading="Goals" activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
                                 <GoalList/>
