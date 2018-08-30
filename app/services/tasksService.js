@@ -4,14 +4,16 @@ import Config from 'react-native-config'
 import moment from 'moment'
 import { orderTasksByDate } from '../utils/order'
 
+const fetchAccountId = () => AsyncStorage.getItem('accountId')
+
 const all = async () => {
-    const accountId = await AsyncStorage.getItem('accountId')
+    const accountId = await fetchAccountId()
     const { body } = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
     return orderTasksByDate(body)
 }
 
 const today = async () => {
-    const accountId = await AsyncStorage.getItem('accountId')
+    const accountId = await fetchAccountId()
     const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
     const tasks = response.body
     const endOfDay = moment().endOf('day')
@@ -19,7 +21,7 @@ const today = async () => {
 }
 
 const thisWeek = async () => {
-    const accountId = await AsyncStorage.getItem('accountId')
+    const accountId = await fetchAccountId()
     const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
     const tasks = response.body
     const endOfWeek = moment().endOf('week')
@@ -36,4 +38,10 @@ export const fetchTasks = filter => {
     } else {
         return all()
     }
+}
+
+export const fetchClosedTasks = async () => {
+    const accountId = fetchAccountId()
+    const { body } = await request.get(`${Config.API_URL}/tasks`).query({ closed: true }).set('X-Account-Id', accountId)
+    return body
 }

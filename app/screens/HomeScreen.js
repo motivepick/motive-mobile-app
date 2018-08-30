@@ -22,7 +22,7 @@ import {
     updateUserTasksAction
 } from '../actions/tasksActions'
 import Tasks from '../components/TaskList/Tasks'
-import { fetchTasks } from '../services/tasksService'
+import { fetchClosedTasks, fetchTasks } from '../services/tasksService'
 import moment from 'moment'
 
 export class HomeScreen extends Component {
@@ -110,7 +110,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
             if (closedTasksAreShown) {
                 dispatch(hideClosedTasksAction())
             } else {
-                dispatch(updateClosedUserTasksAction(await all()))
+                dispatch(updateClosedUserTasksAction(await fetchClosedTasks()))
                 dispatch(showClosedTasksAction())
             }
         } else {
