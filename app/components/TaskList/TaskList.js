@@ -14,6 +14,8 @@ import Tasks from './Tasks'
 
 export class TaskList extends Component {
 
+    state = { activeFilter: 'all' }
+
     onAddNewTask = async () => {
         const { newTaskName, createTask } = this.props
         if (newTaskName.trim() !== '') {
@@ -26,7 +28,8 @@ export class TaskList extends Component {
     // TODO: fix Segment btns look on Android (white text on white background)
     // TODO: Segment must be actionable
     render() {
-        const { tasks, newTaskName, changeNewTaskName, creatingTask, closeTask, t } = this.props
+        const { tasks, newTaskName, changeNewTaskName, creatingTask, closeTask, onFilterChanged, t } = this.props
+        const { activeFilter } = this.state
 
         return (
             <View style={styles.container}>
@@ -43,19 +46,25 @@ export class TaskList extends Component {
                     </Item>
                 </Form>
                 <Segment style={{ width: '100%', marginBottom: 0, marginTop: 10 }}>
-                    <Button first active={true}>
-                        <Text>All</Text>
+                    <Button first active={activeFilter === 'all'} onPress={() => this.handleFilterChange('all')}>
+                        <Text>{t('labels.all')}</Text>
                     </Button>
-                    <Button active={false}>
-                        <Text>Today</Text>
+                    <Button active={activeFilter === 'today'} onPress={() => this.handleFilterChange('today')}>
+                        <Text>{t('labels.today')}</Text>
                     </Button>
-                    <Button last active={false}>
-                        <Text>Week</Text>
+                    <Button last active={activeFilter === 'thisWeek'} onPress={() => this.handleFilterChange('thisWeek')}>
+                        <Text>{t('labels.thisWeek')}</Text>
                     </Button>
                 </Segment>
                 <Tasks tasks={tasks} onCloseTask={id => closeTask(id)}/>
             </View>
         )
+    }
+
+    handleFilterChange = activeFilter => {
+        const { onFilterChanged } = this.props
+        this.setState({ activeFilter })
+        onFilterChanged(activeFilter)
     }
 }
 

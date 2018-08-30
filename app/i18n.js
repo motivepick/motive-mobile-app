@@ -15,7 +15,7 @@ i18n.use(languageDetector).init({
             translations: {
                 labels: {
                     statistics: 'You can do it! {{percent}}% done',
-                    all: 'All',
+                    all: 'All Tasks',
                     today: 'Today',
                     thisWeek: 'This Week',
                     newGoal: 'New Goal',
@@ -43,7 +43,7 @@ i18n.use(languageDetector).init({
             translations: {
                 labels: {
                     statistics: 'Соберись! {{percent}}% готово',
-                    all: 'Все',
+                    all: 'Все задачи',
                     today: 'Сегодня',
                     thisWeek: 'На неделе',
                     newGoal: 'Новая цель',
@@ -71,7 +71,7 @@ i18n.use(languageDetector).init({
             translations: {
                 labels: {
                     statistics: 'You can do it! {{percent}}% done',
-                    all: 'All',
+                    all: 'All Tasks',
                     today: 'Today',
                     thisWeek: 'This Week',
                     newGoal: 'New Goal',

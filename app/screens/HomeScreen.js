@@ -11,8 +11,8 @@ import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import { API_URL } from '../const'
 import { hideClosedTasksAction, showClosedTasksAction, undoCloseTaskAction, updateClosedUserTasksAction, updateUserTasksAction } from '../actions/tasksActions'
-import { orderTasksByDate } from '../utils/order'
 import Tasks from '../components/TaskList/Tasks'
+import { all, thisWeek, today } from '../services/tasksService'
 
 export class HomeScreen extends Component {
 
@@ -22,7 +22,7 @@ export class HomeScreen extends Component {
 
     componentDidMount() {
         const { updateUserTasks } = this.props
-        updateUserTasks(false)
+        updateUserTasks(false, 'all')
     }
 
     logout = async () => {
@@ -35,7 +35,7 @@ export class HomeScreen extends Component {
         const { tasks, closedTasks, closedTasksAreShown, updateUserTasks, undoCloseTask, t } = this.props
         return (
             <Container>
-                <Header hasTabs >
+                <Header hasTabs>
                     <Left/>
                     <Body>
                         <Title>{'TODO'}</Title>
@@ -46,7 +46,7 @@ export class HomeScreen extends Component {
                     <Tab heading="Tasks">
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
-                                <TaskList tasks={tasks}/>
+                                <TaskList tasks={tasks} onFilterChanged={filter => updateUserTasks(false, filter)}/>
                                 <Button transparent onPress={() => updateUserTasks(true)}>
                                     <Text>{closedTasksAreShown ? t('labels.hideClosedTasks') : t('labels.showClosedTasks')}</Text>
                                 </Button>
@@ -75,20 +75,21 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
-    updateUserTasks: closed => async (dispatch, getState) => {
-        const accountId = await AsyncStorage.getItem('accountId')
+    updateUserTasks: (closed, filter) => async (dispatch, getState) => {
         if (closed) {
             const { closedTasksAreShown } = getState().tasks
             if (closedTasksAreShown) {
                 dispatch(hideClosedTasksAction())
             } else {
-                const { body } = await request.get(`${API_URL}/tasks`).query({ closed: true }).set('X-Account-Id', accountId)
-                dispatch(updateClosedUserTasksAction(orderTasksByDate(body)))
+                dispatch(updateClosedUserTasksAction(await all()))
                 dispatch(showClosedTasksAction())
             }
-        } else {
-            const { body } = await request.get(`${API_URL}/tasks`).query({ closed: false }).set('X-Account-Id', accountId)
-            dispatch(updateUserTasksAction(orderTasksByDate(body)))
+        } else if (filter === 'all') {
+            dispatch(updateUserTasksAction(await all()))
+        } else if (filter === 'today') {
+            dispatch(updateUserTasksAction(await today()))
+        } else if (filter === 'thisWeek') {
+            dispatch(updateUserTasksAction(await thisWeek()))
         }
     },
 
