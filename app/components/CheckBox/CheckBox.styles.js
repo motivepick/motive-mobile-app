@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
         borderColor: '#bbb'
     },
     incompleteCircle: {
-        borderColor: '#a56d54'
+        borderColor: '#3d3d3d'
     }
 })
 
