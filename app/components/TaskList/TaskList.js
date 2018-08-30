@@ -42,7 +42,7 @@ export class TaskList extends Component {
                         />
                     </Item>
                 </Form>
-                <Segment  style={{ width: '100%', marginBottom: 0, marginTop: 10}}>
+                <Segment style={{ width: '100%', marginBottom: 0, marginTop: 10 }}>
                     <Button first active={true}>
                         <Text>All</Text>
                     </Button>
