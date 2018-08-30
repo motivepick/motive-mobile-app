@@ -4,7 +4,7 @@ import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
 import GoalList from '../components/GoalList/GoalList'
-import { Button, Container, Content, Text } from 'native-base'
+import { Body, Button, Container, Content, Header, Left, Right, Tab, Tabs, Text, Title } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -35,16 +35,33 @@ export class HomeScreen extends Component {
         const { tasks, closedTasks, closedTasksAreShown, updateUserTasks, undoCloseTask, t } = this.props
         return (
             <Container>
-                <Content>
-                    <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
-                        <GoalList/>
-                        <TaskList tasks={tasks}/>
-                        <Button transparent onPress={() => updateUserTasks(true)}>
-                            <Text>{closedTasksAreShown ? t('labels.hideClosedTasks') : t('labels.showClosedTasks')}</Text>
-                        </Button>
-                        {closedTasksAreShown && <Tasks tasks={closedTasks} onCloseTask={id => undoCloseTask(id)}/>}
-                    </View>
-                </Content>
+                <Header hasTabs >
+                    <Left/>
+                    <Body>
+                        <Title>{'TODO'}</Title>
+                    </Body>
+                    <Right/>
+                </Header>
+                <Tabs>
+                    <Tab heading="Tasks">
+                        <Content>
+                            <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
+                                <TaskList tasks={tasks}/>
+                                <Button transparent onPress={() => updateUserTasks(true)}>
+                                    <Text>{closedTasksAreShown ? t('labels.hideClosedTasks') : t('labels.showClosedTasks')}</Text>
+                                </Button>
+                                {closedTasksAreShown && <Tasks tasks={closedTasks} onCloseTask={id => undoCloseTask(id)}/>}
+                            </View>
+                        </Content>
+                    </Tab>
+                    <Tab heading="Goals">
+                        <Content>
+                            <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
+                                <GoalList/>
+                            </View>
+                        </Content>
+                    </Tab>
+                </Tabs>
             </Container>
         )
     }
