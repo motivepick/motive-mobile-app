@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage, Platform, Text, TouchableOpacity } from 'react-native'
+import { AsyncStorage, Text, TouchableOpacity, View } from 'react-native'
 import ColorIndicator from '../ColorIndicator/ColorIndicator'
 import styles from './Goal.styles'
 import { withNavigation } from 'react-navigation'
@@ -14,54 +14,18 @@ class Goal extends Component {
 
     constructor(props) {
         super(props)
-
-        this._active = new Animated.Value(0)
-
-        this._style = {
-            ...Platform.select({
-                ios: {
-                    transform: [
-                        {
-                            scale: this._active.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [1, 1.1]
-                            })
-                        }
-                    ],
-                    shadowRadius: this._active.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [2, 10]
-                    })
-                },
-
-                android: {
-                    transform: [
-                        {
-                            scale: this._active.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: [1, 1.07]
-                            })
-                        }
-                    ],
-                    elevation: this._active.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [2, 6]
-                    })
-                }
-            })
-        }
     }
 
     render() {
         const { data: { type, name, colorTag } } = this.props
 
         return (
-            <Animated.View style={[styles.row, this._style]}>
+            <View style={styles.row}>
                 <TouchableOpacity style={styles.goal} onPress={() => this.handleGoalSelect(type)}>
                     <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
-                    <ColorIndicator color={colorTag}/>
                 </TouchableOpacity>
-            </Animated.View>
+                <ColorIndicator color={colorTag} styler={{ marginLeft: 20 }}/>
+            </View>
         )
     }
 

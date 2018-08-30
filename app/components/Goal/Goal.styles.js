@@ -2,22 +2,22 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
     row: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         padding: 16,
-        width: 110,
-        height: 70,
-        marginHorizontal: 4,
+        height: 50,
+        flex: 1,
+        marginTop: 7,
         borderRadius: 4
     },
     text: {
-        fontSize: 14,
-        textAlign: 'center'
+        fontSize: 14
     },
     goal: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'center',
+        alignSelf: 'center',
         justifyContent: 'center'
     }
 })

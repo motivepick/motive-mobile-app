@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, View } from 'react-native'
-import SortableList from 'react-native-sortable-list'
+import { AsyncStorage, ListView, View } from 'react-native'
 
 import Goal from '../Goal/Goal'
 import styles from './GoalList.styles'
@@ -9,8 +8,13 @@ import { updateUserGoals } from '../../actions/goalsActions'
 import request from 'superagent'
 import Config from 'react-native-config'
 import { translate } from 'react-i18next'
+import { Button, Icon, List } from 'native-base'
 
 export class GoalList extends Component {
+    constructor(props) {
+        super(props)
+        this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+    }
 
     async componentDidMount() {
         const { updateUserGoals, t } = this.props
@@ -23,15 +27,38 @@ export class GoalList extends Component {
 
         return (
             <View style={styles.container}>
-                <SortableList
-                    horizontal
+                <List
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
-                    data={goals}
-                    sortingEnabled={false}
-                    renderRow={({ data, active }) => <Goal data={data} active={active}/>}/>
+                    rightOpenValue={-140}
+                    disableRightSwipe={true}
+                    closeOnRowBeginSwipe={true}
+                    dataSource={this.ds.cloneWithRows(goals)}
+                    renderRow={this.renderRow}
+                    renderRightHiddenRow={this.renderRightHiddenRow}
+                />
             </View>
         )
+    }
+
+    renderRow = (data) => {
+        return <Goal data={data}/>
+    }
+
+    renderRightHiddenRow = (data, secId, rowId, rowMap) =>
+        <View style={{ flexDirection: 'row', marginTop: 9 }}>
+            <Button onPress={() => this.editGoal(secId, rowId, rowMap)}>
+                <Icon active name='md-create'/>
+            </Button>
+            <Button danger onPress={() => this.deleteGoal(secId, rowId, rowMap)}>
+                <Icon active name='trash'/>
+            </Button>
+        </View>
+
+    deleteGoal(secId, rowId, rowMap) {
+    }
+
+    editGoal(secId, rowId, rowMap) {
     }
 }
 
@@ -41,14 +68,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 
-    updateUserGoals: async (accountId, t) => {
+    updateUserGoals: async (accountId) => {
         const response = await request.get(`${Config.API_URL}/goals`).set('X-Account-Id', accountId)
-        const defaultGoals = [
-            { type: 'all', name: t('labels.all') },
-            { type: 'today', name: t('labels.today') },
-            { type: 'thisWeek', name: t('labels.thisWeek') }
-        ]
-        dispatch(updateUserGoals([...defaultGoals, ...response.body, { type: 'newGoal', name: t('labels.newGoal') }]))
+        dispatch(updateUserGoals(response.body))
     }
 })
 

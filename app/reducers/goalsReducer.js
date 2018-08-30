@@ -21,10 +21,7 @@ export default function (state = INITIAL_STATE, action) {
     } else if (type === CHANGE_GOAL_DUE_DATE) {
         return { ...state, goalDueDate: payload }
     } else if (type === CREATE_NEW_GOAL) {
-        const [allBtn, todayBtn, weekBtn, ...otherGoals] = state.goals
-        const newGoalBtn = otherGoals.pop()
-        const goals = otherGoals.slice(0, -1)
-        return { ...state, goals: [allBtn, todayBtn, weekBtn, ...goals, payload, newGoalBtn] }
+        return { ...state, goals: [...state.goals, payload] }
     } else if (type === UPDATE_USER_GOALS) {
         return { ...state, goals: payload }
     } else if (type === SET_GOAL) {
