@@ -10,7 +10,7 @@ import ColorPicker from '../components/common/ColorPicker/ColorPicker'
 import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import Config from 'react-native-config'
-import Header from '../components/common/Header/CustomHeader'
+import Header from '../components/common/Header/Header'
 
 class NewGoalScreen extends Component {
 

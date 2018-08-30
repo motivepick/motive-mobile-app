@@ -9,7 +9,7 @@ import { updateTaskAction } from '../actions/tasksActions'
 import { translate } from 'react-i18next'
 import { Container, Content, Form, Input, Item, Label } from 'native-base'
 import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
-import Header from '../components/common/Header/CustomHeader'
+import Header from '../components/common/Header/Header'
 
 class TaskScreen extends Component {
 
