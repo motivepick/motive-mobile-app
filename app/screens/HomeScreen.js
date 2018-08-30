@@ -10,9 +10,20 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import { API_URL } from '../const'
-import { hideClosedTasksAction, showClosedTasksAction, undoCloseTaskAction, updateClosedUserTasksAction, updateUserTasksAction } from '../actions/tasksActions'
+import {
+    createTask,
+    endCreatingTask,
+    hideClosedTasksAction,
+    setFilterAction,
+    showClosedTasksAction,
+    startCreatingTask,
+    undoCloseTaskAction,
+    updateClosedUserTasksAction,
+    updateUserTasksAction
+} from '../actions/tasksActions'
 import Tasks from '../components/TaskList/Tasks'
-import { all, thisWeek, today } from '../services/tasksService'
+import { fetchTasks } from '../services/tasksService'
+import moment from 'moment'
 
 export class HomeScreen extends Component {
 
@@ -32,7 +43,7 @@ export class HomeScreen extends Component {
     }
 
     render() {
-        const { tasks, closedTasks, closedTasksAreShown, updateUserTasks, undoCloseTask, t } = this.props
+        const { tasks, closedTasks, closedTasksAreShown, updateUserTasks, createTask, undoCloseTask, t } = this.props
         return (
             <Container>
                 <Header hasTabs>
@@ -46,7 +57,7 @@ export class HomeScreen extends Component {
                     <Tab heading="Tasks">
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
-                                <TaskList tasks={tasks} onFilterChanged={filter => updateUserTasks(false, filter)}/>
+                                <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}/>
                                 <Button transparent onPress={() => updateUserTasks(true)}>
                                     <Text>{closedTasksAreShown ? t('labels.hideClosedTasks') : t('labels.showClosedTasks')}</Text>
                                 </Button>
@@ -75,6 +86,24 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
+    createTask: task => async (dispatch, getState) => {
+        dispatch(startCreatingTask())
+        const state = getState()
+        const filter = state.tasks.tasksFilter
+        const accountId = await AsyncStorage.getItem('accountId')
+        if (filter === 'today') {
+            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('day') })
+            dispatch(createTask(body))
+        } else if (filter === 'thisWeek') {
+            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('week') })
+            dispatch(createTask(body))
+        } else {
+            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send(task)
+            dispatch(createTask(body))
+        }
+        dispatch(endCreatingTask())
+    },
+
     updateUserTasks: (closed, filter) => async (dispatch, getState) => {
         if (closed) {
             const { closedTasksAreShown } = getState().tasks
@@ -84,12 +113,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
                 dispatch(updateClosedUserTasksAction(await all()))
                 dispatch(showClosedTasksAction())
             }
-        } else if (filter === 'all') {
-            dispatch(updateUserTasksAction(await all()))
-        } else if (filter === 'today') {
-            dispatch(updateUserTasksAction(await today()))
-        } else if (filter === 'thisWeek') {
-            dispatch(updateUserTasksAction(await thisWeek()))
+        } else {
+            dispatch(setFilterAction(filter))
+            dispatch(updateUserTasksAction(await fetchTasks(filter)))
         }
     },
 

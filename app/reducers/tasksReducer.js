@@ -1,9 +1,9 @@
 import {
-    CHANGE_NEW_TASK_NAME,
     CLOSE_TASK,
     CREATE_TASK,
     END_CREATING_TASK,
     HIDE_CLOSED_TASKS,
+    SET_FILTER,
     SHOW_CLOSED_TASKS,
     SHOW_ERROR,
     START_CREATING_TASK,
@@ -17,7 +17,7 @@ const INITIAL_STATE = {
     tasks: [],
     closedTasks: [],
     closedTasksAreShown: false,
-    newTaskName: '',
+    tasksFilter: 'all',
     newTaskNameInputDisabled: false,
     error: null
 }
@@ -38,14 +38,14 @@ const updatedClosedTasks = (state, id) => {
 
 export default function (state = INITIAL_STATE, action) {
     const { type } = action
-    if (type === CHANGE_NEW_TASK_NAME) {
-        return { ...state, newTaskName: action.payload }
-    } else if (type === CREATE_TASK) {
+    if (type === CREATE_TASK) {
         return { ...state, tasks: [action.payload].concat(state.tasks) }
     } else if (type === START_CREATING_TASK) {
         return { ...state, creatingTask: true }
     } else if (type === END_CREATING_TASK) {
         return { ...state, creatingTask: false }
+    } else if (type === SET_FILTER) {
+        return { ...state, tasksFilter: action.payload }
     } else if (type === UPDATE_USER_TASKS) {
         return { ...state, tasks: action.payload }
     } else if (type === UPDATE_CLOSED_USER_TASKS) {

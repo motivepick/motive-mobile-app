@@ -1,4 +1,4 @@
-export const CHANGE_NEW_TASK_NAME = 'CHANGE_NEW_TASK_NAME'
+export const SET_FILTER = 'SET_FILTER'
 export const UPDATE_USER_TASKS = 'UPDATE_USER_TASKS'
 export const UPDATE_CLOSED_USER_TASKS = 'UPDATE_CLOSED_USER_TASKS'
 export const SHOW_CLOSED_TASKS = 'SHOW_CLOSED_TASKS'
@@ -11,7 +11,7 @@ export const CLOSE_TASK = 'CLOSE_TASK'
 export const UNDO_CLOSE_TASK = 'UNDO_CLOSE_TASK'
 export const UPDATE_TASK = 'UPDATE_TASK'
 
-export const changeNewTaskName = newTaskName => ({ type: CHANGE_NEW_TASK_NAME, payload: newTaskName })
+export const setFilterAction = tasksFilter => ({ type: SET_FILTER, payload: tasksFilter })
 
 export const updateUserTasksAction = tasks => ({ type: UPDATE_USER_TASKS, payload: tasks })
 
