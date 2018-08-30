@@ -53,7 +53,7 @@ export class HomeScreen extends Component {
                     </Body>
                     <Right/>
                 </Header>
-                <Tabs>
+                <Tabs locked>
                     <Tab heading="Tasks">
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
