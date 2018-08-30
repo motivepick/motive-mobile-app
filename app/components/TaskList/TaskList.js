@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, View } from 'react-native'
+import { AsyncStorage, Image, View } from 'react-native'
 import styles from './TaskList.styles'
 import { handleDueDateOf } from '../../utils/parser'
 import { closeTask, showError } from '../../actions/tasksActions'
@@ -59,8 +59,27 @@ export class TaskList extends Component {
                     </Button>
                 </Segment>
                 <Tasks tasks={tasks} onCloseTask={id => closeTask(id)}/>
+                {tasks && tasks.length === 0 && this.noTasksToShow()}
             </View>
         )
+    }
+
+    // TODO: remove img later. Just bored.
+    noTasksToShow = () => {
+        const imgs = [
+            { uri: 'https://mir-s3-cdn-cf.behance.net/project_modules/disp/27fb8e19326681.562d885e2f63b.gif' },
+            { uri: 'http://gifdanceparty.giphy.com/assets/dancers/deadpool.gif' },
+            { uri: 'http://www.yim778.com/data/out/168/1118556.gif' }
+        ]
+        const img = imgs[Math.floor(Math.random() * 3)]
+
+        return <View style={{ flex: 1, alignItems: 'center' }}>
+            <Text>Hell yeah! All done!</Text>
+            <Image
+                style={{ width: 250, height: 250 }}
+                source={img}
+            />
+        </View>
     }
 
     handleFilterChange = activeFilter => {
