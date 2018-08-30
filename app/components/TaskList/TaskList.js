@@ -9,7 +9,7 @@ import request from 'superagent'
 import { API_URL } from '../../const'
 import moment from 'moment'
 import { translate } from 'react-i18next'
-import { Form, Input, Item, Label } from 'native-base'
+import { Form, Input, Item } from 'native-base'
 import Tasks from './Tasks'
 
 export class TaskList extends Component {
@@ -28,15 +28,15 @@ export class TaskList extends Component {
 
         return (
             <View style={styles.container}>
-                <Form>
-                    <Item last floatingLabel>
-                        <Label>{t('labels.newTask')}</Label>
+                <Form style={{ marginHorizontal: 10 }}>
+                    <Item regular>
                         <Input
                             onChangeText={changeNewTaskName}
                             value={newTaskName}
                             onSubmitEditing={this.onAddNewTask}
                             editable={!creatingTask}
                             returnKeyType={'done'}
+                            placeholder={t('labels.newTask')}
                         />
                     </Item>
                 </Form>
