@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
 
         ...Platform.select({
             ios: {
-                paddingTop: 20
+                paddingTop: 10
             }
         })
     },
