@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { AsyncStorage, Text, TouchableOpacity, View } from 'react-native'
-import ColorIndicator from '../ColorIndicator/ColorIndicator'
+import ColorIndicator from '../common/ColorIndicator/ColorIndicator'
 import styles from './Goal.styles'
 import { withNavigation } from 'react-navigation'
 import connect from 'react-redux/es/connect/connect'

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Body, Button, Header, Left, Right, Text, Title } from 'native-base'
 import { translate } from 'react-i18next'
 
-class CustomHeader extends Component {
+class HeaderComponent extends Component {
 
     render() {
         const { title, onLeftButtonPress, onRightButtonPress, t } = this.props
@@ -27,4 +27,4 @@ class CustomHeader extends Component {
     }
 }
 
-export default translate('translations')(CustomHeader)
+export default translate('translations')(HeaderComponent)

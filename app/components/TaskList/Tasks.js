@@ -3,7 +3,7 @@ import Task from '../Task/Task'
 import styles from './TaskList.styles'
 import { Button, Icon } from 'native-base'
 import { ListView, View } from 'react-native'
-import List from '../List/List'
+import List from '../common/List/List'
 
 class Tasks extends Component {
     constructor(props) {

@@ -3,8 +3,8 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import moment from 'moment'
 import FontAwesome, { Icons } from 'react-native-fontawesome'
 
-import CheckBox from '../CheckBox/CheckBox'
-import ColorIndicator from '../ColorIndicator/ColorIndicator'
+import CheckBox from '../common/CheckBox/CheckBox'
+import ColorIndicator from '../common/ColorIndicator/ColorIndicator'
 
 import styles from './Task.styles'
 import { connect } from 'react-redux'

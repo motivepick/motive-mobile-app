@@ -9,7 +9,7 @@ import request from 'superagent'
 import Config from 'react-native-config'
 import { translate } from 'react-i18next'
 import { Button, Form, Icon, Input, Item } from 'native-base'
-import List from '../List/List'
+import List from '../common/List/List'
 
 export class GoalList extends Component {
     constructor(props) {

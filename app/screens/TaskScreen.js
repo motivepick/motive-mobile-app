@@ -8,8 +8,8 @@ import { API_URL } from '../const'
 import { updateTaskAction } from '../actions/tasksActions'
 import { translate } from 'react-i18next'
 import { Container, Content, Form, Input, Item, Label } from 'native-base'
-import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
-import Header from '../components/CustomHeader/CustomHeader'
+import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
+import Header from '../components/common/Header/CustomHeader'
 
 class TaskScreen extends Component {
 

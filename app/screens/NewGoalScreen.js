@@ -5,12 +5,12 @@ import { connect } from 'react-redux'
 import { changeGoalColorAction, changeGoalDescriptionAction, changeGoalDueDateAction, changeGoalNameAction, createNewGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 import { Container, Content, Form, Input, Item, Label } from 'native-base'
-import DueDatePicker from '../components/DueDatePicker/DueDatePicker'
-import ColorPicker from '../components/ColorPicker/ColorPicker'
+import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
+import ColorPicker from '../components/common/ColorPicker/ColorPicker'
 import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import Config from 'react-native-config'
-import Header from '../components/CustomHeader/CustomHeader'
+import Header from '../components/common/Header/CustomHeader'
 
 class NewGoalScreen extends Component {
 
