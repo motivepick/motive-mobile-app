@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, Easing, Platform, Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import moment from 'moment'
 import FontAwesome, { Icons } from 'react-native-fontawesome'
 
@@ -31,7 +31,7 @@ class Task extends Component {
         const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).local().calendar() : null
 
         return (
-            <Animated.View style={styles.row}>
+            <View style={styles.row}>
                 <CheckBox isCompleted={closed} onAction={() => onClose(id)}/>
                 <TouchableOpacity style={styles.task} onPress={this.handleTaskClick}>
                     <Text
@@ -46,7 +46,7 @@ class Task extends Component {
                     {formattedDueDate && <Text style={[styles.textMuted]}><FontAwesome>{Icons.calendarO}</FontAwesome> {formattedDueDate}</Text>}
                 </TouchableOpacity>
                 <ColorIndicator color={goal && goal.colorTag} styler={{ marginLeft: 20 }}/>
-            </Animated.View>
+            </View>
         )
     }
 

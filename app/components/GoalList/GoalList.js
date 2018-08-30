@@ -8,7 +8,7 @@ import { updateUserGoals } from '../../actions/goalsActions'
 import request from 'superagent'
 import Config from 'react-native-config'
 import { translate } from 'react-i18next'
-import { Button, Icon } from 'native-base'
+import { Button, Form, Icon, Input, Item } from 'native-base'
 import List from '../List/List'
 
 export class GoalList extends Component {
@@ -24,14 +24,28 @@ export class GoalList extends Component {
     }
 
     render() {
-        const { goals } = this.props
+        const { goals, goalName, creatingGoal, t } = this.props
 
         return (
-            <List
-                data={goals}
-                renderRow={this.renderRow}
-                renderRightHiddenRow={this.renderRightHiddenRow}
-            />
+            <View style={styles.container}>
+                <Form style={{ marginHorizontal: 10 }}>
+                    <Item regular>
+                        <Input
+                            onChangeText={goalName => this.setState({ goalName })}
+                            value={goalName}
+                            onSubmitEditing={this.onAddNewGoal}
+                            editable={!creatingGoal}
+                            returnKeyType={'done'}
+                            placeholder={t('labels.newGoal')}
+                        />
+                    </Item>
+                </Form>
+                <List
+                    data={goals}
+                    renderRow={this.renderRow}
+                    renderRightHiddenRow={this.renderRightHiddenRow}
+                />
+            </View>
         )
     }
 
@@ -52,6 +66,8 @@ export class GoalList extends Component {
 
     editGoal(secId, rowId, rowMap) {
     }
+
+    onAddNewGoal = () => {}
 }
 
 const mapStateToProps = state => ({

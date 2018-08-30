@@ -27,7 +27,6 @@ export class TaskList extends Component {
     }
 
     // TODO: fix Segment btns look on Android (white text on white background)
-    // TODO: Segment must be actionable
     render() {
         const { taskName } = this.state
         const { tasks, creatingTask, closeTask, t } = this.props
