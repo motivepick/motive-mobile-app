@@ -1,6 +1,4 @@
-import { Dimensions, Platform, StyleSheet } from 'react-native'
-
-const window = Dimensions.get('window')
+import { Platform, StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
     container: {
@@ -19,9 +17,6 @@ export const styles = StyleSheet.create({
         color: '#999999',
         textAlign: 'center'
     },
-    list: {
-        flex: 1
-    },
     input: {
         borderBottomColor: '#3d3d3d',
         borderBottomWidth: 1,
@@ -29,8 +24,9 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         padding: 16
     },
-    contentContainer: {
-        width: window.width
+    hiddenRow: {
+        flexDirection: 'row',
+        marginTop: 9
     }
 })
 

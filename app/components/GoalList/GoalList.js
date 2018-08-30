@@ -8,7 +8,8 @@ import { updateUserGoals } from '../../actions/goalsActions'
 import request from 'superagent'
 import Config from 'react-native-config'
 import { translate } from 'react-i18next'
-import { Button, Icon, List } from 'native-base'
+import { Button, Icon } from 'native-base'
+import List from '../List/List'
 
 export class GoalList extends Component {
     constructor(props) {
@@ -26,27 +27,18 @@ export class GoalList extends Component {
         const { goals } = this.props
 
         return (
-            <View style={styles.container}>
-                <List
-                    style={styles.list}
-                    contentContainerStyle={styles.contentContainer}
-                    rightOpenValue={-140}
-                    disableRightSwipe={true}
-                    closeOnRowBeginSwipe={true}
-                    dataSource={this.ds.cloneWithRows(goals)}
-                    renderRow={this.renderRow}
-                    renderRightHiddenRow={this.renderRightHiddenRow}
-                />
-            </View>
+            <List
+                data={goals}
+                renderRow={this.renderRow}
+                renderRightHiddenRow={this.renderRightHiddenRow}
+            />
         )
     }
 
-    renderRow = (data) => {
-        return <Goal data={data}/>
-    }
+    renderRow = data => <Goal data={data}/>
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
-        <View style={{ flexDirection: 'row', marginTop: 9 }}>
+        <View style={styles.hiddenRow}>
             <Button onPress={() => this.editGoal(secId, rowId, rowMap)}>
                 <Icon active name='md-create'/>
             </Button>

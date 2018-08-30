@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import styles from './TaskList.styles'
 import Task from '../Task/Task'
-import { Button, Icon, List } from 'native-base'
+import styles from './TaskList.styles'
+import { Button, Icon } from 'native-base'
 import { ListView, View } from 'react-native'
+import List from '../List/List'
 
 class Tasks extends Component {
     constructor(props) {
@@ -17,22 +18,18 @@ class Tasks extends Component {
 
     list = (tasks) =>
         <List
-            style={styles.list}
-            contentContainerStyle={styles.contentContainer}
-            rightOpenValue={-140}
-            disableRightSwipe={true}
-            closeOnRowBeginSwipe={true}
-            dataSource={this.ds.cloneWithRows(tasks)}
+            data={tasks}
             renderRow={this.renderRow}
             renderRightHiddenRow={this.renderRightHiddenRow}
         />
+
     renderRow = (data) => {
         const { onCloseTask } = this.props
         return <Task data={data} onClose={onCloseTask}/>
     }
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={styles.hiddenRow}>
             <Button onPress={() => this.editTask(secId, rowId, rowMap)}>
                 <Icon active name='md-create'/>
             </Button>
@@ -40,8 +37,6 @@ class Tasks extends Component {
                 <Icon active name='trash'/>
             </Button>
         </View>
-
-    // TODO: task content needs to be centered vertically to align with buttons
 
     deleteTask(secId, rowId, rowMap) {
         // rowMap[`${secId}${rowId}`].props.closeRow()
