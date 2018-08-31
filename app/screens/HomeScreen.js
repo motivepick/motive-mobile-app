@@ -24,6 +24,7 @@ import {
 import Tasks from '../components/TaskList/Tasks'
 import { fetchClosedTasks, fetchTasks } from '../services/tasksService'
 import moment from 'moment'
+import { createNewGoalAction, updateUserGoalsAction } from '../actions/goalsActions'
 
 export class HomeScreen extends Component {
 
@@ -32,8 +33,9 @@ export class HomeScreen extends Component {
     }
 
     componentDidMount() {
-        const { updateUserTasks } = this.props
+        const { updateUserTasks, updateUserGoals } = this.props
         updateUserTasks(false, 'all')
+        updateUserGoals()
     }
 
     logout = async () => {
@@ -43,7 +45,7 @@ export class HomeScreen extends Component {
     }
 
     render() {
-        const { tasks, closedTasks, closedTasksAreShown, updateUserTasks, createTask, undoCloseTask, t } = this.props
+        const { tasks, closedTasks, closedTasksAreShown, goals, updateUserTasks, createTask, undoCloseTask, createGoal, t } = this.props
         return (
             <Container>
                 <Tabs locked tabBarBackgroundColor={'#fff'} style={{ marginTop: 30 }}>
@@ -61,7 +63,7 @@ export class HomeScreen extends Component {
                     <Tab heading={t('headings.goals')} activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
-                                <GoalList/>
+                                <GoalList goals={goals} onGoalCreated={goal => createGoal(goal)}/>
                             </View>
                         </Content>
                     </Tab>
@@ -74,28 +76,11 @@ export class HomeScreen extends Component {
 const mapStateToProps = state => ({
     tasks: state.tasks.tasks,
     closedTasks: state.tasks.closedTasks,
-    closedTasksAreShown: state.tasks.closedTasksAreShown
+    closedTasksAreShown: state.tasks.closedTasksAreShown,
+    goals: state.goals.goals
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
-    createTask: task => async (dispatch, getState) => {
-        dispatch(startCreatingTask())
-        const state = getState()
-        const filter = state.tasks.tasksFilter
-        const accountId = await AsyncStorage.getItem('accountId')
-        if (filter === 'today') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('day') })
-            dispatch(createTask(body))
-        } else if (filter === 'thisWeek') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('week') })
-            dispatch(createTask(body))
-        } else {
-            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send(task)
-            dispatch(createTask(body))
-        }
-        dispatch(endCreatingTask())
-    },
 
     updateUserTasks: (closed, filter) => async (dispatch, getState) => {
         if (closed) {
@@ -112,10 +97,40 @@ const mapDispatchToProps = dispatch => bindActionCreators({
         }
     },
 
+    createTask: task => async (dispatch, getState) => {
+        dispatch(startCreatingTask())
+        const { tasks } = getState()
+        const { tasksFilter } = tasks
+        const accountId = await AsyncStorage.getItem('accountId')
+        if (tasksFilter === 'today') {
+            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('day') })
+            dispatch(createTask(body))
+        } else if (tasksFilter === 'thisWeek') {
+            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('week') })
+            dispatch(createTask(body))
+        } else {
+            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send(task)
+            dispatch(createTask(body))
+        }
+        dispatch(endCreatingTask())
+    },
+
     undoCloseTask: id => async dispatch => {
         const accountId = await AsyncStorage.getItem('accountId')
         const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: false })
         dispatch(undoCloseTaskAction(body.id))
+    },
+
+    updateUserGoals: () => async dispatch => {
+        const accountId = await AsyncStorage.getItem('accountId')
+        const response = await request.get(`${API_URL}/goals`).set('X-Account-Id', accountId)
+        dispatch(updateUserGoalsAction(response.body))
+    },
+
+    createGoal: goal => async dispatch => {
+        const accountId = await AsyncStorage.getItem('accountId')
+        const { body } = await request.post(`${API_URL}/goals`).set('X-Account-Id', accountId).send(goal)
+        dispatch(createNewGoalAction(body))
     }
 }, dispatch)
 

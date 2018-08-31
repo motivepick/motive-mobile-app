@@ -1,30 +1,23 @@
 import React, { Component } from 'react'
-import { AsyncStorage, ListView, View } from 'react-native'
-
+import { ListView, View } from 'react-native'
 import Goal from '../Goal/Goal'
 import styles from './GoalList.styles'
-import connect from 'react-redux/es/connect/connect'
-import { updateUserGoals } from '../../actions/goalsActions'
-import request from 'superagent'
-import Config from 'react-native-config'
 import { translate } from 'react-i18next'
 import { Button, Form, Icon, Input, Item } from 'native-base'
 import List from '../common/List/List'
 
 export class GoalList extends Component {
+
+    state = { goalName: '' }
+
     constructor(props) {
         super(props)
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
     }
 
-    async componentDidMount() {
-        const { updateUserGoals, t } = this.props
-        const accountId = await AsyncStorage.getItem('accountId')
-        updateUserGoals(accountId, t)
-    }
-
     render() {
-        const { goals, goalName, creatingGoal, t } = this.props
+        const { goalName } = this.state
+        const { goals, creatingGoal, t } = this.props
 
         return (
             <View style={styles.container}>
@@ -61,25 +54,21 @@ export class GoalList extends Component {
             </Button>
         </View>
 
-    deleteGoal(secId, rowId, rowMap) {
-    }
-
     editGoal(secId, rowId, rowMap) {
     }
 
-    onAddNewGoal = () => {}
+    deleteGoal(secId, rowId, rowMap) {
+    }
+
+    onAddNewGoal = async () => {
+        const { goalName } = this.state
+        const { onGoalCreated } = this.props
+        if (goalName.trim() !== '') {
+            const goal = { name: goalName.trim() }
+            onGoalCreated(goal)
+            this.setState({ goalName: '' })
+        }
+    }
 }
 
-const mapStateToProps = state => ({
-    goals: state.goals.goals
-})
-
-const mapDispatchToProps = dispatch => ({
-
-    updateUserGoals: async (accountId) => {
-        const response = await request.get(`${Config.API_URL}/goals`).set('X-Account-Id', accountId)
-        dispatch(updateUserGoals(response.body))
-    }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(GoalList))
+export default translate('translations')(GoalList)

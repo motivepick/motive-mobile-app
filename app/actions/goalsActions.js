@@ -18,4 +18,4 @@ export const createNewGoalAction = goal => ({ type: CREATE_NEW_GOAL, payload: go
 
 export const setGoal = (id, type) => ({ type: SET_GOAL, payload: { id, type } })
 
-export const updateUserGoals = goals => ({ type: UPDATE_USER_GOALS, payload: goals })
+export const updateUserGoalsAction = goals => ({ type: UPDATE_USER_GOALS, payload: goals })

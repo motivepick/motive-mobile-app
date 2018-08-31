@@ -15,17 +15,6 @@ export class TaskList extends Component {
 
     state = { taskName: '', activeFilter: 'all' }
 
-    onAddNewTask = async () => {
-        const { taskName } = this.state
-        const { onTaskCreated } = this.props
-        if (taskName.trim() !== '') {
-            const id = await AsyncStorage.getItem('accountId')
-            const task = handleDueDateOf({ accountId: id, name: taskName.trim() })
-            onTaskCreated(task)
-            this.setState({ taskName: '' })
-        }
-    }
-
     // TODO: fix Segment btns look on Android (white text on white background)
     render() {
         const { taskName } = this.state
@@ -67,6 +56,16 @@ export class TaskList extends Component {
         const { onFilterChanged } = this.props
         this.setState({ activeFilter })
         onFilterChanged(activeFilter)
+    }
+
+    onAddNewTask = async () => {
+        const { taskName } = this.state
+        const { onTaskCreated } = this.props
+        if (taskName.trim() !== '') {
+            const task = handleDueDateOf({ name: taskName.trim() })
+            onTaskCreated(task)
+            this.setState({ taskName: '' })
+        }
     }
 }
 

@@ -39,7 +39,7 @@ const updatedClosedTasks = (state, id) => {
 export default function (state = INITIAL_STATE, action) {
     const { type } = action
     if (type === CREATE_TASK) {
-        return { ...state, tasks: [action.payload].concat(state.tasks) }
+        return { ...state, tasks: [action.payload, ...state.tasks] }
     } else if (type === START_CREATING_TASK) {
         return { ...state, creatingTask: true }
     } else if (type === END_CREATING_TASK) {

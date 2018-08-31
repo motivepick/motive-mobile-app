@@ -21,7 +21,7 @@ export default function (state = INITIAL_STATE, action) {
     } else if (type === CHANGE_GOAL_DUE_DATE) {
         return { ...state, goalDueDate: payload }
     } else if (type === CREATE_NEW_GOAL) {
-        return { ...state, goals: [...state.goals, payload] }
+        return { ...state, goals: [payload, ...state.goals] }
     } else if (type === UPDATE_USER_GOALS) {
         return { ...state, goals: payload }
     } else if (type === SET_GOAL) {
