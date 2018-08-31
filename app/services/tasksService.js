@@ -41,7 +41,7 @@ export const fetchTasks = filter => {
 }
 
 export const fetchClosedTasks = async () => {
-    const accountId = fetchAccountId()
+    const accountId = await fetchAccountId()
     const { body } = await request.get(`${Config.API_URL}/tasks`).query({ closed: true }).set('X-Account-Id', accountId)
     return body
 }
