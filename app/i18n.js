@@ -1,6 +1,5 @@
 import i18n from 'i18next'
 import { locale } from './utils/locale'
-import React from 'react'
 
 const languageDetector = {
     type: 'languageDetector',
@@ -13,6 +12,10 @@ i18n.use(languageDetector).init({
     resources: {
         en: {
             translations: {
+                headings: {
+                    tasks: 'Tasks',
+                    goals: 'Goals'
+                },
                 labels: {
                     statistics: 'You can do it! {{percent}}% done',
                     all: 'All Tasks',
@@ -41,6 +44,10 @@ i18n.use(languageDetector).init({
         },
         ru: {
             translations: {
+                headings: {
+                    tasks: 'Задачи',
+                    goals: 'Цели'
+                },
                 labels: {
                     statistics: 'Соберись! {{percent}}% готово',
                     all: 'Все задачи',
@@ -69,6 +76,10 @@ i18n.use(languageDetector).init({
         },
         zh: {
             translations: {
+                headings: {
+                    tasks: 'Tasks',
+                    goals: 'Goals'
+                },
                 labels: {
                     statistics: 'You can do it! {{percent}}% done',
                     all: 'All Tasks',

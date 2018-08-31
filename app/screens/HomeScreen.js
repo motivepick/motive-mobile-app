@@ -47,7 +47,7 @@ export class HomeScreen extends Component {
         return (
             <Container>
                 <Tabs locked tabBarBackgroundColor={'#fff'} style={{ marginTop: 30 }}>
-                    <Tab heading="Tasks" activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
+                    <Tab heading={t('headings.tasks')} activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
                                 <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}/>
@@ -58,7 +58,7 @@ export class HomeScreen extends Component {
                             </View>
                         </Content>
                     </Tab>
-                    <Tab heading="Goals" activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
+                    <Tab heading={t('headings.goals')} activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
                                 <GoalList/>
