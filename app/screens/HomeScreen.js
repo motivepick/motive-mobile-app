@@ -123,8 +123,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
     updateUserGoals: () => async dispatch => {
         const accountId = await AsyncStorage.getItem('accountId')
-        const response = await request.get(`${API_URL}/goals`).set('X-Account-Id', accountId)
-        dispatch(updateUserGoalsAction(response.body))
+        const { body } = await request.get(`${API_URL}/goals`).set('X-Account-Id', accountId)
+        dispatch(updateUserGoalsAction(body))
     },
 
     createGoal: goal => async dispatch => {

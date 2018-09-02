@@ -4,7 +4,7 @@ import { StackNavigator } from 'react-navigation'
 import LoginScreen from './screens/LoginScreen'
 import SplashScreen from './screens/SplashScreen'
 import HomeScreen from './screens/HomeScreen'
-import NewGoalScreen from './screens/NewGoalScreen'
+import GoalScreen from './screens/GoalScreen'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import { applyMiddleware, createStore } from 'redux'
@@ -16,8 +16,8 @@ const RootStack = StackNavigator({
     Splash: SplashScreen,
     Login: LoginScreen,
     Home: HomeScreen,
-    NewGoal: NewGoalScreen,
-    Task: TaskScreen
+    Task: TaskScreen,
+    Goal: GoalScreen
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

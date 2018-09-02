@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-
 import { Button, Icon, Item } from 'native-base'
+import { translate } from 'react-i18next'
 
 const palette = {
     red: '#C25B56',
@@ -12,8 +12,10 @@ const palette = {
 
 class ColorPicker extends Component {
 
-    state = {
-        selectedColor: ''
+    constructor(props) {
+        super(props)
+        const { value } = props
+        this.state = ({ selectedColor: value || '' })
     }
 
     render() {
@@ -38,4 +40,5 @@ class ColorPicker extends Component {
     }
 }
 
-export default ColorPicker
+// TODO: if translations are removed (or if wait is set fo false), constructor is called earlier and the initial state is not set
+export default translate('translations')(ColorPicker)

@@ -17,11 +17,11 @@ class Goal extends Component {
     }
 
     render() {
-        const { data: { type, name, colorTag } } = this.props
+        const { data: { name, colorTag } } = this.props
 
         return (
             <View style={styles.row}>
-                <TouchableOpacity style={styles.goal} onPress={() => this.handleGoalSelect(type)}>
+                <TouchableOpacity style={styles.goal} onPress={this.handleGoalClick}>
                     <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
                 </TouchableOpacity>
                 <ColorIndicator color={colorTag} styler={{ marginLeft: 20 }}/>
@@ -29,20 +29,9 @@ class Goal extends Component {
         )
     }
 
-    handleGoalSelect = (type) => {
-        const { unsetGoal, setTodayGoal, setThisWeekGoal, setUserDefinedGoal } = this.props
-        if (type === 'all') {
-            unsetGoal()
-        } else if (type === 'today') {
-            setTodayGoal()
-        } else if (type === 'thisWeek') {
-            setThisWeekGoal()
-        } else if (type === 'newGoal') {
-            const { navigation } = this.props
-            navigation.navigate('NewGoal')
-        } else {
-            setUserDefinedGoal()
-        }
+    handleGoalClick = () => {
+        const { data, navigation } = this.props
+        navigation.navigate('Goal', { goal: data })
     }
 }
 
