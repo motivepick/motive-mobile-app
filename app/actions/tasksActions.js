@@ -10,6 +10,7 @@ export const END_CREATING_TASK = 'END_CREATING_TASK'
 export const CLOSE_TASK = 'CLOSE_TASK'
 export const UNDO_CLOSE_TASK = 'UNDO_CLOSE_TASK'
 export const UPDATE_TASK = 'UPDATE_TASK'
+export const DELETE_TASK = 'DELETE_TASK'
 
 export const setFilterAction = tasksFilter => ({ type: SET_FILTER, payload: tasksFilter })
 
@@ -34,3 +35,5 @@ export const closeTask = id => ({ type: CLOSE_TASK, payload: id })
 export const undoCloseTaskAction = id => ({ type: UNDO_CLOSE_TASK, payload: id })
 
 export const updateTaskAction = task => ({ type: UPDATE_TASK, payload: task })
+
+export const deleteTaskAction = id => ({ type: DELETE_TASK, payload: id })

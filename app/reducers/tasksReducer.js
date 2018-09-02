@@ -1,6 +1,7 @@
 import {
     CLOSE_TASK,
     CREATE_TASK,
+    DELETE_TASK,
     END_CREATING_TASK,
     HIDE_CLOSED_TASKS,
     SET_FILTER,
@@ -67,6 +68,8 @@ export default function (state = INITIAL_STATE, action) {
             tasks.push(task.id === payload.id ? { ...task, ...payload } : task)
         }
         return { ...state, tasks }
+    } else if (type === DELETE_TASK) {
+        return { ...state, tasks: state.tasks.filter(t => t.id !== action.payload), closedTasks: state.closedTasks.filter(t => t.id !== action.payload) }
     } else {
         return state
     }

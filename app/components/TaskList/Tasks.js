@@ -4,8 +4,10 @@ import styles from './TaskList.styles'
 import { Button, Icon } from 'native-base'
 import { ListView, View } from 'react-native'
 import List from '../common/List/List'
+import { withNavigation } from 'react-navigation'
 
 class Tasks extends Component {
+
     constructor(props) {
         super(props)
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
@@ -30,23 +32,26 @@ class Tasks extends Component {
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
         <View style={styles.hiddenRow}>
-            <Button onPress={() => this.editTask(secId, rowId, rowMap)}>
+            <Button onPress={() => this.editTask(data, secId, rowId, rowMap)}>
                 <Icon active name='md-create'/>
             </Button>
-            <Button danger onPress={() => this.deleteTask(secId, rowId, rowMap)}>
+            <Button danger onPress={() => this.deleteTask(data, secId, rowId, rowMap)}>
                 <Icon active name='trash'/>
             </Button>
         </View>
 
-    deleteTask(secId, rowId, rowMap) {
-        // rowMap[`${secId}${rowId}`].props.closeRow()
-        // const newData = [...this.state.listViewData]
-        // newData.splice(rowId, 1)
-        // this.setState({ listViewData: newData })
+    deleteTask = (data, secId, rowId, rowMap) => {
+        const { onDeleteTask } = this.props
+        const { id } = data
+        onDeleteTask(id)
+        rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    editTask(secId, rowId, rowMap) {
+    editTask = (data, secId, rowId, rowMap) => {
+        const { navigation } = this.props
+        navigation.navigate('Task', { task: data })
+        rowMap[`${secId}${rowId}`].props.closeRow()
     }
 }
 
-export default Tasks
+export default withNavigation(Tasks)

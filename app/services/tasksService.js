@@ -45,3 +45,9 @@ export const fetchClosedTasks = async () => {
     const { body } = await request.get(`${API_URL}/tasks`).query({ closed: true }).set('X-Account-Id', accountId)
     return body
 }
+
+export const doDeleteTask = async id => {
+    const accountId = await fetchAccountId()
+    const { body } = await request.del(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId)
+    return body
+}

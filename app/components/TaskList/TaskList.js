@@ -18,7 +18,7 @@ export class TaskList extends Component {
     // TODO: fix Segment btns look on Android (white text on white background)
     render() {
         const { taskName } = this.state
-        const { tasks, creatingTask, closeTask, t } = this.props
+        const { tasks, creatingTask, closeTask, onTaskDeleted, t } = this.props
         const { activeFilter } = this.state
 
         return (
@@ -46,7 +46,7 @@ export class TaskList extends Component {
                         <Text>{t('labels.thisWeek')}</Text>
                     </Button>
                 </Segment>
-                <Tasks tasks={tasks} onCloseTask={id => closeTask(id)}/>
+                <Tasks tasks={tasks} onCloseTask={id => closeTask(id)} onDeleteTask={onTaskDeleted}/>
                 {tasks && tasks.length === 0 && <Text style={{ alignSelf: 'center' }}> All done!</Text>}
             </View>
         )
