@@ -3,6 +3,7 @@ import {
     CHANGE_GOAL_DESCRIPTION,
     CHANGE_GOAL_NAME,
     CREATE_NEW_GOAL,
+    DELETE_GOAL,
     SET_GOAL,
     UPDATE_GOAL,
     UPDATE_USER_GOALS
@@ -33,6 +34,8 @@ export default function (state = INITIAL_STATE, action) {
             goals.push(goal.id === payload.id ? { ...goal, ...payload } : goal)
         }
         return { ...state, goals }
+    } else if (type === DELETE_GOAL) {
+        return { ...state, goals: state.goals.filter(g => g.id !== action.payload) }
     } else {
         return state
     }

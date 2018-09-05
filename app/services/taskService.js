@@ -1,10 +1,8 @@
-import { AsyncStorage } from 'react-native'
 import request from 'superagent'
 import moment from 'moment'
 import { orderTasksByDate } from '../utils/order'
 import { API_URL } from '../const'
-
-const fetchAccountId = () => AsyncStorage.getItem('accountId')
+import { fetchAccountId } from './accountService'
 
 const all = async () => {
     const accountId = await fetchAccountId()

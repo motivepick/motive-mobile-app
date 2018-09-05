@@ -5,6 +5,7 @@ import styles from './GoalList.styles'
 import { translate } from 'react-i18next'
 import { Button, Form, Icon, Input, Item } from 'native-base'
 import List from '../common/List/List'
+import { withNavigation } from 'react-navigation'
 
 export class GoalList extends Component {
 
@@ -46,18 +47,25 @@ export class GoalList extends Component {
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
         <View style={styles.hiddenRow}>
-            <Button onPress={() => this.editGoal(secId, rowId, rowMap)}>
+            <Button onPress={() => this.editGoal(data, secId, rowId, rowMap)}>
                 <Icon active name='md-create'/>
             </Button>
-            <Button danger onPress={() => this.deleteGoal(secId, rowId, rowMap)}>
+            <Button danger onPress={() => this.deleteGoal(data, secId, rowId, rowMap)}>
                 <Icon active name='trash'/>
             </Button>
         </View>
 
-    editGoal(secId, rowId, rowMap) {
+    deleteGoal = (data, secId, rowId, rowMap) => {
+        const { onDeleteGoal } = this.props
+        const { id } = data
+        onDeleteGoal(id)
+        rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    deleteGoal(secId, rowId, rowMap) {
+    editGoal = (data, secId, rowId, rowMap) => {
+        const { navigation } = this.props
+        navigation.navigate('Goal', { goal: data })
+        rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
     onAddNewGoal = async () => {
@@ -71,4 +79,4 @@ export class GoalList extends Component {
     }
 }
 
-export default translate('translations')(GoalList)
+export default translate('translations')(withNavigation(GoalList))

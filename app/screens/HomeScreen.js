@@ -23,9 +23,10 @@ import {
     updateUserTasksAction
 } from '../actions/tasksActions'
 import Tasks from '../components/TaskList/Tasks'
-import { doDeleteTask, fetchClosedTasks, fetchTasks } from '../services/tasksService'
+import { doDeleteTask, fetchClosedTasks, fetchTasks } from '../services/taskService'
 import moment from 'moment'
-import { createNewGoalAction, updateUserGoalsAction } from '../actions/goalsActions'
+import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '../actions/goalsActions'
+import { doDeleteGoal } from '../services/goalService'
 
 export class HomeScreen extends Component {
 
@@ -46,7 +47,7 @@ export class HomeScreen extends Component {
     }
 
     render() {
-        const { tasks, closedTasks, closedTasksAreShown, goals, updateUserTasks, createTask, deleteTask, undoCloseTask, createGoal, t } = this.props
+        const { tasks, closedTasks, closedTasksAreShown, goals, updateUserTasks, createTask, deleteTask, undoCloseTask, createGoal, deleteGoal, t } = this.props
         return (
             <Container>
                 <Tabs locked tabBarBackgroundColor={'#fff'} style={{ marginTop: 30 }}>
@@ -65,7 +66,7 @@ export class HomeScreen extends Component {
                     <Tab heading={t('headings.goals')} activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
-                                <GoalList goals={goals} onGoalCreated={goal => createGoal(goal)}/>
+                                <GoalList goals={goals} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>
                             </View>
                         </Content>
                     </Tab>
@@ -126,6 +127,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     deleteTask: id => async dispatch => {
         await doDeleteTask(id)
         dispatch(deleteTaskAction(id))
+    },
+
+    deleteGoal: id => async dispatch => {
+        await doDeleteGoal(id)
+        dispatch(deleteGoalAction(id))
     },
 
     updateUserGoals: () => async dispatch => {
