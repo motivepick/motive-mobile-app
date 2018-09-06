@@ -4,20 +4,22 @@ import { StackNavigator } from 'react-navigation'
 import LoginScreen from './screens/LoginScreen'
 import SplashScreen from './screens/SplashScreen'
 import HomeScreen from './screens/HomeScreen'
-import GoalScreen from './screens/GoalScreen'
+import GoalEditScreen from './screens/GoalEditScreen'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import { applyMiddleware, createStore } from 'redux'
 import TaskScreen from './screens/TaskScreen'
 import { I18nextProvider } from 'react-i18next'
 import i18n from './i18n'
+import GoalScreen from './screens/GoalScreen'
 
 const RootStack = StackNavigator({
     Splash: SplashScreen,
     Login: LoginScreen,
     Home: HomeScreen,
     Task: TaskScreen,
-    Goal: GoalScreen
+    Goal: GoalScreen,
+    GoalEdit: GoalEditScreen
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

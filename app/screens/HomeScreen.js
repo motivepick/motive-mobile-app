@@ -55,7 +55,7 @@ export class HomeScreen extends Component {
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
                                 <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}
-                                    onTaskDeleted={id => deleteTask(id)}/>
+                                    onDeleteTask={id => deleteTask(id)}/>
                                 <Button transparent onPress={() => updateUserTasks(true)}>
                                     <Text>{closedTasksAreShown ? t('labels.hideClosedTasks') : t('labels.showClosedTasks')}</Text>
                                 </Button>

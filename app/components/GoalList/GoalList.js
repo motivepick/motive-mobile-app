@@ -64,7 +64,7 @@ export class GoalList extends Component {
 
     editGoal = (data, secId, rowId, rowMap) => {
         const { navigation } = this.props
-        navigation.navigate('Goal', { goal: data })
+        navigation.navigate('GoalEdit', { goal: data })
         rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
