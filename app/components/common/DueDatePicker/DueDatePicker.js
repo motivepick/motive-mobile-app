@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import { Dimensions } from 'react-native'
+import { View } from 'react-native'
 import DatePicker from 'react-native-datepicker'
-import { Icon } from 'native-base'
+import { Button, Icon } from 'native-base'
 
 import moment from 'moment'
 import { translate } from 'react-i18next'
-
-const window = Dimensions.get('window')
 
 export class DueDatePicker extends Component {
 
@@ -22,22 +20,27 @@ export class DueDatePicker extends Component {
         const { t } = this.props
 
         return (
-            <DatePicker
-                customStyles={{
-                    dateInput: { borderWidth: 0, alignItems: 'flex-start', justifyContent: 'center', flex: 1 },
-                    dateTouchBody: { flexDirection: 'row-reverse', alignItems: 'center', justifyContent: 'flex-start' }
-                }}
-                style={{ width: window.width }}
-                date={this.state.dateAsStringInLocalFormat}
-                mode='date'
-                placeholder={t('placeholders.whenIsItDue')}
-                format={format}
-                minDate={today}
-                confirmBtnText={t('labels.set')}
-                cancelBtnText={t('labels.cancel')}
-                iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
-                onDateChange={dateAsStringInLocalFormat => this.handleDateChange(dateAsStringInLocalFormat)}
-            />
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <DatePicker
+                    customStyles={{
+                        dateInput: { borderWidth: 0, alignItems: 'flex-start', justifyContent: 'center', height: 42 },
+                        dateTouchBody: { flexDirection: 'row-reverse', height: 42 }
+                    }}
+                    style={{ flex: 4 }}
+                    date={this.state.dateAsStringInLocalFormat}
+                    mode='date'
+                    placeholder={t('placeholders.whenIsItDue')}
+                    format={format}
+                    minDate={today}
+                    confirmBtnText={t('labels.set')}
+                    cancelBtnText={t('labels.cancel')}
+                    iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
+                    onDateChange={dateAsStringInLocalFormat => this.handleDateChange(dateAsStringInLocalFormat)}
+                />
+                {this.state.dateAsStringInLocalFormat && <Button transparent danger style={{ flex: 1, height:42 }} onPress={() => this.clearDate()}>
+                    <Icon type='MaterialCommunityIcons' name='close-circle-outline' style={{ height:31 }}/>
+                </Button>}
+            </View>
         )
     }
 
@@ -48,6 +51,12 @@ export class DueDatePicker extends Component {
         const isoDate = moment(dateAsStringInLocalFormat, this.format()).format('YYYY-MM-DDTHH:mm:ss.SSS')
         this.setState({ dateAsStringInLocalFormat: dateAsStringInLocalFormat })
         onChangeDate(isoDate)
+    }
+
+    clearDate = () => {
+        const { onChangeDate } = this.props
+        this.setState({ dateAsStringInLocalFormat: '' })
+        onChangeDate('')
     }
 
     format = () => moment().creationData().locale.longDateFormat('L')
