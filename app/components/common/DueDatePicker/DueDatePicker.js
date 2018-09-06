@@ -5,6 +5,7 @@ import { Button, Icon } from 'native-base'
 
 import moment from 'moment'
 import { translate } from 'react-i18next'
+import styles from './DueDatePicker.styles'
 
 export class DueDatePicker extends Component {
 
@@ -20,13 +21,10 @@ export class DueDatePicker extends Component {
         const { t } = this.props
 
         return (
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            <View style={styles.container}>
                 <DatePicker
-                    customStyles={{
-                        dateInput: { borderWidth: 0, alignItems: 'flex-start', justifyContent: 'center', height: 42 },
-                        dateTouchBody: { flexDirection: 'row-reverse', height: 42 }
-                    }}
-                    style={{ flex: 4 }}
+                    customStyles={{ dateInput: styles.dateInput, dateTouchBody: styles.dateTouchBody }}
+                    style={styles.datePickerContainer}
                     date={this.state.dateAsStringInLocalFormat}
                     mode='date'
                     placeholder={t('placeholders.whenIsItDue')}
@@ -37,8 +35,8 @@ export class DueDatePicker extends Component {
                     iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
                     onDateChange={dateAsStringInLocalFormat => this.handleDateChange(dateAsStringInLocalFormat)}
                 />
-                {this.state.dateAsStringInLocalFormat && <Button transparent danger style={{ flex: 1, height:42 }} onPress={() => this.clearDate()}>
-                    <Icon type='MaterialCommunityIcons' name='close-circle-outline' style={{ height:31 }}/>
+                {this.state.dateAsStringInLocalFormat && <Button transparent danger style={styles.clearBtn} onPress={() => this.clearDate()}>
+                    <Icon type='MaterialCommunityIcons' name='close-circle-outline' style={styles.clearBtnIcon}/>
                 </Button>}
             </View>
         )
@@ -56,7 +54,7 @@ export class DueDatePicker extends Component {
     clearDate = () => {
         const { onChangeDate } = this.props
         this.setState({ dateAsStringInLocalFormat: '' })
-        onChangeDate('')
+        onChangeDate(null)
     }
 
     format = () => moment().creationData().locale.longDateFormat('L')
