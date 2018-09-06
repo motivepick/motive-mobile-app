@@ -2,14 +2,17 @@ import {
     CHANGE_GOAL_COLOR,
     CHANGE_GOAL_DESCRIPTION,
     CHANGE_GOAL_NAME,
+    CREATE_GOAL_TASK,
     CREATE_NEW_GOAL,
     DELETE_GOAL,
+    DELETE_GOAL_TASK,
     SET_GOAL,
     UPDATE_GOAL,
+    UPDATE_GOAL_TASKS,
     UPDATE_USER_GOALS
 } from '../actions/goalsActions'
 
-const INITIAL_STATE = { goal: {}, goals: [] }
+const INITIAL_STATE = { filter: 'all', goal: {}, goals: [] }
 
 export default function (state = INITIAL_STATE, action) {
     const { type, payload } = action
@@ -27,6 +30,13 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, goals: [payload, ...state.goals] }
     } else if (type === UPDATE_USER_GOALS) {
         return { ...state, goals: payload }
+    } else if (type === UPDATE_GOAL_TASKS) {
+        const { filter, tasks } = payload
+        return { ...state, filter, goal: { ...state.goal, tasks } }
+    } else if (type === CREATE_GOAL_TASK) {
+        return { ...state, goal: { ...state.goal, tasks: [action.payload, ...state.goal.tasks] } }
+    } else if (type === DELETE_GOAL_TASK) {
+        return { ...state, goal: { ...state.goal, tasks: state.goal.tasks.filter(t => t.id !== action.payload) } }
     } else if (type === UPDATE_GOAL) {
         const { payload } = action
         const goals = []

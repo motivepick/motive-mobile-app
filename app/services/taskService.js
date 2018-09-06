@@ -4,37 +4,37 @@ import { orderTasksByDate } from '../utils/order'
 import { API_URL } from '../const'
 import { fetchAccountId } from './accountService'
 
-const all = async () => {
+const all = async (goalId) => {
     const accountId = await fetchAccountId()
-    const { body } = await request.get(`${API_URL}/tasks`).set('X-Account-Id', accountId)
+    const { body } = await request.get(goalId ? `${API_URL}/goals/${goalId}/tasks` : `${API_URL}/tasks`).set('X-Account-Id', accountId)
     return orderTasksByDate(body)
 }
 
-const today = async () => {
+const today = async (goalId) => {
     const accountId = await fetchAccountId()
-    const response = await request.get(`${API_URL}/tasks`).set('X-Account-Id', accountId)
+    const response = await request.get(goalId ? `${API_URL}/goals/${goalId}/tasks` : `${API_URL}/tasks`).set('X-Account-Id', accountId)
     const tasks = response.body
     const endOfDay = moment().endOf('day')
     return orderTasksByDate(tasks.filter(t => t.dueDate && moment(t.dueDate).isBefore(endOfDay)))
 }
 
-const thisWeek = async () => {
+const thisWeek = async (goalId) => {
     const accountId = await fetchAccountId()
-    const response = await request.get(`${API_URL}/tasks`).set('X-Account-Id', accountId)
+    const response = await request.get(goalId ? `${API_URL}/goals/${goalId}/tasks` : `${API_URL}/tasks`).set('X-Account-Id', accountId)
     const tasks = response.body
     const endOfWeek = moment().endOf('week')
     return orderTasksByDate(tasks.filter(t => t.dueDate && moment(t.dueDate).isBefore(endOfWeek)))
 }
 
-export const fetchTasks = filter => {
+export const fetchTasks = (filter, goalId) => {
     if (filter === 'all') {
-        return all()
+        return all(goalId)
     } else if (filter === 'today') {
-        return today()
+        return today(goalId)
     } else if (filter === 'thisWeek') {
-        return thisWeek()
+        return thisWeek(goalId)
     } else {
-        return all()
+        return all(goalId)
     }
 }
 
