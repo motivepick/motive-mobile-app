@@ -20,14 +20,16 @@ class GoalScreen extends Component {
     }
 
     render() {
-        const { goal, navigation, createGoalTask, updateGoalTasks, deleteTask } = this.props
+        const { goal, navigation, createGoalTask, updateGoalTasks, deleteTask, t } = this.props
         const { id, tasks } = goal
         return (
             <Container>
-                <Header title={'Goal'} onLeftButtonPress={() => navigation.goBack()} onRightButtonPress={this.handleGoalClick}/>
+                <Header title={'Goal'} rightButtonLabel={t('labels.editGoal')} onLeftButtonPress={() => navigation.goBack()}
+                    onRightButtonPress={this.handleGoalClick}/>
                 <Content>
                     <H1 style={{ textAlign: 'center', paddingTop: 7 }}>{goal.name}</H1>
-                    <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={filter => updateGoalTasks(id, filter)} onDeleteTask={id => deleteTask(id)}/>
+                    <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={filter => updateGoalTasks(id, filter)}
+                        onDeleteTask={id => deleteTask(id)}/>
                 </Content>
             </Container>
         )

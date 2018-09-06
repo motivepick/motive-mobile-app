@@ -29,7 +29,7 @@ class GoalEditScreen extends Component {
         return (
             <Container>
                 <Content>
-                    <Header title={t('labels.newGoal')} onLeftButtonPress={() => navigation.goBack()}/>
+                    <Header title={t('headings.editGoal')} onLeftButtonPress={() => navigation.goBack()}/>
                     <Form>
                         <Item floatingLabel>
                             <Label>{t('labels.goal')}</Label>

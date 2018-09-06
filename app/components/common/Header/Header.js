@@ -5,7 +5,7 @@ import { translate } from 'react-i18next'
 class HeaderComponent extends Component {
 
     render() {
-        const { title, onLeftButtonPress, onRightButtonPress, t } = this.props
+        const { title, rightButtonLabel, onLeftButtonPress, onRightButtonPress, t } = this.props
         return (
             <Header>
                 <Left>
@@ -19,7 +19,7 @@ class HeaderComponent extends Component {
                 <Right>
                     {!!onRightButtonPress &&
                     <Button transparent onPress={onRightButtonPress}>
-                        <Text>{t('labels.save')}</Text>
+                        <Text>{rightButtonLabel || t('labels.save')}</Text>
                     </Button>}
                 </Right>
             </Header>

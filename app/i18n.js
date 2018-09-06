@@ -14,7 +14,8 @@ i18n.use(languageDetector).init({
             translations: {
                 headings: {
                     tasks: 'Tasks',
-                    goals: 'Goals'
+                    goals: 'Goals',
+                    editGoal: 'Edit Goal'
                 },
                 labels: {
                     statistics: 'You can do it! {{percent}}% done',
@@ -22,6 +23,7 @@ i18n.use(languageDetector).init({
                     today: 'Today',
                     thisWeek: 'This Week',
                     newGoal: 'New Goal',
+                    editGoal: 'Edit',
                     goal: 'Goal',
                     task: 'Task',
                     description: 'Description',
@@ -46,7 +48,8 @@ i18n.use(languageDetector).init({
             translations: {
                 headings: {
                     tasks: 'Задачи',
-                    goals: 'Цели'
+                    goals: 'Цели',
+                    editGoal: 'Изменить цель'
                 },
                 labels: {
                     statistics: 'Соберись! {{percent}}% готово',
@@ -54,6 +57,7 @@ i18n.use(languageDetector).init({
                     today: 'Сегодня',
                     thisWeek: 'На неделе',
                     newGoal: 'Новая цель',
+                    editGoal: 'Изменить',
                     goal: 'Цель',
                     task: 'Задача',
                     description: 'Описание',
@@ -78,7 +82,8 @@ i18n.use(languageDetector).init({
             translations: {
                 headings: {
                     tasks: 'Tasks',
-                    goals: 'Goals'
+                    goals: 'Goals',
+                    editGoal: 'Edit Goal'
                 },
                 labels: {
                     statistics: 'You can do it! {{percent}}% done',
@@ -86,6 +91,7 @@ i18n.use(languageDetector).init({
                     today: 'Today',
                     thisWeek: 'This Week',
                     newGoal: 'New Goal',
+                    editGoal: 'Edit',
                     goal: 'Goal',
                     task: 'Task',
                     description: 'Description',
