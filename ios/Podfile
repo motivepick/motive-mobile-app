@@ -2,14 +2,12 @@
 # platform :ios, '9.0'
 
 target 'MotiveMobileApp' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
 
   # Pods for MotiveMobileApp
-  pod 'FBSDKCoreKit', '~> 4.35.0'
-  pod 'FBSDKLoginKit', '~> 4.35.0'
-  pod 'FBSDKShareKit', '~> 4.35.0'
-  pod 'Bolts', '~> 1.9.0'
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
 
   target 'MotiveMobileAppTests' do
     inherit! :search_paths

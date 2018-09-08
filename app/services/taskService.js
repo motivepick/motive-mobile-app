@@ -2,25 +2,25 @@ import request from 'superagent'
 import moment from 'moment'
 import { orderTasksByDate } from '../utils/order'
 import { API_URL } from '../const'
-import { fetchAccountId } from './accountService'
+import { fetchToken } from './accountService'
 
 const all = async (goalId) => {
-    const accountId = await fetchAccountId()
-    const { body } = await request.get(goalId ? `${API_URL}/goals/${goalId}/tasks` : `${API_URL}/tasks`).set('X-Account-Id', accountId)
+    const token = await fetchToken()
+    const { body } = await request.get(goalId ? `${API_URL}/goals/${goalId}/tasks` : `${API_URL}/tasks`).set('Cookie', token)
     return orderTasksByDate(body)
 }
 
 const today = async (goalId) => {
-    const accountId = await fetchAccountId()
-    const response = await request.get(goalId ? `${API_URL}/goals/${goalId}/tasks` : `${API_URL}/tasks`).set('X-Account-Id', accountId)
+    const token = await fetchToken()
+    const response = await request.get(goalId ? `${API_URL}/goals/${goalId}/tasks` : `${API_URL}/tasks`).set('Cookie', token)
     const tasks = response.body
     const endOfDay = moment().endOf('day')
     return orderTasksByDate(tasks.filter(t => t.dueDate && moment(t.dueDate).isBefore(endOfDay)))
 }
 
 const thisWeek = async (goalId) => {
-    const accountId = await fetchAccountId()
-    const response = await request.get(goalId ? `${API_URL}/goals/${goalId}/tasks` : `${API_URL}/tasks`).set('X-Account-Id', accountId)
+    const token = await fetchToken()
+    const response = await request.get(goalId ? `${API_URL}/goals/${goalId}/tasks` : `${API_URL}/tasks`).set('Cookie', token)
     const tasks = response.body
     const endOfWeek = moment().endOf('week')
     return orderTasksByDate(tasks.filter(t => t.dueDate && moment(t.dueDate).isBefore(endOfWeek)))
@@ -39,13 +39,13 @@ export const fetchTasks = (filter, goalId) => {
 }
 
 export const fetchClosedTasks = async () => {
-    const accountId = await fetchAccountId()
-    const { body } = await request.get(`${API_URL}/tasks`).query({ closed: true }).set('X-Account-Id', accountId)
+    const token = await fetchToken()
+    const { body } = await request.get(`${API_URL}/tasks`).query({ closed: true }).set('Cookie', token)
     return body
 }
 
 export const doDeleteTask = async id => {
-    const accountId = await fetchAccountId()
-    const { body } = await request.del(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId)
+    const token = await fetchToken()
+    const { body } = await request.del(`${API_URL}/tasks/${id}`).set('Cookie', token)
     return body
 }

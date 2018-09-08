@@ -40,16 +40,16 @@ const mapStateToProps = () => ({})
 const mapDispatchToProps = (dispatch, { data }) => ({
 
     unsetGoal: async () => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
+        const token = await AsyncStorage.getItem('token')
+        const response = await request.get(`${Config.API_URL}/tasks`).set('Cookie', token)
         const tasks = response.body
         dispatch(setGoal(null, null))
         dispatch(updateUserTasksAction(tasks))
     },
 
     setTodayGoal: async () => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
+        const token = await AsyncStorage.getItem('token')
+        const response = await request.get(`${Config.API_URL}/tasks`).set('Cookie', token)
         const tasks = response.body
         const startOfDay = moment().startOf('day')
         const endOfDay = moment().endOf('day')
@@ -58,8 +58,8 @@ const mapDispatchToProps = (dispatch, { data }) => ({
     },
 
     setThisWeekGoal: async () => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const response = await request.get(`${Config.API_URL}/tasks`).set('X-Account-Id', accountId)
+        const token = await AsyncStorage.getItem('token')
+        const response = await request.get(`${Config.API_URL}/tasks`).set('Cookie', token)
         const tasks = response.body
         const startOfWeek = moment().startOf('week')
         const endOfWeek = moment().endOf('week')
@@ -68,8 +68,8 @@ const mapDispatchToProps = (dispatch, { data }) => ({
     },
 
     setUserDefinedGoal: async () => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const response = await request.get(`${Config.API_URL}/goals/${data.id}/tasks`).set('X-Account-Id', accountId)
+        const token = await AsyncStorage.getItem('token')
+        const response = await request.get(`${Config.API_URL}/goals/${data.id}/tasks`).set('Cookie', token)
         dispatch(setGoal(data.id, null))
         dispatch(updateUserTasksAction(response.body))
     }

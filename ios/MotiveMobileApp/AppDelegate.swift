@@ -14,10 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   // Create the base window
   var window : UIWindow? = UIWindow(frame: UIScreen.main.bounds)
   
-  func applicationDidBecomeActive(_ application: UIApplication) {
-    FBSDKAppEvents.activateApp()
-  }
-  
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     // Setup any initial properties we want included
     let initialProperties: [String: Any] = [:]
@@ -39,12 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window?.rootViewController = controller
     self.window?.makeKeyAndVisible()
     
-    FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-    
     return true
   }
   
-  func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-    return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+  func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+    return RCTLinkingManager.application(application, open: url, options: options)
   }
 }

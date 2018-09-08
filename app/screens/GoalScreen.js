@@ -57,17 +57,17 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     createGoalTask: (goalId, task) => async (dispatch, getState) => {
         const { goals } = getState()
         const { filter } = goals
-        const accountId = await AsyncStorage.getItem('accountId')
+        const token = await AsyncStorage.getItem('token')
         if (filter === 'today') {
             const { body } = await request.post(`${API_URL}/goals/${goalId}/tasks`)
-                .set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('day') })
+                .set('Cookie', token).send({ ...task, dueDate: moment().endOf('day') })
             dispatch(createGoalTaskAction(body))
         } else if (filter === 'thisWeek') {
             const { body } = await request.post(`${API_URL}/goals/${goalId}/tasks`)
-                .set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('week') })
+                .set('Cookie', token).send({ ...task, dueDate: moment().endOf('week') })
             dispatch(createGoalTaskAction(body))
         } else {
-            const { body } = await request.post(`${API_URL}/goals/${goalId}/tasks`).set('X-Account-Id', accountId).send(task)
+            const { body } = await request.post(`${API_URL}/goals/${goalId}/tasks`).set('Cookie', token).send(task)
             dispatch(createGoalTaskAction(body))
         }
     },
@@ -77,8 +77,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     },
 
     closeGoalTask: id => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
+        const token = await AsyncStorage.getItem('token')
+        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: true })
         dispatch(closeGoalTaskAction(body.id))
     },
 

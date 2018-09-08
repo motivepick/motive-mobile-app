@@ -54,9 +54,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     changeTaskDescription: taskDescription => dispatch => dispatch(changeTaskDescriptionAction(taskDescription)),
 
     saveTask: task => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
+        const token = await AsyncStorage.getItem('token')
         const { id, name, description, dueDate } = task
-        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({
+        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({
             name,
             description,
             dueDate

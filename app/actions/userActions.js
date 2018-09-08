@@ -3,7 +3,7 @@ import { API_URL } from '../const'
 
 export const LOGOUT = 'LOGOUT'
 
-export const logout = (accountId) => {
-    const response = request.delete(`${API_URL}/users/${accountId}`)
+export const logout = (token) => {
+    const response = request.delete(`${API_URL}/users`).set('Cookie', token);
     return { type: LOGOUT, payload: response }
 }

@@ -69,9 +69,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     changeGoalColor: color => dispatch => dispatch(changeGoalColorAction(color)),
 
     saveGoal: goal => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
+        const token = await AsyncStorage.getItem('token')
         const { id } = goal
-        const { body } = await request.put(`${API_URL}/goals/${id}`).set('X-Account-Id', accountId).send(goal)
+        const { body } = await request.put(`${API_URL}/goals/${id}`).set('Cookie', token).send(goal)
         dispatch(updateGoalAction(body))
     }
 }, dispatch)

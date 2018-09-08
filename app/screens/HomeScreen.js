@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { AsyncStorage, View } from 'react-native'
-import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
 import GoalList from '../components/GoalList/GoalList'
@@ -37,12 +36,6 @@ export class HomeScreen extends Component {
         const { updateUserTasks, updateUserGoals } = this.props
         updateUserTasks(false, 'all')
         updateUserGoals()
-    }
-
-    logout = async () => {
-        LoginManager.logOut()
-        await AsyncStorage.removeItem('accountId')
-        navigateWithReset(this.props.navigation, 'Login')
     }
 
     render() {
@@ -115,28 +108,28 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     createTask: task => async (dispatch, getState) => {
         const { tasks } = getState()
         const { tasksFilter } = tasks
-        const accountId = await AsyncStorage.getItem('accountId')
+        const token = await AsyncStorage.getItem('token')
         if (tasksFilter === 'today') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('day') })
+            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({ ...task, dueDate: moment().endOf('day') })
             dispatch(createTask(body))
         } else if (tasksFilter === 'thisWeek') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({ ...task, dueDate: moment().endOf('week') })
+            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({ ...task, dueDate: moment().endOf('week') })
             dispatch(createTask(body))
         } else {
-            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send(task)
+            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send(task)
             dispatch(createTask(body))
         }
     },
 
     undoCloseTask: id => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: false })
+        const token = await AsyncStorage.getItem('token')
+        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: false })
         dispatch(undoCloseTaskAction(body.id))
     },
 
     closeTask: id => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
+        const token = await AsyncStorage.getItem('token')
+        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: true })
         dispatch(closeTaskAction(body.id))
     },
 
@@ -151,14 +144,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     },
 
     updateUserGoals: () => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.get(`${API_URL}/goals`).set('X-Account-Id', accountId)
+        const token = await AsyncStorage.getItem('token')
+        const { body } = await request.get(`${API_URL}/goals`).set('Cookie', token)
         dispatch(updateUserGoalsAction(body))
     },
 
     createGoal: goal => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.post(`${API_URL}/goals`).set('X-Account-Id', accountId).send(goal)
+        const token = await AsyncStorage.getItem('token')
+        const { body } = await request.post(`${API_URL}/goals`).set('Cookie', token).send(goal)
         dispatch(createNewGoalAction(body))
     }
 }, dispatch)
