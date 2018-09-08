@@ -2,12 +2,9 @@ import {
     CLOSE_TASK,
     CREATE_TASK,
     DELETE_TASK,
-    END_CREATING_TASK,
     HIDE_CLOSED_TASKS,
     SET_FILTER,
     SHOW_CLOSED_TASKS,
-    SHOW_ERROR,
-    START_CREATING_TASK,
     UNDO_CLOSE_TASK,
     UPDATE_CLOSED_USER_TASKS,
     UPDATE_TASK,
@@ -41,10 +38,6 @@ export default function (state = INITIAL_STATE, action) {
     const { type } = action
     if (type === CREATE_TASK) {
         return { ...state, tasks: [action.payload, ...state.tasks] }
-    } else if (type === START_CREATING_TASK) {
-        return { ...state, creatingTask: true }
-    } else if (type === END_CREATING_TASK) {
-        return { ...state, creatingTask: false }
     } else if (type === SET_FILTER) {
         return { ...state, tasksFilter: action.payload }
     } else if (type === UPDATE_USER_TASKS) {
@@ -55,8 +48,6 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, closedTasksAreShown: true }
     } else if (type === HIDE_CLOSED_TASKS) {
         return { ...state, closedTasksAreShown: false }
-    } else if (type === SHOW_ERROR) {
-        return { ...state, error: action.error }
     } else if (type === CLOSE_TASK) {
         return { ...state, tasks: state.tasks.filter(t => t.id !== action.payload), closedTasks: updatedClosedTasks(state, action.payload) }
     } else if (type === UNDO_CLOSE_TASK) {
