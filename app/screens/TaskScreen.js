@@ -10,6 +10,7 @@ import { translate } from 'react-i18next'
 import { Container, Content, Form, Input, Item, Label } from 'native-base'
 import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
 import Header from '../components/common/Header/Header'
+import Description from '../components/common/Description/Description'
 
 class TaskScreen extends Component {
 
@@ -24,29 +25,33 @@ class TaskScreen extends Component {
     }
 
     render() {
-        const { task, navigation, changeTaskName, changeTaskDescription, saveTask, t } = this.props
+        const { task, navigation, changeTaskName, saveTask, t } = this.props
         const { id, name, description, dueDate } = task
         return (
             <Container>
                 <Content>
                     <Header title={t('labels.editTask')} onLeftButtonPress={() => navigation.goBack()}/>
-                    <Form>
+                    <Form style={{ marginRight: 15 }}>
                         <Item floatingLabel>
                             <Label>{t('labels.task')}</Label>
                             <Input value={name} onChangeText={changeTaskName} onSubmitEditing={() => saveTask({ id, name })} returnKeyType={'done'}/>
                         </Item>
-                        <Item floatingLabel>
-                            <Label>{t('labels.description')}</Label>
-                            <Input onChangeText={changeTaskDescription} value={description}
-                                style={{ height: 200 }} multiline={true} numberOfLines={5}/>
-                        </Item>
-                        <Item>
+                        <Item style={{ borderColor: 'white' }}>
                             <DueDatePicker value={dueDate} onChangeDate={dueDate => saveTask({ id, dueDate })}/>
+                        </Item>
+                        <Item stackedLabel onPress={this.handleDescriptionClick} >
+                            <Label>{t('labels.description')}</Label>
+                            <Description value={description}/>
                         </Item>
                     </Form>
                 </Content>
             </Container>
         )
+    }
+
+    handleDescriptionClick = () => {
+        const { task, navigation } = this.props
+        navigation.navigate('DescriptionEditScreen', { task })
     }
 }
 

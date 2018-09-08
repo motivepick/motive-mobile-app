@@ -12,6 +12,7 @@ import TaskScreen from './screens/TaskScreen'
 import { I18nextProvider } from 'react-i18next'
 import i18n from './i18n'
 import GoalScreen from './screens/GoalScreen'
+import DescriptionEditScreen from './screens/DescriptionEditScreen'
 
 const RootStack = StackNavigator({
     Splash: SplashScreen,
@@ -19,7 +20,8 @@ const RootStack = StackNavigator({
     Home: HomeScreen,
     Task: TaskScreen,
     Goal: GoalScreen,
-    GoalEdit: GoalEditScreen
+    GoalEdit: GoalEditScreen,
+    DescriptionEditScreen: DescriptionEditScreen
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
