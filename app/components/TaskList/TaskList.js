@@ -1,12 +1,7 @@
 import React, { Component } from 'react'
-import { AsyncStorage, View } from 'react-native'
+import { View } from 'react-native'
 import styles from './TaskList.styles'
 import { handleDueDateOf } from '../../utils/parser'
-import { closeTask, showError } from '../../actions/tasksActions'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import request from 'superagent'
-import { API_URL } from '../../const'
 import { translate } from 'react-i18next'
 import { Button, Form, Input, Item, Segment, Text } from 'native-base'
 import Tasks from './Tasks'
@@ -18,7 +13,7 @@ export class TaskList extends Component {
     // TODO: fix Segment btns look on Android (white text on white background)
     render() {
         const { taskName } = this.state
-        const { tasks, creatingTask, closeTask, onDeleteTask, t } = this.props
+        const { tasks, onCloseTask, onDeleteTask, t } = this.props
         const { activeFilter } = this.state
 
         return (
@@ -29,7 +24,6 @@ export class TaskList extends Component {
                             onChangeText={taskName => this.setState({ taskName })}
                             value={taskName}
                             onSubmitEditing={this.onAddNewTask}
-                            editable={!creatingTask}
                             returnKeyType={'done'}
                             placeholder={t('labels.newTask')}
                         />
@@ -46,7 +40,7 @@ export class TaskList extends Component {
                         <Text>{t('labels.thisWeek')}</Text>
                     </Button>
                 </Segment>
-                <Tasks tasks={tasks} onCloseTask={id => closeTask(id)} onDeleteTask={onDeleteTask}/>
+                <Tasks tasks={tasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>
                 {tasks && tasks.length === 0 && <Text style={{ alignSelf: 'center' }}> All done!</Text>}
             </View>
         )
@@ -69,19 +63,4 @@ export class TaskList extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    creatingTask: state.tasks.creatingTask
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-
-    closeTask: id => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
-        dispatch(closeTask(body.id))
-    },
-
-    showError: error => dispatch => dispatch(showError(error))
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(TaskList))
+export default translate('translations')(TaskList)

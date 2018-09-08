@@ -2,6 +2,7 @@ import {
     CHANGE_GOAL_COLOR,
     CHANGE_GOAL_DESCRIPTION,
     CHANGE_GOAL_NAME,
+    CLOSE_GOAL_TASK,
     CREATE_GOAL_TASK,
     CREATE_NEW_GOAL,
     DELETE_GOAL,
@@ -35,6 +36,8 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, filter, goal: { ...state.goal, tasks } }
     } else if (type === CREATE_GOAL_TASK) {
         return { ...state, goal: { ...state.goal, tasks: [action.payload, ...state.goal.tasks] } }
+    } else if (type === CLOSE_GOAL_TASK) {
+        return { ...state, goal: { ...state.goal, tasks: state.goal.tasks.filter(t => t.id !== action.payload) } }
     } else if (type === DELETE_GOAL_TASK) {
         return { ...state, goal: { ...state.goal, tasks: state.goal.tasks.filter(t => t.id !== action.payload) } }
     } else if (type === UPDATE_GOAL) {

@@ -4,7 +4,7 @@ import TaskList from '../components/TaskList/TaskList'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { createGoalTaskAction, deleteGoalTaskAction, setGoalAction, updateGoalTasksAction } from '../actions/goalsActions'
+import { closeGoalTaskAction, createGoalTaskAction, deleteGoalTaskAction, setGoalAction, updateGoalTasksAction } from '../actions/goalsActions'
 import Header from '../components/common/Header/Header'
 import { doDeleteTask, fetchTasks } from '../services/taskService'
 import { AsyncStorage } from 'react-native'
@@ -25,7 +25,7 @@ class GoalScreen extends Component {
     }
 
     render() {
-        const { goal, navigation, createGoalTask, updateGoalTasks, deleteTask, t } = this.props
+        const { goal, navigation, createGoalTask, updateGoalTasks, closeGoalTask, deleteGoalTask, t } = this.props
         const { id, tasks } = goal
         return (
             <Container>
@@ -34,7 +34,7 @@ class GoalScreen extends Component {
                 <Content>
                     <H1 style={{ textAlign: 'center', paddingTop: 7 }}>{goal.name}</H1>
                     <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={filter => updateGoalTasks(filter, id)}
-                        onDeleteTask={id => deleteTask(id)}/>
+                        onCloseTask={id => closeGoalTask(id)} onDeleteTask={id => deleteGoalTask(id)}/>
                 </Content>
             </Container>
         )
@@ -76,7 +76,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
         dispatch(updateGoalTasksAction(filter, await fetchTasks(filter, goalId)))
     },
 
-    deleteTask: id => async dispatch => {
+    closeGoalTask: id => async dispatch => {
+        const accountId = await AsyncStorage.getItem('accountId')
+        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
+        dispatch(closeGoalTaskAction(body.id))
+    },
+
+    deleteGoalTask: id => async dispatch => {
         await doDeleteTask(id)
         dispatch(deleteGoalTaskAction(id))
     }

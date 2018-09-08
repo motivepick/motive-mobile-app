@@ -11,13 +11,12 @@ import { bindActionCreators } from 'redux'
 import request from 'superagent'
 import { API_URL } from '../const'
 import {
+    closeTaskAction,
     createTask,
     deleteTaskAction,
-    endCreatingTask,
     hideClosedTasksAction,
     setFilterAction,
     showClosedTasksAction,
-    startCreatingTask,
     undoCloseTaskAction,
     updateClosedUserTasksAction,
     updateUserTasksAction
@@ -47,7 +46,20 @@ export class HomeScreen extends Component {
     }
 
     render() {
-        const { tasks, closedTasks, closedTasksAreShown, goals, updateUserTasks, createTask, deleteTask, undoCloseTask, createGoal, deleteGoal, t } = this.props
+        const {
+            tasks,
+            closedTasks,
+            closedTasksAreShown,
+            goals,
+            updateUserTasks,
+            createTask,
+            closeTask,
+            deleteTask,
+            undoCloseTask,
+            createGoal,
+            deleteGoal,
+            t
+        } = this.props
         return (
             <Container>
                 <Tabs locked tabBarBackgroundColor={'#fff'} style={{ marginTop: 30 }}>
@@ -55,7 +67,7 @@ export class HomeScreen extends Component {
                         <Content>
                             <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
                                 <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}
-                                    onDeleteTask={id => deleteTask(id)}/>
+                                    onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
                                 <Button full light small onPress={() => updateUserTasks(true)}>
                                     <Text>{closedTasksAreShown ? t('labels.hideClosedTasks') : t('labels.showClosedTasks')}</Text>
                                 </Button>
@@ -101,7 +113,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     },
 
     createTask: task => async (dispatch, getState) => {
-        dispatch(startCreatingTask())
         const { tasks } = getState()
         const { tasksFilter } = tasks
         const accountId = await AsyncStorage.getItem('accountId')
@@ -115,13 +126,18 @@ const mapDispatchToProps = dispatch => bindActionCreators({
             const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send(task)
             dispatch(createTask(body))
         }
-        dispatch(endCreatingTask())
     },
 
     undoCloseTask: id => async dispatch => {
         const accountId = await AsyncStorage.getItem('accountId')
         const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: false })
         dispatch(undoCloseTaskAction(body.id))
+    },
+
+    closeTask: id => async dispatch => {
+        const accountId = await AsyncStorage.getItem('accountId')
+        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
+        dispatch(closeTaskAction(body.id))
     },
 
     deleteTask: id => async dispatch => {
