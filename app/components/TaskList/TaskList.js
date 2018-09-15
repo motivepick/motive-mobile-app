@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import styles from './TaskList.styles'
 import { handleDueDateOf } from '../../utils/parser'
 import { translate } from 'react-i18next'
-import { Button, Form, Input, Item, Segment, Text } from 'native-base'
+import { Button, Form, Icon, Input, Item, Segment, Text } from 'native-base'
 import Tasks from './Tasks'
 
 export class TaskList extends Component {
@@ -19,14 +19,17 @@ export class TaskList extends Component {
         return (
             <View style={styles.container}>
                 <Form style={{ marginHorizontal: 10 }}>
-                    <Item regular>
-                        <Input
-                            onChangeText={taskName => this.setState({ taskName })}
-                            value={taskName}
-                            onSubmitEditing={this.onAddNewTask}
-                            returnKeyType={'done'}
-                            placeholder={t('labels.newTask')}
+                    <Item rounded style={{backgroundColor: 'lightgrey', paddingHorizontal: 10}}>
+                        <Icon active name='add' />
+                        <Input small
+                               onChangeText={taskName => this.setState({ taskName })}
+                               value={taskName}
+                               onSubmitEditing={this.onAddNewTask}
+                               returnKeyType={'done'}
+                               placeholder={t('labels.newTask')}
                         />
+                        <Icon active name='calendar'/>
+                        <Icon active name='list' />
                     </Item>
                 </Form>
                 <Segment style={{ width: '100%', marginBottom: 0, marginTop: 10 }}>
