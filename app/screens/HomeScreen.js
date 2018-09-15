@@ -3,7 +3,7 @@ import { AsyncStorage, View } from 'react-native'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
 import GoalList from '../components/GoalList/GoalList'
-import { Button, Container, Content, Tab, Tabs, Text } from 'native-base'
+import { Button, Container, Content, StyleProvider, Tab, Tabs, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -25,6 +25,8 @@ import { doDeleteTask, fetchClosedTasks, fetchTasks } from '../services/taskServ
 import moment from 'moment'
 import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '../actions/goalsActions'
 import { doDeleteGoal } from '../services/goalService'
+import getTheme from '../../native-base-theme/components'
+import baseTheme from '../../native-base-theme/variables/platform'
 
 export class HomeScreen extends Component {
 
@@ -54,29 +56,31 @@ export class HomeScreen extends Component {
             t
         } = this.props
         return (
-            <Container>
-                <Tabs locked tabBarBackgroundColor={'#fff'} style={{ marginTop: 30 }}>
-                    <Tab heading={t('headings.tasks')} activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
-                        <Content>
-                            <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
-                                <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}
-                                    onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
-                                <Button full light small onPress={() => updateUserTasks(true)}>
-                                    <Text>{closedTasksAreShown ? t('labels.hideClosedTasks') : t('labels.showClosedTasks')}</Text>
-                                </Button>
-                                {closedTasksAreShown && <Tasks tasks={closedTasks} onCloseTask={id => undoCloseTask(id)} onDeleteTask={id => deleteTask(id)}/>}
-                            </View>
-                        </Content>
-                    </Tab>
-                    <Tab heading={t('headings.goals')} activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
-                        <Content>
-                            <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
-                                <GoalList goals={goals} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>
-                            </View>
-                        </Content>
-                    </Tab>
-                </Tabs>
-            </Container>
+            <StyleProvider style={getTheme(baseTheme)}>
+                <Container>
+                    <Tabs locked tabBarBackgroundColor={'#fff'} style={{ marginTop: 30 }}>
+                        <Tab heading={t('headings.tasks')} activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
+                            <Content>
+                                <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
+                                    <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}
+                                        onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
+                                    <Button full light small onPress={() => updateUserTasks(true)}>
+                                        <Text>{closedTasksAreShown ? t('labels.hideClosedTasks') : t('labels.showClosedTasks')}</Text>
+                                    </Button>
+                                    {closedTasksAreShown && <Tasks tasks={closedTasks} onCloseTask={id => undoCloseTask(id)} onDeleteTask={id => deleteTask(id)}/>}
+                                </View>
+                            </Content>
+                        </Tab>
+                        <Tab heading={t('headings.goals')} activeTabStyle={{ backgroundColor: '#fff' }} tabStyle={{ backgroundColor: '#fff' }}>
+                            <Content>
+                                <View style={{ flex: 1, flexDirection: 'column', paddingTop: 6, backgroundColor: '#fff' }}>
+                                    <GoalList goals={goals} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>
+                                </View>
+                            </Content>
+                        </Tab>
+                    </Tabs>
+                </Container>
+            </StyleProvider>
         )
     }
 }
