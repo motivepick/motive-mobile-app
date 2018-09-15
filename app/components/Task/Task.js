@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import moment from 'moment'
 import FontAwesome, { Icons } from 'react-native-fontawesome'
 
-import CheckBox from '../common/CheckBox/CheckBox'
 import ColorIndicator from '../common/ColorIndicator/ColorIndicator'
 
 import styles from './Task.styles'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
+import { Body, ListItem, CheckBox  } from 'native-base'
 
 class Task extends Component {
     state = {
@@ -31,22 +31,24 @@ class Task extends Component {
         const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).local().calendar() : null
 
         return (
-            <View style={styles.row}>
-                <CheckBox isCompleted={closed} onAction={() => onClose(id)}/>
-                <TouchableOpacity style={styles.task} onPress={this.handleTaskClick}>
-                    <Text
-                        ellipsizeMode='tail'
-                        numberOfLines={1}
-                        style={[
-                            styles.text,
-                            closed ? styles.strikeText : styles.unstrikeText
-                        ]}>
-                        {name}
-                    </Text>
-                    {formattedDueDate && <Text style={[styles.textMuted]}><FontAwesome>{Icons.calendarO}</FontAwesome> {formattedDueDate}</Text>}
-                </TouchableOpacity>
-                <ColorIndicator color={goal && goal.colorTag} styler={{ marginLeft: 20 }}/>
-            </View>
+            <ListItem>
+                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ marginLeft: 16 }} />
+                <Body style={styles.row}>
+                    <TouchableOpacity style={styles.task} onPress={this.handleTaskClick}>
+                        <Text
+                            ellipsizeMode='tail'
+                            numberOfLines={1}
+                            style={[
+                                styles.text,
+                                closed ? styles.strikeText : styles.unstrikeText
+                            ]}>
+                            {name}
+                        </Text>
+                        {formattedDueDate && <Text style={[styles.textMuted]}><FontAwesome>{Icons.calendarO}</FontAwesome> {formattedDueDate}</Text>}
+                    </TouchableOpacity>
+                    <ColorIndicator color={goal && goal.colorTag} styler={{ marginLeft: 20 }}/>
+                </Body>
+            </ListItem>
         )
     }
 

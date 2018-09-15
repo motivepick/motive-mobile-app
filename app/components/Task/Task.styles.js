@@ -4,11 +4,7 @@ export const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 16,
-        height: 50,
-        flex: 1,
-        marginTop: 7,
-        borderRadius: 4
+        paddingLeft: 16
     },
     text: {
         fontSize: 14
