@@ -9,6 +9,8 @@ const platformStyle = undefined
 const isIphoneX =
   platform === 'ios' && (deviceHeight === 812 || deviceWidth === 812)
 
+const mainTextColor = '#000';
+
 export default {
     platformStyle,
     platform,
@@ -227,9 +229,9 @@ export default {
     inverseSpinnerColor: '#1A191B',
 
     // Tab
-    tabDefaultBg: platform === 'ios' ? '#F8F8F8' : '#3F51B5',
+    tabDefaultBg: platform === 'ios' ? '#FFF' : '#3F51B5',
     topTabBarTextColor: platform === 'ios' ? '#6b6b6b' : '#b3c7f9',
-    topTabBarActiveTextColor: platform === 'ios' ? '#007aff' : '#fff',
+    topTabBarActiveTextColor: platform === 'ios' ? mainTextColor : '#fff',
     topTabBarBorderColor: platform === 'ios' ? '#a7a6ab' : '#fff',
     topTabBarActiveBorderColor: platform === 'ios' ? '#007aff' : '#fff',
 
@@ -238,7 +240,7 @@ export default {
     tabFontSize: 15,
 
     // Text
-    textColor: '#000',
+    textColor: mainTextColor,
     inverseTextColor: '#fff',
     noteFontSize: 14,
     get defaultTextColor() {
