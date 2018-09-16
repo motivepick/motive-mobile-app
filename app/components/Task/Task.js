@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import { Text, TouchableOpacity } from 'react-native'
+import { TouchableOpacity, View } from 'react-native'
 import moment from 'moment'
-import FontAwesome, { Icons } from 'react-native-fontawesome'
 
 import ColorIndicator from '../common/ColorIndicator/ColorIndicator'
-
-import styles from './Task.styles'
+// import CheckBox from '../common/CheckBox/CheckBox'
+// import styles from './Task.styles'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-import { Body, ListItem, CheckBox  } from 'native-base'
+import { Body, CheckBox, ListItem, Right, Text } from 'native-base'
 
 class Task extends Component {
     state = {
@@ -29,25 +28,24 @@ class Task extends Component {
         } = this.props
 
         const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).local().calendar() : null
+        const dateColor = dueDate && moment() > moment(dueDate, moment.ISO_8601).local() ? '#990000' : '#009900'
 
         return (
-            <ListItem>
-                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ marginLeft: 16 }} />
-                <Body style={styles.row}>
-                    <TouchableOpacity style={styles.task} onPress={this.handleTaskClick}>
-                        <Text
-                            ellipsizeMode='tail'
-                            numberOfLines={1}
-                            style={[
-                                styles.text,
-                                closed ? styles.strikeText : styles.unstrikeText
-                            ]}>
-                            {name}
-                        </Text>
-                        {formattedDueDate && <Text style={[styles.textMuted]}><FontAwesome>{Icons.calendarO}</FontAwesome> {formattedDueDate}</Text>}
+            <ListItem noBorder>
+                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ marginLeft: 16, height: 18, width: 18,  alignSelf: 'flex-start' }} />
+                <Body onPress={this.handleTaskClick} style={{ alignSelf: 'flex-start' }}>
+                    <TouchableOpacity onPress={this.handleTaskClick}>
+                        <Text>{name}</Text>
+                        {goal && <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            {goal.colorTag && <ColorIndicator color={goal.colorTag} styler={{ marginLeft: 10 }}/>}
+                            <Text note style={{ fontSize: 11,  lineHeight: 16 }}>{goal.name}</Text>
+                        </View>}
                     </TouchableOpacity>
-                    <ColorIndicator color={goal && goal.colorTag} styler={{ marginLeft: 20 }}/>
                 </Body>
+                {formattedDueDate && <Right style={{ alignSelf: 'flex-start' }}>
+                    <Text note style={{ fontSize: 10,  lineHeight: 16, color: dateColor }}>{formattedDueDate}</Text>
+                </Right>}
+
             </ListItem>
         )
     }
