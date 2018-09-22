@@ -7,8 +7,6 @@ target 'MotiveMobileApp' do
 
   # Pods for MotiveMobileApp
 
-  pod 'react-native-config', :path => '../node_modules/react-native-config'
-
   target 'MotiveMobileAppTests' do
     inherit! :search_paths
     # Pods for testing
