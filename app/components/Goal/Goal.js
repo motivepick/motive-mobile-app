@@ -10,6 +10,7 @@ import request from 'superagent'
 import moment from 'moment'
 import { setGoal } from '../../actions/goalsActions'
 
+// import * as Progress from 'react-native-progress'
 class Goal extends Component {
 
     constructor(props) {
@@ -20,11 +21,20 @@ class Goal extends Component {
         const { data: { name, colorTag } } = this.props
 
         return (
-            <View style={styles.row}>
-                <TouchableOpacity style={styles.goal} onPress={this.handleGoalClick}>
-                    <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
-                </TouchableOpacity>
-                <ColorIndicator color={colorTag} styler={{ marginLeft: 20 }}/>
+            <View style={{
+                flexDirection: 'column',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start'
+            }}>
+                <View style={styles.row}>
+                    <ColorIndicator color={'grey'} styler={{ marginRight: 20 }}/>
+                    <TouchableOpacity style={styles.goal} onPress={this.handleGoalClick}>
+                        <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
+                    </TouchableOpacity>
+                    <Text style={{ marginLeft: 20, color: 'grey' }}>25 tasks</Text>
+                </View>
+                <Text style={{ marginLeft: 40, marginTop: 0, color: 'grey' }}>Deadline: 09.08.2018</Text>
+                {/*<Progress.Bar progress={0.1} width={270} style={{marginHorizontal: 40}} /> */}
             </View>
         )
     }

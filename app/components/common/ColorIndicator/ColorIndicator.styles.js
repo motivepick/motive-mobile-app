@@ -2,9 +2,9 @@ import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
     colorTagCircle: {
-        width: 12,
-        height: 12,
-        borderRadius: 12 / 2
+        width: 7,
+        height: 7,
+        borderRadius: 7 / 2
     }
 })
 

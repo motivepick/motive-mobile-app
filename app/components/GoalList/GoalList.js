@@ -3,7 +3,7 @@ import { ListView, View } from 'react-native'
 import Goal from '../Goal/Goal'
 import styles from './GoalList.styles'
 import { translate } from 'react-i18next'
-import { Button, Form, Icon, Input, Item } from 'native-base'
+import { Button, Icon } from 'native-base'
 import List from '../common/List/List'
 import { withNavigation } from 'react-navigation'
 
@@ -22,7 +22,7 @@ export class GoalList extends Component {
 
         return (
             <View style={styles.container}>
-                <Form style={{ marginHorizontal: 10 }}>
+                {/* <Form style={{ marginHorizontal: 10 }}>
                     <Item regular>
                         <Input
                             onChangeText={goalName => this.setState({ goalName })}
@@ -33,7 +33,7 @@ export class GoalList extends Component {
                             placeholder={t('labels.newGoal')}
                         />
                     </Item>
-                </Form>
+                </Form> */}
                 <List
                     data={goals}
                     renderRow={this.renderRow}

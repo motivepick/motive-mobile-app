@@ -7,12 +7,13 @@ const palette = {
     orange: '#FFAE5D',
     blue: '#96C0CE',
     deepBlue: '#336699',
-    purple: '#6F3662'
+    purple: '#6F3662',
+    grey: 'grey'
 }
 
 export const ColorIndicator = (props) => {
     const { color, styler } = props
-    return <View style={[styles.colorTagCircle, color ? { backgroundColor: palette[color] } : {}, styler]}/>
+    return color && palette[color] ? <View style={[styles.colorTagCircle, color && palette[color] ? { backgroundColor: palette[color] || 'grey' } : { backgroundColor: 'grey' }, styler]}/> : null
 }
 
 export default ColorIndicator
