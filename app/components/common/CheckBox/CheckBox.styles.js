@@ -6,16 +6,13 @@ export const styles = StyleSheet.create({
         width: 20,
         height: 20,
         borderRadius: 10,
-        marginLeft: 5,
         borderWidth: 2,
-        marginRight: 20
     },
     completeCircle: {
         borderColor: '#bbb'
     },
     incompleteCircle: {
         borderColor: colors.accent1Clr
-        // borderColor: '#3d3d3d'
     }
 })
 

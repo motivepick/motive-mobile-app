@@ -34,7 +34,7 @@ class Task extends Component {
         return (
             <ListItem noBorder  style={{ backgroundColor: colors.backgroundClr}}>
                 {/* <CheckBox checked={closed} onPress={() => onClose(id)} style={{ backgroundColor: colors.backgroundClr, color: colors.accent1Clr, height: 18, width: 18,  alignSelf: 'flex-start' }} /> */}
-                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ backgroundColor: colors.backgroundClr, color: colors.accent1Clr, marginLeft: 15, height: 18, width: 18,  alignSelf: 'flex-start' }} />
+                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ marginLeft: 15 }}/>
                 <Body onPress={this.handleTaskClick} style={{ alignSelf: 'flex-start' }}>
                     <TouchableOpacity onPress={this.handleTaskClick}>
                         <Text style={{ color: colors.textClr}}>{name}</Text>
