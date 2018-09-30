@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import Task from '../Task/Task'
-import styles from './TaskList.styles'
-import { Button, Icon } from 'native-base'
-import { ListView, View } from 'react-native'
+import { Button, Text } from 'native-base'
+import { ListView } from 'react-native'
 import List from '../common/List/List'
 import { withNavigation } from 'react-navigation'
+import * as colors from '../../screens/COLORS'
 
 class Tasks extends Component {
 
@@ -31,14 +31,9 @@ class Tasks extends Component {
     }
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
-        <View style={styles.hiddenRow}>
-            <Button onPress={() => this.editTask(data, secId, rowId, rowMap)}>
-                <Icon active name='md-create'/>
-            </Button>
-            <Button danger onPress={() => this.deleteTask(data, secId, rowId, rowMap)}>
-                <Icon active name='trash'/>
-            </Button>
-        </View>
+        <Button transparent onPress={() => this.deleteTask(data, secId, rowId, rowMap)}>
+            <Text style={{ color: colors.accent1Clr  }}>{'Delete'.toLocaleUpperCase()}</Text>
+        </Button>
 
     deleteTask = (data, secId, rowId, rowMap) => {
         const { onDeleteTask } = this.props
