@@ -3,8 +3,9 @@ import { View } from 'react-native'
 import styles from './TaskList.styles'
 import { handleDueDateOf } from '../../utils/parser'
 import { translate } from 'react-i18next'
-import { Button, Form, Icon, Input, Item, Segment, Text } from 'native-base'
+import { Text } from 'native-base'
 import Tasks from './Tasks'
+
 
 export class TaskList extends Component {
 
@@ -18,7 +19,7 @@ export class TaskList extends Component {
 
         return (
             <View style={styles.container}>
-                <Form style={{ marginHorizontal: 10 }}>
+                {/* <Form style={{ marginHorizontal: 10 }}>
                     <Item rounded style={{backgroundColor: 'lightgrey', paddingHorizontal: 10}}>
                         <Icon active name='add' />
                         <Input small
@@ -31,8 +32,8 @@ export class TaskList extends Component {
                         <Icon active name='calendar'/>
                         <Icon active name='list' />
                     </Item>
-                </Form>
-                <Segment style={{ width: '100%', marginBottom: 0, marginTop: 10 }}>
+                </Form> */}
+                {/* <Segment style={{ width: '100%', marginBottom: 0, marginTop: 10 }}>
                     <Button first active={activeFilter === 'all'} onPress={() => this.handleFilterChange('all')}>
                         <Text>{t('labels.all')}</Text>
                     </Button>
@@ -42,7 +43,7 @@ export class TaskList extends Component {
                     <Button last active={activeFilter === 'thisWeek'} onPress={() => this.handleFilterChange('thisWeek')}>
                         <Text>{t('labels.thisWeek')}</Text>
                     </Button>
-                </Segment>
+                </Segment> */}
                 <Tasks tasks={tasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>
                 {tasks && tasks.length === 0 && <Text style={{ alignSelf: 'center' }}> All done!</Text>}
             </View>

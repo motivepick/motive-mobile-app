@@ -3,11 +3,12 @@ import { TouchableOpacity, View } from 'react-native'
 import moment from 'moment'
 
 import ColorIndicator from '../common/ColorIndicator/ColorIndicator'
-// import CheckBox from '../common/CheckBox/CheckBox'
+import CheckBox from '../common/CheckBox/CheckBox'
 // import styles from './Task.styles'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-import { Body, CheckBox, ListItem, Right, Text } from 'native-base'
+import { Body, ListItem, Right, Text } from 'native-base'
+import * as colors from '../../screens/COLORS'
 
 class Task extends Component {
     state = {
@@ -31,19 +32,20 @@ class Task extends Component {
         const dateColor = dueDate && moment() > moment(dueDate, moment.ISO_8601).local() ? '#990000' : '#009900'
 
         return (
-            <ListItem noBorder>
-                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ marginLeft: 16, height: 18, width: 18,  alignSelf: 'flex-start' }} />
+            <ListItem noBorder  style={{ backgroundColor: colors.backgroundClr}}>
+                {/* <CheckBox checked={closed} onPress={() => onClose(id)} style={{ backgroundColor: colors.backgroundClr, color: colors.accent1Clr, height: 18, width: 18,  alignSelf: 'flex-start' }} /> */}
+                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ backgroundColor: colors.backgroundClr, color: colors.accent1Clr, marginLeft: 15, height: 18, width: 18,  alignSelf: 'flex-start' }} />
                 <Body onPress={this.handleTaskClick} style={{ alignSelf: 'flex-start' }}>
                     <TouchableOpacity onPress={this.handleTaskClick}>
-                        <Text>{name}</Text>
+                        <Text style={{ color: colors.textClr}}>{name}</Text>
                         {goal && <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             {goal.colorTag && <ColorIndicator color={goal.colorTag} styler={{ marginLeft: 10 }}/>}
-                            <Text note style={{ fontSize: 11,  lineHeight: 16 }}>{goal.name}</Text>
+                            <Text note style={{ fontSize: 11,  lineHeight: 16, color: colors.textNoteClr }}>{goal.name}</Text>
                         </View>}
                     </TouchableOpacity>
                 </Body>
                 {formattedDueDate && <Right style={{ alignSelf: 'flex-start' }}>
-                    <Text note style={{ fontSize: 10,  lineHeight: 16, color: dateColor }}>{formattedDueDate}</Text>
+                    <Text note style={{ fontSize: 10,  lineHeight: 16, color: colors.accent1Clr }}>{formattedDueDate}</Text>
                 </Right>}
 
             </ListItem>

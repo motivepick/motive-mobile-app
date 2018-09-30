@@ -2,12 +2,12 @@ import { Platform, StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
+        // marginTop: 15,
         alignItems: 'stretch',
-
         ...Platform.select({
             ios: {
-                paddingTop: 10
+                // paddingTop: 10
             }
         })
     },
@@ -26,7 +26,10 @@ export const styles = StyleSheet.create({
     },
     hiddenRow: {
         flexDirection: 'row',
-        marginTop: 9
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        alignContent: 'stretch'
+        // marginTop: 9
     }
 })
 

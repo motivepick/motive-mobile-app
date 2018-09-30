@@ -13,11 +13,15 @@ import { I18nextProvider } from 'react-i18next'
 import i18n from './i18n'
 import GoalScreen from './screens/GoalScreen'
 import DescriptionEditScreen from './screens/DescriptionEditScreen'
+import AllTasksScreen from './screens/AllTasksScreen'
+import AllGoalsScreen from './screens/AllGoalsScreen'
 
 const RootStack = StackNavigator({
     Splash: SplashScreen,
     Login: LoginScreen,
     Home: HomeScreen,
+    AllTasksScreen: AllTasksScreen,
+    AllGoalsScreen: AllGoalsScreen,
     Task: TaskScreen,
     Goal: GoalScreen,
     GoalEdit: GoalEditScreen,
