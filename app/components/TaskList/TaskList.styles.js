@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'stretch',
-        alignContent: 'stretch'
+        alignContent: 'stretch',
         // marginTop: 9
     }
 })

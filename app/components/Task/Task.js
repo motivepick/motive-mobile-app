@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import moment from 'moment'
 
 import ColorIndicator from '../common/ColorIndicator/ColorIndicator'
@@ -7,8 +7,8 @@ import CheckBox from '../common/CheckBox/CheckBox'
 // import styles from './Task.styles'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-import { Body, ListItem, Right, Text } from 'native-base'
-import * as colors from '../../screens/COLORS'
+import { Body, ListItem, Text } from 'native-base'
+import { human, iOSColors } from 'react-native-typography'
 
 class Task extends Component {
     state = {
@@ -28,26 +28,30 @@ class Task extends Component {
             onClose
         } = this.props
 
-        const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).local().calendar() : null
+        const formattedDueDate1 = dueDate ? moment(dueDate, moment.ISO_8601).local().calendar() : null
         const dateColor = dueDate && moment() > moment(dueDate, moment.ISO_8601).local() ? '#990000' : '#009900'
 
+        // const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).fromNow() : null
+        const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).subtract(100, 'days').fromNow() : null
+
         return (
-            <ListItem noBorder  style={{ backgroundColor: colors.backgroundClr}}>
-                {/* <CheckBox checked={closed} onPress={() => onClose(id)} style={{ backgroundColor: colors.backgroundClr, color: colors.accent1Clr, height: 18, width: 18,  alignSelf: 'flex-start' }} /> */}
-                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ marginLeft: 15 }}/>
-                <Body onPress={this.handleTaskClick} style={{ alignSelf: 'flex-start' }}>
+            <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white}}>
+                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ borderColor: iOSColors.midGray }}/>
+                <Body onPress={this.handleTaskClick}>
+
                     <TouchableOpacity onPress={this.handleTaskClick}>
-                        <Text style={{ color: colors.textClr}}>{name}</Text>
-                        {goal && <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            {goal.colorTag && <ColorIndicator color={goal.colorTag} styler={{ marginLeft: 10 }}/>}
-                            <Text note style={{ fontSize: 11,  lineHeight: 16, color: colors.textNoteClr }}>{goal.name}</Text>
+
+                        <Text>{name}</Text>
+
+                        {(goal || dueDate) && <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            {dueDate && <Text style={styles.date}>{moment().subtract(100, 'days').fromNow()}</Text>}
+                            {goal && goal.colorTag && <ColorIndicator color={goal.colorTag} styler={{ marginLeft: 10 }}/>}
+                            {goal && <Text style={styles.note}>{goal.name}</Text>}
                         </View>}
+
+
                     </TouchableOpacity>
                 </Body>
-                {formattedDueDate && <Right style={{ alignSelf: 'flex-start' }}>
-                    <Text note style={{ fontSize: 10,  lineHeight: 16, color: colors.accent1Clr }}>{formattedDueDate}</Text>
-                </Right>}
-
             </ListItem>
         )
     }
@@ -67,3 +71,15 @@ const mapStateToProps = () => ({})
 const mapDispatchToProps = {}
 
 export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(Task))
+
+
+const styles = StyleSheet.create({
+    note: {
+        ...human.caption2Object,
+        color: iOSColors.gray
+    },
+    date: {
+        ...human.caption2Object,
+        color: iOSColors.red
+    }
+});

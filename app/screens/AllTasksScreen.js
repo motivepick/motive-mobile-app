@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { AsyncStorage } from 'react-native'
+import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
-import { Body, Button, Container, Content, Header, Icon, Left, Right, StyleProvider, Title } from 'native-base'
+import { Button, Container, Content, Header, Icon, Left, Right, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -26,18 +26,38 @@ import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '..
 import { doDeleteGoal } from '../services/goalService'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
-import SpecialTabs from '../components/a-new-ui/SpecialTabs'
-import * as colors from './COLORS'
+
+import Overlay from 'react-native-modal-overlay'
+import { iOSColors, iOSUIKit } from 'react-native-typography'
 
 export class AllTasksScreen extends Component {
-
     static navigationOptions = {
         header: null
+    }
+    state = {
+        modalVisible: false,
+        isModalVisible: false,
+        currentTab: 0,
+        tasksByStatus: 'In progress'
     }
     logout = async () => {
         LoginManager.logOut()
         await AsyncStorage.removeItem('accountId')
         navigateWithReset(this.props.navigation, 'Login')
+    }
+    toggleModal = () =>
+        this.setState({ isModalVisible: !this.state.isModalVisible })
+
+    toggleSortBy = () => Alert.alert('Show sorting options')
+
+    toggleTasksByStatus = () => this.setState({ tasksByStatus: this.state.tasksByStatus === 'In progress' ? 'Completed' : 'In progress' })
+
+    showOverlay() {
+        this.setState({ modalVisible: true })
+    }
+
+    hideOverlay() {
+        this.setState({ modalVisible: false })
     }
 
     componentDidMount() {
@@ -63,53 +83,61 @@ export class AllTasksScreen extends Component {
         } = this.props
         return (
             <StyleProvider style={getTheme(baseTheme)}>
-                <Container>
-
-                    <Header transparent>
-                        <Left><Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='arrow-back'/>
-                        </Button></Left>
-                        <Body>
-                        <Title>Tasks</Title>
-                        </Body>
+                <Container style={{ backgroundColor: iOSColors.white }}>
+                    <Header hasTabs transparent>
+                        <Left>
+                            <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                <Text style={{ color: iOSColors.pink }}>Back</Text>
+                            </Button>
+                        </Left>
                         <Right>
-                            <Button transparent>
-                                <Icon name="add" style={{ color: colors.accent1Clr }}/>
+                            <Button transparent onPress={this.toggleModal}>
+                                <Text style={{ color: iOSColors.pink }}>Add</Text>
                             </Button>
                         </Right>
                     </Header>
-
-                    {/* <H1>Tasks</H1> */}
-
                     <Content>
-                        {/* <Form style={{ margin: 10 }}>
-                        <Item rounded style={{backgroundColor: 'lightgrey', paddingHorizontal: 10}}>
-                            <Icon active name='add' />
-                            <Input small
-                                // onChangeText={taskName => this.setState({ taskName })}
-                                // value={taskName}
-                                // onSubmitEditing={this.onAddNewTask}
-                                returnKeyType={'done'}
-                                placeholder={t('labels.newTask')}
-                            />
-                            <Icon active name='calendar'/>
-                            <Icon active name='list' />
-                        </Item>
-                    </Form> */}
-                        {/* <Progress.Bar progress={0.1} width={280} style={{marginHorizontal: 15, marginTop: 10}} /> */}
-                        <SpecialTabs/>
+                        <View style={styles.header}>
+                            <Text style={iOSUIKit.largeTitleEmphasized}>Tasks</Text>
+                        </View>
+                        <View style={[styles.line, { marginBottom: 8 }]}>
 
-                        {/* <Text >normal text</Text>
-                    <Text note>normal note</Text> */}
+                        </View>
+                        <View style={[styles.line, { marginBottom: 8 }]}>
+                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>130 TASKS</Text>
+                        </View>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginHorizontal: 16,
+                            marginBottom: 12
+                        }}>
+                            <TouchableOpacity onPress={this.toggleSortBy} style={{
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{ color: iOSColors.pink }}>Recent</Text>
+                                <Icon active name='ios-arrow-down' style={{
+                                    marginLeft: 5,
+                                    fontSize: 15,
+                                    color: iOSColors.pink
+                                }}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={this.toggleTasksByStatus}>
+                                <Text style={[{ color: iOSColors.pink }]}>{'Status: ' + this.state.tasksByStatus}</Text>
+                            </TouchableOpacity>
+                        </View>
                         <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}
-                                  onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
-                        {/* <Button full light small onPress={() => updateUserTasks(true)}>
-                                        <Text>{closedTasksAreShown ? t('labels.hideClosedTasks') : t('labels.showClosedTasks')}</Text>
-                                    </Button>
-                                    {closedTasksAreShown && <Tasks tasks={closedTasks} onCloseTask={id => undoCloseTask(id)} onDeleteTask={id => deleteTask(id)}/>} */}
+                            onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
                     </Content>
-
-
+                    <Overlay visible={this.state.isModalVisible} closeOnTouchOutside onClose={this.toggleModal}
+                        animationType="slideInDown"
+                        easing="ease-in"
+                        childrenWrapperStyle={{ backgroundColor: '#eee' }}
+                    >
+                        <Text>Here a form to add a task will be added</Text>
+                    </Overlay>
                 </Container>
             </StyleProvider>
         )
@@ -198,3 +226,21 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(AllTasksScreen))
+
+const styles = StyleSheet.create({
+    line: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginHorizontal: 16,
+        paddingBottom: 8,
+        borderBottomWidth: 1,
+        borderColor: iOSColors.customGray
+    },
+    header: {
+        paddingHorizontal: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    }
+})
