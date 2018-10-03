@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { AsyncStorage, View } from 'react-native'
+import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
-import TaskList from '../components/TaskList/TaskList'
 import GoalList from '../components/GoalList/GoalList'
-import { Button, Container, Content, StyleProvider, Tab, Tabs, H3, Text, Form, Item, Icon, Input } from 'native-base'
+import { Button, Container, Content, Header, Icon, Left, Right, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -21,22 +20,45 @@ import {
     updateClosedUserTasksAction,
     updateUserTasksAction
 } from '../actions/tasksActions'
-import Tasks from '../components/TaskList/Tasks'
 import { doDeleteTask, fetchClosedTasks, fetchTasks } from '../services/taskService'
 import moment from 'moment'
 import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '../actions/goalsActions'
 import { doDeleteGoal } from '../services/goalService'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
-
-import * as Progress from 'react-native-progress'
+// import * as Progress from 'react-native-progress'
+import { iOSColors, iOSUIKit } from 'react-native-typography'
+import Overlay from 'react-native-modal-overlay'
 
 export class AllTasksScreen extends Component {
-
     static navigationOptions = {
-        title: 'Goals'
+        header: null
+    }
+    state = {
+        modalVisible: false,
+        isModalVisible: false,
+        currentTab: 0,
+        tasksByStatus: 'In progress'
+    }
+    logout = async () => {
+        LoginManager.logOut()
+        await AsyncStorage.removeItem('accountId')
+        navigateWithReset(this.props.navigation, 'Login')
+    }
+    toggleModal = () =>
+        this.setState({ isModalVisible: !this.state.isModalVisible })
+
+    toggleSortBy = () => Alert.alert('Show sorting options')
+
+    toggleTasksByStatus = () => this.setState({ tasksByStatus: this.state.tasksByStatus === 'In progress' ? 'Completed' : 'In progress' })
+
+    showOverlay() {
+        this.setState({ modalVisible: true })
     }
 
+    hideOverlay() {
+        this.setState({ modalVisible: false })
+    }
     componentDidMount() {
         const { updateUserTasks, updateUserGoals } = this.props
         updateUserTasks(false, 'all')
@@ -66,53 +88,61 @@ export class AllTasksScreen extends Component {
         } = this.props
         return (
             <StyleProvider style={getTheme(baseTheme)}>
-                <Container>
-
-
+                <Container style={{ backgroundColor: iOSColors.white }}>
+                    <Header hasTabs transparent>
+                        <Left>
+                            <Button transparent onPress={() => this.props.navigation.goBack()}>
+                                <Text style={{ color: iOSColors.pink }}>Back</Text>
+                            </Button>
+                        </Left>
+                        <Right>
+                            <Button transparent onPress={this.toggleModal}>
+                                <Text style={{ color: iOSColors.pink }}>Add</Text>
+                            </Button>
+                        </Right>
+                    </Header>
                     <Content>
-                    {/* <Form style={{ margin: 10 }}>
-                        <Item rounded style={{backgroundColor: 'lightgrey', paddingHorizontal: 10}}>
-                            <Icon active name='add' />
-                            <Input small
-                                // onChangeText={taskName => this.setState({ taskName })}
-                                // value={taskName}
-                                // onSubmitEditing={this.onAddNewTask}
-                                returnKeyType={'done'}
-                                placeholder={t('labels.newTask')}
-                            />
-                            <Icon active name='calendar'/>
-                            <Icon active name='list' />
-                        </Item>
-                    </Form> */}
-                    {/* <Progress.Bar progress={0.1} width={280} style={{marginHorizontal: 15, marginTop: 10}} /> */}
-                    <View style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginHorizontal: 15
-                    }}>
-                        <Button transparent active style={{
+                        <View style={styles.header}>
+                            <Text style={iOSUIKit.largeTitleEmphasized}>Goals</Text>
+                        </View>
+                        <View style={[styles.line, { marginBottom: 8 }]}>
+
+                        </View>
+                        <View style={[styles.line, { marginBottom: 8 }]}>
+                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>15 GOALS</Text>
+                        </View>
+                        <View style={{
                             flexDirection: 'row',
-                            alignItems: 'flex-start',
-                            alignSelf: 'flex-start',
-                            alignContent:'flex-start',
-                            justifyContent: 'flex-start' }}>
-                            {/* <H3>{'In progress'.toUpperCase()}</H3> */}
-                            <Text style={{fontSize: 20, lineHeight: 30,  color: 'black'}}>{'In progress'.toUpperCase()}<Text style={{fontSize: 11, lineHeight: 18, textAlignVertical: 'top', color: 'black'}}>10</Text></Text>
-                            
-                        </Button>
-                        <Button transparent>
-                            <Text note style={{ fontSize: 14 }}>{'Completed'.toUpperCase()}</Text>
-                        </Button>
-                    </View>
-                    
-                    {/* <Text >normal text</Text>
-                    <Text note>normal note</Text> */}
-<GoalList goals={goals} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginHorizontal: 16,
+                            marginBottom: 12
+                        }}>
+                            <TouchableOpacity onPress={this.toggleSortBy} style={{
+                                flexDirection: 'row',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{ color: iOSColors.pink }}>Recent</Text>
+                                <Icon active name='ios-arrow-down' style={{
+                                    marginLeft: 5,
+                                    fontSize: 15,
+                                    color: iOSColors.pink
+                                }}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={this.toggleTasksByStatus}>
+                                <Text style={[{ color: iOSColors.pink }]}>{'Status: ' + this.state.tasksByStatus}</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <GoalList goals={goals} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>
                     </Content>
-
-
-
+                    <Overlay visible={this.state.isModalVisible} closeOnTouchOutside onClose={this.toggleModal}
+                             animationType="slideInDown"
+                             easing="ease-in"
+                             childrenWrapperStyle={{ backgroundColor: '#eee' }}
+                    >
+                        <Text>Here a form to add a task will be added</Text>
+                    </Overlay>
                 </Container>
             </StyleProvider>
         )
@@ -195,3 +225,22 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(AllTasksScreen))
+
+
+const styles = StyleSheet.create({
+    line: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginHorizontal: 16,
+        paddingBottom: 8,
+        borderBottomWidth: 1,
+        borderColor: iOSColors.customGray
+    },
+    header: {
+        paddingHorizontal: 16,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    }
+})

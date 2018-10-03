@@ -3,9 +3,10 @@ import { ListView, View } from 'react-native'
 import Goal from '../Goal/Goal'
 import styles from './GoalList.styles'
 import { translate } from 'react-i18next'
-import { Button, Icon } from 'native-base'
+import { Button, Text } from 'native-base'
 import List from '../common/List/List'
 import { withNavigation } from 'react-navigation'
+import { iOSColors } from 'react-native-typography'
 
 export class GoalList extends Component {
 
@@ -46,14 +47,9 @@ export class GoalList extends Component {
     renderRow = data => <Goal data={data}/>
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
-        <View style={styles.hiddenRow}>
-            <Button onPress={() => this.editGoal(data, secId, rowId, rowMap)}>
-                <Icon active name='md-create'/>
-            </Button>
-            <Button danger onPress={() => this.deleteGoal(data, secId, rowId, rowMap)}>
-                <Icon active name='trash'/>
-            </Button>
-        </View>
+        <Button transparent onPress={() => this.deleteGoal(data, secId, rowId, rowMap)}>
+            <Text style={[{ color: iOSColors.pink  }]}>{'Delete'.toLocaleUpperCase()}</Text>
+        </Button>
 
     deleteGoal = (data, secId, rowId, rowMap) => {
         const { onDeleteGoal } = this.props

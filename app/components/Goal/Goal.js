@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Text, TouchableOpacity, View } from 'react-native'
-import ColorIndicator from '../common/ColorIndicator/ColorIndicator'
-import styles from './Goal.styles'
+import { AsyncStorage, StyleSheet, Text, View } from 'react-native'
+import { palette } from '../common/ColorIndicator/ColorIndicator'
 import { withNavigation } from 'react-navigation'
 import connect from 'react-redux/es/connect/connect'
 import Config from 'react-native-config'
@@ -9,9 +8,16 @@ import { updateUserTasksAction } from '../../actions/tasksActions'
 import request from 'superagent'
 import moment from 'moment'
 import { setGoal } from '../../actions/goalsActions'
+import { Body, Icon, ListItem, Right } from 'native-base'
+import { human, iOSColors, iOSUIKit } from 'react-native-typography'
+import ProgressCircle from 'react-native-progress-circle'
 
-// import * as Progress from 'react-native-progress'
 class Goal extends Component {
+
+    handleGoalClick = () => {
+        const { data, navigation } = this.props
+        navigation.navigate('Goal', { goal: data })
+    }
 
     constructor(props) {
         super(props)
@@ -21,27 +27,28 @@ class Goal extends Component {
         const { data: { name, colorTag } } = this.props
 
         return (
-            <View style={{
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                alignItems: 'flex-start'
-            }}>
-                <View style={styles.row}>
-                    <ColorIndicator color={'grey'} styler={{ marginRight: 20 }}/>
-                    <TouchableOpacity style={styles.goal} onPress={this.handleGoalClick}>
-                        <Text ellipsizeMode='tail' numberOfLines={3} style={styles.text}>{name}</Text>
-                    </TouchableOpacity>
-                    <Text style={{ marginLeft: 20, color: 'grey' }}>25 tasks</Text>
-                </View>
-                <Text style={{ marginLeft: 40, marginTop: 0, color: 'grey' }}>Deadline: 09.08.2018</Text>
-                {/*<Progress.Bar progress={0.1} width={270} style={{marginHorizontal: 40}} /> */}
-            </View>
-        )
-    }
 
-    handleGoalClick = () => {
-        const { data, navigation } = this.props
-        navigation.navigate('Goal', { goal: data })
+            <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white }} onPress={this.handleGoalClick}>
+                <ProgressCircle
+                    percent={30}
+                    radius={13}
+                    borderWidth={3}
+                    shadowColor={iOSColors.midGray}
+                    bgColor={colorTag && palette[colorTag] ? palette[colorTag] : iOSColors.white}
+                    color={iOSColors.gray}
+                >
+                    {/*<Text style={{ fontSize: 10 }}>{'30%'}</Text>*/}
+                </ProgressCircle>
+                <View style={{ marginRight: 10 }}></View>
+                <Body>
+                    <Text>{name}</Text>
+                    <Text style={styles.note}>25 tasks</Text>
+                </Body>
+                <Right style={{ marginRight: 10 }}>
+                    <Icon name="ios-arrow-forward"/>
+                </Right>
+            </ListItem>
+        )
     }
 }
 
@@ -86,3 +93,15 @@ const mapDispatchToProps = (dispatch, { data }) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(Goal))
+
+
+const styles = StyleSheet.create({
+    note: {
+        ...iOSUIKit.caption2Object,
+        color: iOSColors.gray
+    },
+    date: {
+        ...human.caption2Object,
+        color: iOSColors.red
+    }
+})
