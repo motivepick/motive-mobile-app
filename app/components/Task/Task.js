@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import moment from 'moment'
 
-import ColorIndicator from '../common/ColorIndicator/ColorIndicator'
-import CheckBox from '../common/CheckBox/CheckBox'
+import { palette } from '../common/ColorIndicator/ColorIndicator'
 // import styles from './Task.styles'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
 import { Body, ListItem, Text } from 'native-base'
 import { human, iOSColors } from 'react-native-typography'
+import ProgressCircle from 'react-native-progress-circle'
 
 class Task extends Component {
     state = {
@@ -36,20 +36,24 @@ class Task extends Component {
 
         return (
             <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white}}>
-                <CheckBox checked={closed} onPress={() => onClose(id)} style={{ borderColor: iOSColors.midGray }}/>
+                {/*<CheckBox checked={closed} onPress={() => onClose(id)} style={{ borderColor: iOSColors.midGray }}/>*/}
+                <TouchableOpacity onPress={() => onClose(id)}>
+                    <ProgressCircle
+                        percent={0}
+                        radius={13}
+                        borderWidth={3}
+                        shadowColor={iOSColors.midGray}
+                        bgColor={goal && goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.white}
+                        color={iOSColors.gray}
+                    >
+                    </ProgressCircle>
+                </TouchableOpacity>
+
                 <Body onPress={this.handleTaskClick}>
-
                     <TouchableOpacity onPress={this.handleTaskClick}>
-
                         <Text>{name}</Text>
-
-                        {(goal || dueDate) && <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            {dueDate && <Text style={styles.date}>{moment().subtract(100, 'days').fromNow()}</Text>}
-                            {goal && goal.colorTag && <ColorIndicator color={goal.colorTag} styler={{ marginLeft: 10 }}/>}
-                            {goal && <Text style={styles.note}>{goal.name}</Text>}
-                        </View>}
-
-
+                        {dueDate && <Text style={styles.date}>{moment().subtract(100, 'days').fromNow()}</Text>}
+                        {goal && <Text style={styles.note}>{goal.name}</Text>}
                     </TouchableOpacity>
                 </Body>
             </ListItem>
