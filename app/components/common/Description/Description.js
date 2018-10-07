@@ -12,7 +12,9 @@ class Description extends Component {
         }
 
         return <Input onChangeText={onChangeText} onSubmitEditing={onSubmitEditing} value={value} returnKeyType={'done'} style={styles.editableDescription}
-            multiline={true}/>
+                      placeholder={'Enter description...'}
+                      autoFocus
+                      multiline={true}/>
     }
 }
 
