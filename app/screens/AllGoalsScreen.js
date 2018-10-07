@@ -86,6 +86,9 @@ export class AllTasksScreen extends Component {
             deleteGoal,
             t
         } = this.props
+
+        const totalGoals = goals && goals.length || 0
+
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
@@ -109,7 +112,7 @@ export class AllTasksScreen extends Component {
 
                         </View>
                         <View style={[styles.line, { marginBottom: 8 }]}>
-                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>15 GOALS</Text>
+                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalGoals} GOALS`}</Text>
                         </View>
                         <View style={{
                             flexDirection: 'row',
