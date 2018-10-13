@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Alert, AsyncStorage, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
-import { Button, Container, Content, Header, Icon, Left, Right, StyleProvider, Text } from 'native-base'
+import { Button, Container, Content, Form, Header, Icon, Input, Item, Left, Right, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -150,7 +150,17 @@ export class GoalScreen extends Component {
                             </View>
 
                         </View>
-
+                        <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
+                            <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
+                                <Icon active name='add' />
+                                <Input
+                                    // onChangeText={taskName => this.setState({ taskName })}
+                                    // value={taskName}
+                                    // onSubmitEditing={this.onAddNewTask}
+                                    returnKeyType={'done'}
+                                    placeholder={t('labels.newTask')}/>
+                            </Item>
+                        </Form>
                         <View style={[styles.line, { marginBottom: 8 }]}></View>
                         <View style={[styles.line, { marginBottom: 8 }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>130 TASKS</Text>
@@ -240,7 +250,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(GoalScreen))
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
     line: {
         flexDirection: 'row',
         justifyContent: 'space-between',
