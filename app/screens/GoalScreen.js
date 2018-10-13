@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, AsyncStorage, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, AsyncStorage, KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import { Button, Container, Content, Form, Header, Icon, Input, Item, Left, Right, StyleProvider, Text } from 'native-base'
@@ -88,7 +88,9 @@ export class GoalScreen extends Component {
                     </Header>
 
                     <Content>
-
+                    <KeyboardAvoidingView
+                        behavior="position"
+                        enabled>
                         <View style={styles.header}>
                             <Text style={iOSUIKit.largeTitleEmphasized}>{goal.name}</Text>
                         </View>
@@ -96,7 +98,7 @@ export class GoalScreen extends Component {
 
 
                         </View>
-                        <View style={styles.card}>
+                        <View style={styles.card} behavior="padding" enabled>
                             <View style={styles.row}>
                                 <View style={{
                                     flexDirection: 'column',
@@ -140,7 +142,7 @@ export class GoalScreen extends Component {
                                 <Text style={iOSUIKit.footnoteEmphasized}>Some text here and there to support idea of ...</Text>
                             </TouchableOpacity>
                         </View>
-
+                        </KeyboardAvoidingView>
                         <View style={styles.taskSection}>
                             <View style={styles.taskTitleBar}>
                                 <Text style={styles.taskTitle}>Tasks</Text>
