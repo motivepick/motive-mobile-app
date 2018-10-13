@@ -3,7 +3,7 @@ import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-n
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import GoalList from '../components/GoalList/GoalList'
-import { Button, Container, Content, Header, Icon, Left, Right, StyleProvider, Text } from 'native-base'
+import { Button, Container, Content, Form, Header, Icon, Input, Item, Left, Picker, Right, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -38,7 +38,8 @@ export class AllTasksScreen extends Component {
         modalVisible: false,
         isModalVisible: false,
         currentTab: 0,
-        tasksByStatus: 'In progress'
+        tasksByStatus: 'In progress',
+        selected: 'Recent'
     }
     logout = async () => {
         LoginManager.logOut()
@@ -70,7 +71,13 @@ export class AllTasksScreen extends Component {
         await AsyncStorage.removeItem('accountId')
         navigateWithReset(this.props.navigation, 'Login')
     }
+    onValueChange(value: string) {
+        if (value === this.state.selected) return
 
+        this.setState({
+            selected: value
+        })
+    }
     render() {
         const {
             tasks,
@@ -98,16 +105,24 @@ export class AllTasksScreen extends Component {
                                 <Text style={{ color: iOSColors.pink }}>Back</Text>
                             </Button>
                         </Left>
-                        <Right>
-                            <Button transparent onPress={this.toggleModal}>
-                                <Text style={{ color: iOSColors.pink }}>Add</Text>
-                            </Button>
-                        </Right>
+                        <Right/>
                     </Header>
                     <Content>
                         <View style={styles.header}>
                             <Text style={iOSUIKit.largeTitleEmphasized}>Goals</Text>
                         </View>
+                        <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
+                            <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
+                                <Icon active name='add' />
+                                <Input
+                                    // onChangeText={goalName => this.setState({ goalName })}
+                                    // value={goalName}
+                                    // onSubmitEditing={this.onAddNewGoal}
+                                    // editable={!creatingGoal}
+                                    returnKeyType={'done'}
+                                    placeholder={t('labels.newGoal')}/>
+                            </Item>
+                        </Form>
                         <View style={[styles.line, { marginBottom: 8 }]}>
 
                         </View>
@@ -119,19 +134,48 @@ export class AllTasksScreen extends Component {
                             justifyContent: 'space-between',
                             alignItems: 'center',
                             marginHorizontal: 16,
-                            marginBottom: 12
+                            // marginBottom: 12
                         }}>
-                            <TouchableOpacity onPress={this.toggleSortBy} style={{
-                                flexDirection: 'row',
-                                alignItems: 'center'
-                            }}>
-                                <Text style={{ color: iOSColors.pink }}>Recent</Text>
-                                <Icon active name='ios-arrow-down' style={{
-                                    marginLeft: 5,
+                            {/*<TouchableOpacity onPress={this.toggleSortBy} style={{*/}
+                                {/*flexDirection: 'row',*/}
+                                {/*alignItems: 'center'*/}
+                            {/*}}>*/}
+                                {/*<Text style={{ color: iOSColors.pink }}>Recent</Text>*/}
+                                {/*<Icon active name='ios-arrow-down' style={{*/}
+                                    {/*marginLeft: 5,*/}
+                                    {/*fontSize: 15,*/}
+                                    {/*color: iOSColors.pink*/}
+                                {/*}}/>*/}
+                            {/*</TouchableOpacity>*/}
+                            <Picker
+                                mode="dropdown"
+                                iosIcon={<Icon active name='ios-arrow-down' style={{
+                                    marginLeft: -10,
                                     fontSize: 15,
                                     color: iOSColors.pink
-                                }}/>
-                            </TouchableOpacity>
+                                }}/>}
+                                placeholder="Sort by"
+                                placeholderStyle={{ color: "#bfc6ea" }}
+                                placeholderIconColor="#007aff"
+                                style={{ marginLeft: -15, width: undefined }}
+                                selectedValue={this.state.selected}
+                                onValueChange={this.onValueChange.bind(this)}
+                                headerStyle={{ backgroundColor: iOSColors.white }}
+                                headerBackButtonTextStyle={{ color: iOSColors.pink }}
+                                textStyle={{ color: iOSColors.pink }}
+                                iosHeader={'Sort by'}
+                                // itemTextStyle={{ color: '#788ad2' }}
+                                // itemStyle={{
+                                //     backgroundColor: "#d3d3d3",
+                                //     marginLeft: 0,
+                                //     paddingLeft: 10
+                                // }}
+                            >
+                                <Picker.Item label="Recent" value="Recent" />
+                                <Picker.Item label="Overdue" value="Overdue" />
+                                <Picker.Item label="By tasks" value="Tasks" />
+                                <Picker.Item label="By color" value="Color" />
+                            </Picker>
                             <TouchableOpacity onPress={this.toggleTasksByStatus}>
                                 <Text style={[{ color: iOSColors.pink }]}>{'Status: ' + this.state.tasksByStatus}</Text>
                             </TouchableOpacity>
