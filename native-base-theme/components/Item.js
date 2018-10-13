@@ -151,7 +151,8 @@ export default (variables = variable) => {
                 paddingLeft: 8
             },
             'NativeBase.Icon': {
-                paddingLeft: 10
+                paddingLeft: 10,
+                paddingTop: 3
             },
             '.success': {
                 borderColor: variables.inputSuccessBorderColor
@@ -160,7 +161,7 @@ export default (variables = variable) => {
                 borderColor: variables.inputErrorBorderColor
             },
             borderWidth: variables.borderWidth * 2,
-            borderRadius: 30,
+            borderRadius: 10,
             borderColor: variables.inputBorderColor
         },
 

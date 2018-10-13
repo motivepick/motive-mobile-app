@@ -3,7 +3,7 @@ import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-n
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
-import { Button, Container, Content, Header, Icon, Left, Right, StyleProvider, Text } from 'native-base'
+import { Button, Container, Content, Form, Header, Icon, Input, Item, Left, Right, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -93,22 +93,32 @@ export class AllTasksScreen extends Component {
                                 <Text style={{ color: iOSColors.pink }}>Back</Text>
                             </Button>
                         </Left>
-                        <Right>
-                            <Button transparent onPress={this.toggleModal}>
-                                <Text style={{ color: iOSColors.pink }}>Add</Text>
-                            </Button>
-                        </Right>
+                        <Right/>
                     </Header>
                     <Content>
                         <View style={styles.header}>
                             <Text style={iOSUIKit.largeTitleEmphasized}>Tasks</Text>
                         </View>
+                        <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
+                            <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
+                                <Icon active name='add' />
+                                <Input
+                                    // onChangeText={taskName => this.setState({ taskName })}
+                                    // value={taskName}
+                                    // onSubmitEditing={this.onAddNewTask}
+                                    returnKeyType={'done'}
+                                    placeholder={t('labels.newTask')}/>
+                            </Item>
+                        </Form>
                         <View style={[styles.line, { marginBottom: 8 }]}>
 
                         </View>
-                        <View style={[styles.line, { marginBottom: 8 }]}>
+                        <View style={[styles.line, { marginBottom: 8, flexDirection: 'column' }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalTasks} TASKS`}</Text>
+
                         </View>
+
+
                         <View style={{
                             flexDirection: 'row',
                             justifyContent: 'space-between',
@@ -132,12 +142,12 @@ export class AllTasksScreen extends Component {
                             </TouchableOpacity>
                         </View>
                         <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}
-                            onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
+                                  onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
                     </Content>
                     <Overlay visible={this.state.isModalVisible} closeOnTouchOutside onClose={this.toggleModal}
-                        animationType="slideInDown"
-                        easing="ease-in"
-                        childrenWrapperStyle={{ backgroundColor: '#eee' }}
+                             animationType="slideInDown"
+                             easing="ease-in"
+                             childrenWrapperStyle={{ backgroundColor: '#eee' }}
                     >
                         <Text>Here a form to add a task will be added</Text>
                     </Overlay>
