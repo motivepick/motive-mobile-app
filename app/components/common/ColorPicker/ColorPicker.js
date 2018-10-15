@@ -20,8 +20,7 @@ class ColorPicker extends Component {
 
     render() {
         return (
-            <Item>
-                <Icon name='ios-color-fill'/>
+            <Item style={{ borderBottomWidth: 0 }}>
                 {Object.keys(palette).map(color =>
                     <Button key={color} value={color} transparent onPress={() => this.onColorSelect(color)}>
                         <Icon type='MaterialCommunityIcons' name={this.state.selectedColor === color ? 'check-circle' : 'circle'}
