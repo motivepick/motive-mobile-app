@@ -23,7 +23,8 @@ export class DueDatePicker extends Component {
         return (
             <View style={styles.container}>
                 <DatePicker
-                    customStyles={{ dateInput: styles.dateInput, dateTouchBody: styles.dateTouchBody }}
+                    showIcon={false}
+                    customStyles={{ dateInput: styles.dateInput, dateTouchBody: styles.dateTouchBody, dateText: styles.dateText, placeholderText: styles.placeholderText }}
                     style={styles.datePickerContainer}
                     date={this.state.dateAsStringInLocalFormat}
                     mode='date'
@@ -35,8 +36,8 @@ export class DueDatePicker extends Component {
                     iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
                     onDateChange={dateAsStringInLocalFormat => this.handleDateChange(dateAsStringInLocalFormat)}
                 />
-                {this.state.dateAsStringInLocalFormat && <Button transparent danger style={styles.clearBtn} onPress={() => this.clearDate()}>
-                    <Icon type='MaterialCommunityIcons' name='close-circle-outline' style={styles.clearBtnIcon}/>
+                {this.state.dateAsStringInLocalFormat && <Button transparent squared danger onPress={() => this.clearDate()}>
+                    <Icon type='MaterialCommunityIcons' name='close-circle-outline'/>
                 </Button>}
             </View>
         )
