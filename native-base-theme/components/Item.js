@@ -221,7 +221,14 @@ export default (variables = variable) => {
             }
         },
         '.picker': {
-            marginLeft: 0
+            // marginLeft: 0
+            flex: 1,
+            alignContent: 'center',
+            alignSelf: 'center',
+            justifyContent: 'center',
+            borderWidth: variables.borderWidth * 2,
+            borderRadius: 10,
+            borderColor: variables.inputBorderColor
         },
 
         borderWidth: variables.borderWidth * 2,

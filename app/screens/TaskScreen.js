@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, TouchableOpacity, View } from 'react-native'
+import { AsyncStorage, Dimensions, PixelRatio, Platform, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { changeTaskDescriptionAction, changeTaskNameAction, setTaskAction } from '../actions/taskActions'
@@ -15,6 +15,29 @@ import { styles } from './GoalScreen'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import ColorIndicator from '../components/common/ColorIndicator/ColorIndicator'
+
+const mainTextColor = '#000'
+const platform = Platform.OS
+const deviceWidth = Dimensions.get('window').width
+const variables = {
+    // Icon
+    textColor: mainTextColor,
+    iconFamily: 'Ionicons',
+    iconFontSize: platform === 'ios' ? 30 : 28,
+    iconHeaderSize: platform === 'ios' ? 33 : 24,
+    inputFontSize: 17,
+    inputBorderColor: iOSColors.customGray,
+    inputSuccessBorderColor: '#2b8339',
+    inputErrorBorderColor: '#ed2f2f',
+    inputHeightBase: 30,
+    get inputColor() {
+        return this.textColor
+    },
+    get inputColorPlaceholder() {
+        return '#575757'
+    },
+    borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1)
+}
 
 class TaskScreen extends Component {
     state = {
@@ -72,6 +95,7 @@ class TaskScreen extends Component {
                                     <Input style={[{ borderWidth: 0 }]} value={name} onChangeText={changeTaskName} onSubmitEditing={() => saveTask({ id, name })} returnKeyType={'done'}/>
                                 </Item>
                             </Form>
+
                             <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
                                 <View style={[ { marginBottom: 4 }]}>
                                     <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'Due date'.toLocaleUpperCase()}</Text>
@@ -85,30 +109,49 @@ class TaskScreen extends Component {
                                 <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>GOAL</Text>
                             </View>
 
-                            <Picker
-                                mode="dropdown"
-                                iosIcon={<Icon name="ios-arrow-down-outline" />}
-                                placeholder="Select your SIM"
-                                placeholderStyle={{ color: "#bfc6ea" }}
-                                placeholderIconColor="#007aff"
-                                style={{ width: undefined }}
-                                selectedValue={this.state.selected}
-                                onValueChange={this.onValueChange.bind(this)}
-                                headerStyle={{ backgroundColor: iOSColors.white }}
-                                headerBackButtonTextStyle={{ color: iOSColors.pink }}
-                                itemTextStyle={{ color: '#788ad2' }}
-                                // itemStyle={{
-                                //     backgroundColor: "#d3d3d3",
-                                //     marginLeft: 0,
-                                //     paddingLeft: 10
-                                // }}
-                            >
-                                <Picker.Item label={<View style={{flexDirection: 'row', alignItems: 'center'}}><ColorIndicator color={'red'} styler={{marginRight: 10}}/><Text>Veve</Text></View>} value="key0" />
-                                <Picker.Item label="Goal 1" value="key1" />
-                                <Picker.Item label="Goal 2" value="key2" />
-                                <Picker.Item label="Goal 3" value="key3" />
-                                <Picker.Item label="Goal 4" value="key4" />
-                            </Picker>
+                            <Item picker style={{ borderBottomWidth: 0, marginHorizontal: 16, backgroundColor: iOSColors.customGray }}>
+                                <Picker
+                                    mode="dropdown"
+                                    iosIcon={<Icon name="ios-arrow-down-outline" style={{
+                                        height: 30,
+                                        width: 30,
+                                        paddingLeft: 30 / 4,
+                                        fontSize: 20,
+                                        marginRight: 0
+                                    }}/>}
+                                    placeholder="Task is part of goal?"
+                                    placeholderStyle={{
+                                        color: variables.inputColorPlaceholder
+                                    }}
+                                    placeholderIconColor="#007aff"
+                                    style={{
+                                        width: deviceWidth - 16 * 2,
+                                        paddingHorizontal: 5,
+                                        height: variables.inputHeightBase
+                                    }}
+                                    selectedValue={this.state.selected}
+                                    onValueChange={this.onValueChange.bind(this)}
+                                    headerStyle={{ backgroundColor: iOSColors.white }}
+                                    headerBackButtonTextStyle={{ color: iOSColors.pink }}
+                                    itemTextStyle={{ color: '#788ad2' }}
+                                    textStyle={{
+                                        paddingLeft: 5,
+                                        color: variables.inputColor,
+                                        fontSize: variables.inputFontSize,
+                                    }}
+                                    // itemStyle={{
+                                    //     backgroundColor: "#d3d3d3",
+                                    //     marginLeft: 0,
+                                    //     paddingLeft: 10
+                                    // }}
+                                >
+                                    <Picker.Item label={<View style={{flexDirection: 'row', alignItems: 'center'}}><ColorIndicator color={'red'} styler={{marginRight: 10}}/><Text>Veve</Text></View>} value="key0" />
+                                    <Picker.Item label="Goal 1" value="key1" />
+                                    <Picker.Item label="Goal 2" value="key2" />
+                                    <Picker.Item label="Goal 3" value="key3" />
+                                    <Picker.Item label="Goal 4" value="key4" />
+                                </Picker>
+                            </Item>
 
                             <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start', width: '100%', marginHorizontal: 16}}>
                                 <View style={styles.rowBottom}>
