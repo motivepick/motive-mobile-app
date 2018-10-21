@@ -1,4 +1,3 @@
-import * as colors from './COLORS'
 import React, { Component } from 'react'
 import { AsyncStorage, ImageBackground, Platform, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
@@ -103,7 +102,7 @@ export class HomeScreen extends Component {
 
         return (
             <StyleProvider style={getTheme(baseTheme)}>
-                <Container style={{ backgroundColor: colors.backgroundClr }}>
+                <Container style={{ backgroundColor: iOSColors.white }}>
                     <Header hasTabs transparent>
                         <Right>
                             <Button transparent onPress={this.handleGoalClick}>
