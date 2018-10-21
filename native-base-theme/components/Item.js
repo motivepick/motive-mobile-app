@@ -1,4 +1,5 @@
 import { Platform } from 'react-native'
+import { iOSColors } from 'react-native-typography'
 
 import variable from './../variables/platform'
 
@@ -162,7 +163,8 @@ export default (variables = variable) => {
             },
             borderWidth: variables.borderWidth * 2,
             borderRadius: 10,
-            borderColor: variables.inputBorderColor
+            borderColor: variables.inputBorderColor,
+            backgroundColor: iOSColors.customGray
         },
 
         '.success': {

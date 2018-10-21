@@ -70,7 +70,7 @@ class GoalEditScreen extends Component {
                         <Form style={{ marginHorizontal: 16 }}>
                             <View style={{  marginTop: 8 }}>
                                 <FormLabel labelText={t('labels.goal').toLocaleUpperCase()}/>
-                                <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
+                                <Item rounded>
                                     <Input
                                         onChangeText={changeGoalName}
                                         value={name}
@@ -82,7 +82,7 @@ class GoalEditScreen extends Component {
                             </View>
                             <View style={{ marginTop: 8 }}>
                                 <FormLabel labelText={'Due date'.toLocaleUpperCase()}/>
-                                <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
+                                <Item rounded>
                                     <DueDatePicker value={dueDate} onChangeDate={dueDate => saveGoal({
                                         id,
                                         dueDate
