@@ -110,6 +110,7 @@ export class HomeScreen extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <AnimatedHeader title={'Hi, John'} scrollOffset={this.state.scrollY}  onRightButtonPress={this.logout} rightIcon={<Icon name='log-out'/>}/>
+                    <View style={styles.line}/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <View style={styles.recentlyPlayed}>
                             <View style={styles.recentlyPlayedTitleBar}>
@@ -344,6 +345,15 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(HomeScreen))
 
 const styles = StyleSheet.create({
+    line: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+        marginHorizontal: 16,
+        paddingBottom: 8,
+        borderBottomWidth: 1,
+        borderColor: iOSColors.customGray
+    },
     screenContainer: {
         flex: 1,
         backgroundColor: iOSColors.white
