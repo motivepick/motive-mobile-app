@@ -3,7 +3,7 @@ import { Alert, Animated, AsyncStorage, StyleSheet, TouchableOpacity, View } fro
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
-import { Body, Button, Container, Content, Form, Header, Icon, Input, Item, Left, Right, StyleProvider, Text, Title } from 'native-base'
+import { Container, Content, Form, Icon, Input, Item, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -29,11 +29,7 @@ import baseTheme from '../../native-base-theme/variables/platform'
 
 import Overlay from 'react-native-modal-overlay'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
-
-// const HEADER_EXPANDED_HEIGHT = 200;
-// const HEADER_COLLAPSED_HEIGHT = 150;
-const HEADER_EXPANDED_HEIGHT = 41.5;
-const HEADER_COLLAPSED_HEIGHT = 0;
+import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 
 export class AllTasksScreen extends Component {
     static navigationOptions = {
@@ -47,7 +43,7 @@ export class AllTasksScreen extends Component {
     }
 
     constructor() {
-        super();
+        super()
 
         this.state = {
             scrollY: new Animated.Value(0)
@@ -98,47 +94,13 @@ export class AllTasksScreen extends Component {
 
         const totalTasks = tasks && tasks.length || 0
 
-
-        const headerHeight = this.state.scrollY.interpolate({
-            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
-            outputRange: [HEADER_EXPANDED_HEIGHT, HEADER_COLLAPSED_HEIGHT],
-            extrapolate: 'clamp'
-        });
-        const headerTitleOpacity = this.state.scrollY.interpolate({
-            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
-            outputRange: [0, 1],
-            extrapolate: 'clamp'
-        });
-        const heroTitleOpacity = this.state.scrollY.interpolate({
-            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
-            outputRange: [1, 0],
-            extrapolate: 'clamp'
-        });
-
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <Header transparent>
-                        <Left>
-                            <Button transparent onPress={() => this.props.navigation.goBack()}>
-                                <Text style={{ color: iOSColors.pink }}>Back</Text>
-                            </Button>
-
-                        </Left>
-                        <Body>
-
-                            <Title><Animated.Text style={{textAlign: 'center', fontSize: 18, color: 'black', marginTop: 28,
-                                opacity: headerTitleOpacity
-                                }}>Tasks</Animated.Text></Title>
-
-                        </Body>
-
-                        <Right/>
-                    </Header>
-                    <Animated.View style={styles.header}>
-                        <Animated.Text style={[iOSUIKit.largeTitleEmphasized, {opacity: heroTitleOpacity, height: headerHeight}]}>Tasks</Animated.Text>
-                    </Animated.View>
-
+                    <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY}
+                        rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick}
+                        leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
+                    />
                     <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
                         <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
                             <Icon active name='add' />
@@ -150,18 +112,8 @@ export class AllTasksScreen extends Component {
                                 placeholder={t('labels.newTask')}/>
                         </Item>
                     </Form>
-                    <View style={[styles.line]}>
-
-                    </View>
-                    <Content onScroll={Animated.event(
-                        [{ nativeEvent: {
-                                contentOffset: {
-                                    y: this.state.scrollY
-                                }
-                            }
-                        }])
-                    }
-                             scrollEventThrottle={16}>
+                    <View style={[styles.line]}/>
+                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
 
                         <View style={[styles.line, { marginTop: 8, marginBottom: 8, flexDirection: 'column' }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalTasks} TASKS`}</Text>

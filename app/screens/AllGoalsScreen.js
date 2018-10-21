@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, Animated, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import GoalList from '../components/GoalList/GoalList'
@@ -42,6 +42,15 @@ export class AllTasksScreen extends Component {
         tasksByStatus: 'In progress',
         selected: 'Recent'
     }
+
+    constructor() {
+        super()
+
+        this.state = {
+            scrollY: new Animated.Value(0)
+        }
+    }
+
     logout = async () => {
         LoginManager.logOut()
         await AsyncStorage.removeItem('accountId')
@@ -100,27 +109,22 @@ export class AllTasksScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <AnimatedHeader leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
-                    <Content>
-                        <View style={styles.header}>
-                            <Text style={iOSUIKit.largeTitleEmphasized}>Goals</Text>
-                        </View>
-                        <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
-                            <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
-                                <Icon active name='add' />
-                                <Input
-                                    // onChangeText={goalName => this.setState({ goalName })}
-                                    // value={goalName}
-                                    // onSubmitEditing={this.onAddNewGoal}
-                                    // editable={!creatingGoal}
-                                    returnKeyType={'done'}
-                                    placeholder={t('labels.newGoal')}/>
-                            </Item>
-                        </Form>
-                        <View style={[styles.line, { marginBottom: 8 }]}>
-
-                        </View>
-                        <View style={[styles.line, { marginBottom: 8 }]}>
+                    <AnimatedHeader title={t('headings.goals')} scrollOffset={this.state.scrollY} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
+                    <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
+                        <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
+                            <Icon active name='add' />
+                            <Input
+                                // onChangeText={goalName => this.setState({ goalName })}
+                                // value={goalName}
+                                // onSubmitEditing={this.onAddNewGoal}
+                                // editable={!creatingGoal}
+                                returnKeyType={'done'}
+                                placeholder={t('labels.newGoal')}/>
+                        </Item>
+                    </Form>
+                    <View style={styles.line}/>
+                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
+                        <View style={[styles.line, { marginTop: 8, marginBottom: 8 }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalGoals} GOALS`}</Text>
                         </View>
                         <View style={{

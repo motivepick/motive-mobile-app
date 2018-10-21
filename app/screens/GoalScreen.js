@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, AsyncStorage, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, Animated, AsyncStorage, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import { Container, Content, Form, Icon, Input, Item, StyleProvider, Text } from 'native-base'
@@ -32,6 +32,15 @@ export class GoalScreen extends Component {
         currentTab: 0,
         tasksByStatus: 'In progress'
     }
+
+    constructor() {
+        super()
+
+        this.state = {
+            scrollY: new Animated.Value(0)
+        }
+    }
+
     logout = async () => {
         LoginManager.logOut()
         await AsyncStorage.removeItem('accountId')
@@ -77,22 +86,17 @@ export class GoalScreen extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <AnimatedHeader
+                        title={goal.name} scrollOffset={this.state.scrollY}
                         rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick}
                         leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
                     />
-
-                    <Content>
+                    <View style={styles.line}/>
+                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                     {/*<KeyboardAvoidingView*/}
                         {/*behavior="padding"*/}
                         {/*keyboardVerticalOffset={0}*/}
                         {/*enabled>*/}
-                        <View style={styles.header}>
-                            <Text style={iOSUIKit.largeTitleEmphasized}>{goal.name}</Text>
-                        </View>
-                        <View style={[styles.line]}>
 
-
-                        </View>
                         <View style={styles.card} behavior="padding" enabled>
                             <View style={styles.row}>
                                 <View style={{
