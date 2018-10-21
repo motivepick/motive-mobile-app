@@ -69,8 +69,6 @@ export class AllTasksScreen extends Component {
             closeTask,
             deleteTask,
             undoCloseTask,
-            createGoal,
-            deleteGoal,
             t
         } = this.props
 
@@ -84,21 +82,14 @@ export class AllTasksScreen extends Component {
                         leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
                     />
                     <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask}/>
-                    <View style={[styles.line]}/>
+                    <View style={styles.line}/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
 
-                        <View style={[styles.line, { marginTop: 8, marginBottom: 8, flexDirection: 'column' }]}>
+                        <View style={[styles.line, { marginVertical: 8, flexDirection: 'column' }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalTasks} TASKS`}</Text>
                         </View>
 
-
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            marginHorizontal: 16,
-                            marginBottom: 12
-                        }}>
+                        <View style={styles.sectionHeader}>
                             <SortPicker activeSort={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                             <TouchableOpacity onPress={this.toggleTasksByStatus}>
                                 <Text style={{ color: iOSColors.pink }}>{'Status: ' + this.state.statusFilter}</Text>
@@ -205,10 +196,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: iOSColors.customGray
     },
-    header: {
-        paddingHorizontal: 16,
+    sectionHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginHorizontal: 16,
+        marginBottom: 12
     }
 })
