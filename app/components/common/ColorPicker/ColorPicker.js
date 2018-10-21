@@ -1,13 +1,24 @@
 import React, { Component } from 'react'
-import { Button, Icon, Item } from 'native-base'
+import { View } from 'react-native'
+import { Button, Icon } from 'native-base'
 import { translate } from 'react-i18next'
 
-const palette = {
-    red: '#C25B56',
-    orange: '#FFAE5D',
-    blue: '#96C0CE',
+export const palette = {
+    maroon: '#800000',
+    red: '#e6194B',
+    pink: '#fabebe',
+    brown: '#9A6324',
+    orange: '#f58231',
+    olive: '#808000',
+    yellow: '#ffe119',
+    lime: '#bfef45',
+    green: '#3cb44b',
+    cyan: '#42d4f4',
     deepBlue: '#336699',
-    purple: '#6F3662'
+    blue: '#4363d8',
+    purple: '#911eb4',
+    lavender: '#e6beff',
+    magenta: '#f032e6'
 }
 
 class ColorPicker extends Component {
@@ -18,16 +29,27 @@ class ColorPicker extends Component {
         this.state = ({ selectedColor: value || '' })
     }
 
+    displayButton = color =>
+        <Button key={color} value={color} transparent onPress={() => this.onColorSelect(color)}>
+            <Icon type='MaterialCommunityIcons' name={this.state.selectedColor === color ? 'check-circle' : 'circle'} style={{ color: palette[color] }}/>
+        </Button>
+
     render() {
+        const colors = Object.keys(palette)
+
         return (
-            <Item style={{ borderBottomWidth: 0 }}>
-                {Object.keys(palette).map(color =>
-                    <Button key={color} value={color} transparent onPress={() => this.onColorSelect(color)}>
-                        <Icon type='MaterialCommunityIcons' name={this.state.selectedColor === color ? 'check-circle' : 'circle'}
-                            style={{ color: palette[color] }}/>
-                    </Button>
-                )}
-            </Item>
+            <View style={{ flexDirection: 'column' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', alignContent: 'flex-start' }}>
+                    {colors.slice(0,5).map(this.displayButton)}
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', alignContent: 'flex-start' }}>
+                    {colors.slice(5,10).map(this.displayButton)}
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'flex-start', alignContent: 'flex-start' }}>
+                    {colors.slice(10,15).map(this.displayButton)}
+                </View>
+            </View>
+
         )
     }
 

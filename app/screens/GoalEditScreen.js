@@ -14,6 +14,7 @@ import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
 import Header from '../components/common/Header/Header'
+import FormLabel from '../components/common/FormLabel/FormLabel'
 
 class GoalEditScreen extends Component {
     static navigationOptions = {
@@ -59,49 +60,16 @@ class GoalEditScreen extends Component {
         const { id, name, description, dueDate, colorTag } = goal
         return (
             <StyleProvider style={getTheme(baseTheme)}>
-                <Container style={{ backgroundColor: iOSColors.white }}>
+                <Container>
                     <Header
                         title={t('headings.editGoal')}
                         leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
                     />
 
                     <Content>
-
-                        <Form>
-
-
-
-
-                            {/*<Item rounded style={{ backgroundColor: iOSColors.customGray }}>*/}
-                                {/*<DatePicker*/}
-                                    {/*value={dueDate}*/}
-                                    {/*defaultDate={new Date(2018, 4, 4)}*/}
-                                    {/*minimumDate={new Date(2018, 1, 1)}*/}
-                                    {/*maximumDate={new Date(2018, 12, 31)}*/}
-                                    {/*locale={"en"}*/}
-                                    {/*timeZoneOffsetInMinutes={undefined}*/}
-                                    {/*modalTransparent={false}*/}
-                                    {/*animationType={"fade"}*/}
-                                    {/*androidMode={"default"}*/}
-                                    {/*placeHolderText="Select date"*/}
-                                    {/*textStyle={{ color: "green" }}*/}
-                                    {/*placeHolderTextStyle={{ color: "#d3d3d3" }}*/}
-                                    {/*onChangeDate={dueDate => saveGoal({*/}
-                                        {/*id,*/}
-                                        {/*dueDate*/}
-                                    {/*})}*/}
-                                {/*/>*/}
-                                {/*<Text>*/}
-                                    {/*/!*Date: {this.state.dueDate.toString().substr(4, 12)}*!/*/}
-                                {/*</Text>*/}
-                            {/*</Item>*/}
-
-
-
-                            <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
-                                <View style={[ { marginBottom: 4 }]}>
-                                    <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{t('labels.goal').toLocaleUpperCase()}</Text>
-                                </View>
+                        <Form style={{ marginHorizontal: 16 }}>
+                            <View style={{  marginTop: 8 }}>
+                                <FormLabel labelText={t('labels.goal').toLocaleUpperCase()}/>
                                 <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
                                     <Input
                                         onChangeText={changeGoalName}
@@ -111,43 +79,35 @@ class GoalEditScreen extends Component {
                                         placeholder={t('labels.newGoal')}
                                         />
                                 </Item>
-                            </Form>
-                            <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
-                                <View style={[ { marginBottom: 4 }]}>
-                                    <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'Due date'.toLocaleUpperCase()}</Text>
-                                </View>
-                                <Item rounded style={{ borderBottomWidth: 0, backgroundColor: iOSColors.customGray }}>
+                            </View>
+                            <View style={{ marginTop: 8 }}>
+                                <FormLabel labelText={'Due date'.toLocaleUpperCase()}/>
+                                <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
                                     <DueDatePicker value={dueDate} onChangeDate={dueDate => saveGoal({
                                         id,
                                         dueDate
                                     })}/>
                                 </Item>
-                            </Form>
-                            <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start', width: '100%', marginHorizontal: 16}}>
-                                <View style={styles.rowBottom}>
-                                    <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>NOTES</Text>
-                                </View>
+                            </View>
+
+                            <View style={{ marginTop: 8 }}>
+                                <FormLabel labelText={'NOTES'.toLocaleUpperCase()}/>
                                 <TouchableOpacity style={styles.goalNotes} onPress={this.goToEditDescriptionScreen}>
                                     <Text style={iOSUIKit.footnoteEmphasized}>Some text here and there to support idea of whatever ...</Text>
                                 </TouchableOpacity>
                             </View>
 
-                            <View style={[styles.rowBottom, { marginHorizontal: 16}]}>
-                                <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>COLOR</Text>
+                            <View style={{ marginTop: 8 }}>
+                                <FormLabel labelText={'COLOR'.toLocaleUpperCase()}/>
+                                <ColorPicker value={colorTag} onChangeColor={colorTag => {
+                                    changeGoalColor(colorTag)
+                                    saveGoal({
+                                        id,
+                                        colorTag
+                                    })
+                                }}/>
                             </View>
-                            <ColorPicker value={colorTag} onChangeColor={colorTag => {
-                                changeGoalColor(colorTag)
-                                saveGoal({
-                                    id,
-                                    colorTag
-                                })
-                            }}/>
                         </Form>
-
-
-                        {/*{tasks &&*/}
-                        {/*<TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={filter => updateGoalTasks(filter, id)}*/}
-                        {/*onCloseTask={id => closeGoalTask(id)} onDeleteTask={id => deleteGoalTask(id)}/>}*/}
                     </Content>
                 </Container>
             </StyleProvider>
