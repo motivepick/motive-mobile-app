@@ -1,5 +1,5 @@
 import { Platform } from 'react-native'
-import { iOSColors } from 'react-native-typography'
+import { iOSColors, iOSUIKit } from 'react-native-typography'
 
 import variable from './../variables/platform'
 
@@ -166,7 +166,65 @@ export default (variables = variable) => {
             borderColor: variables.inputBorderColor,
             backgroundColor: iOSColors.customGray
         },
+        '.roundedInput': {
+            'NativeBase.Input': {
+                paddingLeft: 8,
+                borderWidth: variables.borderWidth * 2,
+                borderRadius: 10,
+                borderColor: variables.inputBorderColor,
+                backgroundColor: iOSColors.customGray
+            },
+            'NativeBase.Icon': {
+                paddingLeft: 10,
+                paddingTop: 3
+            },
+            '.success': {
+                borderColor: variables.inputSuccessBorderColor
+            },
+            '.error': {
+                borderColor: variables.inputErrorBorderColor
+            },
 
+            borderWidth: 0
+        },
+        '.roundedInputWithLabel': {
+            'NativeBase.Label': {
+                left: null,
+                alignSelf: 'flex-start',
+                ...iOSUIKit.footnoteEmphasizedObject,
+                color: iOSColors.gray,
+                marginBottom: 4
+            },
+            'NativeBase.Icon': {
+                marginTop: 36
+            },
+            'NativeBase.Input': {
+                alignSelf: Platform.OS === 'ios' ? 'stretch' : 'flex-start',
+                flex: 1,
+                width: Platform.OS === 'ios' ? null : variables.deviceWidth - 25,
+                height: variables.inputHeightBase,
+                fontSize: variables.inputFontSize,
+                lineHeight: variables.inputLineHeight - 4,
+                borderWidth: variables.borderWidth * 2,
+                borderTopWidth: variables.borderWidth * 4,
+                borderRadius: 10,
+                borderColor: variables.inputBorderColor,
+                backgroundColor: iOSColors.customGray,
+                paddingLeft: 8,
+                '.secureTextEntry': {
+                    fontSize: variables.inputFontSize - 4
+                },
+                color: variables.inputColor,
+                '.multiline': {
+                    paddingTop: Platform.OS === 'ios' ? 9 : undefined,
+                    paddingBottom: Platform.OS === 'ios' ? 9 : undefined
+                }
+            },
+            marginLeft: null,
+            flexDirection: null,
+            marginBottom: 8,
+            borderColor: 'transparent'
+        },
         '.success': {
             'NativeBase.Icon': {
                 color: variables.inputSuccessBorderColor

@@ -13,6 +13,16 @@ export const styles = StyleSheet.create({
         paddingBottom: 9,
         lineHeight: 20,
         fontSize: 17
+    },
+    goalNotes: {
+        marginTop: 4,
+        padding: 12,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        backgroundColor: '#f3ece6',
+        borderRadius: 6,
+        alignSelf: 'stretch'
     }
 })
 

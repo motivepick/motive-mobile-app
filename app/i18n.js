@@ -37,7 +37,9 @@ i18n.use(languageDetector).init({
                     editTask: 'Task',
                     showClosedTasks: 'Show Closed Tasks',
                     hideClosedTasks: 'Hide Closed Tasks',
-                    editDescription: 'Description'
+                    editDescription: 'Description',
+                    dueDate: 'Due date',
+                    color: 'Color'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -75,7 +77,9 @@ i18n.use(languageDetector).init({
                     editTask: 'Задача',
                     showClosedTasks: 'Показать завершённые задачи',
                     hideClosedTasks: 'Скрыть завершённые задачи',
-                    editDescription: 'Описание'
+                    editDescription: 'Описание',
+                    dueDate: 'Due date',
+                    color: 'Color'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -113,7 +117,9 @@ i18n.use(languageDetector).init({
                     editTask: 'Task',
                     showClosedTasks: 'Show Closed Tasks',
                     hideClosedTasks: 'Hide Closed Tasks',
-                    editDescription: 'Description'
+                    editDescription: 'Description',
+                    dueDate: 'Due date',
+                    color: 'Color'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',

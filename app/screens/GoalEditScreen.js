@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Alert, AsyncStorage, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, AsyncStorage, Platform, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { changeGoalColorAction, changeGoalDescriptionAction, changeGoalNameAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
-import { Container, Content, Form, Input, Item, StyleProvider, Text } from 'native-base'
+import { Container, Content, Form, Input, Item, Label, StyleProvider } from 'native-base'
 import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
 import ColorPicker from '../components/common/ColorPicker/ColorPicker'
 import { bindActionCreators } from 'redux'
@@ -14,40 +14,14 @@ import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
 import Header from '../components/common/Header/Header'
-import FormLabel from '../components/common/FormLabel/FormLabel'
+import Description from '../components/common/Description/Description'
 
 class GoalEditScreen extends Component {
     static navigationOptions = {
         header: null
     }
-    state = {
-        modalVisible: false,
-        isModalVisible: false,
-        currentTab: 0,
-        tasksByStatus: 'In progress'
-    }
-
-    toggleModal = () =>
-        this.setState({ isModalVisible: !this.state.isModalVisible })
-
-    toggleSortBy = () => Alert.alert('Show sorting options')
-
-    toggleTasksByStatus = () => this.setState({ tasksByStatus: this.state.tasksByStatus === 'In progress' ? 'Completed' : 'In progress' })
 
     goToEditDescriptionScreen = () => Alert.alert('Go to EditDescriptionScreen')
-
-    handleGoalClick = () => {
-        const { goal, navigation } = this.props
-        navigation.navigate('GoalEdit', { goal })
-    }
-
-    showOverlay() {
-        this.setState({ modalVisible: true })
-    }
-
-    hideOverlay() {
-        this.setState({ modalVisible: false })
-    }
 
     componentDidMount() {
         const { navigation, setGoal } = this.props
@@ -68,46 +42,30 @@ class GoalEditScreen extends Component {
 
                     <Content>
                         <Form style={{ marginHorizontal: 16 }}>
-                            <View style={{  marginTop: 8 }}>
-                                <FormLabel labelText={t('labels.goal').toLocaleUpperCase()}/>
-                                <Item rounded>
-                                    <Input
-                                        onChangeText={changeGoalName}
-                                        value={name}
-                                        onSubmitEditing={() => saveGoal({ id, name })}
-                                        returnKeyType={'done'}
-                                        placeholder={t('labels.newGoal')}
-                                        />
-                                </Item>
-                            </View>
-                            <View style={{ marginTop: 8 }}>
-                                <FormLabel labelText={'Due date'.toLocaleUpperCase()}/>
-                                <Item rounded>
-                                    <DueDatePicker value={dueDate} onChangeDate={dueDate => saveGoal({
-                                        id,
-                                        dueDate
-                                    })}/>
-                                </Item>
-                            </View>
-
-                            <View style={{ marginTop: 8 }}>
-                                <FormLabel labelText={t('labels.description').toLocaleUpperCase()}/>
-                                <TouchableOpacity style={styles.goalNotes} onPress={this.goToEditDescriptionScreen}>
-                                    {description && <Text style={iOSUIKit.footnoteEmphasized}>{description}</Text>}
-                                    <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{t('placeholders.description')}</Text>
-                                </TouchableOpacity>
-                            </View>
-
-                            <View style={{ marginTop: 8 }}>
-                                <FormLabel labelText={'COLOR'.toLocaleUpperCase()}/>
+                            <Item roundedInputWithLabel>
+                                <Label>{t('labels.goal').toLocaleUpperCase()}</Label>
+                                <Input
+                                    onChangeText={changeGoalName}
+                                    value={name}
+                                    onSubmitEditing={() => saveGoal({ id, name })}
+                                    returnKeyType={'done'}
+                                    placeholder={t('labels.newGoal')}/>
+                            </Item>
+                            <Item roundedInputWithLabel>
+                                <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>
+                                <DueDatePicker value={dueDate} onChangeDate={dueDate => saveGoal({ id, dueDate })}/>
+                            </Item>
+                            <Item roundedInputWithLabel>
+                                <Label>{t('labels.description').toLocaleUpperCase()}</Label>
+                                <Description onGoToEditDescriptionScreen={this.goToEditDescriptionScreen} value={description}/>
+                            </Item>
+                            <Item roundedInputWithLabel>
+                                <Label>{t('labels.color').toLocaleUpperCase()}</Label>
                                 <ColorPicker value={colorTag} onChangeColor={colorTag => {
                                     changeGoalColor(colorTag)
-                                    saveGoal({
-                                        id,
-                                        colorTag
-                                    })
+                                    saveGoal({ id, colorTag })
                                 }}/>
-                            </View>
+                            </Item>
                         </Form>
                     </Content>
                 </Container>
@@ -163,7 +121,8 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         backgroundColor: '#f3ece6',
-        borderRadius: 6
+        borderRadius: 6,
+        alignSelf: 'stretch'
     },
     row: {
         flexDirection: 'row',

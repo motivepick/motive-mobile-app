@@ -31,7 +31,11 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        paddingRight: 5
+        paddingRight: 5,
+        borderWidth: variables.borderWidth * 2,
+        borderRadius: 10,
+        borderColor: variables.inputBorderColor,
+        backgroundColor: iOSColors.customGray
     },
     dateInput: {
         flex: 1,
