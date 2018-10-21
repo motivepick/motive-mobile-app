@@ -62,6 +62,9 @@ export const styles = StyleSheet.create({
         color: variables.inputColorPlaceholder,
         paddingLeft: 5,
         paddingRight: 5
+    },
+    btnTextConfirm: {
+        color: iOSColors.pink
     }
 })
 

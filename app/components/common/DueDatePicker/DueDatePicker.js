@@ -24,7 +24,7 @@ export class DueDatePicker extends Component {
             <View style={styles.container}>
                 <DatePicker
                     showIcon={false}
-                    customStyles={{ dateInput: styles.dateInput, dateTouchBody: styles.dateTouchBody, dateText: styles.dateText, placeholderText: styles.placeholderText }}
+                    customStyles={{ dateInput: styles.dateInput, dateTouchBody: styles.dateTouchBody, dateText: styles.dateText, placeholderText: styles.placeholderText, btnTextConfirm: styles.btnTextConfirm }}
                     style={styles.datePickerContainer}
                     date={this.state.dateAsStringInLocalFormat}
                     mode='date'
