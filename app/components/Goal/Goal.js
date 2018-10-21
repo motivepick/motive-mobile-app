@@ -24,7 +24,8 @@ class Goal extends Component {
     }
 
     render() {
-        const { data: { name, colorTag, dueDate } } = this.props
+        const { data: { name, colorTag, dueDate, tasks } } = this.props
+        const totalTasks = tasks && tasks.length || 'No'
 
         return (
 
@@ -43,7 +44,7 @@ class Goal extends Component {
                 <Body>
                     <Text>{name}</Text>
                     {dueDate && <Text style={styles.date}>{moment().subtract(100, 'days').fromNow()}</Text>}
-                    <Text style={styles.note}>25 tasks</Text>
+                    <Text style={styles.note}>{`${totalTasks} tasks`}</Text>
                 </Body>
                 <Right style={{ marginRight: 10 }}>
                     <Icon name="ios-arrow-forward"/>
