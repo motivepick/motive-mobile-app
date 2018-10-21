@@ -25,15 +25,16 @@ class AnimatedHeaderComponent extends Component {
             extrapolate: 'clamp'
         })
 
-        const { title, rightButtonLabel, leftButtonLabel, onLeftButtonPress, onRightButtonPress } = this.props
+        const { title, rightButtonLabel, leftButtonLabel, onLeftButtonPress, onRightButtonPress, leftIcon, rightIcon } = this.props
         return (
             <View>
                 <Header transparent>
                     <Left>
                         {
-                            leftButtonLabel && onLeftButtonPress &&
+                            onLeftButtonPress &&
                             <Button transparent onPress={onLeftButtonPress}>
-                                <Text>{leftButtonLabel}</Text>
+                                {leftButtonLabel && <Text>{leftButtonLabel}</Text>}
+                                {leftIcon}
                             </Button>
                         }
                     </Left>
@@ -48,9 +49,10 @@ class AnimatedHeaderComponent extends Component {
                     }
                     <Right>
                         {
-                            rightButtonLabel && onRightButtonPress &&
+                            onRightButtonPress &&
                             <Button transparent onPress={onRightButtonPress}>
-                                <Text>{rightButtonLabel}</Text>
+                                {rightButtonLabel && <Text>{rightButtonLabel}</Text>}
+                                {rightIcon}
                             </Button>
                         }
                     </Right>

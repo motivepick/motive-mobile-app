@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { AsyncStorage, ImageBackground, Platform, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Animated, AsyncStorage, ImageBackground, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
-import { Button, Container, Content, Header, Icon, Right, StyleProvider, Text } from 'native-base'
+import { Container, Content, Icon, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -30,6 +30,7 @@ import { withNavigation } from 'react-navigation'
 import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
 import { palette } from '../components/common/ColorIndicator/ColorIndicator'
+import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 
 const TouchableRoundedImage = ({ style, ...props }) => (
     <TouchableOpacity style={style}>
@@ -68,6 +69,11 @@ export class HomeScreen extends Component {
     static navigationOptions = {
         header: null
     }
+
+    state = {
+        scrollY: new Animated.Value(0)
+    }
+
     logout = async () => {
         LoginManager.logOut()
         await AsyncStorage.removeItem('accountId')
@@ -103,25 +109,8 @@ export class HomeScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <Header transparent>
-                        <Right>
-                            <Button transparent onPress={this.handleGoalClick}>
-                                <Icon name='settings' />
-                            </Button>
-                        </Right>
-                    </Header>
-
-                    <StatusBar barStyle="dark-content" />
-                    <View style={styles.header}>
-                        <View>
-                            <Text style={iOSUIKit.largeTitleEmphasized}>Hi, John</Text>
-                        </View>
-                    </View>
-                    <Content>
-
-
-
-
+                    <AnimatedHeader title={'Hi, John'} scrollOffset={this.state.scrollY}  onRightButtonPress={this.logout} rightIcon={<Icon name='log-out'/>}/>
+                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <View style={styles.recentlyPlayed}>
                             <View style={styles.recentlyPlayedTitleBar}>
                                 <Text style={styles.recentlyPlayedTitle}>Goals</Text>
