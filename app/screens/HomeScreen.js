@@ -1,10 +1,10 @@
 import * as colors from './COLORS'
 import React, { Component } from 'react'
-import { AsyncStorage, View } from 'react-native'
+import { AsyncStorage, ImageBackground, Platform, ScrollView, StatusBar, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
-import { Body, Button, Container, Content, H1, Header, Icon, Left, Right, StyleProvider, Text, Title } from 'native-base'
+import { Button, Container, Content, Header, Icon, Right, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -28,7 +28,43 @@ import { doDeleteGoal } from '../services/goalService'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import { withNavigation } from 'react-navigation'
+import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
+import ProgressCircle from 'react-native-progress-circle'
+import { palette } from '../components/common/ColorIndicator/ColorIndicator'
 
+const TouchableRoundedImage = ({ style, ...props }) => (
+    <TouchableOpacity style={style}>
+        <ImageBackground
+            borderRadius={6}
+            style={styles.touchableRoundedImage}
+            {...props}
+        />
+    </TouchableOpacity>
+);
+
+const headerStyles = StyleSheet.create({
+    whiteHeader: {
+        height: 30,
+        backgroundColor: iOSColors.white,
+        borderBottomWidth: 0,
+        elevation: 0
+    },
+    backTouchable: {
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+        paddingHorizontal: 8
+    },
+    backIcon: {
+        color: iOSColors.pink,
+        paddingBottom: 2 // Icon visual alignment
+    },
+    backText: {
+        ...iOSUIKit.bodyObject,
+        color: iOSColors.pink,
+        marginLeft: 8
+    }
+});
 export class HomeScreen extends Component {
     static navigationOptions = {
         header: null
@@ -61,191 +97,172 @@ export class HomeScreen extends Component {
             t
         } = this.props
 
+        const goal = goals && goals[0]
+        const goal2 = goals && goals[1]
+        const goal3 = goals && goals[2]
+
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: colors.backgroundClr }}>
-                    <Header transparent>
-                        <Left>
-                            <Title style={{ color: colors.textClr }}>Hello, John</Title>
-                        </Left>
-                        <Body/>
+                    <Header hasTabs transparent>
                         <Right>
-                            <Button transparent>
-                                <Icon name="add" style={{ color: colors.accent1Clr }}/>
-                            </Button>
-                            <Button transparent>
-                                <Icon name="search" style={{ color: colors.accent1Clr }}/>
-                            </Button>
-                            <Button transparent>
-                                <Icon name="settings" style={{ color: colors.accent1Clr }}/>
+                            <Button transparent onPress={this.handleGoalClick}>
+                                <Icon name='settings'  style={{ color: iOSColors.pink }}/>
                             </Button>
                         </Right>
                     </Header>
-                    <Content padder>
-                        <H1 style={{ color: colors.textClr }}>Stats</H1>
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-around',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <View style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                                justifyContent: 'space-around',
-                                alignItems: 'center',
-                                padding: 5
-                            }}>
 
-                                <View style={{
-                                    flexDirection: 'column',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    paddingHorizontal: 8,
-                                    borderRadius: 5
-                                }}>
+                    <StatusBar barStyle="dark-content" />
+                    <View style={styles.header}>
+                        <View>
+                            <Text style={iOSUIKit.largeTitleEmphasized}>Hi, John</Text>
+                        </View>
+                    </View>
+                    <Content>
 
-                                    <View
-                                        style={{
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <Text style={{
-                                            fontWeight: 'bold',
-                                            fontSize: 32,
-                                            color: colors.textClr
-                                        }}>5</Text>
-                                    </View>
-                                    <Text style={{
-                                        fontSize: 11,
-                                        color: colors.textClr
-                                    }}>Tasks in progress</Text>
-                                </View>
-                                <View style={{
-                                    flexDirection: 'column',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    paddingHorizontal: 8,
-                                    borderRadius: 5
-                                }}>
 
-                                    <View
-                                        style={{
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <Text style={{
-                                            fontWeight: 'bold',
-                                            fontSize: 32,
-                                            color: colors.textClr
-                                        }}>31</Text>
-                                    </View>
-                                    <Text style={{
-                                        fontSize: 11,
-                                        color: colors.textClr
-                                    }}>Tasks done</Text>
-                                </View>
+
+
+                        <View style={styles.recentlyPlayed}>
+                            <View style={styles.recentlyPlayedTitleBar}>
+                                <Text style={styles.recentlyPlayedTitle}>Goals</Text>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGoalsScreen')}>
+                                    <Text style={styles.seeAll}>See All</Text>
+                                </TouchableOpacity>
                             </View>
-                        </View>
 
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                marginRight: -15,
-                                justifyContent: 'space-between',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <H1 style={{ color: colors.textClr }}>Goals</H1>
-                            <Button
-                                small
-                                transparent
-                                onPress={() => this.props.navigation.navigate('AllGoalsScreen')}
-                            >
-                                <Text style={{ color: colors.accent1Clr }}>{'View all'}</Text>
-                                {/* <Icon name='arrow-forward' /> */}
-                            </Button>
-                        </View>
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                marginRight: -15,
-                                justifyContent: 'space-between',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <H1 style={{ color: colors.textClr }}>Tasks</H1>
-                            <Button
-                                small
-                                transparent
-                                onPress={() => this.props.navigation.navigate('AllTasksScreen')}
-                            >
-                                <Text style={{ color: colors.accent1Clr }}>{'View all'}</Text>
-                                {/* <Icon name='arrow-forward' /> */}
-                            </Button>
-                        </View>
-                        <View
-                            style={{
-                                flex: 1,
-                                flexDirection: 'row',
-                                justifyContent: 'flex-start',
-                                marginLeft: -14
-                            }}
-                        >
-                            <Button
-                                transparent
-                                active
-                                style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'flex-start',
-                                    alignSelf: 'flex-start',
-                                    alignContent: 'flex-start',
-                                    justifyContent: 'flex-start'
-                                }}
-                            >
-                                {/* <H3>{'In progress'.toUpperCase()}</H3> */}
-                                <Text
-                                    style={{
-                                        fontSize: 20,
-                                        lineHeight: 30,
-                                        color: colors.textClr
-                                    }}
-                                >
-                                    {'Today'.toUpperCase()}
-                                    <Text
-                                        style={{
-                                            fontSize: 11,
-                                            lineHeight: 18,
-                                            textAlignVertical: 'top',
-                                            color: colors.accent1Clr
-                                        }}
-                                    >
-                                        10
-                                    </Text>
-                                </Text>
-                            </Button>
-                            <Button transparent>
-                                <Text note style={{
-                                    fontSize: 14,
-                                    color: colors.textNoteClr
-                                }}>
-                                    {'Week'.toUpperCase()}
-                                </Text>
-                            </Button>
-                        </View>
+                            {/*<GoalList goals={goals && goals.splice(0, 2)} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>*/}
 
-                        <View
-                            style={{
-                                flex: 1,
-                                flexDirection: 'column',
-                                backgroundColor: '#fff'
-                            }}
-                        >
+                            <ScrollView horizontal contentContainerStyle={styles.recentlyPlayedSongList}>
+                                <View style={styles.card3}>
+                                    <View style={styles.row}>
+                                        <View style={{
+                                            flexDirection: 'column',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                            <ProgressCircle
+                                                percent={0}
+                                                radius={30}
+                                                borderWidth={5}
+                                                shadowColor={iOSColors.midGray}
+                                                bgColor={iOSColors.white}
+                                                color={iOSColors.gray}
+                                            >
+                                                {/*<Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{'Add a goal'}</Text>*/}
+                                                <Icon name='add' style={[systemWeights.bold, { color: iOSColors.gray, fontSize: 40 }]}></Icon>
+                                            </ProgressCircle>
+                                            <Text
+                                                style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'Add a goal'}</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                                {goal && <View style={styles.card3}>
+                                    <View style={styles.row}>
+                                        <View style={{
+                                            flexDirection: 'column',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                            <ProgressCircle
+                                                percent={30}
+                                                radius={30}
+                                                borderWidth={5}
+                                                shadowColor={iOSColors.midGray}
+                                                bgColor={goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.green}
+                                                color={iOSColors.gray}
+                                            >
+                                                <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{'30%'}</Text>
+                                            </ProgressCircle>
+                                            <Text
+                                                style={[iOSUIKit.footnoteEmphasized, { color: goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.green }]}>{goal.name}</Text>
+                                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'5 tasks'}</Text>
+                                        </View>
+                                    </View>
+                                </View>}
+                                {goal2 && <View style={styles.card3}>
+                                    <View style={styles.row}>
+                                        <View style={{
+                                            flexDirection: 'column',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                            <ProgressCircle
+                                                percent={10}
+                                                radius={30}
+                                                borderWidth={5}
+                                                shadowColor={iOSColors.midGray}
+                                                bgColor={goal2.colorTag && palette[goal2.colorTag] ? palette[goal2.colorTag] : iOSColors.green}
+                                                color={iOSColors.gray}
+                                            >
+                                                <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{'10%'}</Text>
+                                            </ProgressCircle>
+                                            <Text
+                                                style={[iOSUIKit.footnoteEmphasized, { color: goal2.colorTag && palette[goal2.colorTag] ? palette[goal2.colorTag] : iOSColors.green }]}>{goal2.name}</Text>
+                                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'19 tasks'}</Text>
+                                        </View>
+                                    </View>
+                                </View>}
+                                {goal3 && <View style={styles.card3}>
+                                    <View style={styles.row}>
+                                        <View style={{
+                                            flexDirection: 'column',
+                                            justifyContent: 'center',
+                                            alignItems: 'center'
+                                        }}>
+                                            <ProgressCircle
+                                                percent={0}
+                                                radius={30}
+                                                borderWidth={5}
+                                                shadowColor={iOSColors.midGray}
+                                                bgColor={goal3.colorTag && palette[goal3.colorTag] ? palette[goal3.colorTag] : iOSColors.green}
+                                                color={iOSColors.gray}
+                                            >
+                                                <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{'0%'}</Text>
+                                            </ProgressCircle>
+                                            <Text
+                                                style={[iOSUIKit.footnoteEmphasized, { color: goal3.colorTag && palette[goal3.colorTag] ? palette[goal3.colorTag] : iOSColors.green }]}>{goal3.name}</Text>
+                                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'No tasks'}</Text>
+                                        </View>
+                                    </View>
+                                </View>}
+
+                            </ScrollView>
+                            <View style={styles.recentlyPlayedTitleBar}>
+                                <Text style={styles.recentlyPlayedTitle}>Tasks</Text>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('AllTasksScreen')}>
+                                    <Text style={styles.seeAll}>See All</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={[styles.recentlyPlayedTitleBar, styles.recentlyPlayedSong]}>
+                                <Text style={styles.recentlyPlayedSUBTitle}>Today</Text>
+                                <Text style={styles.author}>{'10 tasks'}</Text>
+                            </View>
+                            <TaskList
+                                tasks={tasks && tasks.splice(0, 2)}
+                                onTaskCreated={task => createTask(task)}
+                                onFilterChanged={filter => updateUserTasks(false, filter)}
+                                onCloseTask={id => closeTask(id)}
+                                onDeleteTask={id => deleteTask(id)}
+                            />
+                            <View style={styles.recentlyPlayedSongList}>
+                                <Text style={styles.recentlyPlayedSUBTitle}>Tommorrow</Text>
+                                <Text style={styles.album}>{'Some text title'}</Text>
+                                <Text style={styles.author}>{'Some text sub title'}</Text>
+                                <Text style={styles.recentlyPlayedSUBTitle}>Wednesday</Text>
+
+                            </View>
+                            <TaskList
+                                tasks={tasks && tasks.splice(3, 5)}
+                                onTaskCreated={task => createTask(task)}
+                                onFilterChanged={filter => updateUserTasks(false, filter)}
+                                onCloseTask={id => closeTask(id)}
+                                onDeleteTask={id => deleteTask(id)}
+                            />
+                            <View style={styles.recentlyPlayedTitleBar}>
+                                <Text style={styles.recentlyPlayedSUBTitle}>Upcoming</Text>
+                                <Text style={styles.author}>{'Next up: in 15 days'}</Text>
+                            </View>
                             <TaskList
                                 tasks={tasks && tasks.splice(0, 3)}
                                 onTaskCreated={task => createTask(task)}
@@ -337,3 +354,190 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(HomeScreen))
+
+const styles = StyleSheet.create({
+    screenContainer: {
+        flex: 1,
+        backgroundColor: iOSColors.white
+    },
+    header: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+        marginHorizontal: 16,
+        paddingBottom: 8,
+        borderBottomWidth: 1,
+        borderColor: iOSColors.customGray
+    },
+    date: {
+        ...iOSUIKit.footnoteEmphasizedObject,
+        color: iOSColors.gray
+    },
+    avatar: {
+        height: 43,
+        width: 43,
+        borderRadius: 43 / 2
+    },
+    body: {
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "stretch"
+    },
+    card: {
+        marginTop: 24,
+        marginHorizontal: 16,
+        padding: 12,
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        backgroundColor: iOSColors.white,
+        borderRadius: 6,
+        ...Platform.select({
+            android: { elevation: 16 },
+            ios: {
+                shadowColor: "black",
+                shadowOffset: {
+                    width: 0,
+                    height: 16
+                },
+                shadowOpacity: 0.2,
+                shadowRadius: 16
+            }
+        })
+    },
+    card2: {
+        // marginTop: 24,
+        marginHorizontal: 16,
+        padding: 12,
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        backgroundColor: iOSColors.white,
+        borderRadius: 6,
+        ...Platform.select({
+            android: { elevation: 16 },
+            ios: {
+                shadowColor: "black",
+                shadowOffset: {
+                    width: 0,
+                    height: 16
+                },
+                shadowOpacity: 0.2,
+                shadowRadius: 16
+            }
+        })
+    },
+    card3: {
+        // marginTop: 24,
+        marginHorizontal: 16,
+        padding: 12,
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        backgroundColor: iOSColors.white,
+        borderRadius: 6
+    },
+    suggestionRow: {
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "stretch"
+    },
+    suggestionRowBottom: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "stretch",
+        marginTop: 4
+    },
+    bigSuggestion: {
+        flex: 2,
+        aspectRatio: 1
+    },
+    bigSuggestionWithText: {
+        flex: 2,
+        aspectRatio: 1,
+        justifyContent: "space-between"
+    },
+    suggestionText: {
+        ...human.headlineWhiteObject,
+        ...systemWeights.light,
+        margin: 8
+    },
+    bold: {
+        ...systemWeights.bold
+    },
+    updatedFriday: {
+        ...human.caption2Object,
+        color: "rgba(255,255,255,0.80)",
+        margin: 8
+    },
+    suggestionColumn: {
+        flex: 1,
+        marginHorizontal: 4,
+        aspectRatio: 0.5,
+        flexDirection: "column",
+        justifyContent: "flex-start"
+    },
+    smallSuggestion: {
+        flex: 1,
+        aspectRatio: 1
+    },
+    smallSuggestionMarginTop: {
+        marginTop: 4
+    },
+    smallSuggestionMarginLeft: {
+        marginLeft: 4
+    },
+    recentlyPlayedTitle: {
+        ...human.title2Object,
+        ...systemWeights.bold
+    },
+    recentlyPlayedSUBTitle: {
+        ...human.title3Object,
+        ...systemWeights.bold
+    },
+    recentlyPlayed: {
+        marginTop: 25,
+        paddingTop: 16,
+        backgroundColor: iOSColors.white
+    },
+    recentlyPlayedTitleBar: {
+        paddingHorizontal: 16,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
+    seeAll: {
+        ...iOSUIKit.bodyEmphasizedObject,
+        color: iOSColors.pink
+    },
+    recentlyPlayedSongList: {
+        marginTop: 12,
+        paddingHorizontal: 16,
+        paddingBottom: 12
+    },
+    recentlyPlayedSong: {
+        marginRight: 8
+    },
+    recentlyPlayedSongCover: {
+        height: 160,
+        width: 160,
+        borderRadius: 6
+    },
+    album: {
+        ...human.footnoteObject,
+        marginTop: 5
+    },
+    author: {
+        ...human.footnoteObject,
+        color: iOSColors.gray
+    },
+    touchableRoundedImage: {
+        flex: 1,
+        height: undefined,
+        width: undefined,
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "flex-start"
+    }
+});
+
