@@ -91,9 +91,10 @@ class GoalEditScreen extends Component {
                             </View>
 
                             <View style={{ marginTop: 8 }}>
-                                <FormLabel labelText={'NOTES'.toLocaleUpperCase()}/>
+                                <FormLabel labelText={t('labels.description').toLocaleUpperCase()}/>
                                 <TouchableOpacity style={styles.goalNotes} onPress={this.goToEditDescriptionScreen}>
-                                    <Text style={iOSUIKit.footnoteEmphasized}>Some text here and there to support idea of whatever ...</Text>
+                                    {description && <Text style={iOSUIKit.footnoteEmphasized}>{description}</Text>}
+                                    <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{t('placeholders.description')}</Text>
                                 </TouchableOpacity>
                             </View>
 

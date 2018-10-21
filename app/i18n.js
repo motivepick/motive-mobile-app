@@ -43,7 +43,8 @@ i18n.use(languageDetector).init({
                     taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
                     goalName: 'What is your goal?',
-                    whenIsItDue: 'When is it due?'
+                    whenIsItDue: 'When is it due?',
+                    description: 'A place for your notes'
                 }
             }
         },
@@ -80,7 +81,8 @@ i18n.use(languageDetector).init({
                     taskName: 'О чём нужно не забыть?',
                     firstTaskName: 'Как насчёт первой мега-задачи?',
                     goalName: 'На что вы нацелились?',
-                    whenIsItDue: 'Когда?'
+                    whenIsItDue: 'Когда?',
+                    description: 'Место для заметок'
                 }
             }
         },
@@ -117,7 +119,8 @@ i18n.use(languageDetector).init({
                     taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
                     goalName: 'What is your goal?',
-                    whenIsItDue: 'When is it due?'
+                    whenIsItDue: 'When is it due?',
+                    description: 'A place for your notes'
                 }
             }
         }
