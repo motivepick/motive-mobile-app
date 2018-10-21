@@ -89,7 +89,7 @@ export class AllTasksScreen extends Component {
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalGoals} GOALS`}</Text>
                         </View>
                         <View style={styles.sectionHeader}>
-                            <SortPicker activeSort={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
+                            <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                             <TouchableOpacity onPress={this.toggleGoalsByStatus}>
                                 <Text style={{ color: iOSColors.pink }}>{'Status: ' + this.state.statusFilter}</Text>
                             </TouchableOpacity>

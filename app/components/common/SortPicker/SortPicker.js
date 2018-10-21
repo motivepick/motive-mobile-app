@@ -5,7 +5,7 @@ import { iOSColors } from 'react-native-typography'
 class SortPicker extends Component {
 
     render() {
-        const { activeSort, onValueChange } = this.props
+        const { selectedValue, onValueChange } = this.props
 
         return (
             <Picker
@@ -19,7 +19,7 @@ class SortPicker extends Component {
                 placeholderStyle={{ color: "#bfc6ea" }}
                 placeholderIconColor="#007aff"
                 style={{ marginLeft: -15, width: undefined }}
-                selectedValue={activeSort}
+                selectedValue={selectedValue}
                 onValueChange={onValueChange}
                 headerStyle={{ backgroundColor: iOSColors.white }}
                 headerBackButtonTextStyle={{ color: iOSColors.pink }}

@@ -89,7 +89,7 @@ export class AllTasksScreen extends Component {
                         </View>
 
                         <View style={styles.sectionHeader}>
-                            <SortPicker activeSort={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
+                            <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                             <TouchableOpacity onPress={this.toggleTasksByStatus}>
                                 <Text style={{ color: iOSColors.pink }}>{'Status: ' + this.state.statusFilter}</Text>
                             </TouchableOpacity>
