@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Body, Button, Header, Left, Right, Text, Title } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 
-class HeaderComponent extends Component {
+// If AnimatedHeader is used add onScroll event to ScrollView (a.k.a <Content> from NativeBase)
+class AnimatedHeaderComponent extends Component {
 
     render() {
         const { title, rightButtonLabel, leftButtonLabel, onLeftButtonPress, onRightButtonPress } = this.props
@@ -11,24 +12,24 @@ class HeaderComponent extends Component {
                 <Left>
                     {
                         leftButtonLabel && onLeftButtonPress &&
-                        <Button transparent onPress={onLeftButtonPress}>
-                            <Text style={{ color: iOSColors.pink }}>{leftButtonLabel}</Text>
-                        </Button>
+                            <Button transparent onPress={onLeftButtonPress}>
+                                <Text style={{ color: iOSColors.pink }}>{leftButtonLabel}</Text>
+                            </Button>
                     }
                 </Left>
 
                 {
                     title &&
-                    <Body>
-                        <Title>{title}</Title>
-                    </Body>
+                        <Body>
+                            <Title>{title}</Title>
+                        </Body>
                 }
                 <Right>
                     {
                         rightButtonLabel && onRightButtonPress &&
-                        <Button transparent onPress={onRightButtonPress}>
-                            <Text style={{ color: iOSColors.pink }}>{rightButtonLabel}</Text>
-                        </Button>
+                            <Button transparent onPress={onRightButtonPress}>
+                                <Text style={{ color: iOSColors.pink }}>{rightButtonLabel}</Text>
+                            </Button>
                     }
                 </Right>
             </Header>
@@ -36,4 +37,4 @@ class HeaderComponent extends Component {
     }
 }
 
-export default HeaderComponent
+export default AnimatedHeaderComponent

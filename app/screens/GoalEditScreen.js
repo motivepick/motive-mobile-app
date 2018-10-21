@@ -3,16 +3,17 @@ import { Alert, AsyncStorage, Platform, StyleSheet, TouchableOpacity, View } fro
 import { connect } from 'react-redux'
 import { changeGoalColorAction, changeGoalDescriptionAction, changeGoalNameAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
-import { Body, Button, Container, Content, Form, Header, Input, Item, Left, Right, StyleProvider, Text, Title } from 'native-base'
+import { Container, Content, Form, Input, Item, StyleProvider, Text } from 'native-base'
 import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
 import ColorPicker from '../components/common/ColorPicker/ColorPicker'
 import { bindActionCreators } from 'redux'
 import request from 'superagent'
-// import Header from '../components/common/Header/Header'
+
 import { API_URL } from '../const'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
+import Header from '../components/common/Header/Header'
 
 class GoalEditScreen extends Component {
     static navigationOptions = {
@@ -59,18 +60,10 @@ class GoalEditScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <Header transparent>
-                        <Left>
-                            <Button transparent onPress={() => this.props.navigation.goBack()}>
-                                <Text style={{ color: iOSColors.pink }}>Back</Text>
-                            </Button>
-                        </Left>
-                        <Body>
-                        <Title>{'Edit goal'}</Title>
-                        </Body>
-                        <Right>
-                        </Right>
-                    </Header>
+                    <Header
+                        title={'Edit goal'}
+                        leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
+                    />
 
                     <Content>
 

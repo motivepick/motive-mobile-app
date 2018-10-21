@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Alert, AsyncStorage, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
-import { Button, Container, Content, Form, Header, Icon, Input, Item, Left, Right, StyleProvider, Text } from 'native-base'
+import { Container, Content, Form, Icon, Input, Item, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -19,6 +19,8 @@ import Overlay from 'react-native-modal-overlay'
 import TaskList from '../components/TaskList/TaskList'
 import ProgressCircle from 'react-native-progress-circle'
 import { palette } from '../components/common/ColorIndicator/ColorIndicator'
+
+import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 
 export class GoalScreen extends Component {
     static navigationOptions = {
@@ -74,18 +76,10 @@ export class GoalScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <Header hasTabs transparent>
-                        <Left>
-                            <Button transparent onPress={() => this.props.navigation.goBack()}>
-                                <Text style={{ color: iOSColors.pink }}>Back</Text>
-                            </Button>
-                        </Left>
-                        <Right>
-                            <Button transparent onPress={this.handleGoalClick}>
-                                <Text style={{ color: iOSColors.pink }}>{t('labels.editGoal')}</Text>
-                            </Button>
-                        </Right>
-                    </Header>
+                    <AnimatedHeader
+                        rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick}
+                        leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
+                    />
 
                     <Content>
                     {/*<KeyboardAvoidingView*/}

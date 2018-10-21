@@ -3,7 +3,7 @@ import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-n
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import GoalList from '../components/GoalList/GoalList'
-import { Button, Container, Content, Form, Header, Icon, Input, Item, Left, Picker, Right, StyleProvider, Text } from 'native-base'
+import { Container, Content, Form, Icon, Input, Item, Picker, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -29,6 +29,7 @@ import baseTheme from '../../native-base-theme/variables/platform'
 // import * as Progress from 'react-native-progress'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import Overlay from 'react-native-modal-overlay'
+import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 
 export class AllTasksScreen extends Component {
     static navigationOptions = {
@@ -99,14 +100,7 @@ export class AllTasksScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <Header hasTabs transparent>
-                        <Left>
-                            <Button transparent onPress={() => this.props.navigation.goBack()}>
-                                <Text style={{ color: iOSColors.pink }}>Back</Text>
-                            </Button>
-                        </Left>
-                        <Right/>
-                    </Header>
+                    <AnimatedHeader leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
                     <Content>
                         <View style={styles.header}>
                             <Text style={iOSUIKit.largeTitleEmphasized}>Goals</Text>
