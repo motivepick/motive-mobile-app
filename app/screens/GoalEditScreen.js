@@ -61,7 +61,7 @@ class GoalEditScreen extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <Header
-                        title={'Edit goal'}
+                        title={t('headings.editGoal')}
                         leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
                     />
 

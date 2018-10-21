@@ -7,9 +7,9 @@ import request from 'superagent'
 import { API_URL } from '../const'
 import { updateTaskAction } from '../actions/tasksActions'
 import { translate } from 'react-i18next'
-import { Body, Button, Container, Content, Form, Header, Icon, Input, Item, Left, Picker, Right, StyleProvider, Text, Title } from 'native-base'
+import { Container, Content, Form, Icon, Input, Item, Picker, StyleProvider, Text } from 'native-base'
 import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
-// import Header from '../components/common/Header/Header'
+import Header from '../components/common/Header/Header'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import { styles } from './GoalScreen'
 import getTheme from '../../native-base-theme/components'
@@ -64,19 +64,10 @@ class TaskScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <Header transparent>
-                        <Left>
-                            <Button transparent onPress={() => navigation.goBack()}>
-                                <Text style={{ color: iOSColors.pink }}>Back</Text>
-                            </Button>
-                        </Left>
-                        <Body>
-                        <Title>{t('labels.editTask')}</Title>
-                        </Body>
-                        <Right>
-                        </Right>
-                    </Header>
-
+                    <Header
+                        title={t('headings.editTask')}
+                        leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
+                    />
                     <Content>
 
 
