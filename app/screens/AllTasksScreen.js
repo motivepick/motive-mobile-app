@@ -72,7 +72,7 @@ export class AllTasksScreen extends Component {
             t
         } = this.props
 
-        const totalTasks = tasks && tasks.length || 0
+        const totalTasks = tasks && tasks.length || 'NO'
         const { taskName } = this.state
         return (
             <StyleProvider style={getTheme(baseTheme)}>
@@ -84,7 +84,7 @@ export class AllTasksScreen extends Component {
 
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
 
-                        <View style={[styles.line, { marginVertical: 8, flexDirection: 'column' }]}>
+                        <View style={[styles.line, { marginTop: 8, flexDirection: 'column' }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalTasks} TASKS`}</Text>
                         </View>
 
@@ -199,7 +199,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginHorizontal: 16,
-        marginBottom: 12
+        marginHorizontal: 16
     }
 })

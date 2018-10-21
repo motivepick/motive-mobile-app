@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { ListView, View } from 'react-native'
 import Goal from '../Goal/Goal'
-import styles from './GoalList.styles'
 import { translate } from 'react-i18next'
 import { Button, Text } from 'native-base'
 import List from '../common/List/List'
@@ -22,7 +21,7 @@ export class GoalList extends Component {
         const { goals, creatingGoal, t } = this.props
 
         return (
-            <View style={styles.container}>
+            <View style={{ flex: 1 }}>
                 {/* <Form style={{ marginHorizontal: 10 }}>
                     <Item regular>
                         <Input
@@ -48,7 +47,7 @@ export class GoalList extends Component {
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
         <Button transparent onPress={() => this.deleteGoal(data, secId, rowId, rowMap)}>
-            <Text style={[{ color: iOSColors.pink  }]}>{'Delete'.toLocaleUpperCase()}</Text>
+            <Text style={{ color: iOSColors.pink  }}>{'Delete'.toLocaleUpperCase()}</Text>
         </Button>
 
     deleteGoal = (data, secId, rowId, rowMap) => {

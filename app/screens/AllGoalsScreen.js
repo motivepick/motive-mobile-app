@@ -74,7 +74,7 @@ export class AllTasksScreen extends Component {
             t
         } = this.props
 
-        const totalGoals = goals && goals.length || 0
+        const totalGoals = goals && goals.length || 'NO'
         const { goalName } = this.state
 
         return (
@@ -85,16 +85,10 @@ export class AllTasksScreen extends Component {
                     <View style={styles.line}/>
 
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
-                        <View style={[styles.line, { marginTop: 8, marginBottom: 8 }]}>
+                        <View style={[styles.line, { marginTop: 8 }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalGoals} GOALS`}</Text>
                         </View>
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            marginHorizontal: 16,
-                            // marginBottom: 12
-                        }}>
+                        <View style={styles.sectionHeader}>
                             <SortPicker activeSort={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                             <TouchableOpacity onPress={this.toggleGoalsByStatus}>
                                 <Text style={{ color: iOSColors.pink }}>{'Status: ' + this.state.statusFilter}</Text>
@@ -197,10 +191,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: iOSColors.customGray
     },
-    header: {
-        paddingHorizontal: 16,
+    sectionHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginHorizontal: 16
     }
 })

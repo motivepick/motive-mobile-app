@@ -32,7 +32,7 @@ class Tasks extends Component {
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
         <Button transparent onPress={() => this.deleteTask(data, secId, rowId, rowMap)}>
-            <Text style={[{ color: iOSColors.pink  }]}>{'Delete'.toLocaleUpperCase()}</Text>
+            <Text style={{ color: iOSColors.pink  }}>{'Delete'.toLocaleUpperCase()}</Text>
         </Button>
 
     deleteTask = (data, secId, rowId, rowMap) => {

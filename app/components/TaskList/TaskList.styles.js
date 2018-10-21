@@ -1,15 +1,8 @@
-import { Platform, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 export const styles = StyleSheet.create({
     container: {
-        // flex: 1,
-        // marginTop: 15,
-        alignItems: 'stretch',
-        ...Platform.select({
-            ios: {
-                // paddingTop: 10
-            }
-        })
+        flex: 1
     },
     title: {
         fontSize: 20,
@@ -23,13 +16,6 @@ export const styles = StyleSheet.create({
         height: 50,
         fontSize: 14,
         padding: 16
-    },
-    hiddenRow: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        alignContent: 'stretch',
-        // marginTop: 9
     }
 })
 
