@@ -76,13 +76,12 @@ export class AllTasksScreen extends Component {
         const { taskName } = this.state
         return (
             <StyleProvider style={getTheme(baseTheme)}>
-                <Container style={{ backgroundColor: iOSColors.white }}>
-                    <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY}
-                        rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick}
-                        leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
-                    />
+                <Container>
+                    <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
                     <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask}/>
+
                     <View style={styles.line}/>
+
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
 
                         <View style={[styles.line, { marginVertical: 8, flexDirection: 'column' }]}>
