@@ -16,7 +16,8 @@ i18n.use(languageDetector).init({
                     tasks: 'Tasks',
                     goals: 'Goals',
                     editGoal: 'Edit Goal',
-                    editTask: 'Edit Task'
+                    editTask: 'Edit Task',
+                    editNotes: 'Edit Notes'
                 },
                 labels: {
                     statistics: 'You can do it! {{percent}}% done',
@@ -52,7 +53,8 @@ i18n.use(languageDetector).init({
                     tasks: 'Задачи',
                     goals: 'Цели',
                     editGoal: 'Изменить цель',
-                    editTask: 'Изменить задачу'
+                    editTask: 'Изменить задачу',
+                    editNotes: 'Заметки'
                 },
                 labels: {
                     statistics: 'Соберись! {{percent}}% готово',
@@ -88,7 +90,8 @@ i18n.use(languageDetector).init({
                     tasks: 'Tasks',
                     goals: 'Goals',
                     editGoal: 'Edit Goal',
-                    editTask: 'Edit Task'
+                    editTask: 'Edit Task',
+                    editNotes: 'Edit Notes'
                 },
                 labels: {
                     statistics: 'You can do it! {{percent}}% done',
