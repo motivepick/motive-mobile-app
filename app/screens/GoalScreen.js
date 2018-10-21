@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, AsyncStorage, KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, AsyncStorage, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import { Button, Container, Content, Form, Header, Icon, Input, Item, Left, Right, StyleProvider, Text } from 'native-base'
@@ -88,9 +88,10 @@ export class GoalScreen extends Component {
                     </Header>
 
                     <Content>
-                    <KeyboardAvoidingView
-                        behavior="position"
-                        enabled>
+                    {/*<KeyboardAvoidingView*/}
+                        {/*behavior="padding"*/}
+                        {/*keyboardVerticalOffset={0}*/}
+                        {/*enabled>*/}
                         <View style={styles.header}>
                             <Text style={iOSUIKit.largeTitleEmphasized}>{goal.name}</Text>
                         </View>
@@ -142,13 +143,13 @@ export class GoalScreen extends Component {
                                 <Text style={iOSUIKit.footnoteEmphasized}>Some text here and there to support idea of ...</Text>
                             </TouchableOpacity>
                         </View>
-                        </KeyboardAvoidingView>
+                        {/*</KeyboardAvoidingView>*/}
                         <View style={styles.taskSection}>
                             <View style={styles.taskTitleBar}>
                                 <Text style={styles.taskTitle}>Tasks</Text>
-                                <TouchableOpacity>
-                                    <Text style={styles.taskAction}>Add</Text>
-                                </TouchableOpacity>
+                                {/*<TouchableOpacity>*/}
+                                    {/*<Text style={styles.taskAction}>Add</Text>*/}
+                                {/*</TouchableOpacity>*/}
                             </View>
 
                         </View>
