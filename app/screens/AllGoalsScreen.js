@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Alert, Animated, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { LoginManager } from 'react-native-fbsdk'
-import { navigateWithReset } from './navigationWithReset'
+import { Animated, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
 import GoalList from '../components/GoalList/GoalList'
-import { Container, Content, Form, Icon, Input, Item, Picker, StyleProvider, Text } from 'native-base'
+import { Container, Content, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -26,68 +24,40 @@ import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '..
 import { doDeleteGoal } from '../services/goalService'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
-// import * as Progress from 'react-native-progress'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
-import Overlay from 'react-native-modal-overlay'
 import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
+import QuickInput from '../components/common/QuickInput/QuickInput'
+import SortPicker from '../components/common/SortPicker/SortPicker'
 
 export class AllTasksScreen extends Component {
     static navigationOptions = {
         header: null
     }
+
     state = {
-        modalVisible: false,
-        isModalVisible: false,
-        currentTab: 0,
-        tasksByStatus: 'In progress',
-        selected: 'Recent'
+        goalName: '',
+        activeFilter: 'all',
+        activeSort: 'Recent',
+        statusFilter: 'In progress',
+        scrollY: new Animated.Value(0)
     }
 
-    constructor() {
-        super()
+    toggleGoalsByStatus = () => this.setState({ statusFilter: this.state.statusFilter === 'In progress' ? 'Completed' : 'In progress' })
 
-        this.state = {
-            scrollY: new Animated.Value(0)
-        }
+    onValueChange(value: string) {
+        if (value === this.state.activeSort) return
+
+        this.setState({
+            activeSort: value
+        })
     }
 
-    logout = async () => {
-        LoginManager.logOut()
-        await AsyncStorage.removeItem('accountId')
-        navigateWithReset(this.props.navigation, 'Login')
-    }
-    toggleModal = () =>
-        this.setState({ isModalVisible: !this.state.isModalVisible })
-
-    toggleSortBy = () => Alert.alert('Show sorting options')
-
-    toggleTasksByStatus = () => this.setState({ tasksByStatus: this.state.tasksByStatus === 'In progress' ? 'Completed' : 'In progress' })
-
-    showOverlay() {
-        this.setState({ modalVisible: true })
-    }
-
-    hideOverlay() {
-        this.setState({ modalVisible: false })
-    }
     componentDidMount() {
         const { updateUserTasks, updateUserGoals } = this.props
         updateUserTasks(false, 'all')
         updateUserGoals()
     }
 
-    logout = async () => {
-        LoginManager.logOut()
-        await AsyncStorage.removeItem('accountId')
-        navigateWithReset(this.props.navigation, 'Login')
-    }
-    onValueChange(value: string) {
-        if (value === this.state.selected) return
-
-        this.setState({
-            selected: value
-        })
-    }
     render() {
         const {
             tasks,
@@ -105,24 +75,15 @@ export class AllTasksScreen extends Component {
         } = this.props
 
         const totalGoals = goals && goals.length || 0
+        const { goalName } = this.state
 
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <AnimatedHeader title={t('headings.goals')} scrollOffset={this.state.scrollY} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
-                    <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
-                        <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
-                            <Icon active name='add' />
-                            <Input
-                                // onChangeText={goalName => this.setState({ goalName })}
-                                // value={goalName}
-                                // onSubmitEditing={this.onAddNewGoal}
-                                // editable={!creatingGoal}
-                                returnKeyType={'done'}
-                                placeholder={t('labels.newGoal')}/>
-                        </Item>
-                    </Form>
+                    <QuickInput placeholder={t('labels.newGoal')} onChangeText={goalName => this.setState({ goalName })} value={goalName} onSubmitEditing={this.onAddNewGoal}/>
                     <View style={styles.line}/>
+
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <View style={[styles.line, { marginTop: 8, marginBottom: 8 }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalGoals} GOALS`}</Text>
@@ -134,60 +95,14 @@ export class AllTasksScreen extends Component {
                             marginHorizontal: 16,
                             // marginBottom: 12
                         }}>
-                            {/*<TouchableOpacity onPress={this.toggleSortBy} style={{*/}
-                                {/*flexDirection: 'row',*/}
-                                {/*alignItems: 'center'*/}
-                            {/*}}>*/}
-                                {/*<Text style={{ color: iOSColors.pink }}>Recent</Text>*/}
-                                {/*<Icon active name='ios-arrow-down' style={{*/}
-                                    {/*marginLeft: 5,*/}
-                                    {/*fontSize: 15,*/}
-                                    {/*color: iOSColors.pink*/}
-                                {/*}}/>*/}
-                            {/*</TouchableOpacity>*/}
-                            <Picker
-                                mode="dropdown"
-                                iosIcon={<Icon active name='ios-arrow-down' style={{
-                                    marginLeft: -10,
-                                    fontSize: 15,
-                                    color: iOSColors.pink
-                                }}/>}
-                                placeholder="Sort by"
-                                placeholderStyle={{ color: "#bfc6ea" }}
-                                placeholderIconColor="#007aff"
-                                style={{ marginLeft: -15, width: undefined }}
-                                selectedValue={this.state.selected}
-                                onValueChange={this.onValueChange.bind(this)}
-                                headerStyle={{ backgroundColor: iOSColors.white }}
-                                headerBackButtonTextStyle={{ color: iOSColors.pink }}
-                                textStyle={{ color: iOSColors.pink }}
-                                iosHeader={'Sort by'}
-                                // itemTextStyle={{ color: '#788ad2' }}
-                                // itemStyle={{
-                                //     backgroundColor: "#d3d3d3",
-                                //     marginLeft: 0,
-                                //     paddingLeft: 10
-                                // }}
-                            >
-                                <Picker.Item label="Recent" value="Recent" />
-                                <Picker.Item label="Overdue" value="Overdue" />
-                                <Picker.Item label="By tasks" value="Tasks" />
-                                <Picker.Item label="By color" value="Color" />
-                            </Picker>
-                            <TouchableOpacity onPress={this.toggleTasksByStatus}>
-                                <Text style={[{ color: iOSColors.pink }]}>{'Status: ' + this.state.tasksByStatus}</Text>
+                            <SortPicker activeSort={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
+                            <TouchableOpacity onPress={this.toggleGoalsByStatus}>
+                                <Text style={{ color: iOSColors.pink }}>{'Status: ' + this.state.statusFilter}</Text>
                             </TouchableOpacity>
                         </View>
 
                         <GoalList goals={goals} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>
                     </Content>
-                    <Overlay visible={this.state.isModalVisible} closeOnTouchOutside onClose={this.toggleModal}
-                             animationType="slideInDown"
-                             easing="ease-in"
-                             childrenWrapperStyle={{ backgroundColor: '#eee' }}
-                    >
-                        <Text>Here a form to add a task will be added</Text>
-                    </Overlay>
                 </Container>
             </StyleProvider>
         )

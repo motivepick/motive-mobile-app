@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { Alert, Animated, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { LoginManager } from 'react-native-fbsdk'
-import { navigateWithReset } from './navigationWithReset'
+import { Animated, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
 import TaskList from '../components/TaskList/TaskList'
-import { Container, Content, Form, Icon, Input, Item, StyleProvider, Text } from 'native-base'
+import { Container, Content, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -26,48 +24,32 @@ import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '..
 import { doDeleteGoal } from '../services/goalService'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
-
-import Overlay from 'react-native-modal-overlay'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
+import QuickInput from '../components/common/QuickInput/QuickInput'
+import SortPicker from '../components/common/SortPicker/SortPicker'
 
 export class AllTasksScreen extends Component {
     static navigationOptions = {
         header: null
     }
+
     state = {
-        modalVisible: false,
-        isModalVisible: false,
-        currentTab: 0,
-        tasksByStatus: 'In progress'
+        taskName: '',
+        activeFilter: 'all',
+        activeSort: 'Recent',
+        statusFilter: 'In progress',
+        scrollY: new Animated.Value(0)
     }
 
-    constructor() {
-        super()
+    toggleTasksByStatus = () => this.setState({ statusFilter: this.state.statusFilter === 'In progress' ? 'Completed' : 'In progress' })
 
-        this.state = {
-            scrollY: new Animated.Value(0)
-        }
-    }
+    onValueChange(value: string) {
+        if (value === this.state.activeSort) return
 
-    logout = async () => {
-        LoginManager.logOut()
-        await AsyncStorage.removeItem('accountId')
-        navigateWithReset(this.props.navigation, 'Login')
-    }
-    toggleModal = () =>
-        this.setState({ isModalVisible: !this.state.isModalVisible })
-
-    toggleSortBy = () => Alert.alert('Show sorting options')
-
-    toggleTasksByStatus = () => this.setState({ tasksByStatus: this.state.tasksByStatus === 'In progress' ? 'Completed' : 'In progress' })
-
-    showOverlay() {
-        this.setState({ modalVisible: true })
-    }
-
-    hideOverlay() {
-        this.setState({ modalVisible: false })
+        this.setState({
+            activeSort: value
+        })
     }
 
     componentDidMount() {
@@ -93,7 +75,7 @@ export class AllTasksScreen extends Component {
         } = this.props
 
         const totalTasks = tasks && tasks.length || 0
-
+        const { taskName } = this.state
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
@@ -101,23 +83,12 @@ export class AllTasksScreen extends Component {
                         rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick}
                         leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
                     />
-                    <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
-                        <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
-                            <Icon active name='add' />
-                            <Input
-                                // onChangeText={taskName => this.setState({ taskName })}
-                                // value={taskName}
-                                // onSubmitEditing={this.onAddNewTask}
-                                returnKeyType={'done'}
-                                placeholder={t('labels.newTask')}/>
-                        </Item>
-                    </Form>
+                    <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask}/>
                     <View style={[styles.line]}/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
 
                         <View style={[styles.line, { marginTop: 8, marginBottom: 8, flexDirection: 'column' }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalTasks} TASKS`}</Text>
-
                         </View>
 
 
@@ -128,31 +99,13 @@ export class AllTasksScreen extends Component {
                             marginHorizontal: 16,
                             marginBottom: 12
                         }}>
-                            <TouchableOpacity onPress={this.toggleSortBy} style={{
-                                flexDirection: 'row',
-                                alignItems: 'center'
-                            }}>
-                                <Text style={{ color: iOSColors.pink }}>Recent</Text>
-                                <Icon active name='ios-arrow-down' style={{
-                                    marginLeft: 5,
-                                    fontSize: 15,
-                                    color: iOSColors.pink
-                                }}/>
-                            </TouchableOpacity>
+                            <SortPicker activeSort={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                             <TouchableOpacity onPress={this.toggleTasksByStatus}>
-                                <Text style={[{ color: iOSColors.pink }]}>{'Status: ' + this.state.tasksByStatus}</Text>
+                                <Text style={{ color: iOSColors.pink }}>{'Status: ' + this.state.statusFilter}</Text>
                             </TouchableOpacity>
                         </View>
-                        <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)}
-                                  onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
+                        <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
                     </Content>
-                    <Overlay visible={this.state.isModalVisible} closeOnTouchOutside onClose={this.toggleModal}
-                             animationType="slideInDown"
-                             easing="ease-in"
-                             childrenWrapperStyle={{ backgroundColor: '#eee' }}
-                    >
-                        <Text>Here a form to add a task will be added</Text>
-                    </Overlay>
                 </Container>
             </StyleProvider>
         )
