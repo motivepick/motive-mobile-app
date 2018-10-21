@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Body, Button, Header, Left, Right, Text, Title } from 'native-base'
-import { iOSColors } from 'react-native-typography'
 
 class HeaderComponent extends Component {
 
@@ -12,7 +11,7 @@ class HeaderComponent extends Component {
                     {
                         leftButtonLabel && onLeftButtonPress &&
                         <Button transparent onPress={onLeftButtonPress}>
-                            <Text style={{ color: iOSColors.pink }}>{leftButtonLabel}</Text>
+                            <Text>{leftButtonLabel}</Text>
                         </Button>
                     }
                 </Left>
@@ -27,7 +26,7 @@ class HeaderComponent extends Component {
                     {
                         rightButtonLabel && onRightButtonPress &&
                         <Button transparent onPress={onRightButtonPress}>
-                            <Text style={{ color: iOSColors.pink }}>{rightButtonLabel}</Text>
+                            <Text>{rightButtonLabel}</Text>
                         </Button>
                     }
                 </Right>

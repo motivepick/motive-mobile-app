@@ -103,10 +103,10 @@ export class HomeScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <Header hasTabs transparent>
+                    <Header transparent>
                         <Right>
                             <Button transparent onPress={this.handleGoalClick}>
-                                <Icon name='settings'  style={{ color: iOSColors.pink }}/>
+                                <Icon name='settings' />
                             </Button>
                         </Right>
                     </Header>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Body, Button, Header, Left, Right, Text, Title } from 'native-base'
-import { iOSColors, iOSUIKit } from 'react-native-typography'
+import { iOSUIKit } from 'react-native-typography'
 import { Animated, StyleSheet, View } from 'react-native'
 
 const HEADER_EXPANDED_HEIGHT = 41.5
@@ -33,7 +33,7 @@ class AnimatedHeaderComponent extends Component {
                         {
                             leftButtonLabel && onLeftButtonPress &&
                             <Button transparent onPress={onLeftButtonPress}>
-                                <Text style={{ color: iOSColors.pink }}>{leftButtonLabel}</Text>
+                                <Text>{leftButtonLabel}</Text>
                             </Button>
                         }
                     </Left>
@@ -50,7 +50,7 @@ class AnimatedHeaderComponent extends Component {
                         {
                             rightButtonLabel && onRightButtonPress &&
                             <Button transparent onPress={onRightButtonPress}>
-                                <Text style={{ color: iOSColors.pink }}>{rightButtonLabel}</Text>
+                                <Text>{rightButtonLabel}</Text>
                             </Button>
                         }
                     </Right>
@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     headerCollapsed: {
         textAlign: 'center',
         fontSize: 18,
-        color: 'black',
         marginTop: 28
     }
 })
