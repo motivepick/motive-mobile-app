@@ -64,6 +64,10 @@ class Task extends Component {
         const { data, navigation } = this.props
         navigation.navigate('Task', { task: data })
     }
+    // handleDescriptionClick = () => {
+    //     const { data, navigation } = this.props
+    //     navigation.navigate('DescriptionEditScreen', { task: data })
+    // }
 
     static format(dueDate) {
         return dueDate.local().calendar()
