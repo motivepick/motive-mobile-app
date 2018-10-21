@@ -14,7 +14,6 @@ import { iOSColors, iOSUIKit } from 'react-native-typography'
 import { styles } from './GoalScreen'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
-import ColorIndicator from '../components/common/ColorIndicator/ColorIndicator'
 
 const mainTextColor = '#000'
 const platform = Platform.OS
@@ -82,7 +81,7 @@ class TaskScreen extends Component {
 
 
 
-                        <Form>
+                        <Form style={{flex: 1}}>
 
 
 
@@ -127,40 +126,36 @@ class TaskScreen extends Component {
                                     style={{
                                         width: deviceWidth - 16 * 2,
                                         paddingHorizontal: 5,
-                                        height: variables.inputHeightBase
+                                        height: variables.inputHeightBase,
+                                        alignItems: 'center',
+                                        alignSelf: 'center',
+                                        paddingTop: 2
                                     }}
                                     selectedValue={this.state.selected}
                                     onValueChange={this.onValueChange.bind(this)}
                                     headerStyle={{ backgroundColor: iOSColors.white }}
                                     headerBackButtonTextStyle={{ color: iOSColors.pink }}
-                                    itemTextStyle={{ color: '#788ad2' }}
                                     textStyle={{
                                         paddingLeft: 5,
                                         color: variables.inputColor,
-                                        fontSize: variables.inputFontSize,
+                                        fontSize: variables.inputFontSize
                                     }}
-                                    // itemStyle={{
-                                    //     backgroundColor: "#d3d3d3",
-                                    //     marginLeft: 0,
-                                    //     paddingLeft: 10
-                                    // }}
                                 >
-                                    <Picker.Item label={<View style={{flexDirection: 'row', alignItems: 'center'}}><ColorIndicator color={'red'} styler={{marginRight: 10}}/><Text>Veve</Text></View>} value="key0" />
-                                    <Picker.Item label="Goal 1" value="key1" />
-                                    <Picker.Item label="Goal 2" value="key2" />
                                     <Picker.Item label="Goal 3" value="key3" />
-                                    <Picker.Item label="Goal 4" value="key4" />
+                                    <Picker.Item label="Task is part of goal" value="key4" />
                                 </Picker>
                             </Item>
-
-                            <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start', width: '100%', marginHorizontal: 16}}>
-                                <View style={styles.rowBottom}>
-                                    <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>NOTES</Text>
+                            <Form style={{ width: '100%', alignItems: 'stretch', alignContent: 'stretch',  alignSelf: 'stretch' }}>
+                                <View style={{ flex: 1, flexDirection: 'column', alignItems: 'flex-start', marginHorizontal: 16}}>
+                                    <View style={styles.rowBottom}>
+                                        <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>NOTES</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.goalNotes} onPress={this.goToEditDescriptionScreen}>
+                                        <Text style={iOSUIKit.footnoteEmphasized}>Some text here and there to support idea of whatever ...</Text>
+                                    </TouchableOpacity>
                                 </View>
-                                <TouchableOpacity style={styles.goalNotes} onPress={this.goToEditDescriptionScreen}>
-                                    <Text style={iOSUIKit.footnoteEmphasized}>Some text here and there to support idea of whatever ...</Text>
-                                </TouchableOpacity>
-                            </View>
+                            </Form>
+
                         </Form>
 
                     </Content>
