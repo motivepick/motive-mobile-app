@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, AsyncStorage, Platform, StyleSheet } from 'react-native'
+import { Alert, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { changeGoalColorAction, changeGoalDescriptionAction, changeGoalNameAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
@@ -12,7 +12,6 @@ import request from 'superagent'
 import { API_URL } from '../const'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
-import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
 import Header from '../components/common/Header/Header'
 import Description from '../components/common/Description/Description'
 
@@ -73,89 +72,6 @@ class GoalEditScreen extends Component {
         )
     }
 }
-
-
-
-export const styles = StyleSheet.create({
-    line: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginHorizontal: 16,
-        paddingBottom: 8,
-        borderBottomWidth: 1,
-        borderColor: iOSColors.customGray
-    },
-    header: {
-        paddingHorizontal: 16,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    card: {
-        marginTop: 24,
-        marginHorizontal: 16,
-        padding: 12,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        backgroundColor: iOSColors.white,
-        borderRadius: 6,
-        ...Platform.select({
-            android: { elevation: 16 },
-            ios: {
-                shadowColor: 'black',
-                shadowOffset: {
-                    width: 0,
-                    height: 16
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 16
-            }
-        })
-    },
-    goalNotes: {
-        marginTop: 4,
-        padding: 12,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        backgroundColor: '#f3ece6',
-        borderRadius: 6,
-        alignSelf: 'stretch'
-    },
-    row: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'stretch'
-    },
-    rowBottom: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
-        marginTop: 4
-    },
-    taskTitle: {
-        ...human.title2Object,
-        ...systemWeights.bold
-    },
-    taskSection: {
-        marginTop: 25,
-        paddingTop: 16,
-        backgroundColor: iOSColors.white
-    },
-    taskTitleBar: {
-        paddingHorizontal: 16,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    taskAction: {
-        ...iOSUIKit.bodyEmphasizedObject,
-        color: iOSColors.pink
-    }
-})
-
 
 const mapStateToProps = state => ({
     goal: state.goals.goal
