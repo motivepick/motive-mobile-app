@@ -141,7 +141,7 @@ class TaskScreen extends Component {
                                     <View style={styles.rowBottom}>
                                         <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>NOTES</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.goalNotes} onPress={this.goToEditDescriptionScreen}>
+                                    <TouchableOpacity style={styles.goalNotes} onPress={this.handleDescriptionClick}>
                                         <Text style={iOSUIKit.footnoteEmphasized}>Some text here and there to support idea of whatever ...</Text>
                                     </TouchableOpacity>
                                 </View>
