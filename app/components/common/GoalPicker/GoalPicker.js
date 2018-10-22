@@ -29,14 +29,14 @@ const variables = {
 class GoalPicker extends Component {
 
     render() {
-        const { selectedValue, onValueChange } = this.props
+        const { selectedValue, onValueChange, placeholder, data } = this.props
 
         return (
             <View style={styles.container}>
                 <Picker
                     mode="dropdown"
                     iosIcon={<Icon name="ios-arrow-down-outline" style={StyleSheet.flatten(styles.iosIconStyle)}/>}
-                    placeholder="Task is part of goal?"
+                    placeholder={placeholder}
                     placeholderStyle={styles.placeholderStyle}
                     style={styles.picker}
                     selectedValue={selectedValue}
@@ -45,8 +45,7 @@ class GoalPicker extends Component {
                     headerBackButtonTextStyle={styles.headerBackButtonTextStyle}
                     textStyle={styles.textStyle}
                 >
-                    <Picker.Item label="Goal 3" value="key3" />
-                    <Picker.Item label="Task is part of goal" value="key4" />
+                    {data.map(item => <Picker.Item key={item.id} label={item.name} value={item.id} />)}
                 </Picker>
             </View>
         )
