@@ -70,6 +70,7 @@ export const styles = StyleSheet.create({
     },
     textStyle: {
         paddingLeft: 5,
+        width: deviceWidth - 16 * 2 - 30 - 30 / 4 - 10 - 10,
         fontSize: variables.inputFontSize
     },
     headerStyle: { backgroundColor: 'transparent' },
