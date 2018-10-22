@@ -38,14 +38,9 @@ class TaskScreen extends Component {
     }
 
     render() {
-        const { task, navigation, changeTaskName, saveTask, t } = this.props
+        const { task, navigation, changeTaskName, saveTask, goals = [], t } = this.props
         const { id, name, description, dueDate } = task
-        const goals = [
-            { id: 1, name: 'Goal1', stuff: 'yes' },
-            { id: 2, name: 'Goal2', stuff: 'yes' },
-            { id: 3, name: 'Goal3', stuff: 'yes' },
-            { id: 4, name: 'Goal4', stuff: 'yes' }
-        ]
+
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
@@ -63,10 +58,10 @@ class TaskScreen extends Component {
                                 <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>
                                 <DueDatePicker value={dueDate} onChangeDate={dueDate => saveTask({ id, dueDate })}/>
                             </Item>
-                            <Item roundedInputWithLabel>
+                            {goals.length && <Item roundedInputWithLabel>
                                 <Label>{t('labels.goal').toLocaleUpperCase()}</Label>
                                 <GoalPicker selectedValue={this.state.selected} onValueChange={this.onValueChange.bind(this)} placeholder={'Task is part of goal?'} data={goals}/>
-                            </Item>
+                            </Item>}
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>
                                 <Description onGoToEditDescriptionScreen={this.handleDescriptionClick} value={description}/>
@@ -85,7 +80,8 @@ class TaskScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-    task: state.task.task
+    task: state.task.task,
+    goals: state.goals.goals
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
