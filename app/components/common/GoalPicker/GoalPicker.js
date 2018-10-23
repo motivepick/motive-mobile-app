@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Icon, Picker } from 'native-base'
+import { Button, Icon, Picker, Text } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 import { Dimensions, PixelRatio, Platform, StyleSheet, View } from 'react-native'
 
@@ -29,24 +29,29 @@ const variables = {
 class GoalPicker extends Component {
 
     render() {
-        const { selectedValue, onValueChange, placeholder, data } = this.props
-
+        const { selectedValue, onValueChange, onClearValue, placeholder, data } = this.props
         return (
-            <View style={styles.container}>
-                <Picker
-                    mode="dropdown"
-                    iosIcon={<Icon name="ios-arrow-down-outline" style={StyleSheet.flatten(styles.iosIconStyle)}/>}
-                    placeholder={placeholder}
-                    placeholderStyle={styles.placeholderStyle}
-                    style={styles.picker}
-                    selectedValue={selectedValue}
-                    onValueChange={onValueChange}
-                    headerStyle={styles.headerStyle}
-                    headerBackButtonTextStyle={styles.headerBackButtonTextStyle}
-                    textStyle={styles.textStyle}
-                >
-                    {data.map(item => <Picker.Item key={item.id} label={item.name} value={item.id} />)}
-                </Picker>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+                <View style={styles.container}>
+                    <Picker
+                        supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
+                        mode="dropdown"
+                        iosIcon={<Icon name="ios-arrow-down-outline" style={StyleSheet.flatten(styles.iosIconStyle)}/>}
+                        placeholder={placeholder}
+                        placeholderStyle={styles.placeholderStyle}
+                        style={[styles.picker, { width: selectedValue ? deviceWidth - 16 * 2 - 71.5 : deviceWidth - 16 * 2 }]}
+                        selectedValue={selectedValue}
+                        onValueChange={onValueChange}
+                        headerStyle={styles.headerStyle}
+                        headerBackButtonTextStyle={styles.headerBackButtonTextStyle}
+                        textStyle={[styles.textStyle, { width: selectedValue ? deviceWidth - 16 * 2 - 30 - 30 / 4 - 10 - 10 - 71.5 : deviceWidth - 16 * 2 - 30 - 30 / 4 - 10 - 10 }]}
+                    >
+                        {data.map(item => <Picker.Item key={item.id} label={item.name} value={item.id} />)}
+                    </Picker>
+                </View>
+                {selectedValue && <Button small transparent onPress={onClearValue}>
+                    <Text>{'Clear'.toLocaleUpperCase()}</Text>
+                </Button>}
             </View>
         )
     }
@@ -61,16 +66,13 @@ export const styles = StyleSheet.create({
         borderColor: variables.inputBorderColor
     },
     picker: {
-        width: deviceWidth - 16 * 2,
         paddingHorizontal: 5,
         height: variables.inputHeightBase,
-        alignItems: 'center',
-        alignSelf: 'center',
         paddingTop: 2
     },
     textStyle: {
         paddingLeft: 5,
-        width: deviceWidth - 16 * 2 - 30 - 30 / 4 - 10 - 10,
+        width: deviceWidth - 16 * 2 - 30 - 30 / 4 - 10 - 10 - 71.5,
         fontSize: variables.inputFontSize
     },
     headerStyle: { backgroundColor: 'transparent' },
