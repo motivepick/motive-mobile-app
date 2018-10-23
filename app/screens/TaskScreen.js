@@ -37,6 +37,12 @@ class TaskScreen extends Component {
         })
     }
 
+    onClearValue() {
+        this.setState({
+            selected: undefined
+        })
+    }
+
     render() {
         const { task, navigation, changeTaskName, saveTask, goals = [], t } = this.props
         const { id, name, description, dueDate } = task
@@ -60,7 +66,7 @@ class TaskScreen extends Component {
                             </Item>
                             {goals.length && <Item roundedInputWithLabel>
                                 <Label>{t('labels.goal').toLocaleUpperCase()}</Label>
-                                <GoalPicker selectedValue={this.state.selected} onValueChange={this.onValueChange.bind(this)} placeholder={'Task is part of goal?'} data={goals}/>
+                                <GoalPicker selectedValue={this.state.selected} onValueChange={this.onValueChange.bind(this)} onClearValue={this.onClearValue.bind(this)} placeholder={'Task is part of goal?'} data={goals}/>
                             </Item>}
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>
