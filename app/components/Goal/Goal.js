@@ -24,27 +24,37 @@ class Goal extends Component {
     }
 
     render() {
-        const { data: { name, colorTag, dueDate, tasks } } = this.props
-        const totalTasks = tasks && tasks.length || 'No'
+        const { data: { name, colorTag, dueDate, tasks = [], closed } } = this.props
+
+        const total = tasks.length
+        const incompleteTasksCount = tasks.filter(task => !task.closed).length
+        const completeTasksCount = total - incompleteTasksCount
+        const progress = closed ? 100 :  total && completeTasksCount && Math.round(completeTasksCount * 100 / total)
+        const taskCountLabel = closed ? `${total} tasks completed` :  `${incompleteTasksCount || 'no'} tasks`
+
+        const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).fromNow() : null
+        const dateColor = dueDate && moment() > moment(dueDate, moment.ISO_8601).local() ? iOSColors.red : iOSColors.green
 
         return (
 
             <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white }} onPress={this.handleGoalClick}>
-                <ProgressCircle
-                    percent={30}
-                    radius={13}
-                    borderWidth={3}
-                    shadowColor={iOSColors.midGray}
-                    bgColor={colorTag && palette[colorTag] ? palette[colorTag] : iOSColors.white}
-                    color={iOSColors.gray}
-                >
-                    {/*<Text style={{ fontSize: 10 }}>{'30%'}</Text>*/}
-                </ProgressCircle>
-                <View style={{ marginRight: 10 }}></View>
+                <View style={{ marginRight: 10 }}>
+                    <ProgressCircle
+                        percent={progress}
+                        radius={13}
+                        borderWidth={3}
+                        shadowColor={iOSColors.midGray}
+                        bgColor={colorTag && palette[colorTag] ? palette[colorTag] : iOSColors.white}
+                        color={iOSColors.gray}
+                        style={{ marginRight: 10 }}
+                    >
+                        {progress === 100 && <Icon name='md-checkmark' style={{ fontWeight: 'bold', lineHeight: 18, fontSize: 18, color: colorTag && palette[colorTag] ? iOSColors.white : iOSColors.gray }}/>}
+                    </ProgressCircle>
+                </View>
                 <Body>
                     <Text>{name}</Text>
-                    {dueDate && <Text style={styles.date}>{moment().subtract(100, 'days').fromNow()}</Text>}
-                    <Text style={styles.note}>{`${totalTasks} tasks`}</Text>
+                    {dueDate && <Text style={[styles.date, { color: dateColor }]}>{formattedDueDate}</Text>}
+                    <Text style={styles.note}>{taskCountLabel}</Text>
                 </Body>
                 <Right style={{ marginRight: 10 }}>
                     <Icon name="ios-arrow-forward"/>
@@ -103,7 +113,6 @@ const styles = StyleSheet.create({
         color: iOSColors.gray
     },
     date: {
-        ...human.caption2Object,
-        color: iOSColors.red
+        ...human.caption2Object
     }
 })
