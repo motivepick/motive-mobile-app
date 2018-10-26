@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Animated, AsyncStorage, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import GoalList from '../components/GoalList/GoalList'
-import { Container, Content, StyleProvider, Text } from 'native-base'
+import { Button, Container, Content, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -58,12 +58,38 @@ export class AllTasksScreen extends Component {
         updateUserGoals()
     }
 
+    renderEmptyState = () => (
+        <View style={{ paddingVertical: 20, marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <Image
+                style={{ width: 128, height: 124, margin: 20 }}
+                source={{ uri: 'https://cdn.pixabay.com/photo/2017/02/16/10/20/target-2070972_1280.png' }}
+            />
+            <Text>There are no goals!</Text>
+            <Text>But you can set one :)</Text>
+        </View>
+    )
+
+    renderCompletedState = () => (
+        <View style={{ paddingVertical: 20, marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <Image
+                style={{ width: 128, height: 124, margin: 20 }}
+                source={{ uri: 'https://cdn.pixabay.com/photo/2017/02/16/10/20/target-2070972_1280.png' }}
+            />
+            <Text>Way to go!</Text>
+            <Text>You have completed all your goals!</Text>
+            <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }}>
+                <Text style={{ color: iOSColors.gray }}>{'See completed goals'.toLocaleUpperCase()}</Text>
+            </Button>
+        </View>
+    )
+
     render() {
         const {
             tasks,
             closedTasks,
             closedTasksAreShown,
             goals,
+            closedGoals = [],
             updateUserTasks,
             createTask,
             closeTask,
@@ -73,6 +99,10 @@ export class AllTasksScreen extends Component {
             deleteGoal,
             t
         } = this.props
+
+        const noGoals = !goals.length && !closedGoals.length
+        const allGoalsCompleted = !goals.length && closedGoals.length
+        const inProgressGoals = goals.length
 
         const totalGoals = goals && goals.length || 'NO'
         const { goalName } = this.state
@@ -84,7 +114,10 @@ export class AllTasksScreen extends Component {
                     <QuickInput placeholder={t('labels.newGoal')} onChangeText={goalName => this.setState({ goalName })} value={goalName} onSubmitEditing={this.onAddNewGoal} onClearValue={() => this.setState({ goalName: '' })}/>
                     <View style={styles.line}/>
 
-                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
+                    {noGoals && this.renderEmptyState()}
+                    {allGoalsCompleted && this.renderCompletedState()}
+
+                    {inProgressGoals && <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <View style={[styles.line, { marginTop: 8 }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalGoals} GOALS`}</Text>
                         </View>
@@ -96,7 +129,7 @@ export class AllTasksScreen extends Component {
                         </View>
 
                         <GoalList goals={goals} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>
-                    </Content>
+                    </Content>}
                 </Container>
             </StyleProvider>
         )
