@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Animated, AsyncStorage, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import TaskList from '../components/TaskList/TaskList'
-import { Container, Content, StyleProvider, Text } from 'native-base'
+import { Button, Container, Content, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -58,8 +58,33 @@ export class AllTasksScreen extends Component {
         updateUserGoals()
     }
 
+    renderEmptyState = () => (
+        <View style={{ paddingVertical: 20, marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <Image
+                style={{ width: 50, height: 50, margin: 20 }}
+                source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png' }}
+            />
+            <Text>There are no tasks!</Text>
+            <Text>But you can add one :)</Text>
+        </View>
+    )
+
+    renderCompletedState = () => (
+        <View style={{ paddingVertical: 20, marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <Image
+                style={{ width: 50, height: 50, margin: 20 }}
+                source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png' }}
+            />
+            <Text>You have completed all your tasks!</Text>
+            <Text>Of course, you can always add more... :)</Text>
+            <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }}>
+                <Text style={{ color: iOSColors.gray }}>{'See completed tasks'.toLocaleUpperCase()}</Text>
+            </Button>
+        </View>
+    )
+
     render() {
-        const {
+        let {
             tasks,
             closedTasks,
             closedTasksAreShown,
@@ -72,18 +97,23 @@ export class AllTasksScreen extends Component {
             t
         } = this.props
 
-        const totalTasks = tasks && tasks.length || 'NO'
+        const noTasks = !tasks.length && !closedTasks.length
+        const allTasksCompleted = !tasks.length && closedTasks.length
+        const inProgressTasks = tasks.length
+
+        const totalTasks = tasks && tasks.length
         const { taskName } = this.state
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
                     <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
-                    <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask}/>
+                    <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
 
                     <View style={styles.line}/>
+                    {noTasks && this.renderEmptyState()}
+                    {allTasksCompleted && this.renderCompletedState()}
 
-                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
-
+                    {inProgressTasks && <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16} style={{ height: '100%'}}>
                         <View style={[styles.line, { marginTop: 8, flexDirection: 'column' }]}>
                             <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalTasks} TASKS`}</Text>
                         </View>
@@ -95,7 +125,7 @@ export class AllTasksScreen extends Component {
                             </TouchableOpacity>
                         </View>
                         <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
-                    </Content>
+                    </Content>}
                 </Container>
             </StyleProvider>
         )
