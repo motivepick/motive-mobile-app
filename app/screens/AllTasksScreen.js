@@ -84,7 +84,7 @@ export class AllTasksScreen extends Component {
     )
 
     render() {
-        let {
+        const {
             tasks,
             closedTasks,
             closedTasksAreShown,
