@@ -1,24 +1,32 @@
 import React, { Component } from 'react'
-import { Form, Icon, Input, Item } from 'native-base'
+import { Button, Form, Icon, Input, Item, Text } from 'native-base'
 import { iOSColors } from 'react-native-typography'
+import { View } from 'react-native'
 
+
+// animate clear button
 class QuickInput extends Component {
 
     render() {
-        const { placeholder, value, onChangeText, onSubmitEditing } = this.props
+        const { placeholder, value, onChangeText, onSubmitEditing, onClearValue } = this.props
 
         return (
-            <Form style={{ marginHorizontal: 16, marginTop: 8 }}>
-                <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
-                    <Icon active name='add' />
-                    <Input
-                        onChangeText={onChangeText}
-                        value={value}
-                        onSubmitEditing={onSubmitEditing}
-                        returnKeyType={'done'}
-                        placeholder={placeholder}/>
-                </Item>
-            </Form>
+            <View style={{ flexDirection: 'row',  marginHorizontal: 16, marginTop: 8 }}>
+                <Form style={{ flex: 1 }}>
+                    <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
+                        <Icon active name='add' />
+                        <Input
+                            onChangeText={onChangeText}
+                            value={value}
+                            onSubmitEditing={onSubmitEditing}
+                            returnKeyType={'done'}
+                            placeholder={placeholder}/>
+                    </Item>
+                </Form>
+                {value && <Button small transparent onPress={onClearValue}>
+                    <Text>{'Clear'.toLocaleUpperCase()}</Text>
+                </Button>}
+            </View>
         )
     }
 }
