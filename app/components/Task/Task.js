@@ -6,7 +6,7 @@ import { palette } from '../common/ColorIndicator/ColorIndicator'
 // import styles from './Task.styles'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-import { Body, ListItem, Text } from 'native-base'
+import { Body, Icon, ListItem, Text } from 'native-base'
 import { human, iOSColors } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
 
@@ -28,15 +28,14 @@ class Task extends Component {
             onClose
         } = this.props
 
-        const formattedDueDate1 = dueDate ? moment(dueDate, moment.ISO_8601).local().calendar() : null
-        const dateColor = dueDate && moment() > moment(dueDate, moment.ISO_8601).local() ? '#990000' : '#009900'
-
-        // const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).fromNow() : null
-        const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).subtract(100, 'days').fromNow() : null
+        const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).fromNow() : null
+        let dateColor = iOSColors.gray
+        if (dueDate && !closed) {
+            dateColor = moment() > moment(dueDate, moment.ISO_8601).local() ? iOSColors.red : iOSColors.green
+        }
 
         return (
             <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white}}>
-                {/*<CheckBox checked={closed} onPress={() => onClose(id)} style={{ borderColor: iOSColors.midGray }}/>*/}
                 <TouchableOpacity onPress={() => onClose(id)}>
                     <ProgressCircle
                         percent={0}
@@ -46,13 +45,14 @@ class Task extends Component {
                         bgColor={goal && goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.white}
                         color={iOSColors.gray}
                     >
+                        {closed && <Icon name='md-checkmark' style={{ fontWeight: 'bold', lineHeight: 18, fontSize: 18, color: goal && goal.colorTag && palette[goal.colorTag] ? iOSColors.white : iOSColors.gray }}/>}
                     </ProgressCircle>
                 </TouchableOpacity>
 
                 <Body onPress={this.handleTaskClick}>
                     <TouchableOpacity onPress={this.handleTaskClick}>
-                        <Text>{name}</Text>
-                        {dueDate && <Text style={styles.date}>{moment().subtract(100, 'days').fromNow()}</Text>}
+                        <Text style={closed ? styles.strikeText : {}}>{name}</Text>
+                        {dueDate && <Text style={[styles.date, { color: dateColor }]}>{formattedDueDate}</Text>}
                         {goal && <Text style={styles.note}>{goal.name}</Text>}
                     </TouchableOpacity>
                 </Body>
@@ -89,5 +89,9 @@ const styles = StyleSheet.create({
     date: {
         ...human.caption2Object,
         color: iOSColors.red
+    },
+    strikeText: {
+        color: iOSColors.gray,
+        textDecorationLine: 'line-through'
     }
-});
+})
