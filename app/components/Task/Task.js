@@ -33,7 +33,7 @@ class Task extends Component {
         const dateColor = getDateColor(dueDate, closed)
 
         return (
-            <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white}}>
+            <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white }}>
                 <TouchableOpacity onPress={() => onClose(id)}>
                     <ProgressCircle
                         percent={0}
