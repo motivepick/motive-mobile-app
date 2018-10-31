@@ -11,6 +11,8 @@ import { setGoal } from '../../actions/goalsActions'
 import { Body, Icon, ListItem, Right } from 'native-base'
 import { human, iOSColors, iOSUIKit } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
+import { calculateGoalProgressStats } from '../../utils/progressUtils'
+import { getDateAsStr, getDateColor } from '../../utils/dateUtils'
 
 class Goal extends Component {
 
@@ -26,17 +28,11 @@ class Goal extends Component {
     render() {
         const { data: { name, colorTag, dueDate, tasks = [], closed } } = this.props
 
-        const total = tasks.length
-        const incompleteTasksCount = tasks.filter(task => !task.closed).length
-        const completeTasksCount = total - incompleteTasksCount
-        const progress = closed ? 100 :  total && completeTasksCount && Math.round(completeTasksCount * 100 / total)
-        const taskCountLabel = closed ? `${total} tasks completed` :  `${incompleteTasksCount || 'no'} tasks`
-
-        const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).fromNow() : null
-        const dateColor = dueDate && moment() > moment(dueDate, moment.ISO_8601).local() ? iOSColors.red : iOSColors.green
+        const { percents: { progress }, labels: { taskCountLabel } } = calculateGoalProgressStats(tasks, closed)
+        const formattedDueDate = getDateAsStr(dueDate)
+        const dateColor = getDateColor(dueDate, closed)
 
         return (
-
             <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white }} onPress={this.handleGoalClick}>
                 <View style={{ marginRight: 10 }}>
                     <ProgressCircle
