@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import Task from '../Task/Task'
 import { Button, Text } from 'native-base'
 import { ListView } from 'react-native'
 import List from '../common/List/List'
 import { withNavigation } from 'react-navigation'
 import { iOSColors } from 'react-native-typography'
+import CheckboxListItem from '../common/CheckboxListItem/CheckboxListItem'
 
 class Tasks extends Component {
 
@@ -25,9 +25,20 @@ class Tasks extends Component {
             renderRightHiddenRow={this.renderRightHiddenRow}
         />
 
-    renderRow = (data) => {
-        const { onCloseTask } = this.props
-        return <Task data={data} onClose={onCloseTask}/>
+    renderRow = (data, secId, rowId, rowMap) => {
+        const { closed, dueDate, name, goal } = data
+
+        return (
+            <CheckboxListItem
+                isCompleted={closed}
+                onComplete={() => this.onCloseTask(data, secId, rowId, rowMap)}
+                onBodyClick={() => this.editTask(data)}
+                text={name}
+                noteText={goal && goal.name}
+                date={dueDate}
+                checkboxColor={goal && goal.colorTag}
+            />
+        )
     }
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
@@ -42,10 +53,16 @@ class Tasks extends Component {
         rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    editTask = (data, secId, rowId, rowMap) => {
+    onCloseTask = (data, secId, rowId, rowMap) => {
+        const { onCloseTask } = this.props
+        const { id } = data
+        onCloseTask(id)
+        rowMap[`${secId}${rowId}`].props.closeRow()
+    }
+
+    editTask = (data) => {
         const { navigation } = this.props
         navigation.navigate('Task', { task: data })
-        rowMap[`${secId}${rowId}`].props.closeRow()
     }
 }
 
