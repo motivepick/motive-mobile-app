@@ -9,6 +9,7 @@ import { withNavigation } from 'react-navigation'
 import { Body, Icon, ListItem, Text } from 'native-base'
 import { human, iOSColors } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
+import { getDateAsStr, getDateColor } from '../../utils/dateUtils'
 
 class Task extends Component {
     state = {
@@ -28,11 +29,8 @@ class Task extends Component {
             onClose
         } = this.props
 
-        const formattedDueDate = dueDate ? moment(dueDate, moment.ISO_8601).fromNow() : null
-        let dateColor = iOSColors.gray
-        if (dueDate && !closed) {
-            dateColor = moment() > moment(dueDate, moment.ISO_8601).local() ? iOSColors.red : iOSColors.green
-        }
+        const formattedDueDate = getDateAsStr(dueDate)
+        const dateColor = getDateColor(dueDate, closed)
 
         return (
             <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white}}>
