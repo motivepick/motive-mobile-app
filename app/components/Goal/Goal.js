@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, StyleSheet, Text, View } from 'react-native'
-import { palette } from '../common/ColorIndicator/ColorIndicator'
+import { AsyncStorage } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import connect from 'react-redux/es/connect/connect'
 import Config from 'react-native-config'
@@ -8,13 +7,12 @@ import { updateUserTasksAction } from '../../actions/tasksActions'
 import request from 'superagent'
 import moment from 'moment'
 import { setGoal } from '../../actions/goalsActions'
-import { Body, Icon, ListItem, Right } from 'native-base'
-import { human, iOSColors, iOSUIKit } from 'react-native-typography'
-import ProgressCircle from 'react-native-progress-circle'
 import { calculateGoalProgressStats } from '../../utils/progressUtils'
-import { getDateAsStr, getDateColor } from '../../utils/dateUtils'
+import CheckboxListItem from '../common/CheckboxListItem/CheckboxListItem'
 
 class Goal extends Component {
+
+    onGoalClose = () => {}
 
     handleGoalClick = () => {
         const { data, navigation } = this.props
@@ -27,35 +25,19 @@ class Goal extends Component {
 
     render() {
         const { data: { name, colorTag, dueDate, tasks = [], closed } } = this.props
-
         const { percents: { progress }, labels: { taskCountLabel } } = calculateGoalProgressStats(tasks, closed)
-        const formattedDueDate = getDateAsStr(dueDate)
-        const dateColor = getDateColor(dueDate, closed)
 
         return (
-            <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white }} onPress={this.handleGoalClick}>
-                <View style={{ marginRight: 10 }}>
-                    <ProgressCircle
-                        percent={progress}
-                        radius={13}
-                        borderWidth={3}
-                        shadowColor={iOSColors.midGray}
-                        bgColor={colorTag && palette[colorTag] ? palette[colorTag] : iOSColors.white}
-                        color={iOSColors.gray}
-                        style={{ marginRight: 10 }}
-                    >
-                        {progress === 100 && <Icon name='md-checkmark' style={{ fontWeight: 'bold', lineHeight: 18, fontSize: 18, color: colorTag && palette[colorTag] ? iOSColors.white : iOSColors.gray }}/>}
-                    </ProgressCircle>
-                </View>
-                <Body>
-                    <Text>{name}</Text>
-                    {dueDate && <Text style={[styles.date, { color: dateColor }]}>{formattedDueDate}</Text>}
-                    <Text style={styles.note}>{taskCountLabel}</Text>
-                </Body>
-                <Right style={{ marginRight: 10 }}>
-                    <Icon name="ios-arrow-forward"/>
-                </Right>
-            </ListItem>
+            <CheckboxListItem
+                isCompleted={closed}
+                onComplete={this.onGoalClose}
+                onBodyClick={this.handleGoalClick}
+                text={name}
+                noteText={taskCountLabel}
+                date={dueDate}
+                checkboxColor={colorTag}
+                progress = {progress}
+            />
         )
     }
 }
@@ -102,13 +84,3 @@ const mapDispatchToProps = (dispatch, { data }) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(Goal))
 
-
-const styles = StyleSheet.create({
-    note: {
-        ...iOSUIKit.caption2Object,
-        color: iOSColors.gray
-    },
-    date: {
-        ...human.caption2Object
-    }
-})
