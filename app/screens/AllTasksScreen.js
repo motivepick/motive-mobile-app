@@ -78,9 +78,19 @@ export class AllTasksScreen extends Component {
             />
             <Text>You have completed all your tasks!</Text>
             <Text>Of course, you can always add more... :)</Text>
-            <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }}>
+            <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }} onPress={this.toggleTasksByStatus}>
                 <Text style={{ color: iOSColors.gray }}>{'See completed tasks'.toLocaleUpperCase()}</Text>
             </Button>
+        </View>
+    )
+
+    renderNoCompletedTasksState = () => (
+        <View style={{ paddingVertical: 20, marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <Image
+                style={{ width: 50, height: 50, margin: 20 }}
+                source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png' }}
+            />
+            <Text>No completed tasks yet</Text>
         </View>
     )
 
@@ -98,9 +108,13 @@ export class AllTasksScreen extends Component {
             t
         } = this.props
 
+        const showInProgressTasks = this.state.statusFilter === 'In progress'
+        const showCompletedTasks = this.state.statusFilter !== 'In progress'
+
         const noTasks = !tasks.length && !closedTasks.length
         const allTasksCompleted = !tasks.length && closedTasks.length
-        const inProgressTasks = tasks.length
+        const inProgressTasks = tasks.length && showInProgressTasks
+        const completedTasks = closedTasks.length && showCompletedTasks
 
         const totalTasks = tasks && tasks.length
         const { taskName } = this.state
@@ -110,11 +124,7 @@ export class AllTasksScreen extends Component {
                     <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
                     <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
                     <Line/>
-
-                    {noTasks && this.renderEmptyState()}
-                    {allTasksCompleted && this.renderCompletedState()}
-
-                    {inProgressTasks && <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16} style={{ height: '100%'}}>
+                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16} style={{ height: '100%'}}>
                         <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray, marginHorizontal: 16, marginTop: 8 }]}>{`${totalTasks} TASKS`}</Text>
                         <Line/>
                         <View style={styles.sectionHeader}>
@@ -123,8 +133,12 @@ export class AllTasksScreen extends Component {
                                 <Text style={{ color: iOSColors.pink }}>{'Status: ' + this.state.statusFilter}</Text>
                             </TouchableOpacity>
                         </View>
-                        <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
-                    </Content>}
+                        {noTasks && this.renderEmptyState()}
+                        {showInProgressTasks && allTasksCompleted && this.renderCompletedState()}
+                        {!noTasks && !closedTasks.length && showCompletedTasks && this.renderNoCompletedTasksState()}
+                        { completedTasks && <TaskList tasks={closedTasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>}
+                        { inProgressTasks && <TaskList tasks={tasks} onTaskCreated={task => createTask(task)} onFilterChanged={filter => updateUserTasks(false, filter)} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/> }
+                    </Content>
                 </Container>
             </StyleProvider>
         )
