@@ -31,8 +31,8 @@ class Tasks extends Component {
         return (
             <CheckboxListItem
                 isCompleted={closed}
-                onComplete={() => this.onCloseTask(data, secId, rowId, rowMap)}
-                onBodyClick={() => this.editTask(data)}
+                onComplete={() => this.onComplete(data, secId, rowId, rowMap)}
+                onBodyClick={() => this.onItemClick(data)}
                 text={name}
                 noteText={goal && goal.name}
                 date={dueDate}
@@ -42,25 +42,25 @@ class Tasks extends Component {
     }
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
-        <Button transparent onPress={() => this.deleteTask(data, secId, rowId, rowMap)}>
+        <Button transparent onPress={() => this.onDelete(data, secId, rowId, rowMap)}>
             <Text style={{ color: iOSColors.pink  }}>{'Delete'.toLocaleUpperCase()}</Text>
         </Button>
 
-    deleteTask = (data, secId, rowId, rowMap) => {
+    onDelete = (data, secId, rowId, rowMap) => {
         const { onDeleteTask } = this.props
         const { id } = data
         onDeleteTask(id)
         rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    onCloseTask = (data, secId, rowId, rowMap) => {
+    onComplete = (data, secId, rowId, rowMap) => {
         const { onCloseTask } = this.props
         const { id } = data
         onCloseTask(id)
         rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    editTask = (data) => {
+    onItemClick = (data) => {
         const { navigation } = this.props
         navigation.navigate('Task', { task: data })
     }

@@ -31,8 +31,8 @@ export class GoalList extends Component {
         return (
             <CheckboxListItem
                 isCompleted={closed}
-                onComplete={() => this.onGoalClose(data, secId, rowId, rowMap)}
-                onBodyClick={() => this.handleGoalClick(data)}
+                onComplete={() => this.onComplete(data, secId, rowId, rowMap)}
+                onBodyClick={() => this.onItemClick(data)}
                 text={name}
                 noteText={taskCountLabel}
                 date={dueDate}
@@ -43,27 +43,27 @@ export class GoalList extends Component {
     }
 
     renderRightHiddenRow = (data, secId, rowId, rowMap) =>
-        <Button transparent onPress={() => this.deleteGoal(data, secId, rowId, rowMap)}>
+        <Button transparent onPress={() => this.onDelete(data, secId, rowId, rowMap)}>
             <Text>{'Delete'.toLocaleUpperCase()}</Text>
         </Button>
 
-    onGoalClose = (data, secId, rowId, rowMap) => {
+    onDelete = (data, secId, rowId, rowMap) => {
+        const { onDeleteGoal } = this.props
+        const { id } = data
+        onDeleteGoal(id)
+        rowMap[`${secId}${rowId}`].props.closeRow()
+    }
+
+    onComplete = (data, secId, rowId, rowMap) => {
         const { onGoalClose } = this.props
         const { id } = data
         onGoalClose(id)
         rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    handleGoalClick = (data) => {
+    onItemClick = (data) => {
         const { navigation } = this.props
         navigation.navigate('Goal', { goal: data })
-    }
-
-    deleteGoal = (data, secId, rowId, rowMap) => {
-        const { onDeleteGoal } = this.props
-        const { id } = data
-        onDeleteGoal(id)
-        rowMap[`${secId}${rowId}`].props.closeRow()
     }
 }
 
