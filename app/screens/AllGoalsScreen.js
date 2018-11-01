@@ -28,6 +28,7 @@ import { iOSColors, iOSUIKit } from 'react-native-typography'
 import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 import QuickInput from '../components/common/QuickInput/QuickInput'
 import SortPicker from '../components/common/SortPicker/SortPicker'
+import Line from '../components/common/Line'
 
 export class AllTasksScreen extends Component {
     static navigationOptions = {
@@ -112,22 +113,20 @@ export class AllTasksScreen extends Component {
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <AnimatedHeader title={t('headings.goals')} scrollOffset={this.state.scrollY} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
                     <QuickInput placeholder={t('labels.newGoal')} onChangeText={goalName => this.setState({ goalName })} value={goalName} onSubmitEditing={this.onAddNewGoal} onClearValue={() => this.setState({ goalName: '' })}/>
-                    <View style={styles.line}/>
+                    <Line/>
 
                     {noGoals && this.renderEmptyState()}
                     {allGoalsCompleted && this.renderCompletedState()}
 
                     {inProgressGoals && <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
-                        <View style={[styles.line, { marginTop: 8 }]}>
-                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalGoals} GOALS`}</Text>
-                        </View>
+                        <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray, marginHorizontal: 16, marginTop: 8 }]}>{`${totalGoals} GOALS`}</Text>
+                        <Line/>
                         <View style={styles.sectionHeader}>
                             <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                             <TouchableOpacity onPress={this.toggleGoalsByStatus}>
                                 <Text style={{ color: iOSColors.pink }}>{'Status: ' + this.state.statusFilter}</Text>
                             </TouchableOpacity>
                         </View>
-
                         <GoalList goals={goals} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>
                     </Content>}
                 </Container>
@@ -215,15 +214,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(translate('translati
 
 
 const styles = StyleSheet.create({
-    line: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginHorizontal: 16,
-        paddingBottom: 8,
-        borderBottomWidth: 1,
-        borderColor: iOSColors.customGray
-    },
     sectionHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
