@@ -28,6 +28,7 @@ import { iOSColors, iOSUIKit } from 'react-native-typography'
 import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 import QuickInput from '../components/common/QuickInput/QuickInput'
 import SortPicker from '../components/common/SortPicker/SortPicker'
+import Line from '../components/common/Line'
 
 export class AllTasksScreen extends Component {
     static navigationOptions = {
@@ -108,16 +109,14 @@ export class AllTasksScreen extends Component {
                 <Container>
                     <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
                     <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
+                    <Line/>
 
-                    <View style={styles.line}/>
                     {noTasks && this.renderEmptyState()}
                     {allTasksCompleted && this.renderCompletedState()}
 
                     {inProgressTasks && <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16} style={{ height: '100%'}}>
-                        <View style={[styles.line, { marginTop: 8, flexDirection: 'column' }]}>
-                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{`${totalTasks} TASKS`}</Text>
-                        </View>
-
+                        <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray, marginHorizontal: 16, marginTop: 8 }]}>{`${totalTasks} TASKS`}</Text>
+                        <Line/>
                         <View style={styles.sectionHeader}>
                             <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                             <TouchableOpacity onPress={this.toggleTasksByStatus}>
@@ -216,15 +215,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(AllTasksScreen))
 
 const styles = StyleSheet.create({
-    line: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        marginHorizontal: 16,
-        paddingBottom: 8,
-        borderBottomWidth: 1,
-        borderColor: iOSColors.customGray
-    },
     sectionHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
