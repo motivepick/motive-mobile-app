@@ -23,7 +23,7 @@ export class TaskList extends Component {
         />
     )
 
-    renderCompletedState = () => (
+    renderAllCompletedState = () => (
         <EmptyStateTemplate
             imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
             content={<React.Fragment>
@@ -35,7 +35,7 @@ export class TaskList extends Component {
         />
     )
 
-    renderNoCompletedTasksState = () => (
+    renderNoneCompletedState = () => (
         <EmptyStateTemplate
             imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
             content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noCompletedTasks')}</Text>}
@@ -59,11 +59,11 @@ export class TaskList extends Component {
         const hasTasks = tasks && tasks.length
         const hasClosedTasks = closedTasks && closedTasks.length
 
-        const showInProgressTasks = this.state.showByStatusInProgress && hasTasks
-        const showCompletedTasks = !this.state.showByStatusInProgress && hasClosedTasks
+        const showInProgressState = this.state.showByStatusInProgress && hasTasks
+        const showAllCompletedState = !this.state.showByStatusInProgress && hasClosedTasks
         const showEmptyState = !hasTasks && !hasClosedTasks
         const showCompletedState = this.state.showByStatusInProgress && !hasTasks && hasClosedTasks
-        const showNoCompletedTasksState = !this.state.showByStatusInProgress && hasTasks && !hasClosedTasks
+        const showNoneCompletedState = !this.state.showByStatusInProgress && hasTasks && !hasClosedTasks
 
         return (
             <React.Fragment>
@@ -78,10 +78,10 @@ export class TaskList extends Component {
                     </View>
                 </React.Fragment>}
                 {showEmptyState && this.renderEmptyState()}
-                {showCompletedState && this.renderCompletedState()}
-                {showNoCompletedTasksState && this.renderNoCompletedTasksState()}
-                {showCompletedTasks && <Tasks tasks={closedTasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>}
-                {showInProgressTasks && <Tasks tasks={tasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>}
+                {showCompletedState && this.renderAllCompletedState()}
+                {showNoneCompletedState && this.renderNoneCompletedState()}
+                {showAllCompletedState && <Tasks tasks={closedTasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>}
+                {showInProgressState && <Tasks tasks={tasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>}
             </React.Fragment>
         )
     }
