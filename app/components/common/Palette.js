@@ -1,0 +1,23 @@
+export const palette = {
+    maroon: '#800000',
+    red: '#e6194B',
+    pink: '#fabebe',
+    brown: '#9A6324',
+    orange: '#f58231',
+    aprikot: '#ffd8b1',
+    olive: '#808000',
+    yellow: '#ffe119',
+    beige: '#fffac8',
+    lime: '#bfef45',
+    green: '#3cb44b',
+    mint: '#aaffc3',
+    teal: '#469990',
+    cyan: '#42d4f4',
+    navy: '#000075',
+    deepBlue: '#336699',
+    blue: '#4363d8',
+    deepPurple: '#6F3662',
+    purple: '#911eb4',
+    lavender: '#e6beff',
+    magenta: '#f032e6'
+}

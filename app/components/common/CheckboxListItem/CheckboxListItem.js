@@ -4,7 +4,7 @@ import { getDateAsStr, getDateColor } from '../../../utils/dateUtils'
 import { Body, Icon, ListItem, Right, Text } from 'native-base'
 import { human, iOSColors } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
-import { palette } from '../ColorIndicator/ColorIndicator'
+import { palette } from '../Palette'
 
 const CheckboxListItem = (props) => {
     const { isCompleted = false, onComplete, onBodyClick, text, noteText, date, checkboxColor = iOSColors.white, progress = 0 } = props
