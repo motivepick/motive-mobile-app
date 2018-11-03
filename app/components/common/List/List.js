@@ -18,7 +18,7 @@ export class ListComponent extends Component {
                 <List
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
-                    rightOpenValue={-105}
+                    rightOpenValue={-115}
                     disableRightSwipe={true}
                     closeOnRowBeginSwipe={true}
                     dataSource={this.ds.cloneWithRows(data)}
