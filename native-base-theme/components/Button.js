@@ -232,6 +232,12 @@ export default (variables = variable) => {
             borderRadius: variables.borderRadiusLarge
         },
 
+        '.noIndent': {
+            'NativeBase.Text': {
+                paddingHorizontal: 0
+            },
+        },
+
         '.transparent': {
             backgroundColor: 'transparent',
             elevation: 0,

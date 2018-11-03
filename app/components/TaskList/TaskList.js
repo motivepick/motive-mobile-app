@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { handleDueDateOf } from '../../utils/parser'
 import { translate } from 'react-i18next'
 import { Button, Text } from 'native-base'
@@ -72,9 +72,9 @@ export class TaskList extends Component {
                     <Line/>
                     <View style={styles.sectionHeader}>
                         <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
-                        <TouchableOpacity onPress={this.toggleTasksByStatus}>
-                            <Text style={{ color: iOSColors.pink }}>{this.state.showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
-                        </TouchableOpacity>
+                        <Button transparent noIndent onPress={this.toggleTasksByStatus}>
+                            <Text>{this.state.showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
+                        </Button>
                     </View>
                 </React.Fragment>}
                 {showEmptyState && this.renderEmptyState()}
