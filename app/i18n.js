@@ -10,7 +10,7 @@ const languageDetector = {
 
 i18n.use(languageDetector).init({
     resources: {
-        en1: {
+        en: {
             translations: {
                 headings: {
                     tasks: 'Tasks',
@@ -70,7 +70,7 @@ i18n.use(languageDetector).init({
                 }
             }
         },
-        en: {
+        ru: {
             translations: {
                 headings: {
                     tasks: 'Задачи',
