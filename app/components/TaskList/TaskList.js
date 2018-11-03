@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { handleDueDateOf } from '../../utils/parser'
 import { translate } from 'react-i18next'
 import { Button, Text } from 'native-base'
@@ -7,98 +7,73 @@ import Tasks from './Tasks'
 import Line from '../common/Line'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import SortPicker from '../common/SortPicker/SortPicker'
-
+import EmptyStateTemplate from '../common/EmptyStateTemplate'
 
 export class TaskList extends Component {
     state = {
         activeFilter: 'all',
         activeSort: 'Recent',
-        statusFilter: 'In progress'
+        showByStatusInProgress: true
     }
 
     renderEmptyState = () => (
-        <View style={{ paddingVertical: 20, marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-            <Image
-                style={{ width: 50, height: 50, margin: 20 }}
-                source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png' }}
-            />
-            <Text>There are no tasks!</Text>
-            <Text>But you can add one :)</Text>
-        </View>
+        <EmptyStateTemplate
+            imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
+            content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noTasks')}</Text>}
+        />
     )
 
     renderCompletedState = () => (
-        <View style={{ paddingVertical: 20, marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-            <Image
-                style={{ width: 50, height: 50, margin: 20 }}
-                source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png' }}
-            />
-            <Text>You have completed all your tasks!</Text>
-            <Text>Of course, you can always add more... :)</Text>
-            <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }} onPress={this.toggleTasksByStatus}>
-                <Text style={{ color: iOSColors.gray }}>{'See completed tasks'.toLocaleUpperCase()}</Text>
-            </Button>
-        </View>
+        <EmptyStateTemplate
+            imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
+            content={<React.Fragment>
+                <Text style={{ textAlign: 'center' }}>{t('emptyStates.allTasksCompleted')}</Text>
+                <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }} onPress={this.toggleTasksByStatus}>
+                    <Text style={{ color: iOSColors.gray }}>{this.props.t('labels.showClosedTasks').toLocaleUpperCase()}</Text>
+                </Button>
+            </React.Fragment>}
+        />
     )
 
     renderNoCompletedTasksState = () => (
-        <View style={{ paddingVertical: 20, marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-            <Image
-                style={{ width: 50, height: 50, margin: 20 }}
-                source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png' }}
-            />
-            <Text>No completed tasks yet</Text>
-        </View>
+        <EmptyStateTemplate
+            imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
+            content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noCompletedTasks')}</Text>}
+        />
     )
 
-    toggleTasksByStatus = () => this.setState({ statusFilter: this.state.statusFilter === 'In progress' ? 'Completed' : 'In progress' })
-
-    onValueChange(value: string) {
-        if (value === this.state.activeSort) return
-
-        this.setState({
-            activeSort: value
-        })
-    }
     render() {
         const {
             showOnlyTasks = false,
-            tasks,
+            tasks = [],
             closedTasks = [],
             onDeleteTask,
             onCloseTask,
             closedTasksAreShown,
-            goals,
             updateUserTasks,
-            createTask,
-            closeTask,
-            deleteTask,
-            undoCloseTask,
             t
         } = this.props
 
+        const totalTasks = this.state.showByStatusInProgress ? tasks && tasks.length : closedTasks && closedTasks.length
 
-        const totalTasks = tasks && tasks.length
+        const hasTasks = tasks && tasks.length
+        const hasClosedTasks = closedTasks && closedTasks.length
 
-        const hasTasks = tasks.length
-        const hasClosedTasks = closedTasks.length
-        const showInProgress = this.state.statusFilter === 'In progress'
-
-        const showInProgressTasks = showInProgress && hasTasks
-        const showCompletedTasks = !showInProgress && hasClosedTasks
+        const showInProgressTasks = this.state.showByStatusInProgress && hasTasks
+        const showCompletedTasks = !this.state.showByStatusInProgress && hasClosedTasks
         const showEmptyState = !hasTasks && !hasClosedTasks
-        const showCompletedState = showInProgress && !hasTasks && hasClosedTasks
-        const showNoCompletedTasksState = !showInProgress && hasTasks && !hasClosedTasks
+        const showCompletedState = this.state.showByStatusInProgress && !hasTasks && hasClosedTasks
+        const showNoCompletedTasksState = !this.state.showByStatusInProgress && hasTasks && !hasClosedTasks
 
         return (
             <React.Fragment>
                 {!showOnlyTasks && <React.Fragment>
-                    <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray, marginHorizontal: 16, marginTop: 8 }]}>{`${totalTasks} TASKS`}</Text>
+                    <Text style={styles.subHeader}>{t('labels.totalTasks', { totalTasks: totalTasks || 0 }).toLocaleUpperCase()}</Text>
                     <Line/>
                     <View style={styles.sectionHeader}>
                         <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                         <TouchableOpacity onPress={this.toggleTasksByStatus}>
-                            <Text style={{ color: iOSColors.pink }}>{'Status: ' + this.state.statusFilter}</Text>
+                            <Text style={{ color: iOSColors.pink }}>{this.state.showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
                         </TouchableOpacity>
                     </View>
                 </React.Fragment>}
@@ -109,6 +84,16 @@ export class TaskList extends Component {
                 {showInProgressTasks && <Tasks tasks={tasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>}
             </React.Fragment>
         )
+    }
+
+    toggleTasksByStatus = () => this.setState({ showByStatusInProgress: !this.state.showByStatusInProgress })
+
+    onValueChange(value: string) {
+        if (value === this.state.activeSort) return
+
+        this.setState({
+            activeSort: value
+        })
     }
 
     handleFilterChange = activeFilter => {
@@ -136,5 +121,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginHorizontal: 16
+    },
+    subHeader: {
+        ...iOSUIKit.footnoteEmphasizedObject,
+        color: iOSColors.gray,
+        marginHorizontal: 16,
+        marginTop: 8
     }
 })

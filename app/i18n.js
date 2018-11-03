@@ -35,11 +35,14 @@ i18n.use(languageDetector).init({
                     save: 'Save',
                     newTask: 'New Task',
                     editTask: 'Task',
-                    showClosedTasks: 'Show Closed Tasks',
+                    showClosedTasks: 'Show Completed Tasks',
                     hideClosedTasks: 'Hide Closed Tasks',
                     editDescription: 'Description',
                     dueDate: 'Due date',
-                    color: 'Color'
+                    color: 'Color',
+                    itemStatusInProgress: 'Status: In Progress',
+                    itemStatusCompleted: 'Status: Completed',
+                    totalTasks: '{{totalTasks}} tasks'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -47,6 +50,11 @@ i18n.use(languageDetector).init({
                     goalName: 'What is your goal?',
                     whenIsItDue: 'When is it due?',
                     description: 'A place for your notes'
+                },
+                emptyStates: {
+                    noCompletedTasks: 'No completed tasks yet',
+                    allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
+                    noTasks: 'There are no tasks! \nBut you can add one :)'
                 }
             }
         },
@@ -79,7 +87,10 @@ i18n.use(languageDetector).init({
                     hideClosedTasks: 'Скрыть завершённые задачи',
                     editDescription: 'Описание',
                     dueDate: 'Due date',
-                    color: 'Color'
+                    color: 'Color',
+                    itemStatusInProgress: 'Состояние: В процессе',
+                    itemStatusCompleted: 'Состояние: Завершено',
+                    totalTasks: 'Задач: {{totalTasks}}'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -87,6 +98,11 @@ i18n.use(languageDetector).init({
                     goalName: 'На что вы нацелились?',
                     whenIsItDue: 'Когда?',
                     description: 'Место для заметок'
+                },
+                emptyStates: {
+                    noCompletedTasks: 'Пока нет завершённых задач',
+                    allTasksCompleted: 'Вы завершили все свои задачи! \nКонечно, всегда можно добавить ещё задач... :)',
+                    noTasks: 'Задач нет! \nНо можно добавить :)'
                 }
             }
         },
@@ -115,11 +131,14 @@ i18n.use(languageDetector).init({
                     save: 'Save',
                     newTask: 'New Task',
                     editTask: 'Task',
-                    showClosedTasks: 'Show Closed Tasks',
+                    showClosedTasks: 'Show Completed Tasks',
                     hideClosedTasks: 'Hide Closed Tasks',
                     editDescription: 'Description',
                     dueDate: 'Due date',
-                    color: 'Color'
+                    color: 'Color',
+                    itemStatusInProgress: 'Status: In Progress',
+                    itemStatusCompleted: 'Status: Completed',
+                    totalTasks: '{{totalTasks}} tasks'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -127,6 +146,11 @@ i18n.use(languageDetector).init({
                     goalName: 'What is your goal?',
                     whenIsItDue: 'When is it due?',
                     description: 'A place for your notes'
+                },
+                emptyStates: {
+                    noCompletedTasks: 'No completed tasks yet',
+                    allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
+                    noTasks: 'There are no tasks! \nBut you can add one :)'
                 }
             }
         }
