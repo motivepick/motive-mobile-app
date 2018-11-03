@@ -10,7 +10,7 @@ const languageDetector = {
 
 i18n.use(languageDetector).init({
     resources: {
-        en: {
+        en1: {
             translations: {
                 headings: {
                     tasks: 'Tasks',
@@ -32,11 +32,13 @@ i18n.use(languageDetector).init({
                     set: 'Set',
                     cancel: 'Cancel',
                     clear: 'Clear',
+                    delete: 'Delete',
                     back: 'Back',
                     save: 'Save',
                     newTask: 'New Task',
                     editTask: 'Task',
                     showClosedTasks: 'Show Completed Tasks',
+                    showClosedGoals: 'See completed goals',
                     hideClosedTasks: 'Hide Closed Tasks',
                     editDescription: 'Description',
                     dueDate: 'Due date',
@@ -44,6 +46,7 @@ i18n.use(languageDetector).init({
                     itemStatusInProgress: 'Status: In Progress',
                     itemStatusCompleted: 'Status: Completed',
                     totalTasks: '{{totalTasks}} tasks',
+                    totalGoals: '{{totalGoals}} goals',
                     sortByRecent: 'Recent',
                     sortByOverdue: 'Overdue',
                     sortByTasks: 'By tasks',
@@ -60,11 +63,14 @@ i18n.use(languageDetector).init({
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',
                     allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
-                    noTasks: 'There are no tasks! \nBut you can add one :)'
+                    noTasks: 'There are no tasks! \nBut you can add one :)',
+                    noCompletedGoals: 'No completed tasks yet',
+                    allGoalsCompleted: 'Way to go! \nYou have completed all your goals!',
+                    noGoals: 'There are no goals! \nBut you can set one :)'
                 }
             }
         },
-        ru: {
+        en: {
             translations: {
                 headings: {
                     tasks: 'Задачи',
@@ -86,11 +92,13 @@ i18n.use(languageDetector).init({
                     set: 'Сохранить',
                     cancel: 'Отменить',
                     clear: 'Сбросить',
+                    delete: 'Удалить',
                     back: 'Назад',
                     save: 'Сохранить',
                     newTask: 'Новая задача',
                     editTask: 'Задача',
                     showClosedTasks: 'Показать завершённые задачи',
+                    showClosedGoals: 'Показать завершённые цели',
                     hideClosedTasks: 'Скрыть завершённые задачи',
                     editDescription: 'Описание',
                     dueDate: 'Due date',
@@ -98,6 +106,7 @@ i18n.use(languageDetector).init({
                     itemStatusInProgress: 'Состояние: В процессе',
                     itemStatusCompleted: 'Состояние: Завершено',
                     totalTasks: 'Задач: {{totalTasks}}',
+                    totalGoals: 'Целей: {{totalGoals}}',
                     sortByRecent: 'Недавние',
                     sortByOverdue: 'Просроченные',
                     sortByTasks: 'По задачам',
@@ -112,9 +121,12 @@ i18n.use(languageDetector).init({
                     sortBy: 'Сортировать'
                 },
                 emptyStates: {
-                    noCompletedTasks: 'Пока нет завершённых задач',
+                    noCompletedTasks: 'Ещё нет завершённых задач',
                     allTasksCompleted: 'Вы завершили все свои задачи! \nКонечно, всегда можно добавить ещё задач... :)',
-                    noTasks: 'Задач нет! \nНо можно добавить :)'
+                    noTasks: 'Задач нет! \nНо можно добавить :)',
+                    noCompletedGoals: 'Ещё нет завершённых целей',
+                    allGoalsCompleted: 'Так держать! \nВсе поставленные цели достигнуты!',
+                    noGoals: 'Целей нет! \nНо можно поставить :)'
                 }
             }
         },
@@ -140,11 +152,13 @@ i18n.use(languageDetector).init({
                     set: 'Set',
                     cancel: 'Cancel',
                     clear: 'Clear',
+                    delete: 'Delete',
                     back: 'Back',
                     save: 'Save',
                     newTask: 'New Task',
                     editTask: 'Task',
                     showClosedTasks: 'Show Completed Tasks',
+                    showClosedGoals: 'See completed goals',
                     hideClosedTasks: 'Hide Closed Tasks',
                     editDescription: 'Description',
                     dueDate: 'Due date',
@@ -152,6 +166,7 @@ i18n.use(languageDetector).init({
                     itemStatusInProgress: 'Status: In Progress',
                     itemStatusCompleted: 'Status: Completed',
                     totalTasks: '{{totalTasks}} tasks',
+                    totalGoals: '{{totalGoals}} goals',
                     sortByRecent: 'Recent',
                     sortByOverdue: 'Overdue',
                     sortByTasks: 'By tasks',
@@ -168,7 +183,10 @@ i18n.use(languageDetector).init({
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',
                     allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
-                    noTasks: 'There are no tasks! \nBut you can add one :)'
+                    noTasks: 'There are no tasks! \nBut you can add one :)',
+                    noCompletedGoals: 'No completed tasks yet',
+                    allGoalsCompleted: 'Way to go! \nYou have completed all your goals!',
+                    noGoals: 'There are no goals! \nBut you can set one :)'
                 }
             }
         }
