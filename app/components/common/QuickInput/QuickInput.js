@@ -2,13 +2,14 @@ import React, { Component } from 'react'
 import { Button, Form, Icon, Input, Item, Text } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 import { View } from 'react-native'
+import { translate } from 'react-i18next'
 
 
 // animate clear button
 class QuickInput extends Component {
 
     render() {
-        const { placeholder, value, onChangeText, onSubmitEditing, onClearValue } = this.props
+        const { placeholder, value, onChangeText, onSubmitEditing, onClearValue, t } = this.props
 
         return (
             <View style={{ flexDirection: 'row',  marginHorizontal: 16, marginTop: 8 }}>
@@ -24,7 +25,7 @@ class QuickInput extends Component {
                     </Item>
                 </Form>
                 {value && <Button small transparent onPress={onClearValue}>
-                    <Text>{'Clear'.toLocaleUpperCase()}</Text>
+                    <Text>{t('labels.clear').toLocaleUpperCase()}</Text>
                 </Button>}
             </View>
         )
@@ -32,4 +33,4 @@ class QuickInput extends Component {
 }
 
 
-export default QuickInput
+export default translate('translations')(QuickInput)
