@@ -42,14 +42,19 @@ i18n.use(languageDetector).init({
                     color: 'Color',
                     itemStatusInProgress: 'Status: In Progress',
                     itemStatusCompleted: 'Status: Completed',
-                    totalTasks: '{{totalTasks}} tasks'
+                    totalTasks: '{{totalTasks}} tasks',
+                    sortByRecent: 'Recent',
+                    sortByOverdue: 'Overdue',
+                    sortByTasks: 'By tasks',
+                    sortByColor: 'By color'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
                     goalName: 'What is your goal?',
                     whenIsItDue: 'When is it due?',
-                    description: 'A place for your notes'
+                    description: 'A place for your notes',
+                    sortBy: 'Sort by'
                 },
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',
@@ -90,14 +95,19 @@ i18n.use(languageDetector).init({
                     color: 'Color',
                     itemStatusInProgress: 'Состояние: В процессе',
                     itemStatusCompleted: 'Состояние: Завершено',
-                    totalTasks: 'Задач: {{totalTasks}}'
+                    totalTasks: 'Задач: {{totalTasks}}',
+                    sortByRecent: 'Недавние',
+                    sortByOverdue: 'Просроченные',
+                    sortByTasks: 'По задачам',
+                    sortByColor: 'По цвету'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
                     firstTaskName: 'Как насчёт первой мега-задачи?',
                     goalName: 'На что вы нацелились?',
                     whenIsItDue: 'Когда?',
-                    description: 'Место для заметок'
+                    description: 'Место для заметок',
+                    sortBy: 'Сортировать'
                 },
                 emptyStates: {
                     noCompletedTasks: 'Пока нет завершённых задач',
@@ -138,14 +148,19 @@ i18n.use(languageDetector).init({
                     color: 'Color',
                     itemStatusInProgress: 'Status: In Progress',
                     itemStatusCompleted: 'Status: Completed',
-                    totalTasks: '{{totalTasks}} tasks'
+                    totalTasks: '{{totalTasks}} tasks',
+                    sortByRecent: 'Recent',
+                    sortByOverdue: 'Overdue',
+                    sortByTasks: 'By tasks',
+                    sortByColor: 'By color'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
                     goalName: 'What is your goal?',
                     whenIsItDue: 'When is it due?',
-                    description: 'A place for your notes'
+                    description: 'A place for your notes',
+                    sortBy: 'Sort by'
                 },
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',

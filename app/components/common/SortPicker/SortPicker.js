@@ -1,39 +1,40 @@
 import React, { Component } from 'react'
 import { Icon, Picker } from 'native-base'
 import { iOSColors } from 'react-native-typography'
+import { translate } from 'react-i18next'
 
 class SortPicker extends Component {
 
     render() {
-        const { selectedValue, onValueChange } = this.props
+        const { selectedValue, onValueChange, t } = this.props
 
         return (
             <Picker
-                mode="dropdown"
+                mode='dropdown'
                 iosIcon={<Icon active name='ios-arrow-down' style={{
                     marginLeft: -10,
                     fontSize: 15,
                     color: iOSColors.pink
                 }}/>}
-                placeholder="Sort by"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
+                placeholder={t('placeholders.sortBy')}
+                placeholderStyle={{ color: '#bfc6ea' }}
+                placeholderIconColor='#007aff'
                 style={{ marginLeft: -15, width: undefined }}
                 selectedValue={selectedValue}
                 onValueChange={onValueChange}
                 headerStyle={{ backgroundColor: iOSColors.white }}
                 headerBackButtonTextStyle={{ color: iOSColors.pink }}
                 textStyle={{ color: iOSColors.pink }}
-                iosHeader={'Sort by'}
+                iosHeader={t('placeholders.sortBy')}
+                headerBackButtonText={t('labels.back')}
             >
-                <Picker.Item label="Recent" value="Recent" />
-                <Picker.Item label="Overdue" value="Overdue" />
-                <Picker.Item label="By tasks" value="Tasks" />
-                <Picker.Item label="By color" value="Color" />
+                <Picker.Item label={t('labels.sortByRecent')} value='Recent' />
+                <Picker.Item label={t('labels.sortByOverdue')} value='Overdue' />
+                <Picker.Item label={t('labels.sortByTasks')} value='Tasks' />
+                <Picker.Item label={t('labels.sortByColor')} value='Color' />
             </Picker>
         )
     }
 }
 
-
-export default SortPicker
+export default translate('translations')(SortPicker)
