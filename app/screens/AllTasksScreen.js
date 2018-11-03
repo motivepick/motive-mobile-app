@@ -20,8 +20,6 @@ import {
 } from '../actions/tasksActions'
 import { doDeleteTask, fetchClosedTasks, fetchTasks } from '../services/taskService'
 import moment from 'moment'
-import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '../actions/goalsActions'
-import { doDeleteGoal } from '../services/goalService'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
@@ -40,18 +38,14 @@ export class AllTasksScreen extends Component {
     }
 
     componentDidMount() {
-        const { updateUserTasks, updateUserGoals } = this.props
+        const { updateUserTasks } = this.props
         updateUserTasks(false, 'all')
-        updateUserGoals()
     }
 
     render() {
         const {
             tasks,
             closedTasks,
-            closedTasksAreShown,
-            updateUserTasks,
-            createTask,
             closeTask,
             deleteTask,
             undoCloseTask,
@@ -88,8 +82,7 @@ export class AllTasksScreen extends Component {
 const mapStateToProps = state => ({
     tasks: state.tasks.tasks,
     closedTasks: state.tasks.closedTasks,
-    closedTasksAreShown: state.tasks.closedTasksAreShown,
-    goals: state.goals.goals
+    closedTasksAreShown: state.tasks.closedTasksAreShown
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -146,23 +139,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     deleteTask: id => async dispatch => {
         await doDeleteTask(id)
         dispatch(deleteTaskAction(id))
-    },
-
-    deleteGoal: id => async dispatch => {
-        await doDeleteGoal(id)
-        dispatch(deleteGoalAction(id))
-    },
-
-    updateUserGoals: () => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.get(`${API_URL}/goals`).set('X-Account-Id', accountId)
-        dispatch(updateUserGoalsAction(body))
-    },
-
-    createGoal: goal => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.post(`${API_URL}/goals`).set('X-Account-Id', accountId).send(goal)
-        dispatch(createNewGoalAction(body))
     }
 }, dispatch)
 

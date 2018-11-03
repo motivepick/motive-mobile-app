@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { handleDueDateOf } from '../../utils/parser'
 import { translate } from 'react-i18next'
 import { Button, Text } from 'native-base'
 import Tasks from './Tasks'
@@ -49,8 +48,6 @@ export class TaskList extends Component {
             closedTasks = [],
             onDeleteTask,
             onCloseTask,
-            closedTasksAreShown,
-            updateUserTasks,
             t
         } = this.props
 
@@ -72,7 +69,7 @@ export class TaskList extends Component {
                     <Line/>
                     <View style={styles.sectionHeader}>
                         <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
-                        <Button transparent noIndent onPress={this.toggleTasksByStatus}>
+                        <Button transparent noIndent onPress={this.toggleByStatus}>
                             <Text>{this.state.showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
                         </Button>
                     </View>
@@ -86,30 +83,12 @@ export class TaskList extends Component {
         )
     }
 
-    toggleTasksByStatus = () => this.setState({ showByStatusInProgress: !this.state.showByStatusInProgress })
+    toggleByStatus = () => this.setState({ showByStatusInProgress: !this.state.showByStatusInProgress })
 
     onValueChange(value: string) {
         if (value === this.state.activeSort) return
 
-        this.setState({
-            activeSort: value
-        })
-    }
-
-    handleFilterChange = activeFilter => {
-        const { onFilterChanged } = this.props
-        this.setState({ activeFilter })
-        onFilterChanged(activeFilter)
-    }
-
-    onAddNewTask = async () => {
-        const { taskName } = this.state
-        const { onTaskCreated } = this.props
-        if (taskName.trim() !== '') {
-            const task = handleDueDateOf({ name: taskName.trim() })
-            onTaskCreated(task)
-            this.setState({ taskName: '' })
-        }
+        this.setState({ activeSort: value })
     }
 }
 

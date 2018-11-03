@@ -1,70 +1,111 @@
 import React, { Component } from 'react'
 import { translate } from 'react-i18next'
 import { Button, Text } from 'native-base'
-import List from '../common/List/List'
-import { withNavigation } from 'react-navigation'
-import { calculateGoalProgressStats } from '../../utils/progressUtils'
-import CheckboxListItem from '../common/CheckboxListItem/CheckboxListItem'
+import { StyleSheet, View } from 'react-native'
+import { iOSColors, iOSUIKit } from 'react-native-typography'
+import EmptyStateTemplate from '../common/EmptyStateTemplate'
+import Line from '../common/Line'
+import SortPicker from '../common/SortPicker/SortPicker'
+import Goals from './Goals'
 
 export class GoalList extends Component {
-
-    constructor(props) {
-        super(props)
+    state = {
+        activeFilter: 'all',
+        activeSort: 'Recent',
+        showByStatusInProgress: true
     }
+
+    renderEmptyState = () => (
+        <EmptyStateTemplate
+            imageUrl={'https://cdn.pixabay.com/photo/2017/02/16/10/20/target-2070972_1280.png'}
+            content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noGoals')}</Text>}
+        />
+    )
+
+    renderAllCompletedState = () => (
+        <EmptyStateTemplate
+            imageUrl={'https://cdn.pixabay.com/photo/2017/02/16/10/20/target-2070972_1280.png'}
+            content={<React.Fragment>
+                <Text style={{ textAlign: 'center' }}>{t('emptyStates.allGoalsCompleted')}</Text>
+                <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }} onPress={this.toggleTasksByStatus}>
+                    <Text style={{ color: iOSColors.gray }}>{this.props.t('labels.showClosedGoals').toLocaleUpperCase()}</Text>
+                </Button>
+            </React.Fragment>}
+        />
+    )
+
+    renderNoneCompletedState = () => (
+        <EmptyStateTemplate
+            imageUrl={'https://cdn.pixabay.com/photo/2017/02/16/10/20/target-2070972_1280.png'}
+            content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noCompletedGoals')}</Text>}
+        />
+    )
 
     render() {
-        const { goals } = this.props
+        const {
+            showSubheader = true,
+            goals = [],
+            closedGoals = [],
+            onGoalCreated,
+            onDeleteGoal,
+            t
+        } = this.props
+
+        const totalGoals = this.state.showByStatusInProgress ? goals && goals.length : closedGoals && closedGoals.length
+
+        const hasGoals = goals && goals.length
+        const hasClosedGoals = closedGoals && closedGoals.length
+
+        const showInProgressState = this.state.showByStatusInProgress && hasGoals
+        const showAllCompletedState = !this.state.showByStatusInProgress && hasClosedGoals
+        const showEmptyState = !hasGoals && !hasClosedGoals
+        const showCompletedState = this.state.showByStatusInProgress && !hasGoals && hasClosedGoals
+        const showNoneCompletedState = !this.state.showByStatusInProgress && hasGoals && !hasClosedGoals
 
         return (
-            <List
-                data={goals}
-                renderRow={this.renderRow}
-                renderRightHiddenRow={this.renderRightHiddenRow}
-            />
+            <React.Fragment>
+                {showSubheader && <React.Fragment>
+                    <Text style={styles.subHeader}>{t('labels.totalGoals', { totalGoals: totalGoals || 0 }).toLocaleUpperCase()}</Text>
+                    <Line/>
+                    <View style={styles.sectionHeader}>
+                        <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
+                        <Button transparent noIndent onPress={this.toggleByStatus}>
+                            <Text>{this.state.showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
+                        </Button>
+                    </View>
+                </React.Fragment>}
+                {showEmptyState && this.renderEmptyState()}
+                {showCompletedState && this.renderAllCompletedState()}
+                {showNoneCompletedState && this.renderNoneCompletedState()}
+                {showAllCompletedState && <Goals goals={closedGoals} onGoalCreated={id => onGoalCreated(id)} onDeleteGoal={id => onDeleteGoal(id)}/>}
+                {showInProgressState && <Goals goals={goals} onGoalCreated={id => onGoalCreated(id)} onDeleteGoal={id => onDeleteGoal(id)}/>}
+            </React.Fragment>
         )
     }
 
-    renderRow = (data, secId, rowId, rowMap) => {
-        const { name, colorTag, dueDate, tasks = [], closed } = data
-        const { percents: { progress }, labels: { taskCountLabel } } = calculateGoalProgressStats(tasks, closed)
+    toggleByStatus = () => this.setState({ showByStatusInProgress: !this.state.showByStatusInProgress })
 
-        return (
-            <CheckboxListItem
-                isCompleted={closed}
-                onComplete={() => this.onComplete(data, secId, rowId, rowMap)}
-                onBodyClick={() => this.onItemClick(data)}
-                text={name}
-                noteText={taskCountLabel}
-                date={dueDate}
-                checkboxColor={colorTag}
-                progress = {progress}
-            />
-        )
-    }
+    onValueChange(value: string) {
+        if (value === this.state.activeSort) return
 
-    renderRightHiddenRow = (data, secId, rowId, rowMap) =>
-        <Button transparent onPress={() => this.onDelete(data, secId, rowId, rowMap)}>
-            <Text>{'Delete'.toLocaleUpperCase()}</Text>
-        </Button>
-
-    onDelete = (data, secId, rowId, rowMap) => {
-        const { onDeleteGoal } = this.props
-        const { id } = data
-        onDeleteGoal(id)
-        rowMap[`${secId}${rowId}`].props.closeRow()
-    }
-
-    onComplete = (data, secId, rowId, rowMap) => {
-        const { onGoalClose } = this.props
-        const { id } = data
-        onGoalClose(id)
-        rowMap[`${secId}${rowId}`].props.closeRow()
-    }
-
-    onItemClick = (data) => {
-        const { navigation } = this.props
-        navigation.navigate('Goal', { goal: data })
+        this.setState({ activeSort: value })
     }
 }
 
-export default translate('translations')(withNavigation(GoalList))
+export default translate('translations')(GoalList)
+
+
+const styles = StyleSheet.create({
+    sectionHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginHorizontal: 16
+    },
+    subHeader: {
+        ...iOSUIKit.footnoteEmphasizedObject,
+        color: iOSColors.gray,
+        marginHorizontal: 16,
+        marginTop: 8
+    }
+})
