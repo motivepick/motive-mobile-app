@@ -15,7 +15,7 @@ import baseTheme from '../../native-base-theme/variables/platform'
 import Description from '../components/common/Description/Description'
 import GoalPicker from '../components/common/GoalPicker/GoalPicker'
 
-class TaskScreen extends Component {
+class TaskEditScreen extends Component {
 
     static navigationOptions = {
         header: null
@@ -106,4 +106,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     },
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(TaskScreen))
+export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(TaskEditScreen))

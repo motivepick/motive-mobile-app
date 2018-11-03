@@ -62,7 +62,7 @@ class Tasks extends Component {
 
     onItemClick = (data) => {
         const { navigation } = this.props
-        navigation.navigate('Task', { task: data })
+        navigation.navigate('TaskEdit', { task: data })
     }
 }
 
