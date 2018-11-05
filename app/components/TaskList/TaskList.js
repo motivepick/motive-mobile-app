@@ -43,7 +43,7 @@ export class TaskList extends Component {
 
     render() {
         const {
-            showOnlyTasks = false,
+            showSubheader = true,
             tasks = [],
             closedTasks = [],
             onDeleteTask,
@@ -64,7 +64,7 @@ export class TaskList extends Component {
 
         return (
             <React.Fragment>
-                {!showOnlyTasks && <React.Fragment>
+                {showSubheader && <React.Fragment>
                     <Text style={styles.subHeader}>{t('labels.totalTasks', { totalTasks: totalTasks || 0 }).toLocaleUpperCase()}</Text>
                     <Line/>
                     <View style={styles.sectionHeader}>

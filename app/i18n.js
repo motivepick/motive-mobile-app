@@ -50,7 +50,10 @@ i18n.use(languageDetector).init({
                     sortByRecent: 'Recent',
                     sortByOverdue: 'Overdue',
                     sortByTasks: 'By tasks',
-                    sortByColor: 'By color'
+                    sortByColor: 'By color',
+                    tasksCompleted: 'tasks\ncompleted',
+                    tasksInProgress: 'tasks\nin progress',
+                    dueDateNotSet: 'not set'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -104,13 +107,16 @@ i18n.use(languageDetector).init({
                     dueDate: 'Due date',
                     color: 'Color',
                     itemStatusInProgress: 'Состояние: В процессе',
-                    itemStatusCompleted: 'Состояние: Завершено',
+                    itemStatusCompleted: 'Состояние: Выполнено',
                     totalTasks: 'Задач: {{totalTasks}}',
                     totalGoals: 'Целей: {{totalGoals}}',
                     sortByRecent: 'Недавние',
                     sortByOverdue: 'Просроченные',
                     sortByTasks: 'По задачам',
-                    sortByColor: 'По цвету'
+                    sortByColor: 'По цвету',
+                    tasksCompleted: 'задач\nвыполнено',
+                    tasksInProgress: 'задач\nв процессе',
+                    dueDateNotSet: 'не задано'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -170,7 +176,10 @@ i18n.use(languageDetector).init({
                     sortByRecent: 'Recent',
                     sortByOverdue: 'Overdue',
                     sortByTasks: 'By tasks',
-                    sortByColor: 'By color'
+                    sortByColor: 'By color',
+                    tasksCompleted: 'tasks\ncompleted',
+                    tasksInProgress: 'tasks\nin progress',
+                    dueDateNotSet: 'not set'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
