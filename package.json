@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "color": "^3.0.0",
+    "delay": "^4.1.0",
     "eslint-plugin-react": "7.11.1",
     "font-awesome": "4.7.0",
     "i18next": "11.6.0",
@@ -52,6 +53,7 @@
     "react-native-typography": "^1.4.0",
     "react-navigation": "2.11.2",
     "react-redux": "5.0.7",
+    "react-spring": "^6.1.2",
     "redux": "4.0.0",
     "redux-thunk": "2.3.0",
     "superagent": "3.8.3"
