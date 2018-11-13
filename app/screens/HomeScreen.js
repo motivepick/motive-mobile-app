@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage, ImageBackground, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Animated, AsyncStorage, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
@@ -29,48 +29,60 @@ import baseTheme from '../../native-base-theme/variables/platform'
 import { withNavigation } from 'react-navigation'
 import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
-import { palette } from '../components/common/ColorIndicator/ColorIndicator'
+import { palette } from '../components/common/Palette'
 import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
+import Line from '../components/common/Line'
+import QuickInput from '../components/common/QuickInput/QuickInput'
+import { getRelevantTasks } from '../utils/dateUtils'
 
-const TouchableRoundedImage = ({ style, ...props }) => (
-    <TouchableOpacity style={style}>
-        <ImageBackground
-            borderRadius={6}
-            style={styles.touchableRoundedImage}
-            {...props}
-        />
-    </TouchableOpacity>
-);
+const SectionHeader = ({ ...props }) => (
+    <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>{props.leftText}</Text>
+        <TouchableOpacity onPress={props.rightAction}>
+            <Text style={styles.sectionRightText}>{props.rightActionText}</Text>
+        </TouchableOpacity>
+    </View>
+)
 
-const headerStyles = StyleSheet.create({
-    whiteHeader: {
-        height: 30,
-        backgroundColor: iOSColors.white,
-        borderBottomWidth: 0,
-        elevation: 0
-    },
-    backTouchable: {
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        paddingHorizontal: 8
-    },
-    backIcon: {
-        color: iOSColors.pink,
-        paddingBottom: 2 // Icon visual alignment
-    },
-    backText: {
-        ...iOSUIKit.bodyObject,
-        color: iOSColors.pink,
-        marginLeft: 8
-    }
-});
+const SubSectionHeader = ({ ...props }) => (
+    <View style={styles.sectionHeader}>
+        <Text style={styles.subSectionTitle}>{props.leftText}</Text>
+        <Text style={styles.subSectionRightText}>{props.rightText}</Text>
+    </View>
+)
+
+const GoalCircle = ({ ...props }) => (
+    <View style={styles.goalCircle}>
+        <TouchableOpacity onPress={() => props.onBodyClick(props.goal)} style={{
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <ProgressCircle
+                percent={props.progress}
+                radius={30}
+                borderWidth={5}
+                shadowColor={iOSColors.midGray}
+                bgColor={props.progressBgColor}
+                color={iOSColors.gray}
+            >
+                {!props.progressIcon && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{`${props.progress}%`}</Text>}
+                {props.progressIcon && <Icon name={props.progressIcon} style={[systemWeights.bold, { color: iOSColors.gray, fontSize: 40 }]}/>}
+            </ProgressCircle>
+            <Text style={[iOSUIKit.footnoteEmphasized]}>{props.text}</Text>
+            {props.subText && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{props.subText}</Text>}
+        </TouchableOpacity>
+    </View>
+)
+
+
 export class HomeScreen extends Component {
     static navigationOptions = {
         header: null
     }
 
     state = {
+        taskName: '',
         scrollY: new Animated.Value(0)
     }
 
@@ -102,168 +114,62 @@ export class HomeScreen extends Component {
             t
         } = this.props
 
-        const goal = goals && goals[0]
-        const goal2 = goals && goals[1]
-        const goal3 = goals && goals[2]
+        const { weeklyTasks = new Map(), nextDate } = getRelevantTasks(tasks)
+        const relevantGoals = goals && goals.filter((goal, i) => i < 3)
 
+        const taskName = this.props.taskName
+
+        // TODO: adding goal is not working right now
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <AnimatedHeader title={'Hi, John'} scrollOffset={this.state.scrollY}  onRightButtonPress={this.logout} rightIcon={<Icon name='log-out'/>}/>
-                    <View style={styles.line}/>
+                    <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
-                        <View style={styles.recentlyPlayed}>
-                            <View style={styles.recentlyPlayedTitleBar}>
-                                <Text style={styles.recentlyPlayedTitle}>Goals</Text>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('AllGoalsScreen')}>
-                                    <Text style={styles.seeAll}>See All</Text>
-                                </TouchableOpacity>
-                            </View>
+                        <View style={{ paddingTop: 16 }}/>
+                        <SectionHeader leftText={'Goals'} rightAction={() => this.props.navigation.navigate('AllGoalsScreen')} rightActionText={'See All'}/>
 
-                            {/*<GoalList goals={goals && goals.splice(0, 2)} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>*/}
+                        <ScrollView horizontal contentContainerStyle={styles.goalBar}>
+                            <GoalCircle progress={0} progressBgColor={iOSColors.white} progressIcon={'add'} text={'Add a goal'}/>
+                            {
+                                relevantGoals && relevantGoals.map(goal => {
+                                    const taskCount = goal.tasks && goal.tasks.length || 0
+                                    const progress = 30 // TODO: hard coded
+                                    return <GoalCircle key={goal.id} goal={goal} onBodyClick={this.onGoalClick} progress={progress} progressBgColor={goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.white} text={goal.name} subText={`${taskCount} tasks`}/>
+                                })
+                            }
+                        </ScrollView>
+                        <SectionHeader leftText={'Tasks'} rightAction={() => this.props.navigation.navigate('AllTasksScreen')} rightActionText={'See All'}/>
+                        <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
+                        <View style={{ marginVertical: 4 }}/>
+                        {
+                            weeklyTasks && [...weeklyTasks.keys()].map(key => {
+                                const value = weeklyTasks.get(key)
+                                const rightText = key === 'Next' ? `Next up: ${nextDate}`: `${value.length} tasks`
 
-                            <ScrollView horizontal contentContainerStyle={styles.recentlyPlayedSongList}>
-                                <View style={styles.card3}>
-                                    <View style={styles.row}>
-                                        <View style={{
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
-                                            <ProgressCircle
-                                                percent={0}
-                                                radius={30}
-                                                borderWidth={5}
-                                                shadowColor={iOSColors.midGray}
-                                                bgColor={iOSColors.white}
-                                                color={iOSColors.gray}
-                                            >
-                                                {/*<Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{'Add a goal'}</Text>*/}
-                                                <Icon name='add' style={[systemWeights.bold, { color: iOSColors.gray, fontSize: 40 }]}></Icon>
-                                            </ProgressCircle>
-                                            <Text
-                                                style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'Add a goal'}</Text>
-                                        </View>
-                                    </View>
-                                </View>
-                                {goal && <View style={styles.card3}>
-                                    <View style={styles.row}>
-                                        <View style={{
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
-                                            <ProgressCircle
-                                                percent={30}
-                                                radius={30}
-                                                borderWidth={5}
-                                                shadowColor={iOSColors.midGray}
-                                                bgColor={goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.green}
-                                                color={iOSColors.gray}
-                                            >
-                                                <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{'30%'}</Text>
-                                            </ProgressCircle>
-                                            <Text
-                                                style={[iOSUIKit.footnoteEmphasized, { color: goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.green }]}>{goal.name}</Text>
-                                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'5 tasks'}</Text>
-                                        </View>
-                                    </View>
-                                </View>}
-                                {goal2 && <View style={styles.card3}>
-                                    <View style={styles.row}>
-                                        <View style={{
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
-                                            <ProgressCircle
-                                                percent={10}
-                                                radius={30}
-                                                borderWidth={5}
-                                                shadowColor={iOSColors.midGray}
-                                                bgColor={goal2.colorTag && palette[goal2.colorTag] ? palette[goal2.colorTag] : iOSColors.green}
-                                                color={iOSColors.gray}
-                                            >
-                                                <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{'10%'}</Text>
-                                            </ProgressCircle>
-                                            <Text
-                                                style={[iOSUIKit.footnoteEmphasized, { color: goal2.colorTag && palette[goal2.colorTag] ? palette[goal2.colorTag] : iOSColors.green }]}>{goal2.name}</Text>
-                                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'19 tasks'}</Text>
-                                        </View>
-                                    </View>
-                                </View>}
-                                {goal3 && <View style={styles.card3}>
-                                    <View style={styles.row}>
-                                        <View style={{
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
-                                            <ProgressCircle
-                                                percent={0}
-                                                radius={30}
-                                                borderWidth={5}
-                                                shadowColor={iOSColors.midGray}
-                                                bgColor={goal3.colorTag && palette[goal3.colorTag] ? palette[goal3.colorTag] : iOSColors.green}
-                                                color={iOSColors.gray}
-                                            >
-                                                <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{'0%'}</Text>
-                                            </ProgressCircle>
-                                            <Text
-                                                style={[iOSUIKit.footnoteEmphasized, { color: goal3.colorTag && palette[goal3.colorTag] ? palette[goal3.colorTag] : iOSColors.green }]}>{goal3.name}</Text>
-                                            <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{'No tasks'}</Text>
-                                        </View>
-                                    </View>
-                                </View>}
+                                return (<View key={key} >
+                                    <SubSectionHeader leftText={key} rightText={rightText}/>
+                                    <TaskList
+                                        showSubheader={false}
+                                        tasks={value}
+                                        onTaskCreated={task => createTask(task)}
+                                        onFilterChanged={filter => updateUserTasks(false, filter)}
+                                        onCloseTask={id => closeTask(id)}
+                                        onDeleteTask={id => deleteTask(id)}
+                                    />
+                                </View>)
+                            })
+                        }
 
-                            </ScrollView>
-                            <View style={styles.recentlyPlayedTitleBar}>
-                                <Text style={styles.recentlyPlayedTitle}>Tasks</Text>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('AllTasksScreen')}>
-                                    <Text style={styles.seeAll}>See All</Text>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={[styles.recentlyPlayedTitleBar, styles.recentlyPlayedSong]}>
-                                <Text style={styles.recentlyPlayedSUBTitle}>Today</Text>
-                                <Text style={styles.author}>{'10 tasks'}</Text>
-                            </View>
-                            <TaskList
-                                tasks={tasks && tasks.splice(0, 2)}
-                                onTaskCreated={task => createTask(task)}
-                                onFilterChanged={filter => updateUserTasks(false, filter)}
-                                onCloseTask={id => closeTask(id)}
-                                onDeleteTask={id => deleteTask(id)}
-                            />
-                            <View style={styles.recentlyPlayedSongList}>
-                                <Text style={styles.recentlyPlayedSUBTitle}>Tommorrow</Text>
-                                <Text style={styles.album}>{'Some text title'}</Text>
-                                <Text style={styles.author}>{'Some text sub title'}</Text>
-                                <Text style={styles.recentlyPlayedSUBTitle}>Wednesday</Text>
-
-                            </View>
-                            <TaskList
-                                tasks={tasks && tasks.splice(3, 5)}
-                                onTaskCreated={task => createTask(task)}
-                                onFilterChanged={filter => updateUserTasks(false, filter)}
-                                onCloseTask={id => closeTask(id)}
-                                onDeleteTask={id => deleteTask(id)}
-                            />
-                            <View style={styles.recentlyPlayedTitleBar}>
-                                <Text style={styles.recentlyPlayedSUBTitle}>Upcoming</Text>
-                                <Text style={styles.author}>{'Next up: in 15 days'}</Text>
-                            </View>
-                            <TaskList
-                                tasks={tasks && tasks.splice(0, 3)}
-                                onTaskCreated={task => createTask(task)}
-                                onFilterChanged={filter => updateUserTasks(false, filter)}
-                                onCloseTask={id => closeTask(id)}
-                                onDeleteTask={id => deleteTask(id)}
-                            />
-                        </View>
                     </Content>
                 </Container>
             </StyleProvider>
         )
+    }
+
+    onGoalClick = (data) => {
+        const { navigation } = this.props
+        navigation.navigate('Goal', { goal: data })
     }
 }
 
@@ -345,197 +251,41 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(HomeScreen))
 
 const styles = StyleSheet.create({
-    line: {
+    sectionHeader: {
+        paddingHorizontal: 16,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    goalCircle: {
+        marginHorizontal: 16,
+        padding: 12,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        marginHorizontal: 16,
-        paddingBottom: 8,
-        borderBottomWidth: 1,
-        borderColor: iOSColors.customGray
-    },
-    screenContainer: {
-        flex: 1,
-        backgroundColor: iOSColors.white
-    },
-    header: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        marginHorizontal: 16,
-        paddingBottom: 8,
-        borderBottomWidth: 1,
-        borderColor: iOSColors.customGray
-    },
-    date: {
-        ...iOSUIKit.footnoteEmphasizedObject,
-        color: iOSColors.gray
-    },
-    avatar: {
-        height: 43,
-        width: 43,
-        borderRadius: 43 / 2
-    },
-    body: {
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "stretch"
-    },
-    card: {
-        marginTop: 24,
-        marginHorizontal: 16,
-        padding: 12,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        backgroundColor: iOSColors.white,
-        borderRadius: 6,
-        ...Platform.select({
-            android: { elevation: 16 },
-            ios: {
-                shadowColor: "black",
-                shadowOffset: {
-                    width: 0,
-                    height: 16
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 16
-            }
-        })
-    },
-    card2: {
-        // marginTop: 24,
-        marginHorizontal: 16,
-        padding: 12,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        backgroundColor: iOSColors.white,
-        borderRadius: 6,
-        ...Platform.select({
-            android: { elevation: 16 },
-            ios: {
-                shadowColor: "black",
-                shadowOffset: {
-                    width: 0,
-                    height: 16
-                },
-                shadowOpacity: 0.2,
-                shadowRadius: 16
-            }
-        })
-    },
-    card3: {
-        // marginTop: 24,
-        marginHorizontal: 16,
-        padding: 12,
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
         backgroundColor: iOSColors.white,
         borderRadius: 6
     },
-    suggestionRow: {
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "stretch"
-    },
-    suggestionRowBottom: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "stretch",
-        marginTop: 4
-    },
-    bigSuggestion: {
-        flex: 2,
-        aspectRatio: 1
-    },
-    bigSuggestionWithText: {
-        flex: 2,
-        aspectRatio: 1,
-        justifyContent: "space-between"
-    },
-    suggestionText: {
-        ...human.headlineWhiteObject,
-        ...systemWeights.light,
-        margin: 8
-    },
-    bold: {
-        ...systemWeights.bold
-    },
-    updatedFriday: {
-        ...human.caption2Object,
-        color: "rgba(255,255,255,0.80)",
-        margin: 8
-    },
-    suggestionColumn: {
-        flex: 1,
-        marginHorizontal: 4,
-        aspectRatio: 0.5,
-        flexDirection: "column",
-        justifyContent: "flex-start"
-    },
-    smallSuggestion: {
-        flex: 1,
-        aspectRatio: 1
-    },
-    smallSuggestionMarginTop: {
-        marginTop: 4
-    },
-    smallSuggestionMarginLeft: {
-        marginLeft: 4
-    },
-    recentlyPlayedTitle: {
+    sectionTitle: {
         ...human.title2Object,
         ...systemWeights.bold
     },
-    recentlyPlayedSUBTitle: {
+    subSectionTitle: {
         ...human.title3Object,
         ...systemWeights.bold
     },
-    recentlyPlayed: {
-        marginTop: 25,
-        paddingTop: 16,
-        backgroundColor: iOSColors.white
-    },
-    recentlyPlayedTitleBar: {
-        paddingHorizontal: 16,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
-    },
-    seeAll: {
+    sectionRightText: {
         ...iOSUIKit.bodyEmphasizedObject,
         color: iOSColors.pink
     },
-    recentlyPlayedSongList: {
+    goalBar: {
         marginTop: 12,
-        paddingHorizontal: 16,
+        paddingHorizontal: 10,
         paddingBottom: 12
     },
-    recentlyPlayedSong: {
-        marginRight: 8
-    },
-    recentlyPlayedSongCover: {
-        height: 160,
-        width: 160,
-        borderRadius: 6
-    },
-    album: {
-        ...human.footnoteObject,
-        marginTop: 5
-    },
-    author: {
+    subSectionRightText: {
         ...human.footnoteObject,
         color: iOSColors.gray
-    },
-    touchableRoundedImage: {
-        flex: 1,
-        height: undefined,
-        width: undefined,
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "flex-start"
     }
 });
 
