@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Dimensions } from 'react-native'
+import { AsyncStorage, Dimensions, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { changeTaskDescriptionAction, setTaskAction } from '../actions/taskActions'
@@ -33,25 +33,11 @@ class DescriptionEditScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: '#f3ece6' }}>
-                    <Header
-                        title={t('headings.editNotes')}
-                        leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
-                    />
+                    <Header title={t('headings.editNotes')} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()}/>
                     <Content>
-                        <Form style={{
-                            marginRight: 10,
-                            height: window.height
-                        }}>
-                            <Item stackedLabel style={{
-                                borderBottomWidth: 0,
-                                paddingTop: 9,
-                                paddingBottom: 9,
-                                height: '100%'
-                            }}>
-                                <Description onChangeText={changeTaskDescription} onSubmitEditing={() => saveTask({
-                                    id,
-                                    description
-                                })} value={description} isEditable/>
+                        <Form style={styles.form}>
+                            <Item stackedLabel style={styles.formItem}>
+                                <Description onChangeText={changeTaskDescription} onSubmitEditing={() => saveTask({ id, description })} value={description} isEditable/>
                             </Item>
                         </Form>
                     </Content>
@@ -84,3 +70,16 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(DescriptionEditScreen))
+
+const styles = StyleSheet.create({
+    form: {
+        marginRight: 10,
+        height: window.height
+    },
+    formItem: {
+        borderBottomWidth: 0,
+        paddingTop: 9,
+        paddingBottom: 9,
+        height: '100%'
+    }
+})
