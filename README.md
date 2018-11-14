@@ -8,6 +8,7 @@
     * `npm i` in the project directory
     * `pod install` in the `ios` directory
     * Open the project in Xcode. Note: use namely `MotiveMobileApp.xcworkspace` to open the project.
-    * Go to Product. Then Clean. Then Build.
-    * Go to Product > Scheme and select `Development`.
+    * Go to `Product` > `Scheme` and select `Development`.
+    * Go to `Product`. Then `Clean`. Then `Build`.
+    * Make sure back end is running (see host and port in `.env.development`).
     * Press the `Run` button.
