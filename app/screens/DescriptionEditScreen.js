@@ -37,7 +37,8 @@ class DescriptionEditScreen extends Component {
                     <Content>
                         <Form style={styles.form}>
                             <Item stackedLabel style={styles.formItem}>
-                                <Description onChangeText={changeTaskDescription} onSubmitEditing={() => saveTask({ id, description })} value={description} isEditable/>
+                                <Description onChangeText={changeTaskDescription} onSubmitEditing={() => saveTask({ id, description })}
+                                    value={description} isEditable/>
                             </Item>
                         </Form>
                     </Content>

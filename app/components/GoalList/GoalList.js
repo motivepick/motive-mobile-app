@@ -43,7 +43,7 @@ export class GoalList extends Component {
 
     render() {
         const {
-            showSubheader = true,
+            showSubHeader = true,
             goals = [],
             closedGoals = [],
             onGoalCreated,
@@ -64,7 +64,7 @@ export class GoalList extends Component {
 
         return (
             <React.Fragment>
-                {showSubheader && <React.Fragment>
+                {showSubHeader && <React.Fragment>
                     <Text style={styles.subHeader}>{t('labels.totalGoals', { totalGoals: totalGoals || 0 }).toLocaleUpperCase()}</Text>
                     <Line/>
                     <View style={styles.sectionHeader}>

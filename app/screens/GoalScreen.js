@@ -39,7 +39,7 @@ export class GoalScreen extends Component {
 
     render() {
         const { goal, createGoalTask, updateGoalTasks, closeGoalTask, deleteGoalTask, t } = this.props
-        const { id, tasks = []  } = goal
+        const { id, tasks = [] } = goal
 
         const { taskName } = this.state
 
@@ -53,14 +53,13 @@ export class GoalScreen extends Component {
                     />
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
-                        <GoalCard
-                            data={goal}
-                            onGoToEditDescriptionScreen={this.handleDescriptionClick}
-                        />
+                        <GoalCard data={goal} onGoToEditDescriptionScreen={this.handleDescriptionClick}/>
                         <Text style={styles.taskTitle}>{t('headings.tasks')}</Text>
-                        <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
+                        <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName}
+                            onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
                         <Line/>
-                        <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={filter => updateGoalTasks(filter, id)} onCloseTask={id => closeGoalTask(id)} onDeleteTask={id => deleteGoalTask(id)}/>
+                        <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={filter => updateGoalTasks(filter, id)}
+                            onCloseTask={id => closeGoalTask(id)} onDeleteTask={id => deleteGoalTask(id)}/>
                     </Content>
                 </Container>
             </StyleProvider>

@@ -31,10 +31,10 @@ export const getRelevantTasks = (tasks) => {
     for (let i = 0; i < tasksWithDates.length; i++) {
         const t = tasksWithDates[i]
         nextDate = endOfWeek.isSameOrBefore(t.dueDate) && !nextDate ? t.dueDate.fromNow() : nextDate
-        if(endOfWeek > t.dueDate || nextDate === t.dueDate.fromNow()) {
+        if (endOfWeek > t.dueDate || nextDate === t.dueDate.fromNow()) {
             let key = moment().startOf('day').isSameOrAfter(t.dueDate) ? 'Today' : t.dueDate.calendar()
 
-            if(nextDate) {
+            if (nextDate) {
                 key = 'Next'
             }
 

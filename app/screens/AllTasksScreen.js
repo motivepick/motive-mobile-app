@@ -57,18 +57,22 @@ export class AllTasksScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
-                    <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
+                    <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')}
+                        onRightButtonPress={this.handleGoalClick} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
+                    <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName}
+                        onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
                     <Line/>
-                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16} style={{ height: '100%' }}>
-                        <TaskList tasks={tasks} closedTasks={closedTasks} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)} undoCloseTask={id => undoCloseTask(id)}/>
+                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}
+                        style={{ height: '100%' }}>
+                        <TaskList tasks={tasks} closedTasks={closedTasks} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}
+                            undoCloseTask={id => undoCloseTask(id)}/>
                     </Content>
                 </Container>
             </StyleProvider>
         )
     }
 
-    onAddNewTask = async () => {
+    onAddNewTask = () => {
         const { taskName } = this.state
         const { createTask } = this.props
         if (taskName.trim() !== '') {

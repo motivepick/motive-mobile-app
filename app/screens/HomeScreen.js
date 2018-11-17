@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Animated, AsyncStorage, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { LoginManager } from 'react-native-fbsdk'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
 import { Container, Content, Icon, StyleProvider, Text } from 'native-base'
@@ -26,7 +25,6 @@ import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '..
 import { doDeleteGoal } from '../services/goalService'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
-import { withNavigation } from 'react-navigation'
 import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
 import { palette } from '../components/common/Palette'
@@ -34,6 +32,7 @@ import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 import Line from '../components/common/Line'
 import QuickInput from '../components/common/QuickInput/QuickInput'
 import { getRelevantTasks } from '../utils/dateUtils'
+import { handleDueDateOf } from '../utils/parser'
 
 const SectionHeader = ({ ...props }) => (
     <View style={styles.sectionHeader}>
@@ -87,7 +86,6 @@ export class HomeScreen extends Component {
     }
 
     logout = async () => {
-        LoginManager.logOut()
         await AsyncStorage.removeItem('accountId')
         navigateWithReset(this.props.navigation, 'Login')
     }
@@ -101,16 +99,11 @@ export class HomeScreen extends Component {
     render() {
         const {
             tasks,
-            closedTasks,
-            closedTasksAreShown,
             goals,
             updateUserTasks,
             createTask,
             closeTask,
             deleteTask,
-            undoCloseTask,
-            createGoal,
-            deleteGoal,
             t
         } = this.props
 
@@ -123,7 +116,7 @@ export class HomeScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <AnimatedHeader title={'Hi, John'} scrollOffset={this.state.scrollY}  onRightButtonPress={this.logout} rightIcon={<Icon name='log-out'/>}/>
+                    <AnimatedHeader title={'Hi, John'} scrollOffset={this.state.scrollY} onRightButtonPress={this.logout} rightIcon={<Icon name='log-out'/>}/>
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <View style={{ paddingTop: 16 }}/>
@@ -135,22 +128,25 @@ export class HomeScreen extends Component {
                                 relevantGoals && relevantGoals.map(goal => {
                                     const taskCount = goal.tasks && goal.tasks.length || 0
                                     const progress = 30 // TODO: hard coded
-                                    return <GoalCircle key={goal.id} goal={goal} onBodyClick={this.onGoalClick} progress={progress} progressBgColor={goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.white} text={goal.name} subText={`${taskCount} tasks`}/>
+                                    return <GoalCircle key={goal.id} goal={goal} onBodyClick={this.onGoalClick} progress={progress}
+                                        progressBgColor={goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.white} text={goal.name}
+                                        subText={`${taskCount} tasks`}/>
                                 })
                             }
                         </ScrollView>
                         <SectionHeader leftText={'Tasks'} rightAction={() => this.props.navigation.navigate('AllTasksScreen')} rightActionText={'See All'}/>
-                        <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName} onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
+                        <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName}
+                            onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
                         <View style={{ marginVertical: 4 }}/>
                         {
                             weeklyTasks && [...weeklyTasks.keys()].map(key => {
                                 const value = weeklyTasks.get(key)
-                                const rightText = key === 'Next' ? `Next up: ${nextDate}`: `${value.length} tasks`
+                                const rightText = key === 'Next' ? `Next up: ${nextDate}` : `${value.length} tasks`
 
-                                return (<View key={key} >
+                                return (<View key={key}>
                                     <SubSectionHeader leftText={key} rightText={rightText}/>
                                     <TaskList
-                                        showSubheader={false}
+                                        showSubHeader={false}
                                         tasks={value}
                                         onTaskCreated={task => createTask(task)}
                                         onFilterChanged={filter => updateUserTasks(false, filter)}
@@ -160,7 +156,6 @@ export class HomeScreen extends Component {
                                 </View>)
                             })
                         }
-
                     </Content>
                 </Container>
             </StyleProvider>
@@ -170,6 +165,16 @@ export class HomeScreen extends Component {
     onGoalClick = (data) => {
         const { navigation } = this.props
         navigation.navigate('Goal', { goal: data })
+    }
+
+    onAddNewTask = () => {
+        const { taskName } = this.state
+        const { createTask } = this.props
+        if (taskName.trim() !== '') {
+            const task = handleDueDateOf({ name: taskName.trim() })
+            createTask(task)
+            this.setState({ taskName: '' })
+        }
     }
 }
 
@@ -287,5 +292,4 @@ const styles = StyleSheet.create({
         ...human.footnoteObject,
         color: iOSColors.gray
     }
-});
-
+})

@@ -43,7 +43,7 @@ export class TaskList extends Component {
 
     render() {
         const {
-            showSubheader = true,
+            showSubHeader = true,
             tasks = [],
             closedTasks = [],
             onDeleteTask,
@@ -53,18 +53,18 @@ export class TaskList extends Component {
 
         const totalTasks = this.state.showByStatusInProgress ? tasks && tasks.length : closedTasks && closedTasks.length
 
-        const hasTasks = tasks && tasks.length
-        const hasClosedTasks = closedTasks && closedTasks.length
+        const hasTasks = Boolean(tasks && tasks.length)
+        const hasClosedTasks = Boolean(closedTasks && closedTasks.length)
 
-        const showInProgressState = this.state.showByStatusInProgress && hasTasks
-        const showAllCompletedState = !this.state.showByStatusInProgress && hasClosedTasks
-        const showEmptyState = !hasTasks && !hasClosedTasks
-        const showCompletedState = this.state.showByStatusInProgress && !hasTasks && hasClosedTasks
-        const showNoneCompletedState = !this.state.showByStatusInProgress && hasTasks && !hasClosedTasks
+        const showInProgressState = Boolean(this.state.showByStatusInProgress && hasTasks)
+        const showAllCompletedState = Boolean(!this.state.showByStatusInProgress && hasClosedTasks)
+        const showEmptyState = Boolean(!hasTasks && !hasClosedTasks)
+        const showCompletedState = Boolean(this.state.showByStatusInProgress && !hasTasks && hasClosedTasks)
+        const showNoneCompletedState = Boolean(!this.state.showByStatusInProgress && hasTasks && !hasClosedTasks)
 
         return (
             <React.Fragment>
-                {showSubheader && <React.Fragment>
+                {showSubHeader && <React.Fragment>
                     <Text style={styles.subHeader}>{t('labels.totalTasks', { totalTasks: totalTasks || 0 }).toLocaleUpperCase()}</Text>
                     <Line/>
                     <View style={styles.sectionHeader}>

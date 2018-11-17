@@ -4,7 +4,6 @@ import { iOSColors } from 'react-native-typography'
 import { View } from 'react-native'
 import { translate } from 'react-i18next'
 
-
 // animate clear button
 class QuickInput extends Component {
 
@@ -12,10 +11,10 @@ class QuickInput extends Component {
         const { placeholder, value, onChangeText, onSubmitEditing, onClearValue, t } = this.props
 
         return (
-            <View style={{ flexDirection: 'row',  marginHorizontal: 16, marginTop: 8 }}>
+            <View style={{ flexDirection: 'row', marginHorizontal: 16, marginTop: 8 }}>
                 <Form style={{ flex: 1 }}>
                     <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
-                        <Icon active name='add' />
+                        <Icon active name='add'/>
                         <Input
                             onChangeText={onChangeText}
                             value={value}
@@ -24,13 +23,12 @@ class QuickInput extends Component {
                             placeholder={placeholder}/>
                     </Item>
                 </Form>
-                {value && <Button small transparent onPress={onClearValue}>
+                {Boolean(value) && <Button small transparent onPress={onClearValue}>
                     <Text>{t('labels.clear').toLocaleUpperCase()}</Text>
                 </Button>}
             </View>
         )
     }
 }
-
 
 export default translate('translations')(QuickInput)
