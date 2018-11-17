@@ -66,7 +66,8 @@ class TaskEditScreen extends Component {
                             </Item>
                             {goals.length && <Item roundedInputWithLabel>
                                 <Label>{t('labels.goal').toLocaleUpperCase()}</Label>
-                                <GoalPicker selectedValue={this.state.selected} onValueChange={this.onValueChange.bind(this)} onClearValue={this.onClearValue.bind(this)} placeholder={'Task is part of goal?'} data={goals}/>
+                                <GoalPicker selectedValue={this.state.selected} onValueChange={this.onValueChange.bind(this)}
+                                    onClearValue={this.onClearValue.bind(this)} placeholder={'Task is part of goal?'} data={goals}/>
                             </Item>}
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>

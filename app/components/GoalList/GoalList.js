@@ -8,7 +8,8 @@ import Line from '../common/Line'
 import SortPicker from '../common/SortPicker/SortPicker'
 import Goals from './Goals'
 
-export class GoalList extends Component {
+class GoalList extends Component {
+
     state = {
         activeFilter: 'all',
         activeSort: 'Recent',
@@ -93,7 +94,6 @@ export class GoalList extends Component {
 }
 
 export default translate('translations')(GoalList)
-
 
 const styles = StyleSheet.create({
     sectionHeader: {

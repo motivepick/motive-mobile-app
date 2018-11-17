@@ -27,13 +27,13 @@ import QuickInput from '../components/common/QuickInput/QuickInput'
 import Line from '../components/common/Line'
 import { handleDueDateOf } from '../utils/parser'
 
-export class AllTasksScreen extends Component {
+class AllTasksScreen extends Component {
+
     static navigationOptions = {
         header: null
     }
 
     state = {
-        taskName: '',
         scrollY: new Animated.Value(0)
     }
 
@@ -52,15 +52,12 @@ export class AllTasksScreen extends Component {
             t
         } = this.props
 
-        const { taskName } = this.state
-
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
                     <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')}
                         onRightButtonPress={this.handleGoalClick} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
-                    <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName}
-                        onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
+                    <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}
                         style={{ height: '100%' }}>
@@ -72,8 +69,7 @@ export class AllTasksScreen extends Component {
         )
     }
 
-    onAddNewTask = () => {
-        const { taskName } = this.state
+    onAddNewTask = taskName => {
         const { createTask } = this.props
         if (taskName.trim() !== '') {
             const task = handleDueDateOf({ name: taskName.trim() })

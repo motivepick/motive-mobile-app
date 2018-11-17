@@ -4,7 +4,8 @@ import { ListView, View } from 'react-native'
 import { List } from 'native-base'
 import styles from './List.styles'
 
-export class ListComponent extends Component {
+class ListComponent extends Component {
+
     constructor(props) {
         super(props)
         this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })

@@ -21,13 +21,13 @@ import Line from '../components/common/Line'
 import QuickInput from '../components/common/QuickInput/QuickInput'
 import { handleDueDateOf } from '../utils/parser'
 
-export class GoalScreen extends Component {
+class GoalScreen extends Component {
+
     static navigationOptions = {
         header: null
     }
 
     state = {
-        taskName: '',
         scrollY: new Animated.Value(0)
     }
 
@@ -41,8 +41,6 @@ export class GoalScreen extends Component {
         const { goal, createGoalTask, updateGoalTasks, closeGoalTask, deleteGoalTask, t } = this.props
         const { id, tasks = [] } = goal
 
-        const { taskName } = this.state
-
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
@@ -55,8 +53,7 @@ export class GoalScreen extends Component {
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <GoalCard data={goal} onGoToEditDescriptionScreen={this.handleDescriptionClick}/>
                         <Text style={styles.taskTitle}>{t('headings.tasks')}</Text>
-                        <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName}
-                            onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
+                        <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                         <Line/>
                         <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={filter => updateGoalTasks(filter, id)}
                             onCloseTask={id => closeGoalTask(id)} onDeleteTask={id => deleteGoalTask(id)}/>
@@ -77,8 +74,7 @@ export class GoalScreen extends Component {
         navigation.navigate('GoalEdit', { goal })
     }
 
-    onAddNewTask = async () => {
-        const { taskName } = this.state
+    onAddNewTask = taskName => {
         const { createGoalTask } = this.props
         if (taskName.trim() !== '') {
             const task = handleDueDateOf({ name: taskName.trim() })

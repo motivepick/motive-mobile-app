@@ -8,7 +8,8 @@ import { iOSColors, iOSUIKit } from 'react-native-typography'
 import SortPicker from '../common/SortPicker/SortPicker'
 import EmptyStateTemplate from '../common/EmptyStateTemplate'
 
-export class TaskList extends Component {
+class TaskList extends Component {
+
     state = {
         activeFilter: 'all',
         activeSort: 'Recent',

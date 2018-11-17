@@ -7,7 +7,7 @@ import moment from 'moment'
 import { translate } from 'react-i18next'
 import styles from './DueDatePicker.styles'
 
-export class DueDatePicker extends Component {
+class DueDatePicker extends Component {
 
     constructor(props) {
         super(props)
@@ -20,12 +20,14 @@ export class DueDatePicker extends Component {
         const today = moment().format(format)
         const { t } = this.props
 
+        const { dateInput, dateTouchBody, dateText, placeholderText, btnTextConfirm, container, datePickerContainer } = styles
+
         return (
-            <View style={styles.container}>
+            <View style={container}>
                 <DatePicker
                     showIcon={false}
-                    customStyles={{ dateInput: styles.dateInput, dateTouchBody: styles.dateTouchBody, dateText: styles.dateText, placeholderText: styles.placeholderText, btnTextConfirm: styles.btnTextConfirm }}
-                    style={styles.datePickerContainer}
+                    customStyles={{ dateInput, dateTouchBody, dateText, placeholderText, btnTextConfirm }}
+                    style={datePickerContainer}
                     date={this.state.dateAsStringInLocalFormat}
                     mode='date'
                     placeholder={t('placeholders.whenIsItDue')}

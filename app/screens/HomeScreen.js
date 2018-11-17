@@ -74,14 +74,13 @@ const GoalCircle = ({ ...props }) => (
     </View>
 )
 
+class HomeScreen extends Component {
 
-export class HomeScreen extends Component {
     static navigationOptions = {
         header: null
     }
 
     state = {
-        taskName: '',
         scrollY: new Animated.Value(0)
     }
 
@@ -110,8 +109,6 @@ export class HomeScreen extends Component {
         const { weeklyTasks = new Map(), nextDate } = getRelevantTasks(tasks)
         const relevantGoals = goals && goals.filter((goal, i) => i < 3)
 
-        const taskName = this.props.taskName
-
         // TODO: adding goal is not working right now
         return (
             <StyleProvider style={getTheme(baseTheme)}>
@@ -135,8 +132,7 @@ export class HomeScreen extends Component {
                             }
                         </ScrollView>
                         <SectionHeader leftText={'Tasks'} rightAction={() => this.props.navigation.navigate('AllTasksScreen')} rightActionText={'See All'}/>
-                        <QuickInput placeholder={t('labels.newTask')} onChangeText={taskName => this.setState({ taskName })} value={taskName}
-                            onSubmitEditing={this.onAddNewTask} onClearValue={() => this.setState({ taskName: '' })}/>
+                        <QuickInput placeholder={t('labels.newTaskForToday')} onSubmitEditing={this.onAddNewTask}/>
                         <View style={{ marginVertical: 4 }}/>
                         {
                             weeklyTasks && [...weeklyTasks.keys()].map(key => {
@@ -162,13 +158,12 @@ export class HomeScreen extends Component {
         )
     }
 
-    onGoalClick = (data) => {
+    onGoalClick = data => {
         const { navigation } = this.props
         navigation.navigate('Goal', { goal: data })
     }
 
-    onAddNewTask = () => {
-        const { taskName } = this.state
+    onAddNewTask = taskName => {
         const { createTask } = this.props
         if (taskName.trim() !== '') {
             const task = handleDueDateOf({ name: taskName.trim() })
@@ -202,20 +197,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
         }
     },
 
-    createTask: task => async (dispatch, getState) => {
-        const { tasks } = getState()
-        const { tasksFilter } = tasks
+    createTask: task => async dispatch => {
         const token = await AsyncStorage.getItem('token')
-        if (tasksFilter === 'today') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({ ...task, dueDate: moment().endOf('day') })
-            dispatch(createTask(body))
-        } else if (tasksFilter === 'thisWeek') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({ ...task, dueDate: moment().endOf('week') })
-            dispatch(createTask(body))
-        } else {
-            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send(task)
-            dispatch(createTask(body))
-        }
+        const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({ ...task, dueDate: moment().endOf('day') })
+        dispatch(createTask(body))
     },
 
     undoCloseTask: id => async dispatch => {

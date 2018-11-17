@@ -15,13 +15,13 @@ import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 import QuickInput from '../components/common/QuickInput/QuickInput'
 import Line from '../components/common/Line'
 
-export class AllGoalsScreen extends Component {
+class AllGoalsScreen extends Component {
+
     static navigationOptions = {
         header: null
     }
 
     state = {
-        goalName: '',
         scrollY: new Animated.Value(0)
     }
 
@@ -39,15 +39,15 @@ export class AllGoalsScreen extends Component {
             t
         } = this.props
 
-        const { goalName } = this.state
-
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <AnimatedHeader title={t('headings.goals')} scrollOffset={this.state.scrollY} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
-                    <QuickInput placeholder={t('labels.newGoal')} onChangeText={goalName => this.setState({ goalName })} value={goalName} onSubmitEditing={this.onAddNewGoal} onClearValue={() => this.setState({ goalName: '' })}/>
+                    <AnimatedHeader title={t('headings.goals')} scrollOffset={this.state.scrollY} leftButtonLabel={t('labels.back')}
+                        onLeftButtonPress={() => this.props.navigation.goBack()}/>
+                    <QuickInput placeholder={t('labels.newGoal')} onSubmitEditing={this.onAddNewGoal}/>
                     <Line/>
-                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16} style={{ height: '100%' }}>
+                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}
+                        style={{ height: '100%' }}>
                         <GoalList goals={goals} closedGoals={closedGoals} onGoalCreated={goal => createGoal(goal)} onDeleteGoal={id => deleteGoal(id)}/>
                     </Content>
                 </Container>

@@ -7,8 +7,11 @@ import { translate } from 'react-i18next'
 // animate clear button
 class QuickInput extends Component {
 
+    state = { value: '' }
+
     render() {
-        const { placeholder, value, onChangeText, onSubmitEditing, onClearValue, t } = this.props
+        const { placeholder, t } = this.props
+        const { value } = this.state
 
         return (
             <View style={{ flexDirection: 'row', marginHorizontal: 16, marginTop: 8 }}>
@@ -16,18 +19,29 @@ class QuickInput extends Component {
                     <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
                         <Icon active name='add'/>
                         <Input
-                            onChangeText={onChangeText}
+                            onChangeText={value => this.setState({ value })}
                             value={value}
-                            onSubmitEditing={onSubmitEditing}
+                            onSubmitEditing={this.onSubmitEditing}
                             returnKeyType={'done'}
                             placeholder={placeholder}/>
                     </Item>
                 </Form>
-                {Boolean(value) && <Button small transparent onPress={onClearValue}>
+                {Boolean(value) && <Button small transparent onPress={this.clearValue}>
                     <Text>{t('labels.clear').toLocaleUpperCase()}</Text>
                 </Button>}
             </View>
         )
+    }
+
+    clearValue = () => {
+        this.setState({ value: '' })
+    }
+
+    onSubmitEditing = () => {
+        const { onSubmitEditing } = this.props
+        const { value } = this.state
+        onSubmitEditing(value)
+        this.clearValue()
     }
 }
 
