@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Alert } from 'react-native'
 import { connect } from 'react-redux'
-import { changeGoalColorAction, changeGoalNameAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
+import { changeGoalColorAction, changeGoalNameAction, createNewGoalAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 import { Container, Content, Form, Input, Item, Label, StyleProvider } from 'native-base'
 import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
@@ -21,7 +20,10 @@ class GoalEditScreen extends Component {
         header: null
     }
 
-    goToEditDescriptionScreen = () => Alert.alert('Go to EditDescriptionScreen')
+    goToEditDescriptionScreen = () => {
+        const { goal, navigation } = this.props
+        return navigation.navigate('GoalDescriptionEditScreen', { goal })
+    }
 
     componentDidMount() {
         const { navigation, setGoal } = this.props
@@ -30,38 +32,36 @@ class GoalEditScreen extends Component {
     }
 
     render() {
-        const { goal, changeGoalName, changeGoalColor, saveGoal, t } = this.props
+        const { goal, changeGoalName, changeGoalColor, saveGoal, navigation, t } = this.props
         const { id, name, description, dueDate, colorTag } = goal
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <Header
-                        title={t('headings.editGoal')}
-                        leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
-                    />
-
+                    <Header title={t('headings.editGoal')} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()}/>
                     <Content>
                         <Form style={{ marginHorizontal: 16 }}>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.goal').toLocaleUpperCase()}</Label>
                                 <Input onChangeText={changeGoalName} value={name} onSubmitEditing={() => saveGoal({ id, name })}
-                                    returnKeyType={'done'} placeholder={t('labels.newGoal')}/>
+                                    returnKeyType={'done'} placeholder={t('labels.newGoal')} autoFocus={Boolean(!id)}/>
                             </Item>
-                            <Item roundedInputWithLabel>
-                                <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>
-                                <DueDatePicker value={dueDate} onChangeDate={dueDate => saveGoal({ id, dueDate })}/>
-                            </Item>
-                            <Item roundedInputWithLabel>
-                                <Label>{t('labels.description').toLocaleUpperCase()}</Label>
-                                <Description value={description} onGoToEditDescriptionScreen={this.goToEditDescriptionScreen}/>
-                            </Item>
-                            <Item roundedInputWithLabel>
-                                <Label>{t('labels.color').toLocaleUpperCase()}</Label>
-                                <ColorPicker value={colorTag} onChangeColor={colorTag => {
-                                    changeGoalColor(colorTag)
-                                    saveGoal({ id, colorTag })
-                                }}/>
-                            </Item>
+                            {Boolean(id) && <React.Fragment>
+                                <Item roundedInputWithLabel>
+                                    <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>
+                                    <DueDatePicker value={dueDate} onChangeDate={dueDate => saveGoal({ id, dueDate })}/>
+                                </Item>
+                                <Item roundedInputWithLabel>
+                                    <Label>{t('labels.description').toLocaleUpperCase()}</Label>
+                                    <Description value={description} onGoToEditDescriptionScreen={this.goToEditDescriptionScreen}/>
+                                </Item>
+                                <Item roundedInputWithLabel>
+                                    <Label>{t('labels.color').toLocaleUpperCase()}</Label>
+                                    <ColorPicker value={colorTag} onChangeColor={colorTag => {
+                                        changeGoalColor(colorTag)
+                                        saveGoal({ id, colorTag })
+                                    }}/>
+                                </Item>
+                            </React.Fragment>}
                         </Form>
                     </Content>
                 </Container>
@@ -85,8 +85,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     saveGoal: goal => async dispatch => {
         const token = await fetchToken()
         const { id } = goal
-        const { body } = await request.put(`${API_URL}/goals/${id}`).set('Cookie', token).send(goal)
-        dispatch(updateGoalAction(body))
+        if (id) {
+            const { body } = await request.put(`${API_URL}/goals/${id}`).set('Cookie', token).send(goal)
+            dispatch(updateGoalAction(body))
+        } else {
+            const { body } = await request.post(`${API_URL}/goals`).set('Cookie', token).send(goal)
+            dispatch(setGoalAction(body))
+            dispatch(createNewGoalAction(body))
+        }
     }
 }, dispatch)
 
