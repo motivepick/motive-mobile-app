@@ -26,15 +26,15 @@ class Goals extends Component {
             renderRightHiddenRow={this.renderRightHiddenRow}
         />
 
-    renderRow = (data, secId, rowId, rowMap) => {
-        const { name, colorTag, dueDate, tasks = [], closed } = data
+    renderRow = (goal, secId, rowId, rowMap) => {
+        const { name, colorTag, dueDate, tasks = [], closed } = goal
         const { percents: { progress }, labels: { taskCountLabel } } = calculateGoalProgressStats(tasks, closed)
 
         return (
             <CheckboxListItem
                 isCompleted={closed}
-                onComplete={() => this.onComplete(data, secId, rowId, rowMap)}
-                onBodyClick={() => this.onItemClick(data)}
+                onComplete={() => this.onComplete(goal, secId, rowId, rowMap)}
+                onBodyClick={() => this.onItemClick(goal)}
                 text={name}
                 noteText={taskCountLabel}
                 date={dueDate}
@@ -44,28 +44,28 @@ class Goals extends Component {
         )
     }
 
-    renderRightHiddenRow = (data, secId, rowId, rowMap) =>
-        <Button transparent onPress={() => this.onDelete(data, secId, rowId, rowMap)}>
+    renderRightHiddenRow = (goal, secId, rowId, rowMap) =>
+        <Button transparent onPress={() => this.onDelete(goal, secId, rowId, rowMap)}>
             <Text>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
         </Button>
 
-    onDelete = (data, secId, rowId, rowMap) => {
+    onDelete = (goal, secId, rowId, rowMap) => {
         const { onDeleteGoal } = this.props
-        const { id } = data
+        const { id } = goal
         onDeleteGoal(id)
         rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    onComplete = (data, secId, rowId, rowMap) => {
+    onComplete = (goal, secId, rowId, rowMap) => {
         const { onGoalClose } = this.props
-        const { id } = data
+        const { id } = goal
         onGoalClose(id)
         rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    onItemClick = (data) => {
+    onItemClick = goal => {
         const { navigation } = this.props
-        navigation.navigate('Goal', { goal: data })
+        navigation.navigate('Goal', { goal })
     }
 }
 

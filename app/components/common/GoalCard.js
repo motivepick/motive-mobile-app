@@ -19,7 +19,7 @@ const Column = ({ ...props }) => (
 class GoalCard extends Component {
 
     render() {
-        const { data: { dueDate, closed, description, colorTag, tasks = [] }, onGoToEditDescriptionScreen, t } = this.props
+        const { goal: { dueDate, closed, description, colorTag, tasks = [] }, onGoToEditDescriptionScreen, t } = this.props
 
         const { percents: { progress }, counts: { incompleteTasksCount, completeTasksCount } } = calculateGoalProgressStats(tasks, closed)
 

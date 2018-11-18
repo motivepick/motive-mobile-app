@@ -29,7 +29,7 @@ const variables = {
 class GoalPicker extends Component {
 
     render() {
-        const { selectedValue, onValueChange, onClearValue, placeholder, data } = this.props
+        const { selectedValue, onValueChange, onClearValue, placeholder, goals } = this.props
         return (
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={styles.container}>
@@ -46,7 +46,7 @@ class GoalPicker extends Component {
                         headerBackButtonTextStyle={styles.headerBackButtonTextStyle}
                         textStyle={[styles.textStyle, { width: selectedValue ? deviceWidth - 16 * 2 - 30 - 30 / 4 - 10 - 10 - 71.5 : deviceWidth - 16 * 2 - 30 - 30 / 4 - 10 - 10 }]}
                     >
-                        {data.map(item => <Picker.Item key={item.id} label={item.name} value={item.id} />)}
+                        {goals.map(item => <Picker.Item key={item.id} label={item.name} value={item.id} />)}
                     </Picker>
                 </View>
                 {selectedValue && <Button small transparent onPress={onClearValue}>

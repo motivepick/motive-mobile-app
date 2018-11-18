@@ -30,7 +30,8 @@ export default function (state = INITIAL_STATE, action) {
         const goal = { ...state.goal, description: payload }
         return { ...state, goal }
     } else if (type === CHANGE_GOAL_COLOR) {
-        return { ...state, goalColor: payload }
+        const goal = { ...state.goal, colorTag: payload }
+        return { ...state, goal }
     } else if (type === CREATE_NEW_GOAL) {
         return { ...state, goals: [payload, ...state.goals] }
     } else if (type === UPDATE_USER_GOALS) {

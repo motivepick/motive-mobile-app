@@ -18,21 +18,21 @@ class Tasks extends Component {
         return tasks.length > 0 && this.list(tasks)
     }
 
-    list = (tasks) =>
+    list = tasks =>
         <List
             data={tasks}
             renderRow={this.renderRow}
             renderRightHiddenRow={this.renderRightHiddenRow}
         />
 
-    renderRow = (data, secId, rowId, rowMap) => {
-        const { closed, dueDate, name, goal } = data
+    renderRow = (task, secId, rowId, rowMap) => {
+        const { closed, dueDate, name, goal } = task
 
         return (
             <CheckboxListItem
                 isCompleted={closed}
-                onComplete={() => this.onComplete(data, secId, rowId, rowMap)}
-                onBodyClick={() => this.onItemClick(data)}
+                onComplete={() => this.onComplete(task, secId, rowId, rowMap)}
+                onBodyClick={() => this.onItemClick(task)}
                 text={name}
                 noteText={goal && goal.name}
                 date={dueDate}
@@ -41,28 +41,28 @@ class Tasks extends Component {
         )
     }
 
-    renderRightHiddenRow = (data, secId, rowId, rowMap) =>
-        <Button transparent onPress={() => this.onDelete(data, secId, rowId, rowMap)}>
+    renderRightHiddenRow = (task, secId, rowId, rowMap) =>
+        <Button transparent onPress={() => this.onDelete(task, secId, rowId, rowMap)}>
             <Text>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
         </Button>
 
-    onDelete = (data, secId, rowId, rowMap) => {
+    onDelete = (task, secId, rowId, rowMap) => {
         const { onDeleteTask } = this.props
-        const { id } = data
+        const { id } = task
         onDeleteTask(id)
         rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    onComplete = (data, secId, rowId, rowMap) => {
+    onComplete = (task, secId, rowId, rowMap) => {
         const { onCloseTask } = this.props
-        const { id } = data
+        const { id } = task
         onCloseTask(id)
         rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
-    onItemClick = (data) => {
+    onItemClick = task => {
         const { navigation } = this.props
-        navigation.navigate('TaskEdit', { task: data })
+        navigation.navigate('TaskEdit', { task })
     }
 }
 

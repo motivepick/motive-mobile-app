@@ -52,7 +52,7 @@ class GoalScreen extends Component {
                     />
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
-                        <GoalCard data={goal} onGoToEditDescriptionScreen={this.handleDescriptionClick}/>
+                        <GoalCard goal={goal} onGoToEditDescriptionScreen={this.handleDescriptionClick}/>
                         <Text style={styles.taskTitle}>{t('headings.tasks')}</Text>
                         <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                         <Line/>

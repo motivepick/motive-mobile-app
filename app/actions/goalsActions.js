@@ -17,11 +17,9 @@ export const changeGoalNameAction = name => ({ type: CHANGE_GOAL_NAME, payload: 
 
 export const changeGoalDescriptionAction = description => ({ type: CHANGE_GOAL_DESCRIPTION, payload: description })
 
-export const changeGoalColorAction = goalColor => ({ type: CHANGE_GOAL_COLOR, payload: goalColor })
+export const changeGoalColorAction = colorTag => ({ type: CHANGE_GOAL_COLOR, payload: colorTag })
 
 export const createNewGoalAction = goal => ({ type: CREATE_NEW_GOAL, payload: goal })
-
-export const setGoal = (id, type) => ({ type: SET_GOAL, payload: { id, type } })
 
 export const updateUserGoalsAction = goals => ({ type: UPDATE_USER_GOALS, payload: goals })
 
