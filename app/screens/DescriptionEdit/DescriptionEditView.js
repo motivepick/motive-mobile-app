@@ -6,23 +6,20 @@ import Description from '../../components/common/Description/Description'
 import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
 
-const window = Dimensions.get('window')
-
-export class GoalDescriptionEditView extends Component {
+export class DescriptionEditView extends Component {
 
     static navigationOptions = {
         header: null
     }
 
     componentDidMount() {
-        const { navigation, setGoal } = this.props
-        const goal = navigation.getParam('goal')
-        setGoal(goal)
+        const { navigation, setEditableEntity } = this.props
+        setEditableEntity(navigation)
     }
 
     render() {
-        const { goal, navigation, saveGoal, t } = this.props
-        const { id, description } = goal
+        const { editableEntity, navigation, saveEditableEntity, t } = this.props
+        const { id, description } = editableEntity
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: '#f3ece6' }}>
@@ -30,7 +27,7 @@ export class GoalDescriptionEditView extends Component {
                     <Content>
                         <Form style={styles.form}>
                             <Item stackedLabel style={styles.formItem}>
-                                <Description value={description} editable onSubmitEditing={description => saveGoal({ id, description })}/>
+                                <Description value={description} editable onSubmitEditing={description => saveEditableEntity({ id, description })}/>
                             </Item>
                         </Form>
                     </Content>
@@ -39,6 +36,8 @@ export class GoalDescriptionEditView extends Component {
         )
     }
 }
+
+const window = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     form: {
