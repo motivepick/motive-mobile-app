@@ -10,17 +10,19 @@ class Description extends Component {
     render() {
         const { value, onChangeText, onSubmitEditing, isEditable, onGoToEditDescriptionScreen, t } = this.props
 
-        if (!isEditable) {
-            return <TouchableOpacity style={styles.goalNotes} onPress={onGoToEditDescriptionScreen}>
-                {value && <Text style={iOSUIKit.footnoteEmphasized}>{value}</Text>}
-                {!value && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{t('placeholders.description')}</Text>}
-            </TouchableOpacity>
+        if (isEditable) {
+            return (
+                <Input onChangeText={onChangeText} onSubmitEditing={onSubmitEditing} value={value} returnKeyType={'done'} style={styles.editableDescription}
+                    placeholder={t('placeholders.description')} autoFocus multiline={true}/>
+            )
+        } else {
+            return (
+                <TouchableOpacity style={styles.goalNotes} onPress={onGoToEditDescriptionScreen}>
+                    {value && <Text style={iOSUIKit.footnoteEmphasized}>{value}</Text>}
+                    {!value && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{t('placeholders.description')}</Text>}
+                </TouchableOpacity>
+            )
         }
-
-        return <Input onChangeText={onChangeText} onSubmitEditing={onSubmitEditing} value={value} returnKeyType={'done'} style={styles.editableDescription}
-                      placeholder={t('placeholders.description')}
-                      autoFocus
-                      multiline={true}/>
     }
 }
 

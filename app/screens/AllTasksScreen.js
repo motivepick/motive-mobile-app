@@ -74,7 +74,6 @@ class AllTasksScreen extends Component {
         if (taskName.trim() !== '') {
             const task = handleDueDateOf({ name: taskName.trim() })
             createTask(task)
-            this.setState({ taskName: '' })
         }
     }
 }

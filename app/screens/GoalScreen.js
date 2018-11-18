@@ -75,11 +75,10 @@ class GoalScreen extends Component {
     }
 
     onAddNewTask = taskName => {
-        const { createGoalTask } = this.props
+        const { goal, createGoalTask } = this.props
         if (taskName.trim() !== '') {
             const task = handleDueDateOf({ name: taskName.trim() })
-            createGoalTask(task)
-            this.setState({ taskName: '' })
+            createGoalTask(goal.id, task)
         }
     }
 }
