@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Animated, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
 import { Container, Content, Icon, StyleProvider, Text } from 'native-base'
@@ -33,6 +33,7 @@ import Line from '../components/common/Line'
 import QuickInput from '../components/common/QuickInput/QuickInput'
 import { getRelevantTasks } from '../utils/dateUtils'
 import { handleDueDateOf } from '../utils/parser'
+import { fetchToken } from '../services/accountService'
 
 const SectionHeader = ({ ...props }) => (
     <View style={styles.sectionHeader}>
@@ -85,7 +86,6 @@ class HomeScreen extends Component {
     }
 
     logout = async () => {
-        await AsyncStorage.removeItem('accountId')
         navigateWithReset(this.props.navigation, 'Login')
     }
 
@@ -120,7 +120,8 @@ class HomeScreen extends Component {
                         <SectionHeader leftText={'Goals'} rightAction={() => this.props.navigation.navigate('AllGoalsScreen')} rightActionText={'See All'}/>
 
                         <ScrollView horizontal contentContainerStyle={styles.goalBar}>
-                            <GoalCircle progress={0} progressBgColor={iOSColors.white} progressIcon={'add'} text={'Add a goal'} onBodyClick={this.onAddGoal}/>
+                            <GoalCircle progress={0} progressBgColor={iOSColors.white} progressIcon={'add'}
+                                text={'Add a goal'} onBodyClick={this.onAddNewGoal}/>
                             {
                                 relevantGoals && relevantGoals.map(goal => {
                                     const taskCount = goal.tasks && goal.tasks.length || 0
@@ -145,7 +146,7 @@ class HomeScreen extends Component {
                                         showSubHeader={false}
                                         tasks={value}
                                         onTaskCreated={task => createTask(task)}
-                                        onFilterChanged={filter => updateUserTasks(false, filter)}
+                                        onFilterChanged={listFilter => updateUserTasks(false, listFilter)}
                                         onCloseTask={id => closeTask(id)}
                                         onDeleteTask={id => deleteTask(id)}
                                     />
@@ -158,21 +159,20 @@ class HomeScreen extends Component {
         )
     }
 
-    onAddGoal = () => {
-        console.log('ADD GOAL')
-    }
-
-    onGoalClick = data => {
+    onAddNewGoal = () => {
         const { navigation } = this.props
-        navigation.navigate('Goal', { goal: data })
+        navigation.navigate('GoalEdit', { goal: {} })
     }
 
-    onAddNewTask = taskName => {
+    onGoalClick = goal => {
+        const { navigation } = this.props
+        navigation.navigate('Goal', { goal })
+    }
+
+    onAddNewTask = name => {
         const { createTask } = this.props
-        if (taskName.trim() !== '') {
-            const task = handleDueDateOf({ name: taskName.trim() })
-            createTask(task)
-        }
+        const task = handleDueDateOf({ name })
+        createTask(task)
     }
 }
 
@@ -185,7 +185,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
-    updateUserTasks: (closed, filter) => async (dispatch, getState) => {
+    updateUserTasks: (closed, listFilter) => async (dispatch, getState) => {
         if (closed) {
             const { closedTasksAreShown } = getState().tasks
             if (closedTasksAreShown) {
@@ -195,25 +195,25 @@ const mapDispatchToProps = dispatch => bindActionCreators({
                 dispatch(showClosedTasksAction())
             }
         } else {
-            dispatch(setFilterAction(filter))
-            dispatch(updateUserTasksAction(await fetchTasks(filter)))
+            dispatch(setFilterAction(listFilter))
+            dispatch(updateUserTasksAction(await fetchTasks(listFilter)))
         }
     },
 
     createTask: task => async dispatch => {
-        const token = await AsyncStorage.getItem('token')
+        const token = await fetchToken()
         const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({ ...task, dueDate: moment().endOf('day') })
         dispatch(createTask(body))
     },
 
     undoCloseTask: id => async dispatch => {
-        const token = await AsyncStorage.getItem('token')
+        const token = await fetchToken()
         const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: false })
         dispatch(undoCloseTaskAction(body.id))
     },
 
     closeTask: id => async dispatch => {
-        const token = await AsyncStorage.getItem('token')
+        const token = await fetchToken()
         const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: true })
         dispatch(closeTaskAction(body.id))
     },
@@ -229,13 +229,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     },
 
     updateUserGoals: () => async dispatch => {
-        const token = await AsyncStorage.getItem('token')
+        const token = await fetchToken()
         const { body } = await request.get(`${API_URL}/goals`).set('Cookie', token)
         dispatch(updateUserGoalsAction(body))
     },
 
     createGoal: goal => async dispatch => {
-        const token = await AsyncStorage.getItem('token')
+        const token = await fetchToken()
         const { body } = await request.post(`${API_URL}/goals`).set('Cookie', token).send(goal)
         dispatch(createNewGoalAction(body))
     }

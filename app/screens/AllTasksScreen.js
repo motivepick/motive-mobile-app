@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage } from 'react-native'
+import { Animated } from 'react-native'
 import TaskList from '../components/TaskList/TaskList'
 import { Container, Content, StyleProvider } from 'native-base'
 import { translate } from 'react-i18next'
@@ -26,6 +26,7 @@ import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 import QuickInput from '../components/common/QuickInput/QuickInput'
 import Line from '../components/common/Line'
 import { handleDueDateOf } from '../utils/parser'
+import { fetchToken } from '../services/accountService'
 
 class AllTasksScreen extends Component {
 
@@ -69,12 +70,10 @@ class AllTasksScreen extends Component {
         )
     }
 
-    onAddNewTask = taskName => {
+    onAddNewTask = name => {
         const { createTask } = this.props
-        if (taskName.trim() !== '') {
-            const task = handleDueDateOf({ name: taskName.trim() })
-            createTask(task)
-        }
+        const task = handleDueDateOf({ name })
+        createTask(task)
     }
 }
 
@@ -86,7 +85,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
-    updateUserTasks: (closed, filter) => async (dispatch, getState) => {
+    updateUserTasks: (closed, listFilter) => async (dispatch, getState) => {
         if (closed) {
             const { closedTasksAreShown } = getState().tasks
             if (closedTasksAreShown) {
@@ -96,42 +95,42 @@ const mapDispatchToProps = dispatch => bindActionCreators({
                 dispatch(showClosedTasksAction())
             }
         } else {
-            dispatch(setFilterAction(filter))
-            dispatch(updateUserTasksAction(await fetchTasks(filter)))
+            dispatch(setFilterAction(listFilter))
+            dispatch(updateUserTasksAction(await fetchTasks(listFilter)))
         }
     },
 
     createTask: task => async (dispatch, getState) => {
         const { tasks } = getState()
-        const { tasksFilter } = tasks
-        const accountId = await AsyncStorage.getItem('accountId')
-        if (tasksFilter === 'today') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({
+        const { listFilter } = tasks
+        const token = await fetchToken()
+        if (listFilter === 'today') {
+            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({
                 ...task,
                 dueDate: moment().endOf('day')
             })
             dispatch(createTask(body))
-        } else if (tasksFilter === 'thisWeek') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send({
+        } else if (listFilter === 'thisWeek') {
+            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({
                 ...task,
                 dueDate: moment().endOf('week')
             })
             dispatch(createTask(body))
         } else {
-            const { body } = await request.post(`${API_URL}/tasks`).set('X-Account-Id', accountId).send(task)
+            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send(task)
             dispatch(createTask(body))
         }
     },
 
     undoCloseTask: id => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: false })
+        const token = await fetchToken()
+        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: false })
         dispatch(undoCloseTaskAction(body.id))
     },
 
     closeTask: id => async dispatch => {
-        const accountId = await AsyncStorage.getItem('accountId')
-        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('X-Account-Id', accountId).send({ closed: true })
+        const token = await fetchToken()
+        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: true })
         dispatch(closeTaskAction(body.id))
     },
 

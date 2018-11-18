@@ -26,12 +26,12 @@ const thisWeek = async (goalId) => {
     return orderTasksByDate(tasks.filter(t => t.dueDate && moment(t.dueDate).isBefore(endOfWeek)))
 }
 
-export const fetchTasks = (filter, goalId) => {
-    if (filter === 'all') {
+export const fetchTasks = (listFilter, goalId) => {
+    if (listFilter === 'all') {
         return all(goalId)
-    } else if (filter === 'today') {
+    } else if (listFilter === 'today') {
         return today(goalId)
-    } else if (filter === 'thisWeek') {
+    } else if (listFilter === 'thisWeek') {
         return thisWeek(goalId)
     } else {
         return all(goalId)

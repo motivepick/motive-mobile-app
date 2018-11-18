@@ -16,7 +16,7 @@ import {
 const INITIAL_STATE = {
     goal: {},
     goals: [],
-    filter: 'all'
+    listFilter: 'all'
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -36,23 +36,22 @@ export default function (state = INITIAL_STATE, action) {
     } else if (type === UPDATE_USER_GOALS) {
         return { ...state, goals: payload }
     } else if (type === UPDATE_GOAL_TASKS) {
-        const { filter, tasks } = payload
-        return { ...state, filter, goal: { ...state.goal, tasks } }
+        const { listFilter, tasks } = payload
+        return { ...state, listFilter, goal: { ...state.goal, tasks } }
     } else if (type === CREATE_GOAL_TASK) {
-        return { ...state, goal: { ...state.goal, tasks: [action.payload, ...state.goal.tasks] } }
+        return { ...state, goal: { ...state.goal, tasks: [payload, ...state.goal.tasks] } }
     } else if (type === CLOSE_GOAL_TASK) {
-        return { ...state, goal: { ...state.goal, tasks: state.goal.tasks.filter(t => t.id !== action.payload) } }
+        return { ...state, goal: { ...state.goal, tasks: state.goal.tasks.filter(t => t.id !== payload) } }
     } else if (type === DELETE_GOAL_TASK) {
-        return { ...state, goal: { ...state.goal, tasks: state.goal.tasks.filter(t => t.id !== action.payload) } }
+        return { ...state, goal: { ...state.goal, tasks: state.goal.tasks.filter(t => t.id !== payload) } }
     } else if (type === UPDATE_GOAL) {
-        const { payload } = action
         const goals = []
         for (const goal of state.goals) {
             goals.push(goal.id === payload.id ? { ...goal, ...payload } : goal)
         }
         return { ...state, goals }
     } else if (type === DELETE_GOAL) {
-        return { ...state, goals: state.goals.filter(g => g.id !== action.payload) }
+        return { ...state, goals: state.goals.filter(g => g.id !== payload) }
     } else {
         return state
     }

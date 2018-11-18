@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { changeTaskNameAction, setTaskAction, updateTaskAction } from '../actions/tasksActions'
@@ -13,6 +12,7 @@ import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import Description from '../components/common/Description/Description'
 import GoalPicker from '../components/common/GoalPicker/GoalPicker'
+import { fetchToken } from '../services/accountService'
 
 class TaskEditScreen extends Component {
 
@@ -97,7 +97,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     changeTaskName: taskName => dispatch => dispatch(changeTaskNameAction(taskName)),
 
     saveTask: task => async dispatch => {
-        const token = await AsyncStorage.getItem('token')
+        const token = await fetchToken()
         const { id, name, description, dueDate } = task
         const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ name, description, dueDate })
         dispatch(updateTaskAction(body))

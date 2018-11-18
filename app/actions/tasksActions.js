@@ -18,7 +18,7 @@ export const changeTaskNameAction = name => ({ type: CHANGE_TASK_NAME, payload: 
 
 export const changeTaskDescriptionAction = description => ({ type: CHANGE_TASK_DESCRIPTION, payload: description })
 
-export const setFilterAction = tasksFilter => ({ type: SET_FILTER, payload: tasksFilter })
+export const setFilterAction = listFilter => ({ type: SET_FILTER, payload: listFilter })
 
 export const updateUserTasksAction = tasks => ({ type: UPDATE_USER_TASKS, payload: tasks })
 

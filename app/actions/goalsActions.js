@@ -25,7 +25,7 @@ export const setGoal = (id, type) => ({ type: SET_GOAL, payload: { id, type } })
 
 export const updateUserGoalsAction = goals => ({ type: UPDATE_USER_GOALS, payload: goals })
 
-export const updateGoalTasksAction = (filter, tasks) => ({ type: UPDATE_GOAL_TASKS, payload: { filter, tasks } })
+export const updateGoalTasksAction = (listFilter, tasks) => ({ type: UPDATE_GOAL_TASKS, payload: { listFilter, tasks } })
 
 export const createGoalTaskAction = task => ({ type: CREATE_GOAL_TASK, payload: task })
 

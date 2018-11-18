@@ -40,8 +40,10 @@ class QuickInput extends Component {
     onSubmitEditing = () => {
         const { onSubmitEditing } = this.props
         const { value } = this.state
-        onSubmitEditing(value)
-        this.clearValue()
+        if (value !== '') {
+            onSubmitEditing(value.trim())
+            this.clearValue()
+        }
     }
 }
 

@@ -54,14 +54,14 @@ class GoalList extends Component {
 
         const totalGoals = this.state.showByStatusInProgress ? goals && goals.length : closedGoals && closedGoals.length
 
-        const hasGoals = goals && goals.length
-        const hasClosedGoals = closedGoals && closedGoals.length
+        const hasGoals = Boolean(goals && goals.length)
+        const hasClosedGoals = Boolean(closedGoals && closedGoals.length)
 
-        const showInProgressState = this.state.showByStatusInProgress && hasGoals
-        const showAllCompletedState = !this.state.showByStatusInProgress && hasClosedGoals
-        const showEmptyState = !hasGoals && !hasClosedGoals
-        const showCompletedState = this.state.showByStatusInProgress && !hasGoals && hasClosedGoals
-        const showNoneCompletedState = !this.state.showByStatusInProgress && hasGoals && !hasClosedGoals
+        const showInProgressState = Boolean(this.state.showByStatusInProgress && hasGoals)
+        const showAllCompletedState = Boolean(!this.state.showByStatusInProgress && hasClosedGoals)
+        const showEmptyState = Boolean(!hasGoals && !hasClosedGoals)
+        const showCompletedState = Boolean(this.state.showByStatusInProgress && !hasGoals && hasClosedGoals)
+        const showNoneCompletedState = Boolean(!this.state.showByStatusInProgress && hasGoals && !hasClosedGoals)
 
         return (
             <React.Fragment>

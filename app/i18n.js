@@ -68,7 +68,7 @@ i18n.use(languageDetector).init({
                     noCompletedTasks: 'No completed tasks yet',
                     allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
                     noTasks: 'There are no tasks! \nBut you can add one :)',
-                    noCompletedGoals: 'No completed tasks yet',
+                    noCompletedGoals: 'No completed goals yet',
                     allGoalsCompleted: 'Way to go! \nYou have completed all your goals!',
                     noGoals: 'There are no goals! \nBut you can set one :)'
                 }
@@ -196,7 +196,7 @@ i18n.use(languageDetector).init({
                     noCompletedTasks: 'No completed tasks yet',
                     allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
                     noTasks: 'There are no tasks! \nBut you can add one :)',
-                    noCompletedGoals: 'No completed tasks yet',
+                    noCompletedGoals: 'No completed goals yet',
                     allGoalsCompleted: 'Way to go! \nYou have completed all your goals!',
                     noGoals: 'There are no goals! \nBut you can set one :)'
                 }

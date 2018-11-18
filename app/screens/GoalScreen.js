@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Animated, AsyncStorage, StyleSheet } from 'react-native'
+import { Animated, StyleSheet } from 'react-native'
 import { Container, Content, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
@@ -20,6 +20,7 @@ import GoalCard from '../components/common/GoalCard'
 import Line from '../components/common/Line'
 import QuickInput from '../components/common/QuickInput/QuickInput'
 import { handleDueDateOf } from '../utils/parser'
+import { fetchToken } from '../services/accountService'
 
 class GoalScreen extends Component {
 
@@ -55,7 +56,7 @@ class GoalScreen extends Component {
                         <Text style={styles.taskTitle}>{t('headings.tasks')}</Text>
                         <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                         <Line/>
-                        <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={filter => updateGoalTasks(filter, id)}
+                        <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={listFilter => updateGoalTasks(listFilter, id)}
                             onCloseTask={id => closeGoalTask(id)} onDeleteTask={id => deleteGoalTask(id)}/>
                     </Content>
                 </Container>
@@ -73,12 +74,10 @@ class GoalScreen extends Component {
         navigation.navigate('GoalEdit', { goal })
     }
 
-    onAddNewTask = taskName => {
+    onAddNewTask = name => {
         const { goal, createGoalTask } = this.props
-        if (taskName.trim() !== '') {
-            const task = handleDueDateOf({ name: taskName.trim() })
-            createGoalTask(goal.id, task)
-        }
+        const task = handleDueDateOf({ name })
+        createGoalTask(goal.id, task)
     }
 }
 
@@ -92,13 +91,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
     createGoalTask: (goalId, task) => async (dispatch, getState) => {
         const { goals } = getState()
-        const { filter } = goals
-        const token = await AsyncStorage.getItem('token')
-        if (filter === 'today') {
+        const { listFilter } = goals
+        const token = await fetchToken()
+        if (listFilter === 'today') {
             const { body } = await request.post(`${API_URL}/goals/${goalId}/tasks`)
                 .set('Cookie', token).send({ ...task, dueDate: moment().endOf('day') })
             dispatch(createGoalTaskAction(body))
-        } else if (filter === 'thisWeek') {
+        } else if (listFilter === 'thisWeek') {
             const { body } = await request.post(`${API_URL}/goals/${goalId}/tasks`)
                 .set('Cookie', token).send({ ...task, dueDate: moment().endOf('week') })
             dispatch(createGoalTaskAction(body))
@@ -108,12 +107,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
         }
     },
 
-    updateGoalTasks: (filter, goalId) => async dispatch => {
-        dispatch(updateGoalTasksAction(filter, await fetchTasks(filter, goalId)))
+    updateGoalTasks: (listFilter, goalId) => async dispatch => {
+        dispatch(updateGoalTasksAction(listFilter, await fetchTasks(listFilter, goalId)))
     },
 
     closeGoalTask: id => async dispatch => {
-        const token = await AsyncStorage.getItem('token')
+        const token = await fetchToken()
         const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: true })
         dispatch(closeGoalTaskAction(body.id))
     },

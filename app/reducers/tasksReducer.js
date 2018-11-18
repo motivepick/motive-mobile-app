@@ -17,11 +17,9 @@ import {
 const INITIAL_STATE = {
     task: {},
     tasks: [],
-    tasksFilter: 'all',
+    listFilter: 'all',
     closedTasks: [],
-    closedTasksAreShown: false,
-    newTaskNameInputDisabled: false,
-    error: null
+    closedTasksAreShown: false
 }
 
 const updatedTasks = (state, id) => {
@@ -51,7 +49,7 @@ export default function (state = INITIAL_STATE, action) {
     } else if (type === CREATE_TASK) {
         return { ...state, tasks: [action.payload, ...state.tasks] }
     } else if (type === SET_FILTER) {
-        return { ...state, tasksFilter: action.payload }
+        return { ...state, listFilter: action.payload }
     } else if (type === UPDATE_USER_TASKS) {
         return { ...state, tasks: action.payload }
     } else if (type === UPDATE_CLOSED_USER_TASKS) {

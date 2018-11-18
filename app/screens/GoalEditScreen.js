@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Alert, AsyncStorage } from 'react-native'
+import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { changeGoalColorAction, changeGoalNameAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
@@ -14,6 +14,7 @@ import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import Header from '../components/common/Header/Header'
 import Description from '../components/common/Description/Description'
+import { fetchToken } from '../services/accountService'
 
 class GoalEditScreen extends Component {
     static navigationOptions = {
@@ -82,7 +83,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     changeGoalColor: color => dispatch => dispatch(changeGoalColorAction(color)),
 
     saveGoal: goal => async dispatch => {
-        const token = await AsyncStorage.getItem('token')
+        const token = await fetchToken()
         const { id } = goal
         const { body } = await request.put(`${API_URL}/goals/${id}`).set('Cookie', token).send(goal)
         dispatch(updateGoalAction(body))
