@@ -19,6 +19,7 @@ class DueDatePicker extends Component {
         const format = this.format()
         const today = moment().format(format)
         const { t } = this.props
+        const { dateAsStringInLocalFormat } = this.state
 
         const { dateInput, dateTouchBody, dateText, placeholderText, btnTextConfirm, container, datePickerContainer } = styles
 
@@ -28,7 +29,7 @@ class DueDatePicker extends Component {
                     showIcon={false}
                     customStyles={{ dateInput, dateTouchBody, dateText, placeholderText, btnTextConfirm }}
                     style={datePickerContainer}
-                    date={this.state.dateAsStringInLocalFormat}
+                    date={dateAsStringInLocalFormat}
                     mode='date'
                     placeholder={t('placeholders.whenIsItDue')}
                     format={format}
@@ -38,7 +39,7 @@ class DueDatePicker extends Component {
                     iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
                     onDateChange={dateAsStringInLocalFormat => this.handleDateChange(dateAsStringInLocalFormat)}
                 />
-                {this.state.dateAsStringInLocalFormat && <Button transparent squared danger onPress={() => this.clearDate()}>
+                {Boolean(dateAsStringInLocalFormat) && <Button transparent squared danger onPress={() => this.clearDate()}>
                     <Icon type='MaterialCommunityIcons' name='close-circle-outline'/>
                 </Button>}
             </View>
