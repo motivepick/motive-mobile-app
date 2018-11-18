@@ -50,7 +50,7 @@ class LoginScreen extends Component {
                         <Image source={require('../assets/images/logo.png')} style={{ marginTop: 100 }}/>
                         <Text style={[styles.title2, { marginTop: 20 }]}>{'Motive'.toLocaleUpperCase()}</Text>
                         <Text style={human.footnote}>{'Defeat your laziness'.toLocaleUpperCase()}</Text>
-                        <Button transparent iconLeft onPress={this.authenticateViaVk} style={{marginTop: 150}}>
+                        <Button transparent iconLeft onPress={this.authenticateViaVk} style={{ marginTop: 150 }}>
                             <Icon name='vk' type='MaterialCommunityIcons'/>
                             <Text>{'Login With VK'.toLocaleUpperCase()}</Text>
                         </Button>
