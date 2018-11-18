@@ -120,7 +120,7 @@ class HomeScreen extends Component {
                         <SectionHeader leftText={'Goals'} rightAction={() => this.props.navigation.navigate('AllGoalsScreen')} rightActionText={'See All'}/>
 
                         <ScrollView horizontal contentContainerStyle={styles.goalBar}>
-                            <GoalCircle progress={0} progressBgColor={iOSColors.white} progressIcon={'add'} text={'Add a goal'}/>
+                            <GoalCircle progress={0} progressBgColor={iOSColors.white} progressIcon={'add'} text={'Add a goal'} onBodyClick={this.onAddGoal}/>
                             {
                                 relevantGoals && relevantGoals.map(goal => {
                                     const taskCount = goal.tasks && goal.tasks.length || 0
@@ -156,6 +156,10 @@ class HomeScreen extends Component {
                 </Container>
             </StyleProvider>
         )
+    }
+
+    onAddGoal = () => {
+        console.log('ADD GOAL')
     }
 
     onGoalClick = data => {

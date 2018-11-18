@@ -1,15 +1,14 @@
 import { AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { changeTaskDescriptionAction, setTaskAction } from '../../../actions/taskActions'
+import { changeTaskDescriptionAction, setTaskAction, updateTaskAction } from '../../../actions/tasksActions'
 import request from 'superagent'
 import { API_URL } from '../../../const'
-import { updateTaskAction } from '../../../actions/tasksActions'
 import { translate } from 'react-i18next'
 import { DescriptionEditView } from '../DescriptionEditView'
 
 const mapStateToProps = state => ({
-    editableEntity: state.task.task
+    editableEntity: state.tasks.task
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

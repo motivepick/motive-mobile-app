@@ -1,9 +1,12 @@
 import {
+    CHANGE_TASK_DESCRIPTION,
+    CHANGE_TASK_NAME,
     CLOSE_TASK,
     CREATE_TASK,
     DELETE_TASK,
     HIDE_CLOSED_TASKS,
     SET_FILTER,
+    SET_TASK,
     SHOW_CLOSED_TASKS,
     UNDO_CLOSE_TASK,
     UPDATE_CLOSED_USER_TASKS,
@@ -12,10 +15,11 @@ import {
 } from '../actions/tasksActions'
 
 const INITIAL_STATE = {
+    task: {},
     tasks: [],
+    tasksFilter: 'all',
     closedTasks: [],
     closedTasksAreShown: false,
-    tasksFilter: 'all',
     newTaskNameInputDisabled: false,
     error: null
 }
@@ -36,7 +40,15 @@ const updatedClosedTasks = (state, id) => {
 
 export default function (state = INITIAL_STATE, action) {
     const { type } = action
-    if (type === CREATE_TASK) {
+    if (type === SET_TASK) {
+        return { ...state, task: action.payload }
+    } else if (type === CHANGE_TASK_NAME) {
+        const task = { ...state.task, name: action.payload }
+        return { ...state, task }
+    } else if (type === CHANGE_TASK_DESCRIPTION) {
+        const task = { ...state.task, description: action.payload }
+        return { ...state, task }
+    } else if (type === CREATE_TASK) {
         return { ...state, tasks: [action.payload, ...state.tasks] }
     } else if (type === SET_FILTER) {
         return { ...state, tasksFilter: action.payload }

@@ -2,10 +2,9 @@ import React, { Component } from 'react'
 import { AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { changeTaskNameAction, setTaskAction } from '../actions/taskActions'
+import { changeTaskNameAction, setTaskAction, updateTaskAction } from '../actions/tasksActions'
 import request from 'superagent'
 import { API_URL } from '../const'
-import { updateTaskAction } from '../actions/tasksActions'
 import { translate } from 'react-i18next'
 import { Container, Content, Form, Input, Item, Label, StyleProvider } from 'native-base'
 import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
@@ -87,7 +86,7 @@ class TaskEditScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-    task: state.task.task,
+    task: state.tasks.task,
     goals: state.goals.goals
 })
 

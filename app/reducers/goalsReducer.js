@@ -13,7 +13,11 @@ import {
     UPDATE_USER_GOALS
 } from '../actions/goalsActions'
 
-const INITIAL_STATE = { filter: 'all', goal: {}, goals: [] }
+const INITIAL_STATE = {
+    goal: {},
+    goals: [],
+    filter: 'all'
+}
 
 export default function (state = INITIAL_STATE, action) {
     const { type, payload } = action
