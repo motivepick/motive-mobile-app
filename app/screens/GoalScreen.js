@@ -4,11 +4,8 @@ import { Container, Content, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import request from 'superagent'
-import { API_URL } from '../const'
 
-import { doDeleteTask, fetchTasks } from '../services/taskService'
-import moment from 'moment'
+import { closeTask, doDeleteTask, fetchTasks } from '../services/taskService'
 import { closeGoalTaskAction, createGoalTaskAction, deleteGoalTaskAction, setGoalAction, updateGoalTasksAction } from '../actions/goalsActions'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
@@ -20,7 +17,7 @@ import GoalCard from '../components/common/GoalCard'
 import Line from '../components/common/Line'
 import QuickInput from '../components/common/QuickInput/QuickInput'
 import { handleDueDateOf } from '../utils/parser'
-import { fetchToken } from '../services/accountService'
+import { createTask } from '../services/goalService'
 
 class GoalScreen extends Component {
 
@@ -45,11 +42,8 @@ class GoalScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <AnimatedHeader
-                        title={goal.name} scrollOffset={this.state.scrollY}
-                        rightButtonLabel={t('labels.editGoal')} onRightButtonPress={this.handleGoalClick}
-                        leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}
-                    />
+                    <AnimatedHeader title={goal.name} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')}
+                        onRightButtonPress={this.handleGoalClick} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <GoalCard goal={goal} onGoToEditDescriptionScreen={this.handleDescriptionClick}/>
@@ -92,19 +86,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     createGoalTask: (goalId, task) => async (dispatch, getState) => {
         const { goals } = getState()
         const { listFilter } = goals
-        const token = await fetchToken()
-        if (listFilter === 'today') {
-            const { body } = await request.post(`${API_URL}/goals/${goalId}/tasks`)
-                .set('Cookie', token).send({ ...task, dueDate: moment().endOf('day') })
-            dispatch(createGoalTaskAction(body))
-        } else if (listFilter === 'thisWeek') {
-            const { body } = await request.post(`${API_URL}/goals/${goalId}/tasks`)
-                .set('Cookie', token).send({ ...task, dueDate: moment().endOf('week') })
-            dispatch(createGoalTaskAction(body))
-        } else {
-            const { body } = await request.post(`${API_URL}/goals/${goalId}/tasks`).set('Cookie', token).send(task)
-            dispatch(createGoalTaskAction(body))
-        }
+        dispatch(createGoalTaskAction(await createTask(listFilter, goalId, task)))
     },
 
     updateGoalTasks: (listFilter, goalId) => async dispatch => {
@@ -112,9 +94,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     },
 
     closeGoalTask: id => async dispatch => {
-        const token = await fetchToken()
-        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: true })
-        dispatch(closeGoalTaskAction(body.id))
+        const task = await closeTask(id)
+        dispatch(closeGoalTaskAction(task.id))
     },
 
     deleteGoalTask: id => async dispatch => {
