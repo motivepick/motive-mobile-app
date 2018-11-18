@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { changeGoalColorAction, changeGoalNameAction, createNewGoalAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
+import { changeGoalNameAction, createNewGoalAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 import { Container, Content, Form, Input, Item, Label, StyleProvider } from 'native-base'
 import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
@@ -16,6 +16,7 @@ import Description from '../components/common/Description/Description'
 import { fetchToken } from '../services/accountService'
 
 class GoalEditScreen extends Component {
+
     static navigationOptions = {
         header: null
     }
@@ -32,7 +33,7 @@ class GoalEditScreen extends Component {
     }
 
     render() {
-        const { goal, changeGoalName, changeGoalColor, saveGoal, navigation, t } = this.props
+        const { goal, changeGoalName, saveGoal, navigation, t } = this.props
         const { id, name, description, dueDate, colorTag } = goal
         return (
             <StyleProvider style={getTheme(baseTheme)}>
@@ -56,10 +57,7 @@ class GoalEditScreen extends Component {
                                 </Item>
                                 <Item roundedInputWithLabel>
                                     <Label>{t('labels.color').toLocaleUpperCase()}</Label>
-                                    <ColorPicker value={colorTag} onChangeColor={colorTag => {
-                                        changeGoalColor(colorTag)
-                                        saveGoal({ id, colorTag })
-                                    }}/>
+                                    <ColorPicker value={colorTag} onChangeColor={colorTag => saveGoal({ id, colorTag })}/>
                                 </Item>
                             </React.Fragment>}
                         </Form>
@@ -80,13 +78,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
     changeGoalName: name => dispatch => dispatch(changeGoalNameAction(name)),
 
-    changeGoalColor: color => dispatch => dispatch(changeGoalColorAction(color)),
-
     saveGoal: goal => async dispatch => {
         const token = await fetchToken()
         const { id } = goal
         if (id) {
             const { body } = await request.put(`${API_URL}/goals/${id}`).set('Cookie', token).send(goal)
+            dispatch(setGoalAction(body))
             dispatch(updateGoalAction(body))
         } else {
             const { body } = await request.post(`${API_URL}/goals`).set('Cookie', token).send(goal)

@@ -1,5 +1,4 @@
 import {
-    CHANGE_GOAL_COLOR,
     CHANGE_GOAL_DESCRIPTION,
     CHANGE_GOAL_NAME,
     CLOSE_GOAL_TASK,
@@ -28,9 +27,6 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, goal }
     } else if (type === CHANGE_GOAL_DESCRIPTION) {
         const goal = { ...state.goal, description: payload }
-        return { ...state, goal }
-    } else if (type === CHANGE_GOAL_COLOR) {
-        const goal = { ...state.goal, colorTag: payload }
         return { ...state, goal }
     } else if (type === CREATE_NEW_GOAL) {
         return { ...state, goals: [payload, ...state.goals] }
