@@ -43,12 +43,8 @@ class GoalEditScreen extends Component {
                         <Form style={{ marginHorizontal: 16 }}>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.goal').toLocaleUpperCase()}</Label>
-                                <Input
-                                    onChangeText={changeGoalName}
-                                    value={name}
-                                    onSubmitEditing={() => saveGoal({ id, name })}
-                                    returnKeyType={'done'}
-                                    placeholder={t('labels.newGoal')}/>
+                                <Input onChangeText={changeGoalName} value={name} onSubmitEditing={() => saveGoal({ id, name })}
+                                    returnKeyType={'done'} placeholder={t('labels.newGoal')}/>
                             </Item>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>

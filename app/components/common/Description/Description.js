@@ -7,35 +7,23 @@ import { translate } from 'react-i18next'
 
 class Description extends Component {
 
-    constructor(props) {
-        super(props)
-        const { value } = props
-        this.state = { value }
-    }
-
     render() {
-        const { editable, onGoToEditDescriptionScreen, t } = this.props
-        const { value } = this.state
+        const { value, editable, onChangeText, onGoToEditDescriptionScreen, t } = this.props
 
         if (editable) {
             return (
-                <Input onChangeText={value => this.setState({ value })} onSubmitEditing={this.onSubmitEditing} value={value} returnKeyType={'done'}
+                <Input onChangeText={value => onChangeText(value)} value={value} returnKeyType={'done'}
                     style={styles.editableDescription} placeholder={t('placeholders.description')} autoFocus multiline={true}/>
             )
         } else {
+            const hasText = Boolean(value)
             return (
                 <TouchableOpacity style={styles.goalNotes} onPress={onGoToEditDescriptionScreen}>
-                    {value && <Text style={iOSUIKit.footnoteEmphasized}>{value}</Text>}
-                    {!value && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{t('placeholders.description')}</Text>}
+                    {hasText && <Text style={iOSUIKit.footnoteEmphasized}>{value}</Text>}
+                    {!hasText && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{t('placeholders.description')}</Text>}
                 </TouchableOpacity>
             )
         }
-    }
-
-    onSubmitEditing = () => {
-        const { onSubmitEditing } = this.props
-        const { value } = this.state
-        onSubmitEditing(value)
     }
 }
 

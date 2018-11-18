@@ -18,22 +18,29 @@ export class DescriptionEditView extends Component {
     }
 
     render() {
-        const { editableEntity, navigation, saveEditableEntity, t } = this.props
-        const { id, description } = editableEntity
+        const { editableEntity, setDescription, t } = this.props
+        const { description } = editableEntity
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: '#f3ece6' }}>
-                    <Header title={t('headings.editNotes')} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()}/>
+                    <Header title={t('headings.editNotes')} leftButtonLabel={t('labels.back')} onLeftButtonPress={this.handleLeftButtonPress}/>
                     <Content>
                         <Form style={styles.form}>
                             <Item stackedLabel style={styles.formItem}>
-                                <Description value={description} editable onSubmitEditing={description => saveEditableEntity({ id, description })}/>
+                                <Description value={description} editable onChangeText={description => setDescription(description)}/>
                             </Item>
                         </Form>
                     </Content>
                 </Container>
             </StyleProvider>
         )
+    }
+
+    handleLeftButtonPress = () => {
+        const { editableEntity, navigation, saveEditableEntity } = this.props
+        const { id, description } = editableEntity
+        saveEditableEntity({ id, description })
+        navigation.goBack()
     }
 }
 

@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setGoalAction, updateGoalAction } from '../../../actions/goalsActions'
+import { changeGoalDescriptionAction, setGoalAction, updateGoalAction } from '../../../actions/goalsActions'
 import request from 'superagent'
 import { API_URL } from '../../../const'
 import { translate } from 'react-i18next'
@@ -17,6 +17,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
         const goal = navigation.getParam('goal')
         dispatch(setGoalAction(goal))
     },
+
+    setDescription: description => dispatch => dispatch(changeGoalDescriptionAction(description)),
 
     saveEditableEntity: entity => async dispatch => {
         const token = await AsyncStorage.getItem('token')

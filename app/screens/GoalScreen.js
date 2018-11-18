@@ -63,7 +63,6 @@ class GoalScreen extends Component {
         )
     }
 
-    //TODO: won't work for goal
     handleDescriptionClick = () => {
         const { goal, navigation } = this.props
         navigation.navigate('GoalDescriptionEditScreen', { goal })
