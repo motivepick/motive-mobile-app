@@ -16,6 +16,7 @@ i18n.use(languageDetector).init({
                     tasks: 'Tasks',
                     goals: 'Goals',
                     editGoal: 'Edit Goal',
+                    newGoal: 'New Goal',
                     editTask: 'Edit Task',
                     editNotes: 'Edit Notes'
                 },
@@ -80,6 +81,7 @@ i18n.use(languageDetector).init({
                     tasks: 'Задачи',
                     goals: 'Цели',
                     editGoal: 'Изменить цель',
+                    newGoal: 'Новая цель',
                     editTask: 'Изменить задачу',
                     editNotes: 'Заметки'
                 },
@@ -144,6 +146,7 @@ i18n.use(languageDetector).init({
                     tasks: 'Tasks',
                     goals: 'Goals',
                     editGoal: 'Edit Goal',
+                    newGoal: 'New Goal',
                     editTask: 'Edit Task',
                     editNotes: 'Edit Notes'
                 },

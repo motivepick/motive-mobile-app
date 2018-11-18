@@ -38,7 +38,8 @@ class GoalEditScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <Header title={t('headings.editGoal')} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()}/>
+                    <Header title={t(id ? 'headings.editGoal' : 'headings.newGoal')} leftButtonLabel={t('labels.back')}
+                        onLeftButtonPress={() => navigation.goBack()}/>
                     <Content>
                         <Form style={{ marginHorizontal: 16 }}>
                             <Item roundedInputWithLabel>
