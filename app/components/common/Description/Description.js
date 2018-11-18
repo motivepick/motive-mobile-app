@@ -7,13 +7,20 @@ import { translate } from 'react-i18next'
 
 class Description extends Component {
 
-    render() {
-        const { value, onChangeText, onSubmitEditing, isEditable, onGoToEditDescriptionScreen, t } = this.props
+    constructor(props) {
+        super(props)
+        const { value } = props
+        this.state = { value }
+    }
 
-        if (isEditable) {
+    render() {
+        const { editable, onGoToEditDescriptionScreen, t } = this.props
+        const { value } = this.state
+
+        if (editable) {
             return (
-                <Input onChangeText={onChangeText} onSubmitEditing={onSubmitEditing} value={value} returnKeyType={'done'} style={styles.editableDescription}
-                    placeholder={t('placeholders.description')} autoFocus multiline={true}/>
+                <Input onChangeText={value => this.setState({ value })} onSubmitEditing={this.onSubmitEditing} value={value} returnKeyType={'done'}
+                    style={styles.editableDescription} placeholder={t('placeholders.description')} autoFocus multiline={true}/>
             )
         } else {
             return (
@@ -23,6 +30,12 @@ class Description extends Component {
                 </TouchableOpacity>
             )
         }
+    }
+
+    onSubmitEditing = () => {
+        const { onSubmitEditing } = this.props
+        const { value } = this.state
+        onSubmitEditing(value)
     }
 }
 

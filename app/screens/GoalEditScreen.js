@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Alert, AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
-import { changeGoalColorAction, changeGoalDescriptionAction, changeGoalNameAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
+import { changeGoalColorAction, changeGoalNameAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
 import { Container, Content, Form, Input, Item, Label, StyleProvider } from 'native-base'
 import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
@@ -29,7 +29,7 @@ class GoalEditScreen extends Component {
     }
 
     render() {
-        const { goal, changeGoalName, changeGoalDescription, changeGoalColor, saveGoal, t } = this.props
+        const { goal, changeGoalName, changeGoalColor, saveGoal, t } = this.props
         const { id, name, description, dueDate, colorTag } = goal
         return (
             <StyleProvider style={getTheme(baseTheme)}>
@@ -56,7 +56,7 @@ class GoalEditScreen extends Component {
                             </Item>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>
-                                <Description onGoToEditDescriptionScreen={this.goToEditDescriptionScreen} value={description}/>
+                                <Description value={description} onGoToEditDescriptionScreen={this.goToEditDescriptionScreen}/>
                             </Item>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.color').toLocaleUpperCase()}</Label>
@@ -82,8 +82,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     setGoal: goal => dispatch => dispatch(setGoalAction(goal)),
 
     changeGoalName: name => dispatch => dispatch(changeGoalNameAction(name)),
-
-    changeGoalDescription: description => dispatch => dispatch(changeGoalDescriptionAction(description)),
 
     changeGoalColor: color => dispatch => dispatch(changeGoalColorAction(color)),
 

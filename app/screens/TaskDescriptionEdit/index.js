@@ -1,0 +1,3 @@
+import TaskDescriptionEditContainer from './TaskDescriptionEditContainer'
+
+export default TaskDescriptionEditContainer

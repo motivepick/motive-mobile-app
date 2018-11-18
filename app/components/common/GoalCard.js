@@ -54,7 +54,7 @@ class GoalCard extends Component {
                 <Form style={{ width: '100%' }}>
                     <Item roundedInputWithLabel>
                         <Label>{t('labels.description').toLocaleUpperCase()}</Label>
-                        <Description onGoToEditDescriptionScreen={onGoToEditDescriptionScreen} value={description}/>
+                        <Description value={description} onGoToEditDescriptionScreen={onGoToEditDescriptionScreen}/>
                     </Item>
                 </Form>
             </View>

@@ -12,7 +12,8 @@ import TaskEditScreen from './screens/TaskEditScreen'
 import { I18nextProvider } from 'react-i18next'
 import i18n from './i18n'
 import GoalScreen from './screens/GoalScreen'
-import DescriptionEditScreen from './screens/DescriptionEditScreen'
+import TaskDescriptionEditScreen from './screens/TaskDescriptionEdit'
+import GoalDescriptionEditScreen from './screens/GoalDescriptionEdit'
 import AllTasksScreen from './screens/AllTasksScreen'
 import AllGoalsScreen from './screens/AllGoalsScreen'
 
@@ -25,7 +26,8 @@ const RootStack = StackNavigator({
     TaskEdit: TaskEditScreen,
     Goal: GoalScreen,
     GoalEdit: GoalEditScreen,
-    DescriptionEditScreen: DescriptionEditScreen
+    TaskDescriptionEditScreen: TaskDescriptionEditScreen,
+    GoalDescriptionEditScreen: GoalDescriptionEditScreen
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

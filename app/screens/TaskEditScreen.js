@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { changeTaskDescriptionAction, changeTaskNameAction, setTaskAction } from '../actions/taskActions'
+import { changeTaskNameAction, setTaskAction } from '../actions/taskActions'
 import request from 'superagent'
 import { API_URL } from '../const'
 import { updateTaskAction } from '../actions/tasksActions'
@@ -71,7 +71,7 @@ class TaskEditScreen extends Component {
                             </Item>}
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>
-                                <Description onGoToEditDescriptionScreen={this.handleDescriptionClick} value={description}/>
+                                <Description value={description} onGoToEditDescriptionScreen={this.handleDescriptionClick}/>
                             </Item>
                         </Form>
                     </Content>
@@ -82,7 +82,7 @@ class TaskEditScreen extends Component {
 
     handleDescriptionClick = () => {
         const { task, navigation } = this.props
-        navigation.navigate('DescriptionEditScreen', { task })
+        navigation.navigate('TaskDescriptionEditScreen', { task })
     }
 }
 
@@ -96,8 +96,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     setTask: task => dispatch => dispatch(setTaskAction(task)),
 
     changeTaskName: taskName => dispatch => dispatch(changeTaskNameAction(taskName)),
-
-    changeTaskDescription: taskDescription => dispatch => dispatch(changeTaskDescriptionAction(taskDescription)),
 
     saveTask: task => async dispatch => {
         const token = await AsyncStorage.getItem('token')
