@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Image, Linking, StyleSheet } from 'react-native'
+import { AsyncStorage, Image, Linking, StyleSheet, View } from 'react-native'
 import { navigateWithReset } from './navigationWithReset'
 import { API_URL } from '../const'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import { Button, Container, Content, Icon, StyleProvider, Text } from 'native-base'
-import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
+import { human, iOSUIKit } from 'react-native-typography'
 
 class LoginScreen extends Component {
 
@@ -46,18 +46,22 @@ class LoginScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <Content contentContainerStyle={styles.container} style={{ marginHorizontal: 16 }}>
-                        <Image source={require('../assets/images/logo.png')} style={{ marginTop: 100 }}/>
-                        <Text style={[styles.title2, { marginTop: 20 }]}>{'Motive'.toLocaleUpperCase()}</Text>
-                        <Text style={human.footnote}>{'Defeat your laziness'.toLocaleUpperCase()}</Text>
-                        <Button transparent iconLeft onPress={this.authenticateViaVk} style={{ marginTop: 150 }}>
-                            <Icon name='vk' type='MaterialCommunityIcons'/>
-                            <Text>{'Login With VK'.toLocaleUpperCase()}</Text>
-                        </Button>
-                        <Button transparent iconLeft onPress={this.authenticateViaFacebook}>
-                            <Icon name='facebook-box' type='MaterialCommunityIcons'/>
-                            <Text>{'Login With Facebook'.toLocaleUpperCase()}</Text>
-                        </Button>
+                    <Content contentContainerStyle={styles.container}>
+                        <View style={styles.titleContainer}>
+                            <Image source={require('../assets/images/logo.png')} style={{ margin: 16 }}/>
+                            <Text style={styles.title}>MOTIVE</Text>
+                            <Text style={styles.slogan}>{'Defeat your laziness'.toLocaleUpperCase()}</Text>
+                        </View>
+                        <View style={styles.loginContainer}>
+                            <Button transparent iconLeft onPress={this.authenticateViaVk}>
+                                <Icon name='vk' type='MaterialCommunityIcons'/>
+                                <Text>{'Login With VK'.toLocaleUpperCase()}</Text>
+                            </Button>
+                            <Button transparent iconLeft onPress={this.authenticateViaFacebook}>
+                                <Icon name='facebook-box' type='MaterialCommunityIcons'/>
+                                <Text>{'Login With Facebook'.toLocaleUpperCase()}</Text>
+                            </Button>
+                        </View>
                     </Content>
                 </Container>
             </StyleProvider>
@@ -72,18 +76,22 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
-        alignSelf: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
+    },
+    titleContainer: {
+        flex: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    loginContainer: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     title: {
-        ...human.title2Object,
-        ...systemWeights.bold,
-        backgroundColor: iOSColors.white,
-        marginTop: 25,
-        paddingTop: 16,
-        paddingHorizontal: 16
-    },
-    title2: {
         ...iOSUIKit.largeTitleEmphasizedObject
+    },
+    slogan: {
+        ...human.footnoteObject
     }
 })
