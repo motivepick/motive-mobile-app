@@ -13,6 +13,7 @@ i18n.use(languageDetector).init({
         en: {
             translations: {
                 headings: {
+                    slogan: 'Defeat your laziness',
                     tasks: 'Tasks',
                     goals: 'Goals',
                     editGoal: 'Edit Goal',
@@ -21,6 +22,8 @@ i18n.use(languageDetector).init({
                     editNotes: 'Edit Notes'
                 },
                 labels: {
+                    loginVK: 'Login With VK',
+                    loginFB: 'Login With Facebook',
                     statistics: 'You can do it! {{percent}}% done',
                     all: 'All Tasks',
                     today: 'Today',
@@ -78,6 +81,7 @@ i18n.use(languageDetector).init({
         ru: {
             translations: {
                 headings: {
+                    slogan: 'Победи лень',
                     tasks: 'Задачи',
                     goals: 'Цели',
                     editGoal: 'Изменить цель',
@@ -86,6 +90,8 @@ i18n.use(languageDetector).init({
                     editNotes: 'Заметки'
                 },
                 labels: {
+                    loginVK: 'Войти с VK',
+                    loginFB: 'Войти с Facebook',
                     statistics: 'Соберись! {{percent}}% готово',
                     all: 'Все задачи',
                     today: 'Сегодня',
@@ -143,6 +149,7 @@ i18n.use(languageDetector).init({
         zh: {
             translations: {
                 headings: {
+                    slogan: 'Defeat your laziness',
                     tasks: 'Tasks',
                     goals: 'Goals',
                     editGoal: 'Edit Goal',
@@ -151,6 +158,8 @@ i18n.use(languageDetector).init({
                     editNotes: 'Edit Notes'
                 },
                 labels: {
+                    loginVK: 'Login With VK',
+                    loginFB: 'Login With Facebook',
                     statistics: 'You can do it! {{percent}}% done',
                     all: 'All Tasks',
                     today: 'Today',

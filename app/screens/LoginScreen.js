@@ -6,6 +6,7 @@ import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import { Button, Container, Content, Icon, StyleProvider, Text } from 'native-base'
 import { human, iOSUIKit } from 'react-native-typography'
+import { translate } from 'react-i18next'
 
 class LoginScreen extends Component {
 
@@ -43,6 +44,8 @@ class LoginScreen extends Component {
     }
 
     render() {
+        const { t } = this.props
+
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
@@ -50,16 +53,16 @@ class LoginScreen extends Component {
                         <View style={styles.titleContainer}>
                             <Image source={require('../assets/images/logo.png')} style={{ margin: 16 }}/>
                             <Text style={styles.title}>MOTIVE</Text>
-                            <Text style={styles.slogan}>{'Defeat your laziness'.toLocaleUpperCase()}</Text>
+                            <Text style={styles.slogan}>{t('headings.slogan').toLocaleUpperCase()}</Text>
                         </View>
                         <View style={styles.loginContainer}>
                             <Button transparent iconLeft onPress={this.authenticateViaVk}>
                                 <Icon name='vk' type='MaterialCommunityIcons'/>
-                                <Text>{'Login With VK'.toLocaleUpperCase()}</Text>
+                                <Text>{t('labels.loginVK').toLocaleUpperCase()}</Text>
                             </Button>
                             <Button transparent iconLeft onPress={this.authenticateViaFacebook}>
                                 <Icon name='facebook-box' type='MaterialCommunityIcons'/>
-                                <Text>{'Login With Facebook'.toLocaleUpperCase()}</Text>
+                                <Text>{t('labels.loginFB').toLocaleUpperCase()}</Text>
                             </Button>
                         </View>
                     </Content>
@@ -69,7 +72,7 @@ class LoginScreen extends Component {
     }
 }
 
-export default LoginScreen
+export default translate('translations')(LoginScreen)
 
 const styles = StyleSheet.create({
     container: {
