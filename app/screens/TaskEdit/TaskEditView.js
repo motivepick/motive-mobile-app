@@ -1,20 +1,13 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { changeTaskNameAction, setTaskAction, updateTaskAction } from '../actions/tasksActions'
-import request from 'superagent'
-import { API_URL } from '../const'
-import { translate } from 'react-i18next'
 import { Container, Content, Form, Input, Item, Label, StyleProvider } from 'native-base'
-import DueDatePicker from '../components/common/DueDatePicker/DueDatePicker'
-import Header from '../components/common/Header/Header'
-import getTheme from '../../native-base-theme/components'
-import baseTheme from '../../native-base-theme/variables/platform'
-import Description from '../components/common/Description/Description'
-import GoalPicker from '../components/common/GoalPicker/GoalPicker'
-import { fetchToken } from '../services/accountService'
+import DueDatePicker from '../../components/common/DueDatePicker/DueDatePicker'
+import Header from '../../components/common/Header/Header'
+import getTheme from '../../../native-base-theme/components/index'
+import baseTheme from '../../../native-base-theme/variables/platform'
+import Description from '../../components/common/Description/Description'
+import GoalPicker from '../../components/common/GoalPicker/GoalPicker'
 
-class TaskEditScreen extends Component {
+export class TaskEditView extends Component {
 
     static navigationOptions = {
         header: null
@@ -63,7 +56,7 @@ class TaskEditScreen extends Component {
                                 <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>
                                 <DueDatePicker value={dueDate} onChangeDate={dueDate => saveTask({ id, dueDate })}/>
                             </Item>
-                            {goals.length && <Item roundedInputWithLabel>
+                            {goals.length > 0 && <Item roundedInputWithLabel>
                                 <Label>{t('labels.goal').toLocaleUpperCase()}</Label>
                                 <GoalPicker selectedValue={this.state.selected} onValueChange={this.onValueChange.bind(this)}
                                     onClearValue={this.onClearValue.bind(this)} placeholder={'Task is part of goal?'} goals={goals}/>
@@ -84,24 +77,3 @@ class TaskEditScreen extends Component {
         navigation.navigate('TaskDescriptionEditScreen', { task })
     }
 }
-
-const mapStateToProps = state => ({
-    task: state.tasks.task,
-    goals: state.goals.goals
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-
-    setTask: task => dispatch => dispatch(setTaskAction(task)),
-
-    changeTaskName: taskName => dispatch => dispatch(changeTaskNameAction(taskName)),
-
-    saveTask: task => async dispatch => {
-        const token = await fetchToken()
-        const { id, name, description, dueDate } = task
-        const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ name, description, dueDate })
-        dispatch(updateTaskAction(body))
-    },
-}, dispatch)
-
-export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(TaskEditScreen))
