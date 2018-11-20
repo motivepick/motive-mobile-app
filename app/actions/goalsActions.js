@@ -22,11 +22,11 @@ export const updateUserGoalsAction = goals => ({ type: UPDATE_USER_GOALS, payloa
 
 export const updateGoalTasksAction = (listFilter, tasks) => ({ type: UPDATE_GOAL_TASKS, payload: { listFilter, tasks } })
 
-export const createGoalTaskAction = task => ({ type: CREATE_GOAL_TASK, payload: task })
+export const createGoalTaskAction = (goalId, task) => ({ type: CREATE_GOAL_TASK, payload: { goalId, task } })
 
-export const closeGoalTaskAction = id => ({ type: CLOSE_GOAL_TASK, payload: id })
+export const closeGoalTaskAction = (goalId, taskId) => ({ type: CLOSE_GOAL_TASK, payload: { goalId, taskId } })
 
-export const deleteGoalTaskAction = id => ({ type: DELETE_GOAL_TASK, payload: id })
+export const deleteGoalTaskAction = (goalId, taskId) => ({ type: DELETE_GOAL_TASK, payload: { goalId, taskId } })
 
 export const updateGoalAction = goal => ({ type: UPDATE_GOAL, payload: goal })
 
