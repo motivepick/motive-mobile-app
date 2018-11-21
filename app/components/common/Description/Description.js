@@ -12,8 +12,8 @@ class Description extends Component {
 
         if (editable) {
             return (
-                <Input onChangeText={value => onChangeText(value)} value={value} returnKeyType={'done'}
-                    style={styles.editableDescription} placeholder={t('placeholders.description')} autoFocus multiline={true}/>
+                <Input onChangeText={value => onChangeText(value)} value={value} style={styles.editableDescription}
+                    placeholder={t('placeholders.description')} autoFocus multiline={true}/>
             )
         } else {
             const hasText = Boolean(value)

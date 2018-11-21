@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Button, Icon, Picker, Text } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 import { Dimensions, PixelRatio, Platform, StyleSheet, View } from 'react-native'
+import { translate } from 'react-i18next'
 
 const mainTextColor = '#000'
 const platform = Platform.OS
@@ -29,7 +30,7 @@ const variables = {
 class GoalPicker extends Component {
 
     render() {
-        const { selectedValue, onValueChange, onClearValue, placeholder, goals } = this.props
+        const { selectedValue, onValueChange, onClearValue, placeholder, goals, t } = this.props
         return (
             <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={styles.container}>
@@ -45,6 +46,8 @@ class GoalPicker extends Component {
                         headerStyle={styles.headerStyle}
                         headerBackButtonTextStyle={styles.headerBackButtonTextStyle}
                         textStyle={[styles.textStyle, { width: selectedValue ? deviceWidth - 16 * 2 - 30 - 30 / 4 - 10 - 10 - 71.5 : deviceWidth - 16 * 2 - 30 - 30 / 4 - 10 - 10 }]}
+                        iosHeader={t('headings.pickGoal')}
+                        headerBackButtonText={t('labels.back')}
                     >
                         {goals.map(item => <Picker.Item key={item.id} label={item.name} value={item.id} />)}
                     </Picker>
@@ -86,4 +89,4 @@ export const styles = StyleSheet.create({
     }
 })
 
-export default GoalPicker
+export default translate('translations')(GoalPicker)

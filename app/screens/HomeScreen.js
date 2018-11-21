@@ -106,22 +106,23 @@ class HomeScreen extends Component {
             t
         } = this.props
 
-        const { weeklyTasks = new Map(), nextDate } = getRelevantTasks(tasks)
+        const { weeklyTasks = new Map(), nextDate } = getRelevantTasks(tasks, t('labels.today'))
         const relevantGoals = goals && goals.filter((goal, i) => i < 3)
 
-        // TODO: adding goal is not working right now
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <AnimatedHeader title={'Hi, John'} scrollOffset={this.state.scrollY} onRightButtonPress={this.logout} rightIcon={<Icon name='log-out'/>}/>
+                    <AnimatedHeader title={t('labels.greeting', { name: 'John' })} scrollOffset={this.state.scrollY}
+                        onRightButtonPress={this.logout} rightIcon={<Icon name='log-out'/>}/>
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <View style={{ paddingTop: 16 }}/>
-                        <SectionHeader leftText={'Goals'} rightAction={() => this.props.navigation.navigate('AllGoalsScreen')} rightActionText={'See All'}/>
+                        <SectionHeader rightAction={() => this.props.navigation.navigate('AllGoalsScreen')}
+                            rightActionText={t('labels.seeAll')} leftText={t('headings.goals')}/>
 
                         <ScrollView horizontal contentContainerStyle={styles.goalBar}>
                             <GoalCircle progress={0} progressBgColor={iOSColors.white} progressIcon={'add'}
-                                text={'Add a goal'} onBodyClick={this.onAddNewGoal}/>
+                                text={t('labels.addGoal')} onBodyClick={this.onAddNewGoal}/>
                             {
                                 relevantGoals && relevantGoals.map(goal => {
                                     const taskCount = goal.tasks && goal.tasks.length || 0
@@ -132,7 +133,8 @@ class HomeScreen extends Component {
                                 })
                             }
                         </ScrollView>
-                        <SectionHeader leftText={'Tasks'} rightAction={() => this.props.navigation.navigate('AllTasksScreen')} rightActionText={'See All'}/>
+                        <SectionHeader rightAction={() => this.props.navigation.navigate('AllTasksScreen')}
+                            rightActionText={t('labels.seeAll')} leftText={t('headings.tasks')}/>
                         <QuickInput placeholder={t('labels.newTaskForToday')} onSubmitEditing={this.onAddNewTask}/>
                         <View style={{ marginVertical: 4 }}/>
                         {

@@ -36,7 +36,7 @@ export class TaskEditView extends Component {
     }
 
     render() {
-        const { task, navigation, changeTaskName, saveTask, goals = [], t } = this.props
+        const { task, navigation, changeTaskName, saveTask, goals, t } = this.props
         const { id, name, description, dueDate } = task
 
         return (
@@ -59,7 +59,7 @@ export class TaskEditView extends Component {
                             {goals.length > 0 && <Item roundedInputWithLabel>
                                 <Label>{t('labels.goal').toLocaleUpperCase()}</Label>
                                 <GoalPicker selectedValue={this.state.selected} onValueChange={this.onValueChange.bind(this)}
-                                    onClearValue={this.onClearValue.bind(this)} placeholder={'Task is part of goal?'} goals={goals}/>
+                                    onClearValue={this.onClearValue.bind(this)} placeholder={t('placeholders.taskIsPartOfGoal')} goals={goals}/>
                             </Item>}
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>

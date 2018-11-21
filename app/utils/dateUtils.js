@@ -15,7 +15,7 @@ export const getDateAsStr = (date) => {
     return date ? moment(date, moment.ISO_8601).local().calendar() : null
 }
 
-export const getRelevantTasks = (tasks) => {
+export const getRelevantTasks = (tasks, todayLabel) => {
     const tasksWithDates = tasks
         .filter(t => t.dueDate)
         .map(t => {
@@ -32,7 +32,7 @@ export const getRelevantTasks = (tasks) => {
         const t = tasksWithDates[i]
         nextDate = endOfWeek.isSameOrBefore(t.dueDate) && !nextDate ? t.dueDate.fromNow() : nextDate
         if (endOfWeek > t.dueDate || nextDate === t.dueDate.fromNow()) {
-            let key = moment().startOf('day').isSameOrAfter(t.dueDate) ? 'Today' : t.dueDate.calendar()
+            let key = moment().startOf('day').isSameOrAfter(t.dueDate) ? todayLabel : t.dueDate.calendar()
 
             if (nextDate) {
                 key = 'Next'

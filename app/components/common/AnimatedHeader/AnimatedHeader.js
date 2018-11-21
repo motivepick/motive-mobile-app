@@ -31,7 +31,7 @@ class AnimatedHeaderComponent extends Component {
                 <Header transparent>
                     <Left>
                         {
-                            onLeftButtonPress &&
+                            Boolean(onLeftButtonPress) &&
                             <Button transparent onPress={onLeftButtonPress}>
                                 {leftButtonLabel && <Text>{leftButtonLabel}</Text>}
                                 {leftIcon}
@@ -40,7 +40,7 @@ class AnimatedHeaderComponent extends Component {
                     </Left>
 
                     {
-                        title &&
+                        Boolean(title) &&
                         <Body>
                             <Title>
                                 <Animated.Text style={[styles.headerCollapsed, { opacity: headerTitleOpacity }]}>{title}</Animated.Text>
@@ -49,7 +49,7 @@ class AnimatedHeaderComponent extends Component {
                     }
                     <Right>
                         {
-                            onRightButtonPress &&
+                            Boolean(onRightButtonPress) &&
                             <Button transparent onPress={onRightButtonPress}>
                                 {rightButtonLabel && <Text>{rightButtonLabel}</Text>}
                                 {rightIcon}
@@ -58,7 +58,7 @@ class AnimatedHeaderComponent extends Component {
                     </Right>
                 </Header>
                 {
-                    title &&
+                    Boolean(title) &&
                     <Animated.View style={styles.headerExpandedContainer}>
                         <Animated.Text style={[styles.headerExpanded, { opacity: heroTitleOpacity, height: headerHeight }]}>{title}</Animated.Text>
                     </Animated.View>

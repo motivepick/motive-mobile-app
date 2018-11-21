@@ -19,11 +19,14 @@ i18n.use(languageDetector).init({
                     editGoal: 'Edit Goal',
                     newGoal: 'New Goal',
                     editTask: 'Edit Task',
-                    editNotes: 'Edit Notes'
+                    editNotes: 'Edit Notes',
+                    pickGoal: 'Pick A Goal'
                 },
                 labels: {
                     loginVK: 'Login With VK',
                     loginFB: 'Login With Facebook',
+                    seeAll: 'See All',
+                    addGoal: 'New goal',
                     statistics: 'You can do it! {{percent}}% done',
                     all: 'All Tasks',
                     today: 'Today',
@@ -48,8 +51,8 @@ i18n.use(languageDetector).init({
                     editDescription: 'Description',
                     dueDate: 'Due date',
                     color: 'Color',
-                    itemStatusInProgress: 'Status: In Progress',
-                    itemStatusCompleted: 'Status: Completed',
+                    itemStatusInProgress: 'Show Closed Tasks',
+                    itemStatusCompleted: 'Show Open Tasks',
                     totalTasks: '{{totalTasks}} tasks',
                     totalGoals: '{{totalGoals}} goals',
                     sortByRecent: 'Recent',
@@ -58,7 +61,8 @@ i18n.use(languageDetector).init({
                     sortByColor: 'By color',
                     tasksCompleted: 'tasks\ncompleted',
                     tasksInProgress: 'tasks\nin progress',
-                    dueDateNotSet: 'not set'
+                    dueDateNotSet: 'not set',
+                    greeting: 'Hi, {{name}}'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -66,7 +70,8 @@ i18n.use(languageDetector).init({
                     goalName: 'What is your goal?',
                     whenIsItDue: 'When is it due?',
                     description: 'A place for your notes',
-                    sortBy: 'Sort by'
+                    sortBy: 'Sort by',
+                    taskIsPartOfGoal: 'Specify a goal'
                 },
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',
@@ -87,11 +92,14 @@ i18n.use(languageDetector).init({
                     editGoal: 'Изменить цель',
                     newGoal: 'Новая цель',
                     editTask: 'Изменить задачу',
-                    editNotes: 'Заметки'
+                    editNotes: 'Заметки',
+                    pickGoal: 'Указать цель'
                 },
                 labels: {
                     loginVK: 'Войти с VK',
                     loginFB: 'Войти с Facebook',
+                    seeAll: 'Смотреть все',
+                    addGoal: 'Новая цель',
                     statistics: 'Соберись! {{percent}}% готово',
                     all: 'Все задачи',
                     today: 'Сегодня',
@@ -114,10 +122,10 @@ i18n.use(languageDetector).init({
                     showClosedGoals: 'Показать завершённые цели',
                     hideClosedTasks: 'Скрыть завершённые задачи',
                     editDescription: 'Описание',
-                    dueDate: 'Due date',
-                    color: 'Color',
-                    itemStatusInProgress: 'Состояние: В процессе',
-                    itemStatusCompleted: 'Состояние: Выполнено',
+                    dueDate: 'Дата выполнения',
+                    color: 'Цвет',
+                    itemStatusInProgress: 'Показать закрытые',
+                    itemStatusCompleted: 'Показать открытые',
                     totalTasks: 'Задач: {{totalTasks}}',
                     totalGoals: 'Целей: {{totalGoals}}',
                     sortByRecent: 'Недавние',
@@ -126,7 +134,8 @@ i18n.use(languageDetector).init({
                     sortByColor: 'По цвету',
                     tasksCompleted: 'задач\nвыполнено',
                     tasksInProgress: 'задач\nв процессе',
-                    dueDateNotSet: 'не задано'
+                    dueDateNotSet: 'не задано',
+                    greeting: 'Привет, {{name}}'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -134,7 +143,8 @@ i18n.use(languageDetector).init({
                     goalName: 'На что вы нацелились?',
                     whenIsItDue: 'Когда?',
                     description: 'Место для заметок',
-                    sortBy: 'Сортировать'
+                    sortBy: 'Сортировать',
+                    taskIsPartOfGoal: 'Указать цель'
                 },
                 emptyStates: {
                     noCompletedTasks: 'Ещё нет завершённых задач',
@@ -155,11 +165,14 @@ i18n.use(languageDetector).init({
                     editGoal: 'Edit Goal',
                     newGoal: 'New Goal',
                     editTask: 'Edit Task',
-                    editNotes: 'Edit Notes'
+                    editNotes: 'Edit Notes',
+                    pickGoal: 'Pick A Goal'
                 },
                 labels: {
                     loginVK: 'Login With VK',
                     loginFB: 'Login With Facebook',
+                    seeAll: 'See All',
+                    addGoal: 'New goal',
                     statistics: 'You can do it! {{percent}}% done',
                     all: 'All Tasks',
                     today: 'Today',
@@ -184,8 +197,8 @@ i18n.use(languageDetector).init({
                     editDescription: 'Description',
                     dueDate: 'Due date',
                     color: 'Color',
-                    itemStatusInProgress: 'Status: In Progress',
-                    itemStatusCompleted: 'Status: Completed',
+                    itemStatusInProgress: 'Show Closed Tasks',
+                    itemStatusCompleted: 'Show Open Tasks',
                     totalTasks: '{{totalTasks}} tasks',
                     totalGoals: '{{totalGoals}} goals',
                     sortByRecent: 'Recent',
@@ -194,7 +207,8 @@ i18n.use(languageDetector).init({
                     sortByColor: 'By color',
                     tasksCompleted: 'tasks\ncompleted',
                     tasksInProgress: 'tasks\nin progress',
-                    dueDateNotSet: 'not set'
+                    dueDateNotSet: 'not set',
+                    greeting: 'Hi, {{name}}'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -202,7 +216,8 @@ i18n.use(languageDetector).init({
                     goalName: 'What is your goal?',
                     whenIsItDue: 'When is it due?',
                     description: 'A place for your notes',
-                    sortBy: 'Sort by'
+                    sortBy: 'Sort by',
+                    taskIsPartOfGoal: 'Specify a goal'
                 },
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',
