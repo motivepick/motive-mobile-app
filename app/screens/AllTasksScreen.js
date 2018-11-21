@@ -57,7 +57,7 @@ class AllTasksScreen extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
                     <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')}
-                        onRightButtonPress={this.handleGoalClick} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => this.props.navigation.goBack()}/>
+                        onRightButtonPress={this.handleGoalClick}/>
                     <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}

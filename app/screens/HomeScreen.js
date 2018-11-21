@@ -7,7 +7,7 @@ import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import request from 'superagent'
-import { API_URL } from '../const'
+import { API_URL, SHOW_GOALS } from '../const'
 import {
     closeTaskAction,
     createTask,
@@ -117,25 +117,27 @@ class HomeScreen extends Component {
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <View style={{ paddingTop: 16 }}/>
-                        <SectionHeader rightAction={() => this.props.navigation.navigate('AllGoalsScreen')}
-                            rightActionText={t('labels.seeAll')} leftText={t('headings.goals')}/>
+                        {SHOW_GOALS && <React.Fragment>
+                            <SectionHeader rightAction={() => this.props.navigation.navigate('AllGoalsScreen')}
+                                rightActionText={t('labels.seeAll')} leftText={t('headings.goals')}/>
 
-                        <ScrollView horizontal contentContainerStyle={styles.goalBar}>
-                            <GoalCircle progress={0} progressBgColor={iOSColors.white} progressIcon={'add'}
-                                text={t('labels.addGoal')} onBodyClick={this.onAddNewGoal}/>
-                            {
-                                relevantGoals && relevantGoals.map(goal => {
-                                    const taskCount = goal.tasks && goal.tasks.length || 0
-                                    const progress = 30 // TODO: hard coded
-                                    return <GoalCircle key={goal.id} goal={goal} onBodyClick={this.onGoalClick} progress={progress}
-                                        progressBgColor={goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.white} text={goal.name}
-                                        subText={`${taskCount} tasks`}/>
-                                })
-                            }
-                        </ScrollView>
+                            <ScrollView horizontal contentContainerStyle={styles.goalBar}>
+                                <GoalCircle progress={0} progressBgColor={iOSColors.white} progressIcon={'add'}
+                                    text={t('labels.addGoal')} onBodyClick={this.onAddNewGoal}/>
+                                {
+                                    relevantGoals && relevantGoals.map(goal => {
+                                        const taskCount = goal.tasks && goal.tasks.length || 0
+                                        const progress = 30 // TODO: hard coded
+                                        return <GoalCircle key={goal.id} goal={goal} onBodyClick={this.onGoalClick} progress={progress}
+                                            progressBgColor={goal.colorTag && palette[goal.colorTag] ? palette[goal.colorTag] : iOSColors.white}
+                                            text={goal.name} subText={`${taskCount} tasks`}/>
+                                    })
+                                }
+                            </ScrollView>
+                        </React.Fragment>}
                         <SectionHeader rightAction={() => this.props.navigation.navigate('AllTasksScreen')}
                             rightActionText={t('labels.seeAll')} leftText={t('headings.tasks')}/>
-                        <QuickInput placeholder={t('labels.newTaskForToday')} onSubmitEditing={this.onAddNewTask}/>
+                        {SHOW_GOALS && <QuickInput placeholder={t('labels.newTaskForToday')} onSubmitEditing={this.onAddNewTask}/>}
                         <View style={{ marginVertical: 4 }}/>
                         {
                             weeklyTasks && [...weeklyTasks.keys()].map(key => {

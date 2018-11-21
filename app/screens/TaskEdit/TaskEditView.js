@@ -6,6 +6,7 @@ import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
 import Description from '../../components/common/Description/Description'
 import GoalPicker from '../../components/common/GoalPicker/GoalPicker'
+import { SHOW_GOALS } from '../../const'
 
 export class TaskEditView extends Component {
 
@@ -56,7 +57,7 @@ export class TaskEditView extends Component {
                                 <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>
                                 <DueDatePicker value={dueDate} onChangeDate={dueDate => saveTask({ id, dueDate })}/>
                             </Item>
-                            {goals.length > 0 && <Item roundedInputWithLabel>
+                            {SHOW_GOALS && goals.length > 0 && <Item roundedInputWithLabel>
                                 <Label>{t('labels.goal').toLocaleUpperCase()}</Label>
                                 <GoalPicker selectedValue={this.state.selected} onValueChange={this.onValueChange.bind(this)}
                                     onClearValue={this.onClearValue.bind(this)} placeholder={t('placeholders.taskIsPartOfGoal')} goals={goals}/>

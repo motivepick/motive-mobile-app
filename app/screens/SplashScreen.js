@@ -16,7 +16,7 @@ class SplashScreen extends Component {
         CookieManager.clearAll().then(() => {
             request.get(`${API_URL}/users`)
                 .set('Cookie', token)
-                .then(() => navigateWithReset(this.props.navigation, 'Home'))
+                .then(() => navigateWithReset(this.props.navigation, 'AllTasksScreen'))
                 .catch(() => navigateWithReset(this.props.navigation, 'Login'))
         })
     }
