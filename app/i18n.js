@@ -20,7 +20,8 @@ i18n.use(languageDetector).init({
                     newGoal: 'New Goal',
                     editTask: 'Edit Task',
                     editNotes: 'Edit Notes',
-                    pickGoal: 'Pick A Goal'
+                    pickGoal: 'Pick A Goal',
+                    schedule: 'Schedule'
                 },
                 labels: {
                     loginVK: 'Login With VK',
@@ -92,7 +93,8 @@ i18n.use(languageDetector).init({
                     newGoal: 'Новая цель',
                     editTask: 'Изменить задачу',
                     editNotes: 'Заметки',
-                    pickGoal: 'Указать цель'
+                    pickGoal: 'Указать цель',
+                    schedule: 'График'
                 },
                 labels: {
                     loginVK: 'Войти с VK',
@@ -164,7 +166,8 @@ i18n.use(languageDetector).init({
                     newGoal: 'New Goal',
                     editTask: 'Edit Task',
                     editNotes: 'Edit Notes',
-                    pickGoal: 'Pick A Goal'
+                    pickGoal: 'Pick A Goal',
+                    schedule: 'Schedule'
                 },
                 labels: {
                     loginVK: 'Login With VK',

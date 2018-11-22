@@ -107,8 +107,7 @@ class HomeScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <AnimatedHeader title={t('labels.greeting', { name: 'John' })} scrollOffset={this.state.scrollY}
-                        onRightButtonPress={this.logout} rightIcon={<Icon name='log-out'/>}/>
+                    <AnimatedHeader title={t('headings.schedule')} scrollOffset={this.state.scrollY}/>
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <View style={{ paddingTop: 16 }}/>
@@ -130,8 +129,8 @@ class HomeScreen extends Component {
                                 }
                             </ScrollView>
                         </React.Fragment>}
-                        <SectionHeader rightAction={() => this.props.navigation.navigate('AllTasksScreen')}
-                            rightActionText={t('labels.seeAll')} leftText={t('headings.tasks')}/>
+                        {SHOW_GOALS &&<SectionHeader rightAction={() => this.props.navigation.navigate('AllTasksScreen')}
+                            rightActionText={t('labels.seeAll')} leftText={t('headings.tasks')}/>}
                         {SHOW_GOALS && <QuickInput placeholder={t('labels.newTaskForToday')} onSubmitEditing={this.onAddNewTask}/>}
                         <View style={{ marginVertical: 4 }}/>
                         {
