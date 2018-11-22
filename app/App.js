@@ -15,7 +15,7 @@ import GoalScreen from './screens/Goal'
 import TaskDescriptionEditScreen from './screens/DescriptionEdit/TaskDescriptionEdit'
 import GoalDescriptionEditScreen from './screens/DescriptionEdit/GoalDescriptionEdit'
 import AllTasksScreen from './screens/AllTasks'
-import AllGoalsScreen from './screens/AllGoalsScreen'
+import AllGoalsScreen from './screens/AllGoals'
 import FooterComponent from './components/common/Footer'
 
 const RootStack = StackNavigator(

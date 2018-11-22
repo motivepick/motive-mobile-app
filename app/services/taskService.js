@@ -56,6 +56,12 @@ export const undoCloseTask = async id => {
     return body
 }
 
+export const updateTask = async (id, task) => {
+    const token = await fetchToken()
+    const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send(task)
+    return body
+}
+
 export const doDeleteTask = async id => {
     const token = await fetchToken()
     const { body } = await request.del(`${API_URL}/tasks/${id}`).set('Cookie', token)

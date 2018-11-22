@@ -29,6 +29,7 @@
 		4CC8F855212DEE430047D7D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8F854212DEE430047D7D9 /* AppDelegate.swift */; };
 		4CDC4A812156AD3700AA2B5A /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		4D31D4578E4D46CCB650140F /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 94BE281FFCF747AF9EC157D2 /* Entypo.ttf */; };
+		6A4E5C3321A73B6F00EB32A2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A4E5C3221A73B6F00EB32A2 /* Assets.xcassets */; };
 		7735B59684BD432EA8E760A4 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 78DBEB306E9E4D3980DAB282 /* EvilIcons.ttf */; };
 		7BBC84AFB55645E3B85EB807 /* rubicon-icon-font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 70328F4F4840449CB194CD8B /* rubicon-icon-font.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -361,6 +362,7 @@
 		5E30CF88D38BD608A8F29434 /* Pods-MotiveMobileApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotiveMobileApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MotiveMobileApp/Pods-MotiveMobileApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		61377120C2CD47A2973F4D62 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		6A4E5C3221A73B6F00EB32A2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70328F4F4840449CB194CD8B /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		78DBEB306E9E4D3980DAB282 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				4CC8F854212DEE430047D7D9 /* AppDelegate.swift */,
 				4CC8F857212DEEE50047D7D9 /* MotiveMobileApp-Bridging-Header.h */,
+				6A4E5C3221A73B6F00EB32A2 /* Assets.xcassets */,
 			);
 			name = MotiveMobileApp;
 			sourceTree = "<group>";
@@ -1129,6 +1132,7 @@
 				096B711F3A46466D8FBB4267 /* Roboto.ttf in Resources */,
 				7BBC84AFB55645E3B85EB807 /* rubicon-icon-font.ttf in Resources */,
 				B170905474264ED4BC22AF97 /* SimpleLineIcons.ttf in Resources */,
+				6A4E5C3321A73B6F00EB32A2 /* Assets.xcassets in Resources */,
 				D0A3415AE2F3406F9CA8622D /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

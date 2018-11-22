@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AsyncStorage, Image, Linking, StyleSheet, View } from 'react-native'
+import { Image, Linking, StyleSheet, View } from 'react-native'
 import { navigateWithReset } from './navigationWithReset'
 import { API_URL } from '../const'
 import getTheme from '../../native-base-theme/components'
@@ -7,18 +7,20 @@ import baseTheme from '../../native-base-theme/variables/platform'
 import { Button, Container, Content, Icon, StyleProvider, Text } from 'native-base'
 import { human, iOSUIKit } from 'react-native-typography'
 import { translate } from 'react-i18next'
+import { storeToken } from '../services/accountService'
 
 class LoginScreen extends Component {
-    handleOpenURL = (event) => {
+
+    handleOpenURL = event => {
         const url = event.url || event
         const token = url.replace('motive://', '')
-        AsyncStorage.setItem('token', 'SESSION=' + token, () => {
-            navigateWithReset(this.props.navigation, 'Splash')
-        })
+        storeToken(token, () => navigateWithReset(this.props.navigation, 'Splash'))
     }
+
     authenticateViaVk = () => {
         Linking.openURL(`${API_URL}/oauth2/authorization/vk?mobile`)
     }
+
     authenticateViaFacebook = () => {
         Linking.openURL(`${API_URL}/oauth2/authorization/facebook?mobile`)
     }

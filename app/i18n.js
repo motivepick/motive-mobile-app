@@ -117,12 +117,12 @@ i18n.use(languageDetector).init({
                     newTask: 'Новая задача',
                     newTaskForToday: 'Новая задача на сегодня',
                     editTask: 'Задача',
-                    showClosedTasks: 'Показать завершённые задачи',
-                    showClosedGoals: 'Показать завершённые цели',
-                    hideClosedTasks: 'Скрыть завершённые задачи',
+                    showClosedTasks: 'Показать закрытые задачи',
+                    showClosedGoals: 'Показать закрытые цели',
+                    hideClosedTasks: 'Скрыть закрытые задачи',
                     dueDate: 'Дата выполнения',
                     color: 'Цвет',
-                    itemStatusInProgress: 'Показать завершённые',
+                    itemStatusInProgress: 'Показать закрытые',
                     itemStatusCompleted: 'Показать открытые',
                     totalTasks: 'Задач: {{totalTasks}}',
                     totalGoals: 'Целей: {{totalGoals}}',
@@ -145,10 +145,10 @@ i18n.use(languageDetector).init({
                     taskIsPartOfGoal: 'Указать цель'
                 },
                 emptyStates: {
-                    noCompletedTasks: 'Ещё нет завершённых задач',
-                    allTasksCompleted: 'Вы завершили все свои задачи! \nКонечно, всегда можно добавить ещё задач... :)',
+                    noCompletedTasks: 'Ещё нет закрытых задач',
+                    allTasksCompleted: 'Вы закрыли все свои задачи! \nКонечно, всегда можно добавить ещё задач... :)',
                     noTasks: 'Задач нет! \nНо можно добавить :)',
-                    noCompletedGoals: 'Ещё нет завершённых целей',
+                    noCompletedGoals: 'Ещё нет закрытых целей',
                     allGoalsCompleted: 'Так держать! \nВсе поставленные цели достигнуты!',
                     noGoals: 'Целей нет! \nНо можно поставить :)'
                 }
