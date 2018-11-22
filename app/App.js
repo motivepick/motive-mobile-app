@@ -44,7 +44,8 @@ const RootStack = StackNavigator(
             },
             {
                 tabBarPosition: 'bottom',
-                tabBarComponent: FooterComponent
+                tabBarComponent: FooterComponent,
+                lazy: true
             }
         )
     },
