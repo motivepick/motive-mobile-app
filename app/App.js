@@ -17,18 +17,27 @@ import GoalDescriptionEditScreen from './screens/DescriptionEdit/GoalDescription
 import AllTasksScreen from './screens/AllTasks'
 import AllGoalsScreen from './screens/AllGoalsScreen'
 
-const RootStack = StackNavigator({
-    Splash: SplashScreen,
-    Login: LoginScreen,
-    Home: HomeScreen,
-    AllTasksScreen,
-    AllGoalsScreen,
-    TaskEditScreen,
-    Goal: GoalScreen,
-    GoalEdit: GoalEditScreen,
-    TaskDescriptionEditScreen,
-    GoalDescriptionEditScreen
-})
+const RootStack = StackNavigator(
+    {
+        Splash: SplashScreen,
+        Login: LoginScreen,
+        Home: HomeScreen,
+        AllTasksScreen,
+        AllGoalsScreen,
+        TaskEditScreen,
+        Goal: GoalScreen,
+        GoalEdit: GoalEditScreen,
+        TaskDescriptionEditScreen,
+        GoalDescriptionEditScreen
+    },
+    {
+        header: null,
+        headerMode: 'none',
+        navigationOptions: {
+            header: null
+        }
+    }
+)
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 

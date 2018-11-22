@@ -10,11 +10,6 @@ import Line from '../../components/common/Line'
 import { handleDueDateOf } from '../../utils/parser'
 
 export class AllTasksView extends Component {
-
-    static navigationOptions = {
-        header: null
-    }
-
     state = {
         scrollY: new Animated.Value(0)
     }

@@ -9,11 +9,6 @@ import GoalPicker from '../../components/common/GoalPicker/GoalPicker'
 import { SHOW_GOALS } from '../../const'
 
 export class TaskEditView extends Component {
-
-    static navigationOptions = {
-        header: null
-    }
-
     state = {
         selected: this.props.task.goal && this.props.task.goal.id
     }

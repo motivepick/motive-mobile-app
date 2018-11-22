@@ -17,11 +17,6 @@ import Line from '../components/common/Line'
 import { fetchToken } from '../services/accountService'
 
 class AllGoalsScreen extends Component {
-
-    static navigationOptions = {
-        header: null
-    }
-
     state = {
         scrollY: new Animated.Value(0)
     }

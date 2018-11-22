@@ -76,11 +76,6 @@ const GoalCircle = ({ ...props }) => (
 )
 
 class HomeScreen extends Component {
-
-    static navigationOptions = {
-        header: null
-    }
-
     state = {
         scrollY: new Animated.Value(0)
     }

@@ -7,11 +7,6 @@ import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
 
 export class DescriptionEditView extends Component {
-
-    static navigationOptions = {
-        header: null
-    }
-
     componentDidMount() {
         const { navigation, setEditableEntity } = this.props
         setEditableEntity(navigation)

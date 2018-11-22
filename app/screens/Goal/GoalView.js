@@ -12,11 +12,6 @@ import QuickInput from '../../components/common/QuickInput/QuickInput'
 import { handleDueDateOf } from '../../utils/parser'
 
 export class GoalView extends Component {
-
-    static navigationOptions = {
-        header: null
-    }
-
     state = {
         scrollY: new Animated.Value(0)
     }

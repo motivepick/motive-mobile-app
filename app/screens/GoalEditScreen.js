@@ -16,11 +16,6 @@ import Description from '../components/common/Description/Description'
 import { fetchToken } from '../services/accountService'
 
 class GoalEditScreen extends Component {
-
-    static navigationOptions = {
-        header: null
-    }
-
     goToEditDescriptionScreen = () => {
         const { goal, navigation } = this.props
         return navigation.navigate('GoalDescriptionEditScreen', { goal })

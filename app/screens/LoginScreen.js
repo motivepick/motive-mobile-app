@@ -9,10 +9,6 @@ import { human, iOSUIKit } from 'react-native-typography'
 import { translate } from 'react-i18next'
 
 class LoginScreen extends Component {
-
-    static navigationOptions = {
-        header: null
-    }
     handleOpenURL = (event) => {
         const url = event.url || event
         const token = url.replace('motive://', '')
