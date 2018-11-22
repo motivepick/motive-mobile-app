@@ -64,6 +64,7 @@ export default (variables = variable) => {
                 lineHeight: 16
             }
         },
+        marginTop: 5,
         backgroundColor: Platform.OS === 'android'
             ? variables.footerDefaultBg
             : undefined,

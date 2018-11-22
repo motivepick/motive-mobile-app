@@ -10,7 +10,7 @@ const platformStyle = undefined
 const isIphoneX =
   platform === 'ios' && (deviceHeight === 812 || deviceWidth === 812)
 
-const mainTextColor = '#000';
+const mainTextColor = '#000'
 
 export default {
     platformStyle,
@@ -136,17 +136,19 @@ export default {
     },
 
     // Footer
-    footerHeight: 55,
-    footerDefaultBg: platform === 'ios' ? '#F8F8F8' : '#3F51B5',
+    footerHeight: 50,
+    footerDefaultBg: platform === 'ios' ? iOSColors.white : '#3F51B5',
     footerPaddingBottom: 0,
 
     // FooterTab
-    tabBarTextColor: platform === 'ios' ? '#6b6b6b' : '#b3c7f9',
-    tabBarTextSize: platform === 'ios' ? 14 : 11,
+    tabBarTextColor: platform === 'ios' ? mainTextColor : '#b3c7f9',
+    tabBarTextSize: 11,
     activeTab: platform === 'ios' ? '#007aff' : '#fff',
     sTabBarActiveTextColor: '#007aff',
-    tabBarActiveTextColor: platform === 'ios' ? '#007aff' : '#fff',
-    tabActiveBgColor: platform === 'ios' ? '#cde1f9' : '#3F51B5',
+    get tabBarActiveTextColor() {
+        return platform === 'ios' ? this.brandPrimary : '#fff'
+    },
+    tabActiveBgColor: platform === 'ios' ? 'transparent' : '#3F51B5',
 
     // Header
     toolbarBtnColor: platform === 'ios' ? iOSColors.pink : '#fff',

@@ -93,7 +93,8 @@ export default (variables = variable) => {
             },
             flex: 1,
             alignSelf: 'center',
-            alignItems: 'flex-end'
+            alignItems: 'flex-end',
+            marginBottom: 10
         },
         backgroundColor: variables.footerDefaultBg,
         flexDirection: 'row',
