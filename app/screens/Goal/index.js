@@ -1,3 +1,3 @@
-import GoalScreenContainer from './GoalScreenContainer'
+import GoalContainer from './GoalContainer'
 
-export default GoalScreenContainer
+export default GoalContainer

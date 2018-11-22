@@ -45,8 +45,8 @@ class TaskList extends Component {
     render() {
         const {
             showSubHeader = true,
-            tasks = [],
-            closedTasks = [],
+            tasks,
+            closedTasks,
             onDeleteTask,
             onCloseTask,
             t
@@ -54,12 +54,12 @@ class TaskList extends Component {
 
         const totalTasks = this.state.showByStatusInProgress ? tasks && tasks.length : closedTasks && closedTasks.length
 
-        const hasTasks = Boolean(tasks && tasks.length)
-        const hasClosedTasks = Boolean(closedTasks && closedTasks.length)
+        const hasTasks = tasks.length > 0
+        const hasClosedTasks = closedTasks.length > 0
 
         const showInProgressState = Boolean(this.state.showByStatusInProgress && hasTasks)
         const showAllCompletedState = Boolean(!this.state.showByStatusInProgress && hasClosedTasks)
-        const showEmptyState = Boolean(!hasTasks && !hasClosedTasks)
+        const showEmptyState = !hasTasks && !hasClosedTasks
         const showCompletedState = Boolean(this.state.showByStatusInProgress && !hasTasks && hasClosedTasks)
         const showNoneCompletedState = Boolean(!this.state.showByStatusInProgress && hasTasks && !hasClosedTasks)
 

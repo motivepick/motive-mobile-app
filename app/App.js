@@ -14,7 +14,7 @@ import i18n from './i18n'
 import GoalScreen from './screens/Goal'
 import TaskDescriptionEditScreen from './screens/DescriptionEdit/TaskDescriptionEdit'
 import GoalDescriptionEditScreen from './screens/DescriptionEdit/GoalDescriptionEdit'
-import AllTasksScreen from './screens/AllTasksScreen'
+import AllTasksScreen from './screens/AllTasks'
 import AllGoalsScreen from './screens/AllGoalsScreen'
 
 const RootStack = StackNavigator({

@@ -11,7 +11,7 @@ import Line from '../../components/common/Line'
 import QuickInput from '../../components/common/QuickInput/QuickInput'
 import { handleDueDateOf } from '../../utils/parser'
 
-export class GoalScreenView extends Component {
+export class GoalView extends Component {
 
     static navigationOptions = {
         header: null

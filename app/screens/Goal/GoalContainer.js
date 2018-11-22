@@ -4,7 +4,7 @@ import { createTask } from '../../services/goalService'
 import { closeTask, doDeleteTask, fetchTasks } from '../../services/taskService'
 import connect from 'react-redux/es/connect/connect'
 import { translate } from 'react-i18next'
-import { GoalScreenView } from './GoalScreenView'
+import { GoalView } from './GoalView'
 
 const mapStateToProps = state => ({
     goal: state.goals.goal
@@ -39,4 +39,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     }
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(GoalScreenView))
+export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(GoalView))
