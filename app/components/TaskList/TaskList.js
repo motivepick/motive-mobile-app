@@ -45,8 +45,8 @@ class TaskList extends Component {
     render() {
         const {
             showSubHeader = true,
-            tasks,
-            closedTasks,
+            tasks = [],
+            closedTasks = [],
             onDeleteTask,
             onCloseTask,
             onUndoCloseTask,
