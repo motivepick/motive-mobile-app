@@ -43,7 +43,7 @@ export class GoalView extends Component {
                         <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                         <Line/>
                         <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={listFilter => updateGoalTasks(listFilter, id)}
-                            onCloseTask={id => closeGoalTask(id)} onDeleteTask={id => deleteGoalTask(id)}/>
+                            onCloseTask={id => closeGoalTask(id)} onDeleteTask={id => deleteGoalTask(id)} onTasksStatusToggle={Function}/>
                     </Content>
                 </Container>
             </StyleProvider>

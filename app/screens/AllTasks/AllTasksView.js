@@ -43,8 +43,8 @@ export class AllTasksView extends Component {
                     <Line/>
                     <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}
                         style={{ height: '100%' }}>
-                        <TaskList tasks={tasks} closedTasks={closedTasks} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}
-                            undoCloseTask={id => undoCloseTask(id)}/>
+                        <TaskList tasks={tasks} closedTasks={closedTasks} onCloseTask={id => closeTask(id)} onUndoCloseTask={id => undoCloseTask(id)}
+                            onDeleteTask={id => deleteTask(id)} onTasksStatusToggle={closed => this.onTasksStatusToggle(closed)}/>
                     </Content>
                 </Container>
             </StyleProvider>
@@ -55,5 +55,10 @@ export class AllTasksView extends Component {
         const { createTask } = this.props
         const task = handleDueDateOf({ name })
         createTask(task)
+    }
+
+    onTasksStatusToggle = closed => {
+        const { updateUserTasks } = this.props
+        updateUserTasks(closed, 'all')
     }
 }

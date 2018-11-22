@@ -28,7 +28,7 @@ class GoalList extends Component {
             imageUrl={'https://cdn.pixabay.com/photo/2017/02/16/10/20/target-2070972_1280.png'}
             content={<React.Fragment>
                 <Text style={{ textAlign: 'center' }}>{t('emptyStates.allGoalsCompleted')}</Text>
-                <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }} onPress={this.toggleTasksByStatus}>
+                <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }} onPress={this.toggleByStatus}>
                     <Text style={{ color: iOSColors.gray }}>{this.props.t('labels.showClosedGoals').toLocaleUpperCase()}</Text>
                 </Button>
             </React.Fragment>}

@@ -46,7 +46,8 @@ class CheckboxListItem extends Component {
 
     handleComplete = (entity, secId, rowId, rowMap) => {
         const { onComplete } = this.props
-        this.setState({ completed: true })
+        const { completed } = this.state
+        this.setState({ completed: !completed })
         onComplete(entity, secId, rowId, rowMap)
     }
 }

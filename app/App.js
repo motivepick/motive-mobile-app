@@ -21,13 +21,13 @@ const RootStack = StackNavigator({
     Splash: SplashScreen,
     Login: LoginScreen,
     Home: HomeScreen,
-    AllTasksScreen: AllTasksScreen,
-    AllGoalsScreen: AllGoalsScreen,
-    TaskEdit: TaskEditScreen,
+    AllTasksScreen,
+    AllGoalsScreen,
+    TaskEditScreen,
     Goal: GoalScreen,
     GoalEdit: GoalEditScreen,
-    TaskDescriptionEditScreen: TaskDescriptionEditScreen,
-    GoalDescriptionEditScreen: GoalDescriptionEditScreen
+    TaskDescriptionEditScreen,
+    GoalDescriptionEditScreen
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))

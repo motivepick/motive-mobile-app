@@ -27,8 +27,8 @@ class TaskList extends Component {
         <EmptyStateTemplate
             imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
             content={<React.Fragment>
-                <Text style={{ textAlign: 'center' }}>{t('emptyStates.allTasksCompleted')}</Text>
-                <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }} onPress={this.toggleTasksByStatus}>
+                <Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.allTasksCompleted')}</Text>
+                <Button small transparent style={{ alignSelf: 'center', marginVertical: 20 }} onPress={this.toggleByStatus}>
                     <Text style={{ color: iOSColors.gray }}>{this.props.t('labels.showClosedTasks').toLocaleUpperCase()}</Text>
                 </Button>
             </React.Fragment>}
@@ -49,19 +49,21 @@ class TaskList extends Component {
             closedTasks,
             onDeleteTask,
             onCloseTask,
+            onUndoCloseTask,
             t
         } = this.props
+        const { showByStatusInProgress } = this.state
 
-        const totalTasks = this.state.showByStatusInProgress ? tasks && tasks.length : closedTasks && closedTasks.length
+        const totalTasks = showByStatusInProgress ? tasks && tasks.length : closedTasks && closedTasks.length
 
         const hasTasks = tasks.length > 0
         const hasClosedTasks = closedTasks.length > 0
 
-        const showInProgressState = Boolean(this.state.showByStatusInProgress && hasTasks)
-        const showAllCompletedState = Boolean(!this.state.showByStatusInProgress && hasClosedTasks)
+        const showInProgressState = Boolean(showByStatusInProgress && hasTasks)
+        const showAllCompletedState = Boolean(!showByStatusInProgress && hasClosedTasks)
         const showEmptyState = !hasTasks && !hasClosedTasks
-        const showCompletedState = Boolean(this.state.showByStatusInProgress && !hasTasks && hasClosedTasks)
-        const showNoneCompletedState = Boolean(!this.state.showByStatusInProgress && hasTasks && !hasClosedTasks)
+        const showCompletedState = Boolean(showByStatusInProgress && !hasTasks && hasClosedTasks)
+        const showNoneCompletedState = Boolean(!showByStatusInProgress && hasTasks && !hasClosedTasks)
 
         return (
             <React.Fragment>
@@ -71,20 +73,25 @@ class TaskList extends Component {
                     <View style={styles.sectionHeader}>
                         <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                         <Button transparent noIndent onPress={this.toggleByStatus}>
-                            <Text>{this.state.showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
+                            <Text>{showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
                         </Button>
                     </View>
                 </React.Fragment>}
                 {showEmptyState && this.renderEmptyState()}
                 {showCompletedState && this.renderAllCompletedState()}
                 {showNoneCompletedState && this.renderNoneCompletedState()}
-                {showAllCompletedState && <Tasks tasks={closedTasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>}
                 {showInProgressState && <Tasks tasks={tasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>}
+                {showAllCompletedState && <Tasks tasks={closedTasks} onCloseTask={id => onUndoCloseTask(id)} onDeleteTask={onDeleteTask}/>}
             </React.Fragment>
         )
     }
 
-    toggleByStatus = () => this.setState({ showByStatusInProgress: !this.state.showByStatusInProgress })
+    toggleByStatus = () => {
+        const { onTasksStatusToggle } = this.props
+        const { showByStatusInProgress } = this.state
+        this.setState({ showByStatusInProgress: !showByStatusInProgress })
+        onTasksStatusToggle(showByStatusInProgress)
+    }
 
     onValueChange(value: string) {
         if (value === this.state.activeSort) return

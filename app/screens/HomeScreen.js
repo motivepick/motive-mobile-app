@@ -153,6 +153,7 @@ class HomeScreen extends Component {
                                         onFilterChanged={listFilter => updateUserTasks(false, listFilter)}
                                         onCloseTask={id => closeTask(id)}
                                         onDeleteTask={id => deleteTask(id)}
+                                        onTasksStatusToggle={Function}
                                     />
                                 </View>)
                             })
