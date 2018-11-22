@@ -32,6 +32,7 @@ class Goals extends Component {
 
         return (
             <CheckboxListItem
+                key={goal.id}
                 isCompleted={closed}
                 onComplete={() => this.onComplete(goal, secId, rowId, rowMap)}
                 onBodyClick={() => this.onItemClick(goal)}
@@ -39,7 +40,7 @@ class Goals extends Component {
                 noteText={taskCountLabel}
                 date={dueDate}
                 checkboxColor={colorTag}
-                progress = {progress}
+                progress={progress}
             />
         )
     }

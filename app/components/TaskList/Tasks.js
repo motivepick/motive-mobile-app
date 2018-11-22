@@ -30,6 +30,7 @@ class Tasks extends Component {
 
         return (
             <CheckboxListItem
+                key={task.id}
                 isCompleted={closed}
                 onComplete={() => this.onComplete(task, secId, rowId, rowMap)}
                 onBodyClick={() => this.onItemClick(task)}
