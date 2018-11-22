@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Animated, ScrollView, StyleSheet, View } from 'react-native'
-import { navigateWithReset } from './navigationWithReset'
 import TaskList from '../components/TaskList/TaskList'
 import { Container, Content, StyleProvider } from 'native-base'
 import { translate } from 'react-i18next'
@@ -40,10 +39,6 @@ import { fetchToken } from '../services/accountService'
 class HomeScreen extends Component {
     state = {
         scrollY: new Animated.Value(0)
-    }
-
-    logout = async () => {
-        navigateWithReset(this.props.navigation, 'Login')
     }
 
     componentDidMount() {
