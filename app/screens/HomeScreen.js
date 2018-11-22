@@ -25,55 +25,17 @@ import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '..
 import { doDeleteGoal } from '../services/goalService'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
-import { human, iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
-import ProgressCircle from 'react-native-progress-circle'
+import { iOSColors } from 'react-native-typography'
 import { palette } from '../components/common/Palette'
 import AnimatedHeader from '../components/common/AnimatedHeader/AnimatedHeader'
 import Line from '../components/common/Line'
 import QuickInput from '../components/common/QuickInput/QuickInput'
+import SectionHeader from '../components/common/SectionHeader'
+import SubSectionHeader from '../components/common/SubSectionHeader'
+import GoalCircle from '../components/common/GoalCircle'
 import { getRelevantTasks } from '../utils/dateUtils'
 import { handleDueDateOf } from '../utils/parser'
 import { fetchToken } from '../services/accountService'
-
-const SectionHeader = ({ ...props }) => (
-    <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>{props.leftText}</Text>
-        <TouchableOpacity onPress={props.rightAction}>
-            <Text style={styles.sectionRightText}>{props.rightActionText}</Text>
-        </TouchableOpacity>
-    </View>
-)
-
-const SubSectionHeader = ({ ...props }) => (
-    <View style={styles.sectionHeader}>
-        <Text style={styles.subSectionTitle}>{props.leftText}</Text>
-        <Text style={styles.subSectionRightText}>{props.rightText}</Text>
-    </View>
-)
-
-const GoalCircle = ({ ...props }) => (
-    <View style={styles.goalCircle}>
-        <TouchableOpacity onPress={() => props.onBodyClick(props.goal)} style={{
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
-            <ProgressCircle
-                percent={props.progress}
-                radius={30}
-                borderWidth={5}
-                shadowColor={iOSColors.midGray}
-                bgColor={props.progressBgColor}
-                color={iOSColors.gray}
-            >
-                {!props.progressIcon && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.white }]}>{`${props.progress}%`}</Text>}
-                {props.progressIcon && <Icon name={props.progressIcon} style={[systemWeights.bold, { color: iOSColors.gray, fontSize: 40 }]}/>}
-            </ProgressCircle>
-            <Text style={[iOSUIKit.footnoteEmphasized]}>{props.text}</Text>
-            {props.subText && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{props.subText}</Text>}
-        </TouchableOpacity>
-    </View>
-)
 
 class HomeScreen extends Component {
     state = {
@@ -243,40 +205,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(HomeScreen))
 
 const styles = StyleSheet.create({
-    sectionHeader: {
-        paddingHorizontal: 16,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    goalCircle: {
-        marginHorizontal: 16,
-        padding: 12,
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        backgroundColor: iOSColors.white,
-        borderRadius: 6
-    },
-    sectionTitle: {
-        ...human.title2Object,
-        ...systemWeights.bold
-    },
-    subSectionTitle: {
-        ...human.title3Object,
-        ...systemWeights.bold
-    },
-    sectionRightText: {
-        ...iOSUIKit.bodyEmphasizedObject,
-        color: iOSColors.pink
-    },
     goalBar: {
         marginTop: 12,
         paddingHorizontal: 10,
         paddingBottom: 12
-    },
-    subSectionRightText: {
-        ...human.footnoteObject,
-        color: iOSColors.gray
     }
 })
