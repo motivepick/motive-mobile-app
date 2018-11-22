@@ -17,10 +17,10 @@ export default class FooterComponent extends Component {
                             <Icon type="MaterialCommunityIcons" name="calendar-clock" onPress={() => this.props.navigation.navigate('Home')}/>
                             <Text>Schedule</Text>
                         </Button>
-                        {/*<Button vertical active={this.props.navigationState.index === 2}>*/}
-                            {/*<Icon type="MaterialCommunityIcons" name="account" onPress={() => this.props.navigation.navigate('AccountScreen')}/>*/}
-                            {/*<Text>Account</Text>*/}
-                        {/*</Button>*/}
+                        <Button vertical active={this.props.navigationState.index === 2}>
+                            <Icon type="MaterialCommunityIcons" name="account" onPress={() => this.props.navigation.navigate('AccountScreen')}/>
+                            <Text>Account</Text>
+                        </Button>
                     </FooterTab>
                 </Footer>
             </StyleProvider>

@@ -16,6 +16,7 @@ import TaskDescriptionEditScreen from './screens/DescriptionEdit/TaskDescription
 import GoalDescriptionEditScreen from './screens/DescriptionEdit/GoalDescriptionEdit'
 import AllTasksScreen from './screens/AllTasks'
 import AllGoalsScreen from './screens/AllGoalsScreen'
+import AccountScreen from './screens/AccountScreen'
 import FooterComponent from './components/common/Footer'
 
 const RootStack = StackNavigator(
@@ -38,9 +39,9 @@ const RootStack = StackNavigator(
                 Home: {
                     screen: HomeScreen
                 },
-                // AccountScreen: {
-                //     screen: AccountScreen
-                // }
+                AccountScreen: {
+                    screen: AccountScreen
+                }
             },
             {
                 tabBarPosition: 'bottom',
