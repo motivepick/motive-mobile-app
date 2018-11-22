@@ -1,6 +1,6 @@
 import React from 'react'
 import thunkMiddleware from 'redux-thunk'
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, TabNavigator } from 'react-navigation'
 import LoginScreen from './screens/LoginScreen'
 import SplashScreen from './screens/SplashScreen'
 import HomeScreen from './screens/HomeScreen'
@@ -16,6 +16,7 @@ import TaskDescriptionEditScreen from './screens/DescriptionEdit/TaskDescription
 import GoalDescriptionEditScreen from './screens/DescriptionEdit/GoalDescriptionEdit'
 import AllTasksScreen from './screens/AllTasks'
 import AllGoalsScreen from './screens/AllGoalsScreen'
+import FooterComponent from './components/common/Footer'
 
 const RootStack = StackNavigator(
     {
@@ -28,7 +29,24 @@ const RootStack = StackNavigator(
         Goal: GoalScreen,
         GoalEdit: GoalEditScreen,
         TaskDescriptionEditScreen,
-        GoalDescriptionEditScreen
+        GoalDescriptionEditScreen,
+        MainNavigation: TabNavigator(
+            {
+                AllTasksScreen: {
+                    screen: AllTasksScreen
+                },
+                Home: {
+                    screen: HomeScreen
+                },
+                // AccountScreen: {
+                //     screen: AccountScreen
+                // }
+            },
+            {
+                tabBarPosition: 'bottom',
+                tabBarComponent: FooterComponent
+            }
+        )
     },
     {
         header: null,
