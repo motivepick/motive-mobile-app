@@ -9,16 +9,16 @@ export default class FooterComponent extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Footer>
                     <FooterTab>
-                        <Button vertical active={this.props.navigation.state.index === 0}>
-                            <Icon type="MaterialCommunityIcons" name="playlist-check" onPress={() => this.props.navigation.navigate('AllTasksScreen')}/>
+                        <Button vertical active={this.props.navigation.state.index === 0} onPress={() => this.props.navigation.navigate('AllTasksScreen')}>
+                            <Icon type="MaterialCommunityIcons" name="playlist-check"/>
                             <Text>Tasks</Text>
                         </Button>
-                        <Button vertical active={this.props.navigation.state.index === 1}>
-                            <Icon type="MaterialCommunityIcons" name="calendar-clock" onPress={() => this.props.navigation.navigate('Home')}/>
+                        <Button vertical active={this.props.navigation.state.index === 1} onPress={() => this.props.navigation.navigate('Home')}>
+                            <Icon type="MaterialCommunityIcons" name="calendar-clock"/>
                             <Text>Schedule</Text>
                         </Button>
-                        <Button vertical active={this.props.navigation.state.index === 2}>
-                            <Icon type="MaterialCommunityIcons" name="account" onPress={() => this.props.navigation.navigate('AccountScreen')}/>
+                        <Button vertical active={this.props.navigation.state.index === 2} onPress={() => this.props.navigation.navigate('AccountScreen')}>
+                            <Icon type="MaterialCommunityIcons" name="account"/>
                             <Text>Account</Text>
                         </Button>
                     </FooterTab>
