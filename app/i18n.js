@@ -21,14 +21,14 @@ i18n.use(languageDetector).init({
                     editTask: 'Edit Task',
                     editNotes: 'Edit Notes',
                     pickGoal: 'Pick A Goal',
-                    schedule: 'Schedule'
+                    schedule: 'Schedule',
+                    account: 'Account'
                 },
                 labels: {
                     loginVK: 'Login With VK',
                     loginFB: 'Login With Facebook',
                     seeAll: 'See All',
                     addGoal: 'New goal',
-                    statistics: 'You can do it! {{percent}}% done',
                     all: 'All Tasks',
                     today: 'Today',
                     thisWeek: 'This Week',
@@ -94,14 +94,14 @@ i18n.use(languageDetector).init({
                     editTask: 'Изменить задачу',
                     editNotes: 'Заметки',
                     pickGoal: 'Указать цель',
-                    schedule: 'График'
+                    schedule: 'График',
+                    account: 'Аккаунт'
                 },
                 labels: {
                     loginVK: 'Войти с VK',
                     loginFB: 'Войти с Facebook',
                     seeAll: 'Смотреть все',
                     addGoal: 'Новая цель',
-                    statistics: 'Соберись! {{percent}}% готово',
                     all: 'Все задачи',
                     today: 'Сегодня',
                     thisWeek: 'На неделе',
@@ -167,14 +167,14 @@ i18n.use(languageDetector).init({
                     editTask: 'Edit Task',
                     editNotes: 'Edit Notes',
                     pickGoal: 'Pick A Goal',
-                    schedule: 'Schedule'
+                    schedule: 'Schedule',
+                    account: 'Account'
                 },
                 labels: {
                     loginVK: 'Login With VK',
                     loginFB: 'Login With Facebook',
                     seeAll: 'See All',
                     addGoal: 'New goal',
-                    statistics: 'You can do it! {{percent}}% done',
                     all: 'All Tasks',
                     today: 'Today',
                     thisWeek: 'This Week',
