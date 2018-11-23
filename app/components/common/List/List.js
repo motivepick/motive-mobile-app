@@ -17,7 +17,6 @@ class ListComponent extends Component {
         return (
             <View style={styles.container}>
                 <List
-                    style={styles.list}
                     contentContainerStyle={styles.contentContainer}
                     rightOpenValue={-115}
                     disableRightSwipe={true}

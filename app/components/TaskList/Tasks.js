@@ -43,7 +43,7 @@ class Tasks extends Component {
     }
 
     renderRightHiddenRow = (task, secId, rowId, rowMap) =>
-        <Button transparent onPress={() => this.onDelete(task, secId, rowId, rowMap)}>
+        <Button transparent onPress={() => this.onDelete(task, secId, rowId, rowMap)} style={{ backgroundColor: '#f0f0f0' }}>
             <Text>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
         </Button>
 
