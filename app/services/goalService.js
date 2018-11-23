@@ -23,6 +23,12 @@ const all = async (goalId, task) => {
     return body
 }
 
+export const updateGoal = async (id, goal) => {
+    const token = await fetchToken()
+    const { body } = await request.put(`${API_URL}/goals/${id}`).set('Cookie', token).send(goal)
+    return body
+}
+
 export const doDeleteGoal = async id => {
     const token = await fetchToken()
     const { body } = await request.del(`${API_URL}/goals/${id}`).set('Cookie', token)
