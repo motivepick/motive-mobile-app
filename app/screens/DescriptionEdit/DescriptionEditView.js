@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
+import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
 import { Container, Content, Form, Item, StyleProvider } from 'native-base'
 import Header from '../../components/common/Header/Header'
 import Description from '../../components/common/Description/Description'
@@ -19,13 +19,15 @@ export class DescriptionEditView extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: '#f3ece6' }}>
                     <Header title={t('headings.editNotes')} leftButtonLabel={t('labels.back')} onLeftButtonPress={this.handleLeftButtonPress}/>
-                    <Content contentContainerStyle={{ flex: 1 }}>
-                        <Form style={styles.form}>
-                            <Item stackedLabel style={styles.formItem}>
-                                <Description value={description} editable onChangeText={description => setDescription(description)}/>
-                            </Item>
-                        </Form>
-                    </Content>
+                    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled={Platform.OS === 'ios'}>
+                        <Content contentContainerStyle={{ flex: 1 }}>
+                            <Form style={styles.form}>
+                                <Item stackedLabel style={styles.formItem}>
+                                    <Description autoFocus={false} scrollEnabled={false} value={description} editable onChangeText={description => setDescription(description)}/>
+                                </Item>
+                            </Form>
+                        </Content>
+                    </KeyboardAvoidingView>
                 </Container>
             </StyleProvider>
         )
