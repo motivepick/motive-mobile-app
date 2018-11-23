@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Container, Content, Form, Item, StyleProvider } from 'native-base'
 import Header from '../../components/common/Header/Header'
 import Description from '../../components/common/Description/Description'
@@ -19,7 +19,7 @@ export class DescriptionEditView extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: '#f3ece6' }}>
                     <Header title={t('headings.editNotes')} leftButtonLabel={t('labels.back')} onLeftButtonPress={this.handleLeftButtonPress}/>
-                    <Content>
+                    <Content contentContainerStyle={{ flex: 1 }}>
                         <Form style={styles.form}>
                             <Item stackedLabel style={styles.formItem}>
                                 <Description value={description} editable onChangeText={description => setDescription(description)}/>
@@ -39,17 +39,14 @@ export class DescriptionEditView extends Component {
     }
 }
 
-const window = Dimensions.get('window')
-
 const styles = StyleSheet.create({
     form: {
-        marginRight: 10,
-        height: window.height
+        marginRight: 10
     },
     formItem: {
         borderBottomWidth: 0,
         paddingTop: 9,
-        paddingBottom: 9,
+        paddingBottom: 16,
         height: '100%'
     }
 })
