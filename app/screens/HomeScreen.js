@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Animated, ScrollView, StyleSheet, View } from 'react-native'
 import TaskList from '../components/TaskList/TaskList'
-import { Container, Content, StyleProvider } from 'native-base'
+import { Container, Content, StyleProvider, Text } from 'native-base'
 import { translate } from 'react-i18next'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -35,11 +35,19 @@ import GoalCircle from '../components/common/GoalCircle'
 import { getRelevantTasks } from '../utils/dateUtils'
 import { handleDueDateOf } from '../utils/parser'
 import { fetchToken } from '../services/accountService'
+import EmptyStateTemplate from '../components/common/EmptyStateTemplate'
 
 class HomeScreen extends Component {
     state = {
         scrollY: new Animated.Value(0)
     }
+
+    renderEmptyState = () => (
+        <EmptyStateTemplate
+            imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
+            content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noTasks')}</Text>}
+        />
+    )
 
     componentDidMount() {
         const { updateUserTasks, updateUserGoals } = this.props
@@ -61,12 +69,16 @@ class HomeScreen extends Component {
         const { weeklyTasks = new Map(), nextDate } = getRelevantTasks(tasks, t('labels.today'))
         const relevantGoals = goals && goals.filter((goal, i) => i < 3)
 
+        const hasTasks = weeklyTasks && weeklyTasks.length > 0
+        const showEmptyState = !hasTasks
+
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <AnimatedHeader title={t('headings.schedule')} scrollOffset={this.state.scrollY}/>
                     <Line/>
-                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
+                    <Content contentContainerStyle={{ flex: 1 }} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
+                        {showEmptyState && this.renderEmptyState()}
                         <View style={{ paddingTop: 16 }}/>
                         {SHOW_GOALS && <React.Fragment>
                             <SectionHeader rightAction={() => this.props.navigation.navigate('AllGoalsScreen')}

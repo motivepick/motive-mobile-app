@@ -36,7 +36,7 @@ export class AllTasksView extends Component {
                         onRightButtonPress={this.handleGoalClick}/>
                     <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                     <Line/>
-                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}
+                    <Content contentContainerStyle={{ flex: 1 }} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}
                         style={{ height: '100%' }}>
                         <TaskList tasks={tasks} closedTasks={closedTasks} onCloseTask={id => closeTask(id)} onUndoCloseTask={id => undoCloseTask(id)}
                             onDeleteTask={id => deleteTask(id)} onTasksStatusToggle={closed => this.onTasksStatusToggle(closed)}/>

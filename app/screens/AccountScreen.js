@@ -27,7 +27,7 @@ class AccountScreen extends Component {
                     <AnimatedHeader title={this.props.t('labels.greeting', { name: 'John' })} scrollOffset={this.state.scrollY} onRightButtonPress={this.logout}
                                     rightIcon={<Icon name='log-out'/>}/>
                     <Line/>
-                    <Content onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
+                    <Content contentContainerStyle={{ flex: 1 }} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <EmptyStateTemplate imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'} content={<Text>Screen for logging out</Text>}/>
                     </Content>
                 </Container>

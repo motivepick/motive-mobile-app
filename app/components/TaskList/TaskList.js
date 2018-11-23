@@ -7,6 +7,7 @@ import Line from '../common/Line'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import SortPicker from '../common/SortPicker/SortPicker'
 import EmptyStateTemplate from '../common/EmptyStateTemplate'
+import { SHOW_GOALS } from '../../const'
 
 class TaskList extends Component {
 
@@ -71,8 +72,8 @@ class TaskList extends Component {
                     <Text style={styles.subHeader}>{t('labels.totalTasks', { totalTasks: totalTasks || 0 }).toLocaleUpperCase()}</Text>
                     <Line/>
                     <View style={styles.sectionHeader}>
-                        <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
-                        <Button transparent noIndent onPress={this.toggleByStatus}>
+                        { SHOW_GOALS && <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>}
+                        <Button transparent noIndent onPress={this.toggleByStatus} style={{ alignSelf: 'flex-end' }}>
                             <Text>{showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
                         </Button>
                     </View>
@@ -105,8 +106,7 @@ export default translate('translations')(TaskList)
 const styles = StyleSheet.create({
     sectionHeader: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        justifyContent: 'flex-end',
         marginHorizontal: 16
     },
     subHeader: {

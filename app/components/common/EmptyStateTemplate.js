@@ -7,9 +7,9 @@ class EmptyStateTemplate extends Component {
         const { imageUrl, content } = this.props
 
         return (
-            <View style={{ paddingVertical: 20, marginTop: 50, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+            <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <Image
-                    style={{ width: 50, height: 50, margin: 20 }}
+                    style={{ width: '35%', aspectRatio: 1.5, resizeMode: 'contain', marginBottom: 20 }}
                     source={{ uri: imageUrl }}
                 />
                 {content}
