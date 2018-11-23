@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
 import { Container, Content, Form, Item, StyleProvider } from 'native-base'
@@ -5,8 +6,19 @@ import Header from '../../components/common/Header/Header'
 import Description from '../../components/common/Description/Description'
 import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
+import type { EditableEntity, Navigation, T } from '../../types/Types'
 
-export class DescriptionEditView extends Component {
+type DescriptionEditViewProps = {|
+    editableEntity: EditableEntity,
+    setDescription: string => void,
+    navigation: Navigation,
+    setEditableEntity: Navigation => void,
+    saveEditableEntity: EditableEntity => void,
+    t: T
+|}
+
+export class DescriptionEditView extends Component<DescriptionEditViewProps> {
+
     componentDidMount() {
         const { navigation, setEditableEntity } = this.props
         setEditableEntity(navigation)
@@ -23,7 +35,8 @@ export class DescriptionEditView extends Component {
                         <Content contentContainerStyle={{ flex: 1 }}>
                             <Form style={styles.form}>
                                 <Item stackedLabel style={styles.formItem}>
-                                    <Description autoFocus={false} scrollEnabled={false} value={description} editable onChangeText={description => setDescription(description)}/>
+                                    <Description autoFocus={false} scrollEnabled={false} value={description} editable
+                                        onChangeText={description => setDescription(description)}/>
                                 </Item>
                             </Form>
                         </Content>

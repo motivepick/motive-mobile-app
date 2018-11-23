@@ -1,6 +1,10 @@
+// @flow
 import { AppRegistry, YellowBox } from 'react-native'
 import App from './app/App'
 import * as moment from 'moment'
+import 'moment/locale/ru'
+import 'moment/locale/zh-tw'
+import { locale } from './app/utils/locale'
 
 const setUpLocale = () => {
     moment.updateLocale('en', {
@@ -36,7 +40,7 @@ const setUpLocale = () => {
         }
     })
 
-    moment.locale('en') // TODO: move getRelevantTasks() to back end and set correct locale here
+    moment.locale(locale())
 }
 
 setUpLocale()

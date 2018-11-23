@@ -66,7 +66,7 @@ class HomeScreen extends Component {
             t
         } = this.props
 
-        const { weeklyTasks = new Map(), nextDate } = getRelevantTasks(tasks, t('labels.today'))
+        const { weeklyTasks = new Map(), nextDate } = getRelevantTasks(tasks)
         const relevantGoals = goals && goals.filter((goal, i) => i < 3)
 
         const hasTasks = weeklyTasks && weeklyTasks.length > 0

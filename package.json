@@ -6,6 +6,7 @@
     "babel-eslint": "8.2.6",
     "metro-react-native-babel-preset": "0.45.6",
     "eslint": "5.3.0",
+    "flow-bin": "^0.86.0",
     "jest": "23.4.2",
     "jest-react-native": "18.0.0",
     "react-test-renderer": "16.3.1"
@@ -15,6 +16,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "test": "jest",
+    "flow": "flow",
     "android-dev": "ENVFILE=.env.development react-native run-android",
     "android-prod": "ENVFILE=.env.production react-native run-android",
     "build-android-prod": "export ENVFILE=.env.production && cd android && ./gradlew assembleRelease && cd .."

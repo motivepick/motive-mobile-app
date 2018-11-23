@@ -1,23 +1,40 @@
+// @flow
+
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import DatePicker from 'react-native-datepicker'
 import { Button, Icon } from 'native-base'
-
-import moment from 'moment'
 import { translate } from 'react-i18next'
 import styles from './DueDatePicker.styles'
+import {
+    convertIsoDateToDateInCurrentLocale,
+    formatDateInCurrentLocale,
+    formatDateInIso,
+    getFormatFromCurrentLocale,
+    parseDateInCurrentLocale
+} from '../../../utils/dateFormat'
+import { locale } from '../../../utils/locale'
+import type { T } from '../../../types/Types'
 
-class DueDatePicker extends Component {
+type DueDatePickerProps = {|
+    value: string,
+    onChangeDate: string => void,
+    t: T
+|}
 
-    constructor(props) {
+type DueDatePickerState = {|
+    dateAsStringInLocalFormat: string
+|}
+
+class DueDatePicker extends Component<DueDatePickerProps, DueDatePickerState> {
+
+    constructor(props: DueDatePickerProps) {
         super(props)
         const { value } = props
-        this.state = { dateAsStringInLocalFormat: this.dateAsStringInLocalFormat(value) }
+        this.state = { dateAsStringInLocalFormat: convertIsoDateToDateInCurrentLocale(value) }
     }
 
     render() {
-        const format = this.format()
-        const today = moment().format(format)
         const { t } = this.props
         const { dateAsStringInLocalFormat } = this.state
 
@@ -32,8 +49,8 @@ class DueDatePicker extends Component {
                     date={dateAsStringInLocalFormat}
                     mode='date'
                     placeholder={t('placeholders.whenIsItDue')}
-                    format={format}
-                    minDate={today}
+                    locale={locale()}
+                    format={getFormatFromCurrentLocale()}
                     confirmBtnText={t('labels.set')}
                     cancelBtnText={t('labels.cancel')}
                     iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
@@ -46,22 +63,18 @@ class DueDatePicker extends Component {
         )
     }
 
-    dateAsStringInLocalFormat = (isoDate) => isoDate ? moment(isoDate, 'YYYY-MM-DDTHH:mm:ss.SSS').format(this.format()) : ''
-
-    handleDateChange = (dateAsStringInLocalFormat) => {
+    handleDateChange = dateAsStringInLocalFormat => {
         const { onChangeDate } = this.props
-        const isoDate = moment(dateAsStringInLocalFormat, this.format()).format('YYYY-MM-DDTHH:mm:ss.SSS')
-        this.setState({ dateAsStringInLocalFormat: dateAsStringInLocalFormat })
-        onChangeDate(isoDate)
+        const endOfToday = parseDateInCurrentLocale(dateAsStringInLocalFormat).endOf('day')
+        this.setState({ dateAsStringInLocalFormat: formatDateInCurrentLocale(endOfToday) })
+        onChangeDate(formatDateInIso(endOfToday))
     }
 
     clearDate = () => {
         const { onChangeDate } = this.props
         this.setState({ dateAsStringInLocalFormat: '' })
-        onChangeDate(null)
+        onChangeDate('')
     }
-
-    format = () => moment().creationData().locale.longDateFormat('L')
 }
 
 export default translate('translations')(DueDatePicker)
