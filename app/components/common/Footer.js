@@ -9,15 +9,15 @@ export default class FooterComponent extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Footer>
                     <FooterTab>
-                        <Button vertical active={this.props.navigationState.index === 0}>
+                        <Button vertical active={this.props.navigation.state.index === 0}>
                             <Icon type="MaterialCommunityIcons" name="playlist-check" onPress={() => this.props.navigation.navigate('AllTasksScreen')}/>
                             <Text>Tasks</Text>
                         </Button>
-                        <Button vertical active={this.props.navigationState.index === 1}>
+                        <Button vertical active={this.props.navigation.state.index === 1}>
                             <Icon type="MaterialCommunityIcons" name="calendar-clock" onPress={() => this.props.navigation.navigate('Home')}/>
                             <Text>Schedule</Text>
                         </Button>
-                        <Button vertical active={this.props.navigationState.index === 2}>
+                        <Button vertical active={this.props.navigation.state.index === 2}>
                             <Icon type="MaterialCommunityIcons" name="account" onPress={() => this.props.navigation.navigate('AccountScreen')}/>
                             <Text>Account</Text>
                         </Button>

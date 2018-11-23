@@ -24,6 +24,7 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		1D766272869B489383B36A0C /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FF0F3A72E23444F9D35CC4D /* Octicons.ttf */; };
 		332E5CE68ED8D05E7E855162 /* Pods_MotiveMobileAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 152484198F7FCD1D6D89DA9C /* Pods_MotiveMobileAppTests.framework */; };
+		38F960022BBC4F8BA61B848B /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D153E094DB0C4195B3A1D362 /* libRNGestureHandler.a */; };
 		41F286809DA046D48980C3CC /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B6D0CA6F218B429D93CA9F61 /* Ionicons.ttf */; };
 		4CB1E150212DF009003B3473 /* MotiveMobileAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB1E14F212DF009003B3473 /* MotiveMobileAppTests.swift */; };
 		4CC8F855212DEE430047D7D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC8F854212DEE430047D7D9 /* AppDelegate.swift */; };
@@ -327,6 +328,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		B716952D21A891F3006992FA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A2805B3178E4A32A4AE153F /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNGestureHandler;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -369,6 +377,7 @@
 		81B14D51E855467592E8469B /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		88C10A4CB4E54D8AA0FD6227 /* libReactNativeConfig.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeConfig.a; sourceTree = "<group>"; };
+		8A2805B3178E4A32A4AE153F /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		8F73F35657144EDB8A7B2C32 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		94BE281FFCF747AF9EC157D2 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		99AB1AFB97B975B4E2449F59 /* Pods-MotiveMobileAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotiveMobileAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MotiveMobileAppTests/Pods-MotiveMobileAppTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -379,6 +388,7 @@
 		B7390864D9058761D056899C /* libPods-MotiveMobileApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MotiveMobileApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B93BCFFC37CB1DD1DB6BB28B /* Pods-MotiveMobileAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotiveMobileAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MotiveMobileAppTests/Pods-MotiveMobileAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CEBBDC27A10C43A3BC96B589 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/native-base/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		D153E094DB0C4195B3A1D362 /* libRNGestureHandler.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGestureHandler.a; sourceTree = "<group>"; };
 		DBBB25DEF259497F8869B926 /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		EB90A4FB52E04479A9FC2B3E /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		F9AF5C5A5B044FF3C8920BA8 /* Pods-MotiveMobileApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MotiveMobileApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-MotiveMobileApp/Pods-MotiveMobileApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -413,6 +423,7 @@
 				F907E20A747D42EAB79BF6AB /* libReactNativeConfig.a in Frameworks */,
 				C8A23C9902F74164B557994C /* libRNCookieManagerIOS.a in Frameworks */,
 				846CBA7F5315A1BD4EFC72DD /* Pods_MotiveMobileApp.framework in Frameworks */,
+				38F960022BBC4F8BA61B848B /* libRNGestureHandler.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +589,7 @@
 			children = (
 				88C10A4CB4E54D8AA0FD6227 /* libReactNativeConfig.a */,
 				06C1395356DA4267B20ED9FA /* libRNCookieManagerIOS.a */,
+				D153E094DB0C4195B3A1D362 /* libRNGestureHandler.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -608,6 +620,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				A7D1A829437741509F9A5DD5 /* ReactNativeConfig.xcodeproj */,
 				0F012A83D4824B84A90031D9 /* RNCookieManagerIOS.xcodeproj */,
+				8A2805B3178E4A32A4AE153F /* RNGestureHandler.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -663,6 +676,14 @@
 			children = (
 				ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */,
 				2D16E6721FA4F8DC00B85C8A /* libRCTBlob-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B716952A21A891F3006992FA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B716952E21A891F3006992FA /* libRNGestureHandler.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -736,7 +757,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 940;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -818,6 +839,10 @@
 				{
 					ProductGroup = 4CCAF6082143E3F00061ECE3 /* Products */;
 					ProjectRef = 0F012A83D4824B84A90031D9 /* RNCookieManagerIOS.xcodeproj */;
+				},
+				{
+					ProductGroup = B716952A21A891F3006992FA /* Products */;
+					ProjectRef = 8A2805B3178E4A32A4AE153F /* RNGestureHandler.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1102,6 +1127,13 @@
 			remoteRef = ADBDB9261DFEBF0700ED6528 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B716952E21A891F3006992FA /* libRNGestureHandler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGestureHandler.a;
+			remoteRef = B716952D21A891F3006992FA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -1249,12 +1281,14 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
 					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
+					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 				);
 				INFOPLIST_FILE = MotiveMobileAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1286,12 +1320,14 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
 					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
+					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 				);
 				INFOPLIST_FILE = MotiveMobileAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1326,6 +1362,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
 					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
+					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 				);
 				INFOPLIST_FILE = MotiveMobileApp/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1364,6 +1401,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/ios/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
 					"$(SRCROOT)/../node_modules/react-native-cookies/ios/RNCookieManagerIOS",
+					"$(SRCROOT)/../node_modules/react-native-gesture-handler/ios/**",
 				);
 				INFOPLIST_FILE = MotiveMobileApp/Info.plist;
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";

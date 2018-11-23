@@ -1,6 +1,6 @@
 import React from 'react'
 import thunkMiddleware from 'redux-thunk'
-import { StackNavigator, TabNavigator } from 'react-navigation'
+import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import LoginScreen from './screens/LoginScreen'
 import SplashScreen from './screens/SplashScreen'
 import HomeScreen from './screens/HomeScreen'
@@ -19,7 +19,7 @@ import AllGoalsScreen from './screens/AllGoals'
 import AccountScreen from './screens/AccountScreen'
 import FooterComponent from './components/common/Footer'
 
-const RootStack = StackNavigator(
+const RootStack = createStackNavigator(
     {
         Splash: SplashScreen,
         Login: LoginScreen,
@@ -31,7 +31,7 @@ const RootStack = StackNavigator(
         GoalEdit: GoalEditScreen,
         TaskDescriptionEditScreen,
         GoalDescriptionEditScreen,
-        MainNavigation: TabNavigator(
+        MainNavigation: createBottomTabNavigator(
             {
                 AllTasksScreen: {
                     screen: AllTasksScreen
@@ -59,8 +59,10 @@ const RootStack = StackNavigator(
     }
 )
 
+const AppNav = createAppContainer(RootStack)
+
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
-const App = () => <Provider store={store}><I18nextProvider i18n={i18n}><RootStack/></I18nextProvider></Provider>
+const App = () => <Provider store={store}><I18nextProvider i18n={i18n}><AppNav/></I18nextProvider></Provider>
 
 export default App
