@@ -17,7 +17,7 @@ class CheckboxListItem extends Component {
         const formattedDueDate = getDateAsStr(date)
         const dateColor = getDateColor(date, checked)
         const checkboxBgColor = checkboxColor && palette[checkboxColor] ? palette[checkboxColor] : iOSColors.white
-        const checkboxMarkColor = checkboxBgColor ? iOSColors.white : iOSColors.gray
+        const checkboxMarkColor = iOSColors.midGray
         return (
             <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white }} onPress={onBodyClick}>
                 <TouchableOpacity onPress={(entity, secId, rowId, rowMap) => this.handleComplete(entity, secId, rowId, rowMap)}>
@@ -26,10 +26,10 @@ class CheckboxListItem extends Component {
                         radius={13}
                         borderWidth={3}
                         shadowColor={iOSColors.midGray}
-                        bgColor={checkboxBgColor}
+                        bgColor={ checkboxBgColor}
                         color={iOSColors.gray}
                     >
-                        {checked && <Icon name='md-checkmark' style={{ fontWeight: 'bold', lineHeight: 18, fontSize: 18, color: checkboxMarkColor }}/>}
+                        {checked && <Icon type="FontAwesome" name='check' style={{ fontWeight: 'bold', lineHeight: 18, fontSize: 18, color: checkboxMarkColor }}/>}
                     </ProgressCircle>
                 </TouchableOpacity>
                 <Body style={{ marginLeft: 4 }}>
