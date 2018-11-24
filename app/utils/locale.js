@@ -1,5 +1,3 @@
-// @flow
-
 import React, { NativeModules } from 'react-native'
 
 export const locale = () => {

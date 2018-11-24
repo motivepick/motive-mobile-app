@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { Button, Icon } from 'native-base'
 import { translate } from 'react-i18next'
 
-export const palette = {
+const palette = {
     maroon: '#800000',
     red: '#e6194B',
     pink: '#fabebe',

@@ -2,15 +2,22 @@ import color from 'color'
 
 import { Dimensions, PixelRatio, Platform } from 'react-native'
 import { iOSColors } from 'react-native-typography'
+import { ios, iphoneX } from '../../app/utils/platform'
 
 const deviceHeight = Dimensions.get('window').height
 const deviceWidth = Dimensions.get('window').width
 const platform = Platform.OS
 const platformStyle = undefined
-const isIphoneX =
-  platform === 'ios' && (deviceHeight === 812 || deviceWidth === 812)
 
 const mainTextColor = '#000'
+
+const toolbarHeight = () => {
+    if (platform === 'ios') {
+        return iphoneX() ? 100 : 64
+    } else {
+        return 60
+    }
+}
 
 export default {
     platformStyle,
@@ -153,7 +160,7 @@ export default {
     // Header
     toolbarBtnColor: platform === 'ios' ? iOSColors.pink : '#fff',
     toolbarDefaultBg: platform === 'ios' ? '#F8F8F8' : '#3F51B5',
-    toolbarHeight: platform === 'ios' ? 64 : 56,
+    toolbarHeight: toolbarHeight(),
     toolbarSearchIconSize: platform === 'ios' ? 20 : 23,
     toolbarInputColor: platform === 'ios' ? '#CECDD2' : '#fff',
     searchBarHeight: platform === 'ios' ? 30 : 40,
@@ -182,7 +189,7 @@ export default {
     inputBorderColor: iOSColors.customGray,
     inputSuccessBorderColor: '#2b8339',
     inputErrorBorderColor: '#ed2f2f',
-    inputHeightBase: 30,
+    inputHeightBase: ios() ? 30 : 40,
     get inputColor() {
         return this.textColor
     },
@@ -267,7 +274,7 @@ export default {
     inputLineHeight: 24,
     deviceWidth,
     deviceHeight,
-    isIphoneX,
+    isIphoneX: iphoneX(),
     inputGroupRoundedBorderRadius: 30,
 
     //iPhoneX SafeArea

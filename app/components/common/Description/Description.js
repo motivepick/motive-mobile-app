@@ -4,8 +4,17 @@ import styles from './Description.styles'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import { TouchableOpacity } from 'react-native'
 import { translate } from 'react-i18next'
+import type { T } from '../../../types/Types'
 
-class Description extends Component {
+type DescriptionProps = {|
+    value: string,
+    editable: boolean,
+    onChangeText: string => void,
+    onGoToEditDescriptionScreen: () => void,
+    t: T
+|}
+
+class Description extends Component<DescriptionProps> {
 
     render() {
         const { value, editable, onChangeText, onGoToEditDescriptionScreen, t } = this.props

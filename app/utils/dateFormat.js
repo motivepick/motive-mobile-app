@@ -1,5 +1,3 @@
-// @flow
-
 import moment, { Moment } from 'moment'
 
 const ISO_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS'

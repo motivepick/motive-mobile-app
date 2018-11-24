@@ -10,7 +10,6 @@ import Line from '../components/common/Line'
 import EmptyStateTemplate from '../components/common/EmptyStateTemplate'
 import { translate } from 'react-i18next'
 
-
 class AccountScreen extends Component {
     state = {
         scrollY: new Animated.Value(0)
@@ -24,11 +23,13 @@ class AccountScreen extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
-                    <AnimatedHeader title={this.props.t('labels.greeting', { name: 'John' })} scrollOffset={this.state.scrollY} onRightButtonPress={this.logout}
-                                    rightIcon={<Icon name='log-out'/>}/>
+                    <AnimatedHeader title={this.props.t('labels.greeting', { name: 'John' })} scrollOffset={this.state.scrollY}
+                        onRightButtonPress={this.logout} rightIcon={<Icon name='log-out'/>}/>
                     <Line/>
-                    <Content contentContainerStyle={{ flex: 1 }} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
-                        <EmptyStateTemplate imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'} content={<Text>Screen for logging out</Text>}/>
+                    <Content contentContainerStyle={{ flex: 1 }} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
+                        scrollEventThrottle={16}>
+                        <EmptyStateTemplate imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
+                            content={<Text>Screen for logging out</Text>}/>
                     </Content>
                 </Container>
             </StyleProvider>

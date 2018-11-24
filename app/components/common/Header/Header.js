@@ -1,30 +1,30 @@
 import React, { Component } from 'react'
-import { Body, Button, Header, Left, Right, Text, Title } from 'native-base'
+import { Body, Button, Header, Icon, Left, Right, Text, Title } from 'native-base'
+import { ios } from '../../../utils/platform'
 
 class HeaderComponent extends Component {
 
     render() {
         const { title, rightButtonLabel, leftButtonLabel, onLeftButtonPress, onRightButtonPress } = this.props
         return (
-            <Header transparent>
+            <Header transparent={ios()}>
                 <Left>
                     {
-                        leftButtonLabel && onLeftButtonPress &&
+                        Boolean(onLeftButtonPress) &&
                         <Button transparent onPress={onLeftButtonPress}>
-                            <Text>{leftButtonLabel}</Text>
+                            {leftButtonLabel && ios() ? <Text>{leftButtonLabel}</Text> : <Icon name='arrow-back'/>}
                         </Button>
                     }
                 </Left>
-
                 {
-                    title &&
+                    Boolean(title) &&
                     <Body>
                         <Title>{title}</Title>
                     </Body>
                 }
                 <Right>
                     {
-                        rightButtonLabel && onRightButtonPress &&
+                        Boolean(rightButtonLabel && onRightButtonPress) &&
                         <Button transparent onPress={onRightButtonPress}>
                             <Text>{rightButtonLabel}</Text>
                         </Button>

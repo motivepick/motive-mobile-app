@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react'
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
 import { Container, Content, Form, Item, StyleProvider } from 'native-base'
