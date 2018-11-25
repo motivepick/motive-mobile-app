@@ -143,9 +143,9 @@ export default {
     },
 
     // Footer
-    footerHeight: 50,
+    footerHeight: iphoneX() ? 70 : 50,
     footerDefaultBg: platform === 'ios' ? iOSColors.white : '#3F51B5',
-    footerPaddingBottom: 0,
+    footerPaddingBottom: iphoneX() ? 20 : 0,
 
     // FooterTab
     tabBarTextColor: platform === 'ios' ? mainTextColor : '#b3c7f9',
