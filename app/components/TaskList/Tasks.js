@@ -20,6 +20,7 @@ class Tasks extends Component {
 
     list = tasks =>
         <List
+            onScroll={this.props.onScroll}
             data={tasks}
             renderRow={this.renderRow}
             renderRightHiddenRow={this.renderRightHiddenRow}

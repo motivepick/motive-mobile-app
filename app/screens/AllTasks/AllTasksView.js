@@ -38,7 +38,7 @@ export class AllTasksView extends Component {
                     <Line/>
                     <Content contentContainerStyle={{ flex: 1 }} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} scrollEventThrottle={16}>
                         <TaskList tasks={tasks} closedTasks={closedTasks} onCloseTask={id => closeTask(id)} onUndoCloseTask={id => undoCloseTask(id)}
-                            onDeleteTask={id => deleteTask(id)} onTasksStatusToggle={closed => this.onTasksStatusToggle(closed)}/>
+                            onDeleteTask={id => deleteTask(id)} onTasksStatusToggle={closed => this.onTasksStatusToggle(closed)} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])} />
                     </Content>
                 </Container>
             </StyleProvider>

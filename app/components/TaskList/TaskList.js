@@ -51,6 +51,7 @@ class TaskList extends Component {
             onDeleteTask,
             onCloseTask,
             onUndoCloseTask,
+            onScroll,
             t
         } = this.props
         const { showByStatusInProgress } = this.state
@@ -81,8 +82,8 @@ class TaskList extends Component {
                 {showEmptyState && this.renderEmptyState()}
                 {showCompletedState && this.renderAllCompletedState()}
                 {showNoneCompletedState && this.renderNoneCompletedState()}
-                {showInProgressState && <Tasks tasks={tasks} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>}
-                {showAllCompletedState && <Tasks tasks={closedTasks} onCloseTask={id => onUndoCloseTask(id)} onDeleteTask={onDeleteTask}/>}
+                {showInProgressState && <Tasks tasks={tasks} onScroll={onScroll} onCloseTask={id => onCloseTask(id)} onDeleteTask={onDeleteTask}/>}
+                {showAllCompletedState && <Tasks tasks={closedTasks} onScroll={onScroll} onCloseTask={id => onUndoCloseTask(id)} onDeleteTask={onDeleteTask}/>}
             </React.Fragment>
         )
     }
