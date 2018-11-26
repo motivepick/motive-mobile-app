@@ -7,6 +7,7 @@ import baseTheme from '../../../native-base-theme/variables/platform'
 import Description from '../../components/common/Description/Description'
 import GoalPicker from '../../components/common/GoalPicker/GoalPicker'
 import { SHOW_GOALS } from '../../const'
+import { android } from '../../utils/platform'
 
 export class TaskEditView extends Component {
     state = {
@@ -38,11 +39,9 @@ export class TaskEditView extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <Header
-                        title={t('headings.editTask')}
-                        leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()}
-                    />
-                    <Content>
+                    <Header title={t('headings.editTask')} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()}/>
+                    {/* TODO: what this the best place for the style? */}
+                    <Content style={android() ? { marginTop: 10 } : {}}>
                         <Form style={{ marginHorizontal: 16 }}>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.task').toLocaleUpperCase()}</Label>

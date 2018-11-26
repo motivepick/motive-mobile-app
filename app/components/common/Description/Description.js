@@ -22,7 +22,7 @@ class Description extends Component<DescriptionProps> {
         if (editable) {
             return (
                 <Input onChangeText={value => onChangeText(value)} value={value} style={styles.editableDescription}
-                    placeholder={t('placeholders.description')} multiline={true}/>
+                    placeholder={t('placeholders.description')} multiline={true} textAlignVertical="top"/>
             )
         } else {
             const hasText = Boolean(value)
