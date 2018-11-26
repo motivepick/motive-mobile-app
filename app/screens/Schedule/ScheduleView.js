@@ -124,7 +124,7 @@ export class ScheduleView extends Component {
 
     isEmpty = schedule => {
         const { week, future, overdue } = schedule
-        return Object.keys(week).length === 0 && future.length === 0 && overdue.length === 0
+        return Object.keys(week).every(key => week[key].length === 0) && future.length === 0 && overdue.length === 0
     }
 }
 
