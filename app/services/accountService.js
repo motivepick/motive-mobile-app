@@ -5,3 +5,5 @@ export const storeToken = (token, callback) => {
 }
 
 export const fetchToken = () => AsyncStorage.getItem('token')
+
+export const removeToken = callback => AsyncStorage.removeItem('token', callback)
