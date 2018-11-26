@@ -21,7 +21,7 @@ class FooterComponent extends Component {
                             <Text>{t('headings.schedule')}</Text>
                         </Button>
                         <Button vertical active={state.index === 2} onPress={() => navigation.navigate('AccountScreen')}>
-                            <Icon type="MaterialCommunityIcons" name="account"/>
+                            <Icon type="MaterialCommunityIcons" name="heart"/>
                             <Text>{t('headings.account')}</Text>
                         </Button>
                     </FooterTab>

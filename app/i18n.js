@@ -22,11 +22,12 @@ i18n.use(languageDetector).init({
                     editNotes: 'Edit Notes',
                     pickGoal: 'Pick A Goal',
                     schedule: 'Schedule',
-                    account: 'Account'
+                    account: 'Motive'
                 },
                 labels: {
                     loginVK: 'Login With VK',
                     loginFB: 'Login With Facebook',
+                    logout: 'Logout',
                     seeAll: 'See All',
                     addGoal: 'New goal',
                     all: 'All Tasks',
@@ -64,7 +65,9 @@ i18n.use(languageDetector).init({
                     dueDateNotSet: 'not set',
                     greeting: 'Hi, {{name}}',
                     future: 'Next',
-                    overdue: 'Overdue'
+                    overdue: 'Overdue',
+                    rateUs: 'Rate us in {{store}}',
+                    rateUsBigText: 'It would be lovely to hear what Your experience with Motive is!'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -97,11 +100,12 @@ i18n.use(languageDetector).init({
                     editNotes: 'Заметки',
                     pickGoal: 'Указать цель',
                     schedule: 'График',
-                    account: 'Аккаунт'
+                    account: 'Motive'
                 },
                 labels: {
                     loginVK: 'Войти с VK',
                     loginFB: 'Войти с Facebook',
+                    logout: 'Выйти',
                     seeAll: 'Смотреть все',
                     addGoal: 'Новая цель',
                     all: 'Все задачи',
@@ -139,7 +143,9 @@ i18n.use(languageDetector).init({
                     dueDateNotSet: 'не задано',
                     greeting: 'Привет, {{name}}',
                     future: 'Дальше',
-                    overdue: 'Просроченные'
+                    overdue: 'Просроченные',
+                    rateUs: 'Оцените нас в {{store}}',
+                    rateUsBigText: 'Мы будем рады услышать как Motive помог Вам!'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -172,11 +178,12 @@ i18n.use(languageDetector).init({
                     editNotes: 'Edit Notes',
                     pickGoal: 'Pick A Goal',
                     schedule: 'Schedule',
-                    account: 'Account'
+                    account: 'Motive'
                 },
                 labels: {
                     loginVK: 'Login With VK',
                     loginFB: 'Login With Facebook',
+                    logout: 'Logout',
                     seeAll: 'See All',
                     addGoal: 'New goal',
                     all: 'All Tasks',
@@ -214,7 +221,9 @@ i18n.use(languageDetector).init({
                     dueDateNotSet: 'not set',
                     greeting: 'Hi, {{name}}',
                     future: 'Next',
-                    overdue: 'Overdue'
+                    overdue: 'Overdue',
+                    rateUs: 'Rate us in {{store}}',
+                    rateUsBigText: 'It would be lovely to hear what Your experience with Motive is!'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
