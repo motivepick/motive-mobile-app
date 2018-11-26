@@ -11,15 +11,4 @@ export const getDateColor = (date, useDefaultColor) => {
     }
 }
 
-export const getDateAsStr = (date) => {
-    return date ? moment(date, moment.ISO_8601).local().calendar() : null
-}
-
-export const getRelevantTasks = (tasks) => {
-    const weeklyTasks = new Map()
-    weeklyTasks.set('Next', tasks)
-
-    return {
-        weeklyTasks,
-    }
-}
+export const getDateAsStr = date => date ? moment(date, moment.ISO_8601).local().calendar() : null

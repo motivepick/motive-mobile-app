@@ -62,7 +62,9 @@ i18n.use(languageDetector).init({
                     tasksCompleted: 'tasks\ncompleted',
                     tasksInProgress: 'tasks\nin progress',
                     dueDateNotSet: 'not set',
-                    greeting: 'Hi, {{name}}'
+                    greeting: 'Hi, {{name}}',
+                    future: 'Next',
+                    overdue: 'Overdue'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -135,7 +137,9 @@ i18n.use(languageDetector).init({
                     tasksCompleted: 'задач\nвыполнено',
                     tasksInProgress: 'задач\nв процессе',
                     dueDateNotSet: 'не задано',
-                    greeting: 'Привет, {{name}}'
+                    greeting: 'Привет, {{name}}',
+                    future: 'Дальше',
+                    overdue: 'Просроченные'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -208,7 +212,9 @@ i18n.use(languageDetector).init({
                     tasksCompleted: 'tasks\ncompleted',
                     tasksInProgress: 'tasks\nin progress',
                     dueDateNotSet: 'not set',
-                    greeting: 'Hi, {{name}}'
+                    greeting: 'Hi, {{name}}',
+                    future: 'Next',
+                    overdue: 'Overdue'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',

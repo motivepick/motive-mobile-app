@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Text } from 'native-base'
 import { ListView } from 'react-native'
-import List from '../common/List/List'
 import { withNavigation } from 'react-navigation'
 import CheckboxListItem from '../common/CheckboxListItem/CheckboxListItem'
 import { translate } from 'react-i18next'
@@ -18,13 +17,11 @@ class Tasks extends Component {
         return tasks.length > 0 && this.list(tasks)
     }
 
+    // TODO: finalize this, fix delete button
     list = tasks =>
-        <List
-            onScroll={this.props.onScroll}
-            data={tasks}
-            renderRow={this.renderRow}
-            renderRightHiddenRow={this.renderRightHiddenRow}
-        />
+        <React.Fragment>
+            {tasks.map(t => this.renderRow(t))}
+        </React.Fragment>
 
     renderRow = (task, secId, rowId, rowMap) => {
         const { closed, dueDate, name, goal } = task
@@ -59,7 +56,7 @@ class Tasks extends Component {
         const { onCloseTask } = this.props
         const { id } = task
         onCloseTask(id)
-        rowMap[`${secId}${rowId}`].props.closeRow()
+        // rowMap[`${secId}${rowId}`].props.closeRow() // TODO: fix delete button
     }
 
     onItemClick = task => {

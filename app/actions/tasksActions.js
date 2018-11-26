@@ -3,6 +3,7 @@ export const CHANGE_TASK_NAME = 'CHANGE_TASK_NAME'
 export const CHANGE_TASK_DESCRIPTION = 'CHANGE_TASK_DESCRIPTION'
 export const SET_FILTER = 'SET_FILTER'
 export const UPDATE_USER_TASKS = 'UPDATE_USER_TASKS'
+export const UPDATE_USER_SCHEDULE = 'UPDATE_USER_SCHEDULE'
 export const UPDATE_CLOSED_USER_TASKS = 'UPDATE_CLOSED_USER_TASKS'
 export const SHOW_CLOSED_TASKS = 'SHOW_CLOSED_TASKS'
 export const HIDE_CLOSED_TASKS = 'HIDE_CLOSED_TASKS'
@@ -21,6 +22,8 @@ export const changeTaskDescriptionAction = description => ({ type: CHANGE_TASK_D
 export const setFilterAction = listFilter => ({ type: SET_FILTER, payload: listFilter })
 
 export const updateUserTasksAction = tasks => ({ type: UPDATE_USER_TASKS, payload: tasks })
+
+export const updateUserScheduleAction = schedule => ({ type: UPDATE_USER_SCHEDULE, payload: schedule })
 
 export const updateClosedUserTasksAction = tasks => ({ type: UPDATE_CLOSED_USER_TASKS, payload: tasks })
 

@@ -3,7 +3,7 @@ import thunkMiddleware from 'redux-thunk'
 import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation'
 import LoginScreen from './screens/LoginScreen'
 import SplashScreen from './screens/SplashScreen'
-import HomeScreen from './screens/HomeScreen'
+import ScheduleScreen from './screens/Schedule'
 import GoalEditScreen from './screens/GoalEditScreen'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
@@ -23,7 +23,7 @@ const RootStack = createStackNavigator(
     {
         Splash: SplashScreen,
         Login: LoginScreen,
-        Home: HomeScreen,
+        Home: ScheduleScreen,
         AllTasksScreen,
         AllGoalsScreen,
         TaskEditScreen,
@@ -37,7 +37,7 @@ const RootStack = createStackNavigator(
                     screen: AllTasksScreen
                 },
                 Home: {
-                    screen: HomeScreen
+                    screen: ScheduleScreen
                 },
                 AccountScreen: {
                     screen: AccountScreen
