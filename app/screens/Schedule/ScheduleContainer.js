@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux'
-import { closeTaskAction, createTask, deleteTaskAction, undoCloseTaskAction, updateUserScheduleAction } from '../../actions/tasksActions'
-import { doDeleteTask, fetchSchedule } from '../../services/taskService'
+import { closeTaskAction, createTask, deleteTaskAction, undoCloseTaskAction } from '../../actions/tasksActions'
+import { doDeleteTask } from '../../services/taskService'
 import { fetchToken } from '../../services/accountService'
 import request from 'superagent'
 import { API_URL } from '../../const'
@@ -10,18 +10,17 @@ import { createNewGoalAction, deleteGoalAction, updateUserGoalsAction } from '..
 import connect from 'react-redux/es/connect/connect'
 import { translate } from 'react-i18next'
 import { ScheduleView } from './ScheduleView'
+import { schedule } from '../../utils/schedule'
 
 const mapStateToProps = state => ({
     tasks: state.tasks.tasks,
     closedTasks: state.tasks.closedTasks,
     closedTasksAreShown: state.tasks.closedTasksAreShown,
-    schedule: state.tasks.schedule,
+    schedule: schedule(state.tasks.tasks),
     goals: state.goals.goals
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-
-    updateUserSchedule: () => async dispatch => dispatch(updateUserScheduleAction(await fetchSchedule())),
 
     createTask: task => async dispatch => {
         const token = await fetchToken()

@@ -8,6 +8,8 @@ export const formatDateInCurrentLocale = (date: Moment) => date.format(getFormat
 
 export const parseDateInCurrentLocale = (dateAsStringInLocalFormat: string) => moment(dateAsStringInLocalFormat, getFormatFromCurrentLocale())
 
-export const formatDateInIso = (date: Moment) => date.format(ISO_FORMAT)
+export const formatDateInIso = (date: Moment): string => date.format(ISO_FORMAT)
 
-export const convertIsoDateToDateInCurrentLocale = (isoDate: string) => isoDate ? moment(isoDate, ISO_FORMAT).format(getFormatFromCurrentLocale()) : ''
+export const parseDateInIso = (isoDate: string): Moment => moment(isoDate, ISO_FORMAT)
+
+export const convertIsoDateToDateInCurrentLocale = (isoDate: string) => isoDate ? parseDateInIso(isoDate).format(getFormatFromCurrentLocale()) : ''

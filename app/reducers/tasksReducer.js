@@ -11,7 +11,6 @@ import {
     UNDO_CLOSE_TASK,
     UPDATE_CLOSED_USER_TASKS,
     UPDATE_TASK,
-    UPDATE_USER_SCHEDULE,
     UPDATE_USER_TASKS
 } from '../actions/tasksActions'
 
@@ -39,7 +38,7 @@ const updatedClosedTasks = (state, id) => {
 }
 
 export default function (state = INITIAL_STATE, action) {
-    const { type, payload } = action
+    const { type } = action
     if (type === SET_TASK) {
         return { ...state, task: action.payload }
     } else if (type === CHANGE_TASK_NAME) {
@@ -54,8 +53,6 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, listFilter: action.payload }
     } else if (type === UPDATE_USER_TASKS) {
         return { ...state, tasks: action.payload }
-    } else if (type === UPDATE_USER_SCHEDULE) {
-        return { ...state, schedule: payload }
     } else if (type === UPDATE_CLOSED_USER_TASKS) {
         return { ...state, closedTasks: action.payload }
     } else if (type === SHOW_CLOSED_TASKS) {

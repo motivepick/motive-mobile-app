@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Animated, ScrollView, StyleSheet, View } from 'react-native'
-import { Container, Content, StyleProvider, Text } from 'native-base'
+import { Container, StyleProvider, Text } from 'native-base'
 import { SHOW_GOALS } from '../../const'
 import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
@@ -29,12 +29,6 @@ export class ScheduleView extends Component {
             content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noTasks')}</Text>}
         />
     )
-
-    componentDidMount() {
-        const { updateUserSchedule, updateUserGoals } = this.props
-        updateUserSchedule()
-        updateUserGoals()
-    }
 
     render() {
         const {
@@ -102,7 +96,7 @@ export class ScheduleView extends Component {
                         {SHOW_GOALS && <QuickInput placeholder={t('labels.newTaskForToday')} onSubmitEditing={this.onAddNewTask}/>}
                         <View style={{ marginVertical: 4 }}/>
                         {this.isEmpty(schedule) && this.renderEmptyState()}
-                        {this.asPairs(week).map(({ date, tasks }) =>
+                        {week.map(({ date, tasks }) =>
                             <View key={date}>
                                 <SubSectionHeader leftText={this.capitalize(getDateAsStr(date))}/>
                                 <Tasks tasks={tasks} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
@@ -124,8 +118,6 @@ export class ScheduleView extends Component {
         )
     }
 
-    asPairs = week => Object.entries(week).map(entry => ({ date: entry[0], tasks: entry[1] })).filter(p => p.tasks.length > 0)
-
     capitalize = word => word.charAt(0).toUpperCase() + word.slice(1)
 
     onAddNewGoal = () => {
@@ -146,7 +138,7 @@ export class ScheduleView extends Component {
 
     isEmpty = schedule => {
         const { week, future, overdue } = schedule
-        return Object.keys(week).every(key => week[key].length === 0) && future.length === 0 && overdue.length === 0
+        return week.length === 0 && future.length === 0 && overdue.length === 0
     }
 }
 
