@@ -15,13 +15,13 @@ class AnimatedHeaderComponent extends Component {
             extrapolate: 'clamp'
         })
         const headerTitleOpacity = this.props.scrollOffset.interpolate({
-            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
-            outputRange: [0, 1],
+            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT - 5, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
+            outputRange: [0, 0, 1],
             extrapolate: 'clamp'
         })
         const heroTitleOpacity = this.props.scrollOffset.interpolate({
-            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
-            outputRange: [1, 0],
+            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT - 5, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
+            outputRange: [1, 1, 0],
             extrapolate: 'clamp'
         })
 

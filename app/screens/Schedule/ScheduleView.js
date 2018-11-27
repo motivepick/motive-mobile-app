@@ -49,12 +49,34 @@ export class ScheduleView extends Component {
 
         const { week, future, overdue } = schedule
 
+        let _scrollView = null
+        const headerHeight = 40
+        const onScrollEndSnapToEdge = event => {
+            const y = event.nativeEvent.contentOffset.y
+            if (0 < y && y < headerHeight / 2) {
+                if (_scrollView) {
+                    _scrollView.scrollTo({ y: 0 })
+                }
+            } else if (headerHeight / 2 <= y && y < headerHeight) {
+                if (_scrollView) {
+                    _scrollView.scrollTo({ y: headerHeight })
+                }
+
+            }
+        }
+
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <AnimatedHeader title={t('headings.schedule')} scrollOffset={this.state.scrollY}/>
                     <Line/>
-                    <Content contentContainerStyle={{ flexGrow: 1 }} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
+                    <Animated.ScrollView contentContainerStyle={{ flexGrow: 1 }}
+                        ref={scrollView => {
+                            _scrollView = scrollView ? scrollView._component : null
+                        }}
+                        onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
+                        onScrollEndDrag={onScrollEndSnapToEdge}
+                        onMomentumScrollEnd={onScrollEndSnapToEdge}
                         scrollEventThrottle={16}>
                         <View style={{ paddingTop: 16 }}/>
                         {SHOW_GOALS && <React.Fragment>
@@ -96,7 +118,7 @@ export class ScheduleView extends Component {
                             <SubSectionHeader leftText={t('labels.overdue')}/>
                             <Tasks tasks={overdue} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
                         </View>}
-                    </Content>
+                    </Animated.ScrollView>
                 </Container>
             </StyleProvider>
         )
