@@ -58,7 +58,7 @@ class Tasks extends Component {
         const { onCloseTask } = this.props
         const { id } = task
         onCloseTask(id)
-        // rowMap[`${secId}${rowId}`].props.closeRow() // TODO: fix delete button
+        rowMap[`${secId}${rowId}`].props.closeRow()
     }
 
     onItemClick = task => {
