@@ -12,14 +12,12 @@ class ListComponent extends Component {
     }
 
     render() {
-        const { data, renderRow, renderRightHiddenRow, onScroll } = this.props
+        const { data, renderRow, renderRightHiddenRow } = this.props
 
         return (
             <View style={styles.container}>
                 <List
                     showsVerticalScrollIndicator={false}
-                    scrollEventThrottle={16}
-                    onScroll={onScroll}
                     contentContainerStyle={styles.contentContainer}
                     rightOpenValue={-115}
                     disableRightSwipe={true}

@@ -54,7 +54,7 @@ export class ScheduleView extends Component {
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <AnimatedHeader title={t('headings.schedule')} scrollOffset={this.state.scrollY}/>
                     <Line/>
-                    <Content contentContainerStyle={{ flex: 1 }} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
+                    <Content contentContainerStyle={{ flexGrow: 1 }} onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
                         scrollEventThrottle={16}>
                         <View style={{ paddingTop: 16 }}/>
                         {SHOW_GOALS && <React.Fragment>
@@ -83,18 +83,18 @@ export class ScheduleView extends Component {
                         {this.asPairs(week).map(({ date, tasks }) =>
                             <View key={date}>
                                 <SubSectionHeader leftText={this.capitalize(getDateAsStr(date))}/>
-                                <Tasks tasks={tasks} onScroll={Function} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
+                                <Tasks tasks={tasks} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
                             </View>
                         )}
                         {future.length > 0 &&
                         <View>
                             <SubSectionHeader leftText={t('labels.future')}/>
-                            <Tasks tasks={future} onScroll={Function} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
+                            <Tasks tasks={future} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
                         </View>}
                         {overdue.length > 0 &&
                         <View>
                             <SubSectionHeader leftText={t('labels.overdue')}/>
-                            <Tasks tasks={overdue} onScroll={Function} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
+                            <Tasks tasks={overdue} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
                         </View>}
                     </Content>
                 </Container>
