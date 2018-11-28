@@ -44,12 +44,6 @@ export const fetchClosedTasks = async () => {
     return body
 }
 
-export const fetchSchedule = async () => {
-    const token = await fetchToken()
-    const { body } = await request.get(`${API_URL}/tasks/schedule`).set('Cookie', token)
-    return body
-}
-
 export const closeTask = async id => {
     const token = await fetchToken()
     const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: true })

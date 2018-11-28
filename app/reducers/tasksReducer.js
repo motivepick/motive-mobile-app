@@ -17,7 +17,6 @@ import {
 const INITIAL_STATE = {
     task: {},
     tasks: [],
-    schedule: { week: {}, overdue: [], future: [] },
     listFilter: 'all',
     closedTasks: [],
     closedTasksAreShown: false
