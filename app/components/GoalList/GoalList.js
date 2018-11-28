@@ -13,7 +13,7 @@ class GoalList extends Component {
     state = {
         activeFilter: 'all',
         activeSort: 'Recent',
-        showByStatusInProgress: true
+        openTasksAreShown: true
     }
 
     renderEmptyState = () => (
@@ -52,16 +52,16 @@ class GoalList extends Component {
             t
         } = this.props
 
-        const totalGoals = this.state.showByStatusInProgress ? goals && goals.length : closedGoals && closedGoals.length
+        const totalGoals = this.state.openTasksAreShown ? goals && goals.length : closedGoals && closedGoals.length
 
         const hasGoals = Boolean(goals && goals.length)
         const hasClosedGoals = Boolean(closedGoals && closedGoals.length)
 
-        const showInProgressState = Boolean(this.state.showByStatusInProgress && hasGoals)
-        const showAllCompletedState = Boolean(!this.state.showByStatusInProgress && hasClosedGoals)
+        const showInProgressState = Boolean(this.state.openTasksAreShown && hasGoals)
+        const showAllCompletedState = Boolean(!this.state.openTasksAreShown && hasClosedGoals)
         const showEmptyState = Boolean(!hasGoals && !hasClosedGoals)
-        const showCompletedState = Boolean(this.state.showByStatusInProgress && !hasGoals && hasClosedGoals)
-        const showNoneCompletedState = Boolean(!this.state.showByStatusInProgress && hasGoals && !hasClosedGoals)
+        const showCompletedState = Boolean(this.state.openTasksAreShown && !hasGoals && hasClosedGoals)
+        const showNoneCompletedState = Boolean(!this.state.openTasksAreShown && hasGoals && !hasClosedGoals)
 
         return (
             <React.Fragment>
@@ -71,7 +71,7 @@ class GoalList extends Component {
                     <View style={styles.sectionHeader}>
                         <SortPicker selectedValue={this.state.activeSort} onValueChange={this.onValueChange.bind(this)}/>
                         <Button transparent noIndent onPress={this.toggleByStatus}>
-                            <Text>{this.state.showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
+                            <Text>{this.state.openTasksAreShown ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
                         </Button>
                     </View>
                 </React.Fragment>}
@@ -84,7 +84,7 @@ class GoalList extends Component {
         )
     }
 
-    toggleByStatus = () => this.setState({ showByStatusInProgress: !this.state.showByStatusInProgress })
+    toggleByStatus = () => this.setState({ openTasksAreShown: !this.state.openTasksAreShown })
 
     onValueChange(value: string) {
         if (value === this.state.activeSort) return

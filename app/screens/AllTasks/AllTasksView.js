@@ -9,16 +9,18 @@ import Line from '../../components/common/Line'
 import { handleDueDateOf } from '../../utils/parser'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import Tasks from '../../components/TaskList/Tasks'
+import { NavigationEvents } from 'react-navigation'
 
 export class AllTasksView extends Component {
+
     state = {
         scrollY: new Animated.Value(0),
-        showByStatusInProgress: true
+        openTasksAreShown: true
     }
 
     componentDidMount() {
         const { updateUserTasks } = this.props
-        updateUserTasks(false, 'all')
+        updateUserTasks()
     }
 
     render() {
@@ -29,9 +31,11 @@ export class AllTasksView extends Component {
             totalClosedTasks,
             deleteTask,
             undoCloseTask,
+            resetClosedTasks,
             t
         } = this.props
-        const { showByStatusInProgress } = this.state
+
+        const { openTasksAreShown } = this.state
 
         let _scrollView = null
         const headerHeight = 40
@@ -49,9 +53,12 @@ export class AllTasksView extends Component {
             }
         }
 
+        const totalTasks = openTasksAreShown ? tasks.length : totalClosedTasks
+
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
+                    <NavigationEvents onDidBlur={() => resetClosedTasks()}/>
                     <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')}
                         onRightButtonPress={this.handleGoalClick}/>
                     <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
@@ -66,17 +73,19 @@ export class AllTasksView extends Component {
                         scrollEventThrottle={16}>
                         <React.Fragment>
                             <Text style={styles.subHeader}>
-                                {t('labels.totalTasks', { totalTasks: showByStatusInProgress ? tasks.length : closedTasks.length }).toLocaleUpperCase()}
+                                {t('labels.totalTasks', { totalTasks }).toLocaleUpperCase()}
                             </Text>
                             <Line/>
                             <View style={styles.sectionHeader}>
                                 <Button transparent noIndent onPress={this.toggleByStatus} style={{ alignSelf: 'flex-end' }}>
-                                    <Text>{showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
+                                    <Text>{openTasksAreShown ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
                                 </Button>
                             </View>
                         </React.Fragment>
-                        {showByStatusInProgress && <Tasks tasks={tasks} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>}
-                        {!showByStatusInProgress && <Tasks tasks={closedTasks} onCloseTask={id => undoCloseTask(id)} onDeleteTask={id => deleteTask(id)}/>}
+                        {openTasksAreShown && <Tasks tasks={tasks} total={tasks.length} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>}
+                        {!openTasksAreShown &&
+                        <Tasks tasks={closedTasks} total={totalClosedTasks} onCloseTask={id => undoCloseTask(id)}
+                            onDeleteTask={id => deleteTask(id)} onMoreTasksRequested={() => this.handleMoreTasksRequested()}/>}
                     </Animated.ScrollView>
                 </Container>
             </StyleProvider>
@@ -90,8 +99,15 @@ export class AllTasksView extends Component {
     }
 
     toggleByStatus = () => {
-        const { showByStatusInProgress } = this.state
-        this.setState({ showByStatusInProgress: !showByStatusInProgress })
+        const { resetClosedTasks } = this.props
+        const { openTasksAreShown } = this.state
+        this.setState({ openTasksAreShown: !openTasksAreShown })
+        resetClosedTasks()
+    }
+
+    handleMoreTasksRequested = () => {
+        const { onMoreTasksRequested } = this.props
+        onMoreTasksRequested()
     }
 }
 

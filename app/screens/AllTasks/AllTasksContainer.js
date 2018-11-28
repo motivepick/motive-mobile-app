@@ -1,5 +1,13 @@
 import { bindActionCreators } from 'redux'
-import { closeTaskAction, createTask, deleteTaskAction, setFilterAction, undoCloseTaskAction, updateUserTasksAction } from '../../actions/tasksActions'
+import {
+    closeTaskAction,
+    createTask,
+    deleteTaskAction,
+    resetClosedTasksAction,
+    showMoreTasksAction,
+    undoCloseTaskAction,
+    updateUserTasksAction
+} from '../../actions/tasksActions'
 import { closeTask, doDeleteTask, fetchTasks, undoCloseTask } from '../../services/taskService'
 import { fetchToken } from '../../services/accountService'
 import request from 'superagent'
@@ -24,9 +32,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
-    updateUserTasks: (closed, listFilter) => async (dispatch) => {
-        dispatch(setFilterAction(listFilter))
-        dispatch(updateUserTasksAction(await fetchTasks(listFilter)))
+    updateUserTasks: () => async (dispatch) => {
+        dispatch(updateUserTasksAction(await fetchTasks('all')))
     },
 
     createTask: task => async (dispatch, getState) => {
@@ -64,7 +71,11 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     deleteTask: id => async dispatch => {
         await doDeleteTask(id)
         dispatch(deleteTaskAction(id))
-    }
+    },
+
+    onMoreTasksRequested: () => dispatch => dispatch(showMoreTasksAction()),
+
+    resetClosedTasks: () => dispatch => dispatch(resetClosedTasksAction()),
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(translate('translations')(AllTasksView))

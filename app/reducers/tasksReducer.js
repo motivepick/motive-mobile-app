@@ -4,8 +4,9 @@ import {
     CLOSE_TASK,
     CREATE_TASK,
     DELETE_TASK,
-    SET_FILTER,
+    RESET_CLOSED_TASKS,
     SET_TASK,
+    SHOW_MORE_TASKS,
     UNDO_CLOSE_TASK,
     UPDATE_CLOSED_USER_TASKS,
     UPDATE_TASK,
@@ -31,8 +32,6 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, task }
     } else if (type === CREATE_TASK) {
         return { ...state, tasks: [action.payload, ...state.tasks] }
-    } else if (type === SET_FILTER) {
-        return { ...state, listFilter: action.payload }
     } else if (type === UPDATE_USER_TASKS) {
         return { ...state, tasks: action.payload }
     } else if (type === UPDATE_CLOSED_USER_TASKS) {
@@ -50,6 +49,10 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, tasks }
     } else if (type === DELETE_TASK) {
         return { ...state, tasks: state.tasks.filter(t => t.id !== action.payload) }
+    } else if (type === SHOW_MORE_TASKS) {
+        return { ...state, totalClosedTasksShown: state.totalClosedTasksShown + 10 }
+    } else if (type === RESET_CLOSED_TASKS) {
+        return { ...state, totalClosedTasksShown: 10 }
     } else {
         return state
     }

@@ -67,7 +67,8 @@ i18n.use(languageDetector).init({
                     future: 'Next',
                     overdue: 'Overdue',
                     rateUs: 'Rate us in {{store}}',
-                    rateUsBigText: 'It would be lovely to hear what Your experience with Motive is!'
+                    rateUsBigText: 'It would be lovely to hear what Your experience with Motive is!',
+                    showMoreTasks: 'Show More Tasks'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -81,7 +82,7 @@ i18n.use(languageDetector).init({
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',
                     allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
-                    noTasks: 'There are no tasks! \nBut you can add one :)',
+                    noTasks: 'There are no tasks!',
                     noCompletedGoals: 'No completed goals yet',
                     allGoalsCompleted: 'Way to go! \nYou have completed all your goals!',
                     noGoals: 'There are no goals! \nBut you can set one :)'
@@ -145,7 +146,8 @@ i18n.use(languageDetector).init({
                     future: 'Дальше',
                     overdue: 'Просроченные',
                     rateUs: 'Оцените нас в {{store}}',
-                    rateUsBigText: 'Мы будем рады услышать как Motive помог Вам!'
+                    rateUsBigText: 'Мы будем рады услышать как Motive помог Вам!',
+                    showMoreTasks: 'Показать ещё'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -159,7 +161,7 @@ i18n.use(languageDetector).init({
                 emptyStates: {
                     noCompletedTasks: 'Ещё нет закрытых задач',
                     allTasksCompleted: 'Вы закрыли все свои задачи! \nКонечно, всегда можно добавить ещё задач... :)',
-                    noTasks: 'Задач нет! \nНо можно добавить :)',
+                    noTasks: 'Задач нет!',
                     noCompletedGoals: 'Ещё нет закрытых целей',
                     allGoalsCompleted: 'Так держать! \nВсе поставленные цели достигнуты!',
                     noGoals: 'Целей нет! \nНо можно поставить :)'
@@ -223,7 +225,8 @@ i18n.use(languageDetector).init({
                     future: 'Next',
                     overdue: 'Overdue',
                     rateUs: 'Rate us in {{store}}',
-                    rateUsBigText: 'It would be lovely to hear what Your experience with Motive is!'
+                    rateUsBigText: 'It would be lovely to hear what Your experience with Motive is!',
+                    showMoreTasks: 'Show More Tasks'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -237,7 +240,7 @@ i18n.use(languageDetector).init({
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',
                     allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
-                    noTasks: 'There are no tasks! \nBut you can add one :)',
+                    noTasks: 'There are no tasks!',
                     noCompletedGoals: 'No completed goals yet',
                     allGoalsCompleted: 'Way to go! \nYou have completed all your goals!',
                     noGoals: 'There are no goals! \nBut you can set one :)'
