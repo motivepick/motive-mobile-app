@@ -4,6 +4,7 @@ import { formatDateInIso, parseDateInIso } from './dateFormat'
 
 export type Task = {|
     id: number,
+    closed: boolean,
     dueDate?: string
 |}
 
@@ -37,15 +38,15 @@ const future = (tasksWithDueDate: Array<Task>): Array<Task> => {
 }
 
 export const schedule = (tasks: Array<Task>): Schedule => {
-    const tasksWithDueDate = tasks.filter(t => t.dueDate)
+    const openTasksWithDueDate = tasks.filter(t => !t.closed && t.dueDate)
     const eod = moment.utc().endOf('day')
     const week = []
     for (let i = 0; i <= 6; i++) {
-        const tasks: Array<Task> = tasksWithDueDate.filter(t => eod.isSame(parseDateInIso(t.dueDate), 'day'))
+        const tasks: Array<Task> = openTasksWithDueDate.filter(t => eod.isSame(parseDateInIso(t.dueDate), 'day'))
         if (tasks.length > 0) {
             week.push({ date: formatDateInIso(eod), tasks })
         }
         eod.add(1, 'days')
     }
-    return { week, future: future(tasksWithDueDate), overdue: overdue(tasksWithDueDate) }
+    return { week, future: future(openTasksWithDueDate), overdue: overdue(openTasksWithDueDate) }
 }

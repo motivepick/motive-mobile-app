@@ -13,9 +13,6 @@ import { ScheduleView } from './ScheduleView'
 import { schedule } from '../../utils/schedule'
 
 const mapStateToProps = state => ({
-    tasks: state.tasks.tasks,
-    closedTasks: state.tasks.closedTasks,
-    closedTasksAreShown: state.tasks.closedTasksAreShown,
     schedule: schedule(state.tasks.tasks),
     goals: state.goals.goals
 })

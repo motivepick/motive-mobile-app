@@ -1,16 +1,6 @@
 import { bindActionCreators } from 'redux'
-import {
-    closeTaskAction,
-    createTask,
-    deleteTaskAction,
-    hideClosedTasksAction,
-    setFilterAction,
-    showClosedTasksAction,
-    undoCloseTaskAction,
-    updateClosedUserTasksAction,
-    updateUserTasksAction
-} from '../../actions/tasksActions'
-import { closeTask, doDeleteTask, fetchClosedTasks, fetchTasks, undoCloseTask } from '../../services/taskService'
+import { closeTaskAction, createTask, deleteTaskAction, setFilterAction, undoCloseTaskAction, updateUserTasksAction } from '../../actions/tasksActions'
+import { closeTask, doDeleteTask, fetchTasks, undoCloseTask } from '../../services/taskService'
 import { fetchToken } from '../../services/accountService'
 import request from 'superagent'
 import { API_URL } from '../../const'
@@ -19,27 +9,24 @@ import connect from 'react-redux/es/connect/connect'
 import { translate } from 'react-i18next'
 import { AllTasksView } from './AllTasksView'
 
-const mapStateToProps = state => ({
-    tasks: state.tasks.tasks,
-    closedTasks: state.tasks.closedTasks,
-    closedTasksAreShown: state.tasks.closedTasksAreShown
-})
+const open = (tasks) => tasks.filter(t => !t.closed)
+
+const closed = (tasks) => tasks.filter(t => t.closed)
+
+const mapStateToProps = state => {
+    const closedTasks = closed(state.tasks.tasks, state.tasks.totalClosedTasksShown)
+    return ({
+        tasks: open(state.tasks.tasks),
+        closedTasks: closedTasks.slice(0, state.tasks.totalClosedTasksShown),
+        totalClosedTasks: closedTasks.length
+    })
+}
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
-    updateUserTasks: (closed, listFilter) => async (dispatch, getState) => {
-        if (closed) {
-            const { closedTasksAreShown } = getState().tasks
-            if (closedTasksAreShown) {
-                dispatch(hideClosedTasksAction())
-            } else {
-                dispatch(updateClosedUserTasksAction(await fetchClosedTasks()))
-                dispatch(showClosedTasksAction())
-            }
-        } else {
-            dispatch(setFilterAction(listFilter))
-            dispatch(updateUserTasksAction(await fetchTasks(listFilter)))
-        }
+    updateUserTasks: (closed, listFilter) => async (dispatch) => {
+        dispatch(setFilterAction(listFilter))
+        dispatch(updateUserTasksAction(await fetchTasks(listFilter)))
     },
 
     createTask: task => async (dispatch, getState) => {

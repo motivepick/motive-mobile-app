@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
-import { Animated } from 'react-native'
-import TaskList from '../../components/TaskList/TaskList'
-import { Container, StyleProvider } from 'native-base'
+import { Animated, StyleSheet, View } from 'react-native'
+import { Button, Container, StyleProvider, Text } from 'native-base'
 import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
 import AnimatedHeader from '../../components/common/AnimatedHeader/AnimatedHeader'
 import QuickInput from '../../components/common/QuickInput/QuickInput'
 import Line from '../../components/common/Line'
 import { handleDueDateOf } from '../../utils/parser'
+import { iOSColors, iOSUIKit } from 'react-native-typography'
+import Tasks from '../../components/TaskList/Tasks'
 
 export class AllTasksView extends Component {
     state = {
-        scrollY: new Animated.Value(0)
+        scrollY: new Animated.Value(0),
+        showByStatusInProgress: true
     }
 
     componentDidMount() {
@@ -24,10 +26,12 @@ export class AllTasksView extends Component {
             tasks,
             closedTasks,
             closeTask,
+            totalClosedTasks,
             deleteTask,
             undoCloseTask,
             t
         } = this.props
+        const { showByStatusInProgress } = this.state
 
         let _scrollView = null
         const headerHeight = 40
@@ -60,8 +64,19 @@ export class AllTasksView extends Component {
                         onScrollEndDrag={onScrollEndSnapToEdge}
                         onMomentumScrollEnd={onScrollEndSnapToEdge}
                         scrollEventThrottle={16}>
-                        <TaskList tasks={tasks} closedTasks={closedTasks} onCloseTask={id => closeTask(id)} onUndoCloseTask={id => undoCloseTask(id)}
-                            onDeleteTask={id => deleteTask(id)} onTasksStatusToggle={closed => this.onTasksStatusToggle(closed)}/>
+                        <React.Fragment>
+                            <Text style={styles.subHeader}>
+                                {t('labels.totalTasks', { totalTasks: showByStatusInProgress ? tasks.length : closedTasks.length }).toLocaleUpperCase()}
+                            </Text>
+                            <Line/>
+                            <View style={styles.sectionHeader}>
+                                <Button transparent noIndent onPress={this.toggleByStatus} style={{ alignSelf: 'flex-end' }}>
+                                    <Text>{showByStatusInProgress ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
+                                </Button>
+                            </View>
+                        </React.Fragment>
+                        {showByStatusInProgress && <Tasks tasks={tasks} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>}
+                        {!showByStatusInProgress && <Tasks tasks={closedTasks} onCloseTask={id => undoCloseTask(id)} onDeleteTask={id => deleteTask(id)}/>}
                     </Animated.ScrollView>
                 </Container>
             </StyleProvider>
@@ -74,8 +89,22 @@ export class AllTasksView extends Component {
         createTask(task)
     }
 
-    onTasksStatusToggle = closed => {
-        const { updateUserTasks } = this.props
-        updateUserTasks(closed, 'all')
+    toggleByStatus = () => {
+        const { showByStatusInProgress } = this.state
+        this.setState({ showByStatusInProgress: !showByStatusInProgress })
     }
 }
+
+const styles = StyleSheet.create({
+    sectionHeader: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginHorizontal: 16
+    },
+    subHeader: {
+        ...iOSUIKit.footnoteEmphasizedObject,
+        color: iOSColors.gray,
+        marginHorizontal: 16,
+        marginTop: 8
+    }
+})

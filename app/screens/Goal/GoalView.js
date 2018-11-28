@@ -4,7 +4,6 @@ import { Container, Content, StyleProvider, Text } from 'native-base'
 import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
 import { human, iOSColors, systemWeights } from 'react-native-typography'
-import TaskList from '../../components/TaskList/TaskList'
 import AnimatedHeader from '../../components/common/AnimatedHeader/AnimatedHeader'
 import GoalCard from '../../components/common/GoalCard'
 import Line from '../../components/common/Line'
@@ -23,8 +22,7 @@ export class GoalView extends Component {
     }
 
     render() {
-        const { goal, createGoalTask, updateGoalTasks, closeGoalTask, deleteGoalTask, t } = this.props
-        const { id, tasks } = goal
+        const { goal, t } = this.props
 
         return (
             <StyleProvider style={getTheme(baseTheme)}>
@@ -37,8 +35,6 @@ export class GoalView extends Component {
                         <Text style={styles.taskTitle}>{t('headings.tasks')}</Text>
                         <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                         <Line/>
-                        <TaskList tasks={tasks} onTaskCreated={task => createGoalTask(id, task)} onFilterChanged={listFilter => updateGoalTasks(listFilter, id)}
-                            onCloseTask={id => closeGoalTask(id)} onDeleteTask={id => deleteGoalTask(id)} onTasksStatusToggle={Function}/>
                     </Content>
                 </Container>
             </StyleProvider>

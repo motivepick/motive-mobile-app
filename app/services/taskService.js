@@ -38,12 +38,6 @@ export const fetchTasks = (listFilter, goalId) => {
     }
 }
 
-export const fetchClosedTasks = async () => {
-    const token = await fetchToken()
-    const { body } = await request.get(`${API_URL}/tasks`).query({ closed: true }).set('Cookie', token)
-    return body
-}
-
 export const closeTask = async id => {
     const token = await fetchToken()
     const { body } = await request.put(`${API_URL}/tasks/${id}`).set('Cookie', token).send({ closed: true })

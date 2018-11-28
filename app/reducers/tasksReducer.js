@@ -4,10 +4,8 @@ import {
     CLOSE_TASK,
     CREATE_TASK,
     DELETE_TASK,
-    HIDE_CLOSED_TASKS,
     SET_FILTER,
     SET_TASK,
-    SHOW_CLOSED_TASKS,
     UNDO_CLOSE_TASK,
     UPDATE_CLOSED_USER_TASKS,
     UPDATE_TASK,
@@ -17,23 +15,8 @@ import {
 const INITIAL_STATE = {
     task: {},
     tasks: [],
-    listFilter: 'all',
-    closedTasks: [],
-    closedTasksAreShown: false
-}
-
-const updatedTasks = (state, id) => {
-    const task = state.closedTasks.find(t => t.id === id)
-    return [{ ...task, closed: false }, ...state.tasks]
-}
-
-const updatedClosedTasks = (state, id) => {
-    if (state.closedTasksAreShown) {
-        const task = state.tasks.find(t => t.id === id)
-        return [{ ...task, closed: true }, ...state.closedTasks]
-    } else {
-        return state.closedTasks
-    }
+    totalClosedTasksShown: 10,
+    listFilter: 'all'
 }
 
 export default function (state = INITIAL_STATE, action) {
@@ -54,14 +37,10 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, tasks: action.payload }
     } else if (type === UPDATE_CLOSED_USER_TASKS) {
         return { ...state, closedTasks: action.payload }
-    } else if (type === SHOW_CLOSED_TASKS) {
-        return { ...state, closedTasksAreShown: true }
-    } else if (type === HIDE_CLOSED_TASKS) {
-        return { ...state, closedTasksAreShown: false }
     } else if (type === CLOSE_TASK) {
-        return { ...state, tasks: state.tasks.filter(t => t.id !== action.payload), closedTasks: updatedClosedTasks(state, action.payload) }
+        return { ...state, tasks: state.tasks.map(t => t.id === action.payload ? { ...t, closed: true } : t) }
     } else if (type === UNDO_CLOSE_TASK) {
-        return { ...state, tasks: updatedTasks(state, action.payload), closedTasks: state.closedTasks.filter(t => t.id !== action.payload) }
+        return { ...state, tasks: state.tasks.map(t => t.id === action.payload ? { ...t, closed: false } : t) }
     } else if (type === UPDATE_TASK) {
         const { payload } = action
         const tasks = []
@@ -70,7 +49,7 @@ export default function (state = INITIAL_STATE, action) {
         }
         return { ...state, tasks }
     } else if (type === DELETE_TASK) {
-        return { ...state, tasks: state.tasks.filter(t => t.id !== action.payload), closedTasks: state.closedTasks.filter(t => t.id !== action.payload) }
+        return { ...state, tasks: state.tasks.filter(t => t.id !== action.payload) }
     } else {
         return state
     }
