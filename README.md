@@ -12,3 +12,19 @@
     * Go to `Product`. Then `Clean`. Then `Build`.
     * Make sure back end is running (see host and port in `.env.development`).
     * Press the `Run` button.
+
+## To Release This Application
+
+### iOS
+
+To be described.
+
+### Android
+
+1. Make sure the back end URLs are updated in `.env.development`, `.env.production` and `const.js`.
+2. Increase the values of `versionCode` and `versionName`.
+3. Specify values for `MYAPP_RELEASE_STORE_PASSWORD` and `MYAPP_RELEASE_KEY_PASSWORD`
+4. Go to `./android` and run `./gradlew clean assembleRelease`
+5. The assembly should appear in `./android/app/build/outputs/apk/release`
+
+See details [here](https://facebook.github.io/react-native/docs/signed-apk-android).

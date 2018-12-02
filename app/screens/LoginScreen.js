@@ -8,12 +8,13 @@ import { Button, Container, Content, Icon, StyleProvider, Text } from 'native-ba
 import { human, iOSUIKit } from 'react-native-typography'
 import { translate } from 'react-i18next'
 import { storeToken } from '../services/accountService'
+import { fromUrl } from '../utils/token'
 
 class LoginScreen extends Component {
 
     handleOpenURL = event => {
         const url = event.url || event
-        const token = url.replace('motive://', '')
+        const token = fromUrl(url)
         storeToken(token, () => navigateWithReset(this.props.navigation, 'Splash'))
     }
 
