@@ -10,7 +10,6 @@ import AnimatedHeader from '../../components/common/AnimatedHeader/AnimatedHeade
 import Line from '../../components/common/Line'
 import QuickInput from '../../components/common/QuickInput/QuickInput'
 import SectionHeader from '../../components/common/SectionHeader'
-import SubSectionHeader from '../../components/common/SubSectionHeader'
 import GoalCircle from '../../components/common/GoalCircle'
 import { handleDueDateOf } from '../../utils/parser'
 import EmptyStateTemplate from '../../components/common/EmptyStateTemplate'
@@ -59,6 +58,23 @@ export class ScheduleView extends PureComponent {
             }
         }
 
+        const dataSectionList = [
+            ...week.map(({ date, tasks }) => (
+                {
+                    title: this.capitalize(getDateAsStr(date)),
+                    data: tasks
+                }
+            )),
+            {
+                title: t('labels.future'),
+                data: future
+            },
+            {
+                title: t('labels.overdue'),
+                data: overdue
+            }
+        ]
+
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
@@ -96,22 +112,7 @@ export class ScheduleView extends PureComponent {
                         {SHOW_GOALS && <QuickInput placeholder={t('labels.newTaskForToday')} onSubmitEditing={this.onAddNewTask}/>}
                         <View style={{ marginVertical: 4 }}/>
                         {this.isEmpty(schedule) && this.renderEmptyState()}
-                        {week.map(({ date, tasks }) =>
-                            <View key={date}>
-                                <SubSectionHeader leftText={this.capitalize(getDateAsStr(date))}/>
-                                <Tasks tasks={tasks} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
-                            </View>
-                        )}
-                        {future.length > 0 &&
-                        <View>
-                            <SubSectionHeader leftText={t('labels.future')}/>
-                            <Tasks tasks={future} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
-                        </View>}
-                        {overdue.length > 0 &&
-                        <View>
-                            <SubSectionHeader leftText={t('labels.overdue')}/>
-                            <Tasks tasks={overdue} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
-                        </View>}
+                        <Tasks useSectionList tasks={dataSectionList} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>
                     </Animated.ScrollView>
                 </Container>
             </StyleProvider>

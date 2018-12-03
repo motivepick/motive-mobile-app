@@ -7,6 +7,7 @@ import SwipeListView from 'react-native-swipe-list-view/components/SwipeListView
 import { translate } from 'react-i18next'
 import { iOSColors } from 'react-native-typography'
 import EmptyStateTemplate from '../common/EmptyStateTemplate'
+import SubSectionHeader from '../common/SubSectionHeader'
 
 class Tasks extends PureComponent {
 
@@ -27,20 +28,44 @@ class Tasks extends PureComponent {
         />
     )
 
+    renderFlatList = (tasks) => (
+        <SwipeListView
+            useFlatList
+            showsVerticalScrollIndicator={false}
+            data={tasks}
+            keyExtractor={item => `${item.id}`}
+            renderItem={(data, rowMap) => this.renderRow(data, rowMap)}
+            renderHiddenItem={(data, rowMap) => this.renderRightHiddenRow(data.item.id, rowMap)}
+            rightOpenValue={-100}
+            disableRightSwipe={true}
+            closeOnRowBeginSwipe={true}
+        />
+    )
+
+    renderSectionList = (tasks) => (
+        <SwipeListView
+            useSectionList
+            showsVerticalScrollIndicator={false}
+            sections={tasks}
+            keyExtractor={item => `${item.id}`}
+            renderItem={(data, rowMap) => this.renderRow(data, rowMap)}
+            renderHiddenItem={(data, rowMap) => this.renderRightHiddenRow(data.item.id, rowMap)}
+            rightOpenValue={-100}
+            disableRightSwipe={true}
+            closeOnRowBeginSwipe={true}
+            renderSectionHeader={({ section }) => section.data && section.data.length > 0 ?  <SubSectionHeader leftText={section.title}/> : null}
+        />
+    )
+
     list = (tasks, total, onMoreTasksRequested) => {
-        const { t } = this.props
+        const { t, useSectionList = false } = this.props
         return <React.Fragment>
-            <SwipeListView
-                useFlatList
-                showsVerticalScrollIndicator={false}
-                data={tasks}
-                keyExtractor={item => `${item.id}`}
-                renderItem={(data, rowMap) => this.renderRow(data, rowMap)}
-                renderHiddenItem={(data, rowMap) => this.renderRightHiddenRow(data.item.id, rowMap)}
-                rightOpenValue={-100}
-                disableRightSwipe={true}
-                closeOnRowBeginSwipe={true}
-            />
+            {
+                useSectionList && this.renderSectionList(tasks)
+            }
+            {
+                !useSectionList && this.renderFlatList(tasks)
+            }
             {total && tasks.length < total && <Button small transparent full onPress={onMoreTasksRequested || Function.prototype}>
                 <Text style={{ color: iOSColors.gray, fontSize: 14 }}>{t('labels.showMoreTasks').toLocaleUpperCase()}</Text>
             </Button>}
