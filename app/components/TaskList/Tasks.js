@@ -32,6 +32,7 @@ class Tasks extends PureComponent {
         return <React.Fragment>
             <SwipeListView
                 useFlatList
+                showsVerticalScrollIndicator={false}
                 data={tasks}
                 keyExtractor={item => `${item.id}`}
                 renderItem={(data, rowMap) => this.renderRow(data, rowMap)}
