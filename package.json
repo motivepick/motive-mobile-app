@@ -53,6 +53,7 @@
     "react-native-progress": "^3.5.0",
     "react-native-progress-circle": "^2.0.0",
     "react-native-sortable-list": "0.0.22",
+    "react-native-swipe-list-view": "^1.5.0",
     "react-native-typography": "^1.4.0",
     "react-navigation": "3.0.0",
     "react-redux": "5.0.7",
