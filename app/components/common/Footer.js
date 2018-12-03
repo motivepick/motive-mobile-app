@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Button, Footer, FooterTab, Icon, StyleProvider, Text } from 'native-base'
 import getTheme from '../../../native-base-theme/components'
 import baseTheme from '../../../native-base-theme/variables/platform'
 import { translate } from 'react-i18next'
 
-class FooterComponent extends Component {
+class FooterComponent extends PureComponent {
     render() {
         const { navigation, t } = this.props
         const { state } = navigation

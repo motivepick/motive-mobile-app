@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Animated, ScrollView, StyleSheet, View } from 'react-native'
 import { Container, StyleProvider, Text } from 'native-base'
 import { SHOW_GOALS } from '../../const'
@@ -17,7 +17,7 @@ import EmptyStateTemplate from '../../components/common/EmptyStateTemplate'
 import { getDateAsStr } from '../../utils/dateUtils'
 import Tasks from '../../components/TaskList/Tasks'
 
-export class ScheduleView extends Component {
+export class ScheduleView extends PureComponent {
 
     state = {
         scrollY: new Animated.Value(0)

@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Body, Button, Header, Icon, Left, Right, Text, Title } from 'native-base'
 import { ios } from '../../../utils/platform'
 
-class HeaderComponent extends Component {
+class HeaderComponent extends PureComponent {
 
     render() {
         const { title, rightButtonLabel, leftButtonLabel, onLeftButtonPress, onRightButtonPress } = this.props

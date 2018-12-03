@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Animated } from 'react-native'
 import GoalList from '../../components/GoalList/GoalList'
 import { Container, Content, StyleProvider } from 'native-base'
@@ -8,7 +8,7 @@ import AnimatedHeader from '../../components/common/AnimatedHeader/AnimatedHeade
 import QuickInput from '../../components/common/QuickInput/QuickInput'
 import Line from '../../components/common/Line'
 
-export class AllGoalsView extends Component {
+export class AllGoalsView extends PureComponent {
 
     state = {
         scrollY: new Animated.Value(0)

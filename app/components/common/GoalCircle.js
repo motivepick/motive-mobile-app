@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Icon, Text } from 'native-base'
 import { iOSColors, iOSUIKit, systemWeights } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
 
-export default class SectionHeader extends Component {
+export default class SectionHeader extends PureComponent {
     render() {
         const { onBodyClick, goal, progress, progressBgColor, progressIcon, text, subText } = this.props
         return (

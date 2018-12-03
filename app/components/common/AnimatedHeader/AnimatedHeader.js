@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Body, Button, Header, Left, Right, Text, Title } from 'native-base'
 import { iOSUIKit } from 'react-native-typography'
 import { Animated, StyleSheet, View } from 'react-native'
@@ -7,7 +7,7 @@ const HEADER_EXPANDED_HEIGHT = 41.5
 const HEADER_COLLAPSED_HEIGHT = 0
 
 // If AnimatedHeader is used add onScroll event to ScrollView (a.k.a <Content> from NativeBase)
-class AnimatedHeaderComponent extends Component {
+class AnimatedHeaderComponent extends PureComponent {
     render() {
         const headerHeight = this.props.scrollOffset.interpolate({
             inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],

@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { ListView, View } from 'react-native'
 
 import { List } from 'native-base'
 import styles from './List.styles'
 
-class ListComponent extends Component {
+class ListComponent extends PureComponent {
 
     constructor(props) {
         super(props)

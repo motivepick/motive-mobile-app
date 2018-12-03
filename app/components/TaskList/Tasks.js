@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Button, Text } from 'native-base'
 import { ListView } from 'react-native'
 import { withNavigation } from 'react-navigation'
@@ -8,7 +8,7 @@ import { translate } from 'react-i18next'
 import { iOSColors } from 'react-native-typography'
 import EmptyStateTemplate from '../common/EmptyStateTemplate'
 
-class Tasks extends Component {
+class Tasks extends PureComponent {
 
     constructor(props) {
         super(props)

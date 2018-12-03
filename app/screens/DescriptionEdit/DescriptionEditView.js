@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { KeyboardAvoidingView, Platform, StyleSheet } from 'react-native'
 import { Container, Content, Form, Item, StyleProvider } from 'native-base'
 import Header from '../../components/common/Header/Header'
@@ -16,7 +16,7 @@ type DescriptionEditViewProps = {|
     t: T
 |}
 
-export class DescriptionEditView extends Component<DescriptionEditViewProps> {
+export class DescriptionEditView extends PureComponent<DescriptionEditViewProps> {
 
     componentDidMount() {
         const { navigation, setEditableEntity } = this.props

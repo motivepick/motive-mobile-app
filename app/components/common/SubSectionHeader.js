@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'native-base'
 import { human, iOSColors, systemWeights } from 'react-native-typography'
 
-export default class SectionHeader extends Component {
+export default class SectionHeader extends PureComponent {
     render() {
         return (
             <View style={styles.sectionHeader}>

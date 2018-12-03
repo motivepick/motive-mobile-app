@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { getDateAsStr, getDateColor } from '../../../utils/dateUtils'
 import { Body, Icon, ListItem, Right, Text } from 'native-base'
@@ -6,7 +6,7 @@ import { human, iOSColors } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
 import { palette } from '../Palette'
 
-class CheckboxListItem extends Component {
+class CheckboxListItem extends PureComponent {
 
     state = { completed: this.props.isCompleted }
 

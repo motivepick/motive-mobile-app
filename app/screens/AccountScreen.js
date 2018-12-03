@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Animated, Image, View } from 'react-native'
 import { navigateWithReset } from './navigationWithReset'
 import { Body, Button, Card, CardItem, Container, Header, Icon, Right, StyleProvider, Text } from 'native-base'
@@ -10,7 +10,7 @@ import { ios } from '../utils/platform'
 import CookieManager from 'react-native-cookies'
 import { removeToken } from '../services/accountService'
 
-class AccountScreen extends Component {
+class AccountScreen extends PureComponent {
     state = {
         scrollY: new Animated.Value(0)
     }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Button, Text } from 'native-base'
 import { ListView } from 'react-native'
 import List from '../common/List/List'
@@ -7,7 +7,7 @@ import CheckboxListItem from '../common/CheckboxListItem/CheckboxListItem'
 import { calculateGoalProgressStats } from '../../utils/progressUtils'
 import { translate } from 'react-i18next'
 
-class Goals extends Component {
+class Goals extends PureComponent {
 
     constructor(props) {
         super(props)

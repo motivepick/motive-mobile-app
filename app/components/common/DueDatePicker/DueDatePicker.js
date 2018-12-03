@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { View } from 'react-native'
 import DatePicker from 'react-native-datepicker'
 import { Button, Icon } from 'native-base'
@@ -24,7 +24,7 @@ type DueDatePickerState = {|
     dateAsStringInLocalFormat: string
 |}
 
-class DueDatePicker extends Component<DueDatePickerProps, DueDatePickerState> {
+class DueDatePicker extends PureComponent<DueDatePickerProps, DueDatePickerState> {
 
     constructor(props: DueDatePickerProps) {
         super(props)

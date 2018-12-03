@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Container, Content, Form, Input, Item, Label, StyleProvider } from 'native-base'
 import DueDatePicker from '../../components/common/DueDatePicker/DueDatePicker'
 import Header from '../../components/common/Header/Header'
@@ -9,7 +9,7 @@ import GoalPicker from '../../components/common/GoalPicker/GoalPicker'
 import { SHOW_GOALS } from '../../const'
 import { android } from '../../utils/platform'
 
-export class TaskEditView extends Component {
+export class TaskEditView extends PureComponent {
     state = {
         selected: this.props.task.goal && this.props.task.goal.id
     }

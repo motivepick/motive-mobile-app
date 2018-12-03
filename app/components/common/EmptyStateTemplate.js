@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Image, View } from 'react-native'
 
-class EmptyStateTemplate extends Component {
+class EmptyStateTemplate extends PureComponent {
 
     render() {
         const { imageUrl, content } = this.props

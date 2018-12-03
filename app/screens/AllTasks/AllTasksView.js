@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 import { Button, Container, StyleProvider, Text } from 'native-base'
 import getTheme from '../../../native-base-theme/components/index'
@@ -11,7 +11,7 @@ import { iOSColors, iOSUIKit } from 'react-native-typography'
 import Tasks from '../../components/TaskList/Tasks'
 import { NavigationEvents } from 'react-navigation'
 
-export class AllTasksView extends Component {
+export class AllTasksView extends PureComponent {
 
     state = {
         scrollY: new Animated.Value(0),

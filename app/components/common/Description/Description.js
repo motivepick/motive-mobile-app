@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Input, Text } from 'native-base'
 import styles from './Description.styles'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
@@ -14,7 +14,7 @@ type DescriptionProps = {|
     t: T
 |}
 
-class Description extends Component<DescriptionProps> {
+class Description extends PureComponent<DescriptionProps> {
 
     render() {
         const { value, editable, onChangeText, onGoToEditDescriptionScreen, t } = this.props

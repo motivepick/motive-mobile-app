@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Animated, StyleSheet } from 'react-native'
 import { Container, Content, StyleProvider, Text } from 'native-base'
 import getTheme from '../../../native-base-theme/components/index'
@@ -10,7 +10,7 @@ import Line from '../../components/common/Line'
 import QuickInput from '../../components/common/QuickInput/QuickInput'
 import { handleDueDateOf } from '../../utils/parser'
 
-export class GoalView extends Component {
+export class GoalView extends PureComponent {
     state = {
         scrollY: new Animated.Value(0)
     }

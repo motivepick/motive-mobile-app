@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Platform, StyleSheet, View } from 'react-native'
 import { Form, Icon, Item, Label, Text } from 'native-base'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
@@ -16,7 +16,7 @@ const Column = ({ ...props }) => (
     </View>
 )
 
-class GoalCard extends Component {
+class GoalCard extends PureComponent {
 
     render() {
         const { goal: { dueDate, closed, description, colorTag, tasks = [] }, onGoToEditDescriptionScreen, t } = this.props

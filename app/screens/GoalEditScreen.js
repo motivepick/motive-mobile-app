@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { changeGoalNameAction, createNewGoalAction, setGoalAction, updateGoalAction } from '../actions/goalsActions'
 import { translate } from 'react-i18next'
@@ -15,7 +15,7 @@ import Header from '../components/common/Header/Header'
 import Description from '../components/common/Description/Description'
 import { fetchToken } from '../services/accountService'
 
-class GoalEditScreen extends Component {
+class GoalEditScreen extends PureComponent {
     goToEditDescriptionScreen = () => {
         const { goal, navigation } = this.props
         return navigation.navigate('GoalDescriptionEditScreen', { goal })

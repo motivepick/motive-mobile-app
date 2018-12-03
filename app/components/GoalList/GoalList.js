@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { translate } from 'react-i18next'
 import { Button, Text } from 'native-base'
 import { StyleSheet, View } from 'react-native'
@@ -8,7 +8,7 @@ import Line from '../common/Line'
 import SortPicker from '../common/SortPicker/SortPicker'
 import Goals from './Goals'
 
-class GoalList extends Component {
+class GoalList extends PureComponent {
 
     state = {
         activeFilter: 'all',

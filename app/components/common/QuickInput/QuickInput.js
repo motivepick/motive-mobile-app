@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Button, Form, Icon, Input, Item, Text } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 import { View } from 'react-native'
 import { translate } from 'react-i18next'
 
 // animate clear button
-class QuickInput extends Component {
+class QuickInput extends PureComponent {
 
     state = { value: '' }
 

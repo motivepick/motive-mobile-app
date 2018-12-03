@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Button, Icon, Picker, Text } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 import { Dimensions, PixelRatio, Platform, StyleSheet, View } from 'react-native'
@@ -27,7 +27,7 @@ const variables = {
     borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1)
 }
 
-class GoalPicker extends Component {
+class GoalPicker extends PureComponent {
 
     render() {
         const { selectedValue, onValueChange, onClearValue, placeholder, goals, t } = this.props
