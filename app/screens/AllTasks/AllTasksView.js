@@ -78,7 +78,7 @@ export class AllTasksView extends Component {
                             </Text>
                             <Line/>
                             <View style={styles.sectionHeader}>
-                                <Button transparent noIndent onPress={this.toggleByStatus} style={{ alignSelf: 'flex-end' }}>
+                                <Button transparent onPress={this.toggleByStatus} style={{ alignSelf: 'flex-end' }}>
                                     <Text>{openTasksAreShown ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
                                 </Button>
                             </View>
@@ -113,8 +113,7 @@ export class AllTasksView extends Component {
 const styles = StyleSheet.create({
     sectionHeader: {
         flexDirection: 'row',
-        justifyContent: 'flex-end',
-        marginHorizontal: 16
+        justifyContent: 'flex-end'
     },
     subHeader: {
         ...iOSUIKit.footnoteEmphasizedObject,
