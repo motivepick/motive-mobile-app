@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Container, Content, Form, Input, Item, Label, StyleProvider } from 'native-base'
+import { Button, Container, Content, Form, Input, Item, Label, StyleProvider, Text } from 'native-base'
 import DueDatePicker from '../../components/common/DueDatePicker/DueDatePicker'
 import Header from '../../components/common/Header/Header'
 import getTheme from '../../../native-base-theme/components/index'
@@ -38,11 +38,20 @@ export class TaskEditView extends PureComponent {
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>
                                 <Description value={description} onGoToEditDescriptionScreen={this.handleDescriptionClick}/>
                             </Item>
+                            <Button danger full onPress={() => this.onDelete(id)} style={{ marginTop: 16 }}>
+                                <Text style={{ textAlign: 'center', flex: 1 }}>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
+                            </Button>
                         </Form>
                     </Content>
                 </Container>
             </StyleProvider>
         )
+    }
+
+    onDelete = (id) => {
+        const { deleteTask, navigation } = this.props
+        deleteTask(id)
+        navigation.goBack()
     }
 
     handleDescriptionClick = () => {
