@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Animated, Image, View } from 'react-native'
+import { Animated, Dimensions, Image, View } from 'react-native'
 import { navigateWithReset } from './navigationWithReset'
 import { Body, Button, Card, CardItem, Container, Header, Icon, Right, StyleProvider, Text } from 'native-base'
 import getTheme from '../../native-base-theme/components'
@@ -9,6 +9,9 @@ import { translate } from 'react-i18next'
 import { ios } from '../utils/platform'
 import CookieManager from 'react-native-cookies'
 import { removeToken } from '../services/accountService'
+
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 class AccountScreen extends PureComponent {
     state = {
@@ -42,8 +45,9 @@ class AccountScreen extends PureComponent {
                         <Card>
                             <CardItem>
                                 <Body style={{ alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-                                    <Image source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png' }}
-                                        style={{ marginBottom: 16, width: '50%', aspectRatio: 1.5, resizeMode: 'contain' }}/>
+                                    <Image source={require('../assets/images/list.png')}
+                                        style={{ width: windowWidth * 0.2, height: windowHeight * 0.2, resizeMode: 'contain', marginVertical: 16 }}
+                                    />
                                     <Text style={{ textAlignVertical: 'center', textAlign: 'center' }}>
                                         {t('labels.rateUsBigText')}
                                     </Text>

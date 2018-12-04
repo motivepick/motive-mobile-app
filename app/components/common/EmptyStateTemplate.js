@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import { Dimensions, Image, View } from 'react-native'
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 class EmptyStateTemplate extends PureComponent {
 
