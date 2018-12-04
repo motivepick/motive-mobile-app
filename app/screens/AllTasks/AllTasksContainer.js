@@ -22,10 +22,11 @@ const open = (tasks) => tasks.filter(t => !t.closed)
 const closed = (tasks) => tasks.filter(t => t.closed)
 
 const mapStateToProps = state => {
-    const closedTasks = closed(state.tasks.tasks, state.tasks.totalClosedTasksShown)
+    const { tasks, totalClosedTasksShown } = state.tasks
+    const closedTasks = closed(tasks, totalClosedTasksShown)
     return ({
-        tasks: open(state.tasks.tasks),
-        closedTasks: closedTasks.slice(0, state.tasks.totalClosedTasksShown),
+        tasks: open(tasks),
+        closedTasks: closedTasks.slice(0, totalClosedTasksShown),
         totalClosedTasks: closedTasks.length
     })
 }

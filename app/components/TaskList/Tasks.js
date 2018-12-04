@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { Button, Text } from 'native-base'
-import { ListView, View } from 'react-native'
+import { View } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import CheckboxListItem from '../common/CheckboxListItem/CheckboxListItem'
 import SwipeListView from 'react-native-swipe-list-view/components/SwipeListView'
@@ -10,11 +10,6 @@ import EmptyStateTemplate from '../common/EmptyStateTemplate'
 import SubSectionHeader from '../common/SubSectionHeader'
 
 class Tasks extends PureComponent {
-
-    constructor(props) {
-        super(props)
-        this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
-    }
 
     render() {
         const { tasks, total, onMoreTasksRequested } = this.props

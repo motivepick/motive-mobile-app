@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Animated, View } from 'react-native'
 import { Container, StyleProvider, Text } from 'native-base'
 import getTheme from '../../../native-base-theme/components/index'
@@ -9,8 +9,9 @@ import Line from '../../components/common/Line'
 import EmptyStateTemplate from '../../components/common/EmptyStateTemplate'
 import { getDateAsStr } from '../../utils/dateUtils'
 import Tasks from '../../components/TaskList/Tasks'
+import { changed } from '../../utils/comparison'
 
-export class ScheduleView extends PureComponent {
+export class ScheduleView extends Component {
 
     state = {
         scrollY: new Animated.Value(0)
@@ -22,6 +23,10 @@ export class ScheduleView extends PureComponent {
             content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noTasks')}</Text>}
         />
     )
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.scheduleChanged(this.props.schedule, nextProps.schedule) || this.state !== nextState
+    }
 
     render() {
         const {
@@ -94,5 +99,23 @@ export class ScheduleView extends PureComponent {
     isEmpty = schedule => {
         const { week, future, overdue } = schedule
         return week.length === 0 && future.length === 0 && overdue.length === 0
+    }
+
+    scheduleChanged = (schedule, nextSchedule) => this.scheduleItemsChanged(schedule.week, nextSchedule.week)
+        || changed(schedule.future, nextSchedule.future) || changed(schedule.overdue, nextSchedule.overdue)
+
+    scheduleItemsChanged = (scheduleItems, nextScheduleItems) => {
+        if (scheduleItems.length === nextScheduleItems.length) {
+            for (let i = 0; i < scheduleItems.length; i++) {
+                const item = scheduleItems[i]
+                const nextItem = nextScheduleItems[i]
+                if (item.date !== nextItem.date || changed(item.tasks, nextItem.tasks)) {
+                    return true
+                }
+            }
+            return false
+        } else {
+            return true
+        }
     }
 }

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 import { Button, Container, StyleProvider, Text } from 'native-base'
 import getTheme from '../../../native-base-theme/components/index'
@@ -9,8 +9,9 @@ import Line from '../../components/common/Line'
 import { handleDueDateOf } from '../../utils/parser'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import Tasks from '../../components/TaskList/Tasks'
+import { changed } from '../../utils/comparison'
 
-export class AllTasksView extends PureComponent {
+export class AllTasksView extends Component {
 
     state = {
         scrollY: new Animated.Value(0),
@@ -20,6 +21,11 @@ export class AllTasksView extends PureComponent {
     componentDidMount() {
         const { updateUserTasks } = this.props
         updateUserTasks()
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return changed(this.props.tasks, nextProps.tasks) || changed(this.props.closedTasks, nextProps.closedTasks)
+            || this.props.totalClosedTasks !== nextProps.totalClosedTasks || this.state !== nextState
     }
 
     render() {
