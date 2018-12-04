@@ -9,7 +9,7 @@ import Line from '../../components/common/Line'
 import EmptyStateTemplate from '../../components/common/EmptyStateTemplate'
 import { getDateAsStr } from '../../utils/dateUtils'
 import Tasks from '../../components/TaskList/Tasks'
-import { changed } from '../../utils/comparison'
+import { tasksChanged } from '../../utils/comparison'
 
 export class ScheduleView extends Component {
 
@@ -29,13 +29,7 @@ export class ScheduleView extends Component {
     }
 
     render() {
-        const {
-            schedule,
-            closeTask,
-            deleteTask,
-            t
-        } = this.props
-
+        const { schedule, closeTask, deleteTask, t } = this.props
         const { week, future, overdue } = schedule
 
         let _scrollView = null
@@ -102,14 +96,14 @@ export class ScheduleView extends Component {
     }
 
     scheduleChanged = (schedule, nextSchedule) => this.scheduleItemsChanged(schedule.week, nextSchedule.week)
-        || changed(schedule.future, nextSchedule.future) || changed(schedule.overdue, nextSchedule.overdue)
+        || tasksChanged(schedule.future, nextSchedule.future) || tasksChanged(schedule.overdue, nextSchedule.overdue)
 
     scheduleItemsChanged = (scheduleItems, nextScheduleItems) => {
         if (scheduleItems.length === nextScheduleItems.length) {
             for (let i = 0; i < scheduleItems.length; i++) {
                 const item = scheduleItems[i]
                 const nextItem = nextScheduleItems[i]
-                if (item.date !== nextItem.date || changed(item.tasks, nextItem.tasks)) {
+                if (item.date !== nextItem.date || tasksChanged(item.tasks, nextItem.tasks)) {
                     return true
                 }
             }

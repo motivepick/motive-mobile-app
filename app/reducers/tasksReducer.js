@@ -1,6 +1,5 @@
 import {
     CHANGE_TASK_DESCRIPTION,
-    CHANGE_TASK_NAME,
     CLOSE_TASK,
     CREATE_TASK,
     DELETE_TASK,
@@ -24,9 +23,6 @@ export default function (state = INITIAL_STATE, action) {
     const { type } = action
     if (type === SET_TASK) {
         return { ...state, task: action.payload }
-    } else if (type === CHANGE_TASK_NAME) {
-        const task = { ...state.task, name: action.payload }
-        return { ...state, task }
     } else if (type === CHANGE_TASK_DESCRIPTION) {
         const task = { ...state.task, description: action.payload }
         return { ...state, task }
@@ -46,7 +42,7 @@ export default function (state = INITIAL_STATE, action) {
         for (const task of state.tasks) {
             tasks.push(task.id === payload.id ? { ...task, ...payload } : task)
         }
-        return { ...state, tasks }
+        return { ...state, tasks, task: { ...state.task, ...payload } }
     } else if (type === DELETE_TASK) {
         return { ...state, tasks: state.tasks.filter(t => t.id !== action.payload) }
     } else if (type === SHOW_MORE_TASKS) {

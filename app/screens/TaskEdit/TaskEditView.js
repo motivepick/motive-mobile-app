@@ -9,15 +9,19 @@ import { android } from '../../utils/platform'
 
 export class TaskEditView extends PureComponent {
 
+    state = { taskName: '' }
+
     componentDidMount() {
         const { navigation, setTask } = this.props
         const task = navigation.getParam('task')
         setTask(task)
+        this.setState({ taskName: task.name })
     }
 
     render() {
-        const { task, navigation, changeTaskName, saveTask, t } = this.props
-        const { id, name, description, dueDate } = task
+        const { task, navigation, saveTask, t } = this.props
+        const { id, description, dueDate } = task
+        const { taskName } = this.state
 
         return (
             <StyleProvider style={getTheme(baseTheme)}>
@@ -28,7 +32,8 @@ export class TaskEditView extends PureComponent {
                         <Form style={{ marginHorizontal: 16 }}>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.task').toLocaleUpperCase()}</Label>
-                                <Input value={name} onChangeText={changeTaskName} onSubmitEditing={() => saveTask({ id, name })} returnKeyType={'done'}/>
+                                <Input value={taskName} onChangeText={taskName => this.setState({ taskName })}
+                                    onSubmitEditing={this.handleSubmitTaskNameEditing} returnKeyType={'done'}/>
                             </Item>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>
@@ -46,6 +51,19 @@ export class TaskEditView extends PureComponent {
                 </Container>
             </StyleProvider>
         )
+    }
+
+    handleSubmitTaskNameEditing = () => {
+        const { task, saveTask } = this.props
+        const { taskName } = this.state
+        const { id, name, dueDate } = task
+        const trimmed = taskName.trim()
+        if (trimmed === '') {
+            this.setState({ taskName: name })
+        } else {
+            saveTask({ id, name: trimmed, dueDate })
+            this.setState({ taskName: trimmed })
+        }
     }
 
     onDelete = (id) => {

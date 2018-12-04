@@ -38,10 +38,11 @@ class QuickInput extends PureComponent {
     onSubmitEditing = () => {
         const { onSubmitEditing } = this.props
         const { value } = this.state
-        if (value !== '') {
-            onSubmitEditing(value.trim())
-            this.clearValue()
+        const trimmed = value.trim()
+        if (trimmed !== '') {
+            onSubmitEditing(trimmed)
         }
+        this.clearValue()
     }
 }
 

@@ -1,5 +1,4 @@
 export const SET_TASK = 'SET_TASK'
-export const CHANGE_TASK_NAME = 'CHANGE_TASK_NAME'
 export const CHANGE_TASK_DESCRIPTION = 'CHANGE_TASK_DESCRIPTION'
 export const UPDATE_USER_TASKS = 'UPDATE_USER_TASKS'
 export const UPDATE_CLOSED_USER_TASKS = 'UPDATE_CLOSED_USER_TASKS'
@@ -12,8 +11,6 @@ export const SHOW_MORE_TASKS = 'SHOW_MORE_TASKS'
 export const RESET_CLOSED_TASKS = 'RESET_CLOSED_TASKS'
 
 export const setTaskAction = task => ({ type: SET_TASK, payload: task })
-
-export const changeTaskNameAction = name => ({ type: CHANGE_TASK_NAME, payload: name })
 
 export const changeTaskDescriptionAction = description => ({ type: CHANGE_TASK_DESCRIPTION, payload: description })
 

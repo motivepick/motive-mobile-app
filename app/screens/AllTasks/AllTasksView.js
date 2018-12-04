@@ -9,7 +9,7 @@ import Line from '../../components/common/Line'
 import { handleDueDateOf } from '../../utils/parser'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import Tasks from '../../components/TaskList/Tasks'
-import { changed } from '../../utils/comparison'
+import { tasksChanged } from '../../utils/comparison'
 
 export class AllTasksView extends Component {
 
@@ -24,7 +24,7 @@ export class AllTasksView extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return changed(this.props.tasks, nextProps.tasks) || changed(this.props.closedTasks, nextProps.closedTasks)
+        return tasksChanged(this.props.tasks, nextProps.tasks) || tasksChanged(this.props.closedTasks, nextProps.closedTasks)
             || this.props.totalClosedTasks !== nextProps.totalClosedTasks || this.state !== nextState
     }
 

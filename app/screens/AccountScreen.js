@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Animated, Dimensions, Image, View } from 'react-native'
+import { Animated, Dimensions, Image, Linking, View } from 'react-native'
 import { navigateWithReset } from './navigationWithReset'
 import { Body, Button, Card, CardItem, Container, Header, Icon, Right, StyleProvider, Text } from 'native-base'
 import getTheme from '../../native-base-theme/components'
@@ -26,7 +26,7 @@ class AccountScreen extends PureComponent {
     // TODO this:
     goToAppStore = () => alert('Go to App Store')
 
-    goToGooglePlay = () => alert('Go to Google Play')
+    goToGooglePlay = () => Linking.openURL('https://play.google.com/store/apps/details?id=com.motivemobileapp')
 
     render() {
         const { t } = this.props

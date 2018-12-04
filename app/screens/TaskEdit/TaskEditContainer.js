@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { changeTaskNameAction, deleteTaskAction, setTaskAction, updateTaskAction } from '../../actions/tasksActions'
+import { deleteTaskAction, setTaskAction, updateTaskAction } from '../../actions/tasksActions'
 import { translate } from 'react-i18next'
 import { TaskEditView } from './TaskEditView'
 import { doDeleteTask, updateTask } from '../../services/taskService'
@@ -12,8 +12,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
 
     setTask: task => dispatch => dispatch(setTaskAction(task)),
-
-    changeTaskName: taskName => dispatch => dispatch(changeTaskNameAction(taskName)),
 
     saveTask: task => async dispatch => {
         const { id, name, description, dueDate } = task
