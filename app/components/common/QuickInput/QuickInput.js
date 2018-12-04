@@ -22,7 +22,7 @@ class QuickInput extends PureComponent {
                             onSubmitEditing={this.onSubmitEditing}
                             returnKeyType={'done'}
                             placeholder={placeholder}/>
-                        {Boolean(value) && <Button transparent squared danger onPress={this.clearValue}>
+                        {Boolean(value) && <Button transparent squared danger onPress={this.clearValue} style={{ alignSelf: 'center' }}>
                             <Icon type='MaterialCommunityIcons' name='close-circle-outline'/>
                         </Button>}
                     </Item>
