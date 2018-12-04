@@ -23,7 +23,7 @@ class Tasks extends PureComponent {
 
     renderEmptyState = () => (
         <EmptyStateTemplate
-            imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
+            imagePath={require('../../assets/images/list.png')}
             content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noTasks')}</Text>}
         />
     )
