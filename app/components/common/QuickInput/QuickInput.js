@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Button, Form, Icon, Input, Item, Text } from 'native-base'
+import { Button, Form, Input, Item, Text } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 import { View } from 'react-native'
 import { translate } from 'react-i18next'
@@ -17,7 +17,6 @@ class QuickInput extends PureComponent {
             <View style={{ flexDirection: 'row', marginHorizontal: 16, marginTop: 8 }}>
                 <Form style={{ flex: 1 }}>
                     <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
-                        <Icon active name='add'/>
                         <Input
                             onChangeText={value => this.setState({ value })}
                             value={value}
