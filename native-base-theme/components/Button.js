@@ -228,6 +228,21 @@ export default (variables = variable) => {
         },
 
         '.rounded': {
+            height: 30,
+            width: 30,
+            'NativeBase.Text': {
+                fontSize: 14
+            },
+            'NativeBase.Icon': {
+                fontSize: 20,
+                paddingTop: 0,
+                marginRight: 0,
+                marginLeft: 5
+            },
+            'NativeBase.IconNB': {
+                fontSize: 20,
+                paddingTop: 0
+            },
             // paddingHorizontal: variables.buttonPadding + 20,
             borderRadius: variables.borderRadiusLarge
         },
