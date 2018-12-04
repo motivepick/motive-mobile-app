@@ -6,7 +6,7 @@ import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import { iOSColors } from 'react-native-typography'
 import { translate } from 'react-i18next'
-import { ios } from '../utils/platform'
+import { android, ios } from '../utils/platform'
 import CookieManager from 'react-native-cookies'
 import { removeToken } from '../services/accountService'
 
@@ -37,7 +37,7 @@ class AccountScreen extends PureComponent {
                     <Header transparent={ios()}>
                         <Right>
                             <Button small transparent onPress={this.logout}>
-                                <Text style={{ color: iOSColors.gray, fontSize: 14 }}>{t('labels.logout').toLocaleUpperCase()}</Text>
+                                <Text style={{ color: android() ? iOSColors.white : iOSColors.gray, fontSize: 14 }}>{t('labels.logout').toLocaleUpperCase()}</Text>
                             </Button>
                         </Right>
                     </Header>
