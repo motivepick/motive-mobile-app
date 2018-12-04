@@ -84,7 +84,7 @@ class Tasks extends PureComponent {
 
     renderRightHiddenRow = (rowKey, rowMap) =>
         <View style={{ backgroundColor: '#f0f0f0', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Button transparent onPress={() => this.onDelete(rowKey, rowMap)} style={{ width: 100, alignSelf: 'flex-end' }}>
+            <Button transparent onPress={() => this.onDelete(rowKey, rowMap)} style={{ width: 100, height: '100%', alignSelf: 'flex-end' }}>
                 <Text style={{ textAlign: 'center', flex: 1 }}>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
             </Button>
         </View>
