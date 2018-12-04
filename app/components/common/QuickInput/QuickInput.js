@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
-import { Button, Form, Input, Item, Text } from 'native-base'
+import { Button, Form, Icon, Input, Item } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 import { View } from 'react-native'
-import { translate } from 'react-i18next'
 
 // animate clear button
 class QuickInput extends PureComponent {
@@ -10,7 +9,7 @@ class QuickInput extends PureComponent {
     state = { value: '' }
 
     render() {
-        const { placeholder, t } = this.props
+        const { placeholder } = this.props
         const { value } = this.state
 
         return (
@@ -23,11 +22,11 @@ class QuickInput extends PureComponent {
                             onSubmitEditing={this.onSubmitEditing}
                             returnKeyType={'done'}
                             placeholder={placeholder}/>
+                        {Boolean(value) && <Button transparent squared danger onPress={this.clearValue}>
+                            <Icon type='MaterialCommunityIcons' name='close-circle-outline'/>
+                        </Button>}
                     </Item>
                 </Form>
-                {Boolean(value) && <Button small transparent onPress={this.clearValue}>
-                    <Text>{t('labels.clear').toLocaleUpperCase()}</Text>
-                </Button>}
             </View>
         )
     }
@@ -46,4 +45,4 @@ class QuickInput extends PureComponent {
     }
 }
 
-export default translate('translations')(QuickInput)
+export default QuickInput
