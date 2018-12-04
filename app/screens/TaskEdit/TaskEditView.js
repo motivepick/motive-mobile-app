@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Button, Container, Content, Form, Input, Item, Label, StyleProvider, Text } from 'native-base'
+import { Container, Content, Form, Icon, Input, Item, Label, StyleProvider } from 'native-base'
 import DueDatePicker from '../../components/common/DueDatePicker/DueDatePicker'
 import Header from '../../components/common/Header/Header'
 import getTheme from '../../../native-base-theme/components/index'
@@ -26,7 +26,7 @@ export class TaskEditView extends PureComponent {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <Header title={t('headings.editTask')} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()}/>
+                    <Header title={t('headings.editTask')} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()} rightButtonIcon={<Icon name='trash'/>} onRightButtonPress={() => this.onDelete(id)}/>
                     {/* TODO: what this the best place for the style? */}
                     <Content style={android() ? { marginTop: 10 } : {}}>
                         <Form style={{ marginHorizontal: 16 }}>
@@ -43,9 +43,6 @@ export class TaskEditView extends PureComponent {
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>
                                 <Description value={description} onGoToEditDescriptionScreen={this.handleDescriptionClick}/>
                             </Item>
-                            <Button transparent full onPress={() => this.onDelete(id)} style={{ marginTop: 16 }}>
-                                <Text>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
-                            </Button>
                         </Form>
                     </Content>
                 </Container>
