@@ -33,7 +33,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => bindActionCreators({
 
     updateUserTasks: () => async (dispatch) => {
-        dispatch(updateUserTasksAction(await fetchTasks('all')))
+        dispatch(updateUserTasksAction(await fetchTasks()))
     },
 
     createTask: task => async (dispatch, getState) => {

@@ -6,8 +6,7 @@ import { TaskEditView } from './TaskEditView'
 import { updateTask } from '../../services/taskService'
 
 const mapStateToProps = state => ({
-    task: state.tasks.task,
-    goals: state.goals.goals
+    task: state.tasks.task
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

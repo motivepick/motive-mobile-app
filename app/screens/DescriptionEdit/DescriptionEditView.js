@@ -34,8 +34,7 @@ export class DescriptionEditView extends PureComponent<DescriptionEditViewProps>
                         <Content contentContainerStyle={{ flex: 1 }}>
                             <Form style={styles.form}>
                                 <Item stackedLabel style={styles.formItem}>
-                                    <Description autoFocus={false} scrollEnabled={false} value={description} editable
-                                        onChangeText={description => setDescription(description)}/>
+                                    <Description autoFocus={false} scrollEnabled={false} value={description} editable onChangeText={setDescription}/>
                                 </Item>
                             </Form>
                         </Content>

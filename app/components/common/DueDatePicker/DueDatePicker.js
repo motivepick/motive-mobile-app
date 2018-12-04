@@ -4,18 +4,13 @@ import DatePicker from 'react-native-datepicker'
 import { Button, Icon } from 'native-base'
 import { translate } from 'react-i18next'
 import styles from './DueDatePicker.styles'
-import {
-    convertIsoDateToDateInCurrentLocale,
-    formatDateInCurrentLocale,
-    formatDateInIso,
-    getFormatFromCurrentLocale,
-    parseDateInCurrentLocale
-} from '../../../utils/dateFormat'
+import { formatDateInCurrentLocale, getFormatFromCurrentLocale, parseDateInCurrentLocale } from '../../../utils/dateFormat'
 import { locale } from '../../../utils/locale'
 import type { T } from '../../../types/Types'
+import { Moment } from 'moment'
 
 type DueDatePickerProps = {|
-    value: string,
+    value: Moment,
     onChangeDate: string => void,
     t: T
 |}
@@ -29,7 +24,7 @@ class DueDatePicker extends PureComponent<DueDatePickerProps, DueDatePickerState
     constructor(props: DueDatePickerProps) {
         super(props)
         const { value } = props
-        this.state = { dateAsStringInLocalFormat: convertIsoDateToDateInCurrentLocale(value) }
+        this.state = { dateAsStringInLocalFormat: formatDateInCurrentLocale(value) }
     }
 
     render() {
@@ -65,13 +60,13 @@ class DueDatePicker extends PureComponent<DueDatePickerProps, DueDatePickerState
         const { onChangeDate } = this.props
         const endOfToday = parseDateInCurrentLocale(dateAsStringInLocalFormat).endOf('day')
         this.setState({ dateAsStringInLocalFormat: formatDateInCurrentLocale(endOfToday) })
-        onChangeDate(formatDateInIso(endOfToday))
+        onChangeDate(endOfToday)
     }
 
     clearDate = () => {
         const { onChangeDate } = this.props
         this.setState({ dateAsStringInLocalFormat: '' })
-        onChangeDate('')
+        onChangeDate(null)
     }
 }
 

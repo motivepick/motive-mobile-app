@@ -4,18 +4,14 @@ import { createAppContainer, createBottomTabNavigator, createStackNavigator } fr
 import LoginScreen from './screens/LoginScreen'
 import SplashScreen from './screens/SplashScreen'
 import ScheduleScreen from './screens/Schedule'
-import GoalEditScreen from './screens/GoalEditScreen'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
 import { applyMiddleware, createStore } from 'redux'
 import TaskEditScreen from './screens/TaskEdit'
 import { I18nextProvider } from 'react-i18next'
 import i18n from './i18n'
-import GoalScreen from './screens/Goal'
 import TaskDescriptionEditScreen from './screens/DescriptionEdit/TaskDescriptionEdit'
-import GoalDescriptionEditScreen from './screens/DescriptionEdit/GoalDescriptionEdit'
 import AllTasksScreen from './screens/AllTasks'
-import AllGoalsScreen from './screens/AllGoals'
 import AccountScreen from './screens/AccountScreen'
 import FooterComponent from './components/common/Footer'
 
@@ -25,12 +21,8 @@ const RootStack = createStackNavigator(
         Login: LoginScreen,
         Home: ScheduleScreen,
         AllTasksScreen,
-        AllGoalsScreen,
         TaskEditScreen,
-        Goal: GoalScreen,
-        GoalEdit: GoalEditScreen,
         TaskDescriptionEditScreen,
-        GoalDescriptionEditScreen,
         MainNavigation: createBottomTabNavigator(
             {
                 AllTasksScreen: {

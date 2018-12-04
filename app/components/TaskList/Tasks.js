@@ -53,7 +53,7 @@ class Tasks extends PureComponent {
             rightOpenValue={-100}
             disableRightSwipe={true}
             closeOnRowBeginSwipe={true}
-            renderSectionHeader={({ section }) => section.data && section.data.length > 0 ?  <SubSectionHeader leftText={section.title}/> : null}
+            renderSectionHeader={({ section }) => section.data && section.data.length > 0 ? <SubSectionHeader leftText={section.title}/> : null}
         />
     )
 
@@ -73,7 +73,7 @@ class Tasks extends PureComponent {
     }
 
     renderRow = (data, rowMap) => {
-        const { id, closed, dueDate, name, goal } = data.item
+        const { id, closed, dueDate, name } = data.item
 
         return (
             <CheckboxListItem
@@ -82,15 +82,13 @@ class Tasks extends PureComponent {
                 onComplete={() => this.onComplete(data.item.id, rowMap)}
                 onBodyClick={() => this.onItemClick(data.item)}
                 text={name}
-                noteText={goal && goal.name}
                 date={dueDate}
-                checkboxColor={goal && goal.colorTag}
             />
         )
     }
 
     renderRightHiddenRow = (rowKey, rowMap) =>
-        <View  style={{ backgroundColor: '#f0f0f0', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ backgroundColor: '#f0f0f0', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Button transparent onPress={() => this.onDelete(rowKey, rowMap)} style={{ width: 100, alignSelf: 'flex-end' }}>
                 <Text style={{ textAlign: 'center', flex: 1 }}>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
             </Button>

@@ -27,7 +27,7 @@ class Description extends PureComponent<DescriptionProps> {
         } else {
             const hasText = Boolean(value)
             return (
-                <TouchableOpacity style={styles.goalNotes} onPress={onGoToEditDescriptionScreen}>
+                <TouchableOpacity style={styles.notes} onPress={onGoToEditDescriptionScreen}>
                     {hasText && <Text style={iOSUIKit.footnoteEmphasized}>{value}</Text>}
                     {!hasText && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{t('placeholders.description')}</Text>}
                 </TouchableOpacity>
