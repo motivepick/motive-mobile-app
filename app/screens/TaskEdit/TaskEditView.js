@@ -43,8 +43,8 @@ export class TaskEditView extends PureComponent {
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>
                                 <Description value={description} onGoToEditDescriptionScreen={this.handleDescriptionClick}/>
                             </Item>
-                            <Button danger full onPress={() => this.onDelete(id)} style={{ marginTop: 16 }}>
-                                <Text style={{ textAlign: 'center', flex: 1 }}>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
+                            <Button transparent full onPress={() => this.onDelete(id)} style={{ marginTop: 16 }}>
+                                <Text>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
                             </Button>
                         </Form>
                     </Content>
