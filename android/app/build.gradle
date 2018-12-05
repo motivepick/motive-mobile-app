@@ -102,8 +102,8 @@ android {
         applicationId "com.motivemobileapp"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 5
-        versionName "5.0"
+        versionCode 6
+        versionName "6.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -118,11 +118,11 @@ android {
     }
     signingConfigs {
             release {
-                if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-                    storeFile file(MYAPP_RELEASE_STORE_FILE)
-                    storePassword MYAPP_RELEASE_STORE_PASSWORD
-                    keyAlias MYAPP_RELEASE_KEY_ALIAS
-                    keyPassword MYAPP_RELEASE_KEY_PASSWORD
+                if (project.hasProperty('MOTIVE_RELEASE_STORE_FILE')) {
+                    storeFile file(MOTIVE_RELEASE_STORE_FILE)
+                    storePassword MOTIVE_RELEASE_STORE_PASSWORD
+                    keyAlias MOTIVE_RELEASE_KEY_ALIAS
+                    keyPassword MOTIVE_RELEASE_KEY_PASSWORD
                 }
             }
         }
