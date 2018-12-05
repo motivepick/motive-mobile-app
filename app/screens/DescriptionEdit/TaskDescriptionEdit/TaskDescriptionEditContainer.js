@@ -19,8 +19,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     setDescription: description => dispatch => dispatch(changeTaskDescriptionAction(description)),
 
     saveEditableEntity: entity => async dispatch => {
-        const { id, description } = entity
-        const task = await updateTask(id, { description })
+        const { id, description, dueDate } = entity
+        const task = await updateTask(id, { description, dueDate })
         dispatch(updateTaskAction(task))
     }
 }, dispatch)

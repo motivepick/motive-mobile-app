@@ -26,7 +26,8 @@ export class TaskEditView extends PureComponent {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <Header title={t('headings.editTask')} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()} rightButtonIcon={<Icon name='trash'/>} onRightButtonPress={() => this.onDelete(id)}/>
+                    <Header title={t('headings.editTask')} leftButtonLabel={t('labels.back')} onLeftButtonPress={() => navigation.goBack()}
+                        rightButtonIcon={<Icon name='trash'/>} onRightButtonPress={() => this.onDelete(id)}/>
                     {/* TODO: what this the best place for the style? */}
                     <Content style={android() ? { marginTop: 10 } : {}}>
                         <Form style={{ marginHorizontal: 16 }}>
