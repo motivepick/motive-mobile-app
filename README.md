@@ -23,8 +23,8 @@ To be described.
 
 1. Make sure the back end URLs are updated in `.env.development`, `.env.production` and `const.js`.
 2. Increase the values of `versionCode` and `versionName` in `./android/app/build.gradle`.
-3. Specify values for `MOTIVE_RELEASE_STORE_PASSWORD` and `MOTIVE_RELEASE_KEY_PASSWORD`
+3. Specify values for `MOTIVE_RELEASE_STORE_PASSWORD` and `MOTIVE_RELEASE_KEY_PASSWORD` in `./android/gradle.properties`. If you do not have the signature file, you can use e.g. Android Studio to generate it.
 4. Go to `./android` and run `./gradlew clean assembleRelease`
-5. The assembly should appear in `./android/app/build/outputs/apk/release`
+5. The signed assembly should appear in `./android/app/build/outputs/apk/release`
 
 See details [here](https://facebook.github.io/react-native/docs/signed-apk-android).
