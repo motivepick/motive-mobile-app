@@ -1,14 +1,57 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity, TouchableNativeFeedback, View, Platform } from 'react-native'
 import { getDateAsStr, getDateColor } from '../../../utils/dateUtils'
 import { Body, Icon, ListItem, Right, Text } from 'native-base'
 import { human, iOSColors } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
 import { palette } from '../Palette'
+import variables from '../../../../native-base-theme/variables/platform'
 
 class CheckboxListItem extends PureComponent {
 
     state = { completed: this.props.isCompleted }
+
+    renderProgressIos = (progress, checkboxBgColor, checked, checkboxMarkColor) => {
+        return (
+            <TouchableOpacity onPress={(entity, secId, rowId, rowMap) => this.handleComplete(entity, secId, rowId, rowMap)}>
+                <ProgressCircle
+                    percent={progress}
+                    radius={13}
+                    borderWidth={3}
+                    shadowColor={iOSColors.midGray}
+                    bgColor={checkboxBgColor}
+                    color={iOSColors.gray}
+                >
+                    {checked && <Icon type="FontAwesome" name='check' style={{ fontWeight: 'bold', lineHeight: 18, fontSize: 18, color: checkboxMarkColor }}/>}
+                </ProgressCircle>
+            </TouchableOpacity>
+        )
+    }
+
+    renderProgressAndroid = (progress, checkboxBgColor, checked, checkboxMarkColor) => {
+        return (
+
+            <View style={{ borderRadius: 17, borderWidth: 1, borderColor: 'transparent', width: 34, height: 34, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <TouchableNativeFeedback
+                    onPress={(entity, secId, rowId, rowMap) => this.handleComplete(entity, secId, rowId, rowMap)}
+                    background={TouchableNativeFeedback.Ripple(variables.androidRippleColorDark)} delayPressIn={0}>
+                    <View pointerEvents='box-only'
+                        style={{ width: 32, height: 32, alignItems: 'center', justifyContent: 'center' }}>
+                        <ProgressCircle
+                            percent={progress}
+                            radius={13}
+                            borderWidth={3}
+                            shadowColor={iOSColors.midGray}
+                            bgColor={checkboxBgColor}
+                            color={iOSColors.gray}
+                        >
+                            {checked && <Icon type="FontAwesome" name='check' style={{ fontWeight: 'bold', lineHeight: 18, fontSize: 18, color: checkboxMarkColor }}/>}
+                        </ProgressCircle>
+                    </View>
+                </TouchableNativeFeedback>
+            </View>
+        )
+    }
 
     render() {
         const { onBodyClick, text, noteText, date, checkboxColor = iOSColors.white, progress = 0 } = this.props
@@ -20,18 +63,10 @@ class CheckboxListItem extends PureComponent {
         const checkboxMarkColor = iOSColors.midGray
         return (
             <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white }} onPress={onBodyClick}>
-                <TouchableOpacity onPress={(entity, secId, rowId, rowMap) => this.handleComplete(entity, secId, rowId, rowMap)}>
-                    <ProgressCircle
-                        percent={progress}
-                        radius={13}
-                        borderWidth={3}
-                        shadowColor={iOSColors.midGray}
-                        bgColor={ checkboxBgColor}
-                        color={iOSColors.gray}
-                    >
-                        {checked && <Icon type="FontAwesome" name='check' style={{ fontWeight: 'bold', lineHeight: 18, fontSize: 18, color: checkboxMarkColor }}/>}
-                    </ProgressCircle>
-                </TouchableOpacity>
+                {
+                    Platform.OS === 'ios' ? this.renderProgressIos(progress, checkboxBgColor, checked, checkboxMarkColor) :
+                        this.renderProgressAndroid(progress, checkboxBgColor, checked, checkboxMarkColor)
+                }
                 <Body style={{ marginLeft: 4 }}>
                     <Text style={checked ? styles.strikeText : {}}>{text}</Text>
                     {formattedDueDate && <Text style={[styles.date, { color: dateColor }]}>{formattedDueDate}</Text>}
