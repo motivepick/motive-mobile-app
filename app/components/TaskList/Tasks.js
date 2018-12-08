@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { Button, Text } from 'native-base'
+import { Button, Icon, Text } from 'native-base'
 import { View } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import CheckboxListItem from '../common/CheckboxListItem/CheckboxListItem'
@@ -31,7 +31,7 @@ class Tasks extends PureComponent {
             keyExtractor={item => `${item.id}`}
             renderItem={(data, rowMap) => this.renderRow(data, rowMap)}
             renderHiddenItem={(data, rowMap) => this.renderRightHiddenRow(data.item.id, rowMap)}
-            rightOpenValue={-100}
+            rightOpenValue={-70}
             disableRightSwipe={true}
             closeOnRowBeginSwipe={true}
         />
@@ -45,7 +45,7 @@ class Tasks extends PureComponent {
             keyExtractor={item => `${item.id}`}
             renderItem={(data, rowMap) => this.renderRow(data, rowMap)}
             renderHiddenItem={(data, rowMap) => this.renderRightHiddenRow(data.item.id, rowMap)}
-            rightOpenValue={-100}
+            rightOpenValue={-70}
             disableRightSwipe={true}
             closeOnRowBeginSwipe={true}
             renderSectionHeader={({ section }) => section.data && section.data.length > 0 ? <SubSectionHeader leftText={section.title}/> : null}
@@ -84,8 +84,8 @@ class Tasks extends PureComponent {
 
     renderRightHiddenRow = (rowKey, rowMap) =>
         <View style={{ backgroundColor: '#f0f0f0', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Button transparent onPress={() => this.onDelete(rowKey, rowMap)} style={{ width: 100, height: '100%', alignSelf: 'flex-end' }}>
-                <Text style={{ textAlign: 'center', flex: 1 }}>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
+            <Button transparent onPress={() => this.onDelete(rowKey, rowMap)} style={{ width: 70, height: '100%', alignSelf: 'flex-end' }}>
+                <Icon name='trash' style={{ textAlign: 'center', flex: 1 }}/>
             </Button>
         </View>
 
