@@ -31,9 +31,9 @@ export class TaskEditView extends PureComponent {
                     {/* TODO: what this the best place for the style? */}
                     <Content style={android() ? { marginTop: 10 } : {}}>
                         <Form style={{ marginHorizontal: 16 }}>
-                            <Item roundedInputWithLabel>
+                            <Item roundedInputWithLabel >
                                 <Label>{t('labels.task').toLocaleUpperCase()}</Label>
-                                <Input value={taskName} onChangeText={taskName => this.setState({ taskName })}
+                                <Input style={{  flex: 1, alignSelf: 'stretch' }} value={taskName} onChangeText={taskName => this.setState({ taskName })}
                                     onSubmitEditing={this.handleSubmitTaskNameEditing} returnKeyType={'done'}/>
                             </Item>
                             <Item roundedInputWithLabel>

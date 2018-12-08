@@ -201,7 +201,7 @@ export default (variables = variable) => {
             'NativeBase.Input': {
                 alignSelf: Platform.OS === 'ios' ? 'stretch' : 'flex-start',
                 flex: 1,
-                width: Platform.OS === 'ios' ? null : variables.deviceWidth - 25,
+                width: null,
                 height: variables.inputHeightBase,
                 fontSize: variables.inputFontSize,
                 lineHeight: variables.inputLineHeight - 4,
