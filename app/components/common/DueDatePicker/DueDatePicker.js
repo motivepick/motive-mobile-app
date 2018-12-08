@@ -49,7 +49,7 @@ class DueDatePicker extends PureComponent<DueDatePickerProps, DueDatePickerState
                     iconComponent={<Icon type='MaterialCommunityIcons' name='calendar-blank'/>}
                     onDateChange={dateAsStringInLocalFormat => this.handleDateChange(dateAsStringInLocalFormat)}
                 />
-                {Boolean(dateAsStringInLocalFormat) && <Button transparent rounded danger onPress={this.clearDate}>
+                {Boolean(dateAsStringInLocalFormat) && <Button transparent rounded danger onPress={this.clearDate} style={{ alignSelf: 'center' }}>
                     <Icon type='MaterialCommunityIcons' name='close-circle-outline'/>
                 </Button>}
             </View>

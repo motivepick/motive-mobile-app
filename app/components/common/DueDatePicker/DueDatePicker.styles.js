@@ -1,5 +1,6 @@
 import { PixelRatio, Platform, StyleSheet } from 'react-native'
 import { iOSColors } from 'react-native-typography'
+import { ios } from '../../../utils/platform'
 
 const mainTextColor = '#000'
 const platform = Platform.OS
@@ -14,14 +15,15 @@ const variables = {
     inputBorderColor: iOSColors.customGray,
     inputSuccessBorderColor: '#2b8339',
     inputErrorBorderColor: '#ed2f2f',
-    inputHeightBase: 30,
+    inputHeightBase: ios() ? 30 : 40,
     get inputColor() {
         return this.textColor
     },
     get inputColorPlaceholder() {
         return '#575757'
     },
-    borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1)
+    borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1),
+    borderColor: 'transparent'
 }
 
 
