@@ -1,6 +1,6 @@
 # Motive Mobile App
 
-Try it out on https://motivepick.com.
+Try it out on [https://motivepick.com](https://motivepick.com).
 
 ## To Run This Application Locally
 
