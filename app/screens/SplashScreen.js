@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { View } from 'react-native'
 import request from 'superagent'
 import { navigateWithReset } from './navigationWithReset'
@@ -6,7 +6,7 @@ import { API_URL } from '../const'
 import CookieManager from 'react-native-cookies'
 import { fetchToken } from '../services/accountService'
 
-class SplashScreen extends Component {
+class SplashScreen extends PureComponent {
 
     async componentDidMount() {
         const token = await fetchToken()

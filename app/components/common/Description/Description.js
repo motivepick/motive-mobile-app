@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Input, Text } from 'native-base'
 import styles from './Description.styles'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
@@ -14,7 +14,7 @@ type DescriptionProps = {|
     t: T
 |}
 
-class Description extends Component<DescriptionProps> {
+class Description extends PureComponent<DescriptionProps> {
 
     render() {
         const { value, editable, onChangeText, onGoToEditDescriptionScreen, t } = this.props
@@ -27,7 +27,7 @@ class Description extends Component<DescriptionProps> {
         } else {
             const hasText = Boolean(value)
             return (
-                <TouchableOpacity style={styles.goalNotes} onPress={onGoToEditDescriptionScreen}>
+                <TouchableOpacity style={styles.notes} onPress={onGoToEditDescriptionScreen}>
                     {hasText && <Text style={iOSUIKit.footnoteEmphasized}>{value}</Text>}
                     {!hasText && <Text style={[iOSUIKit.footnoteEmphasized, { color: iOSColors.gray }]}>{t('placeholders.description')}</Text>}
                 </TouchableOpacity>

@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Body, Button, Header, Icon, Left, Right, Text, Title } from 'native-base'
 import { ios } from '../../../utils/platform'
 
-class HeaderComponent extends Component {
+class HeaderComponent extends PureComponent {
 
     render() {
-        const { title, rightButtonLabel, leftButtonLabel, onLeftButtonPress, onRightButtonPress } = this.props
+        const { title, rightButtonLabel, leftButtonLabel, onLeftButtonPress, onRightButtonPress, rightButtonIcon, leftButtonIcon } = this.props
         return (
             <Header transparent={ios()}>
                 <Left>
@@ -13,6 +13,7 @@ class HeaderComponent extends Component {
                         Boolean(onLeftButtonPress) &&
                         <Button transparent onPress={onLeftButtonPress}>
                             {leftButtonLabel && ios() ? <Text>{leftButtonLabel}</Text> : <Icon name='arrow-back'/>}
+                            {leftButtonIcon && ios() && leftButtonIcon}
                         </Button>
                     }
                 </Left>
@@ -24,9 +25,10 @@ class HeaderComponent extends Component {
                 }
                 <Right>
                     {
-                        Boolean(rightButtonLabel && onRightButtonPress) &&
+                        Boolean((rightButtonLabel || rightButtonIcon) && onRightButtonPress) &&
                         <Button transparent onPress={onRightButtonPress}>
-                            <Text>{rightButtonLabel}</Text>
+                            {Boolean(rightButtonLabel) && <Text>{rightButtonLabel}</Text>}
+                            {Boolean(rightButtonIcon) && rightButtonIcon}
                         </Button>
                     }
                 </Right>

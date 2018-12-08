@@ -1,5 +1,0 @@
-export const textClr = '#2F4F4F'
-export const textNoteClr = '#9dafc1'
-export const backgroundClr = '#f0f0f0'
-export const accent1Clr = '#4f2f2f'
-export const accent2Clr = ''

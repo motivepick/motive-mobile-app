@@ -1,16 +1,19 @@
-import React, { Component } from 'react'
-import { Animated, Image, View } from 'react-native'
+import React, { PureComponent } from 'react'
+import { Animated, Dimensions, Image, Linking, View } from 'react-native'
 import { navigateWithReset } from './navigationWithReset'
 import { Body, Button, Card, CardItem, Container, Header, Icon, Right, StyleProvider, Text } from 'native-base'
 import getTheme from '../../native-base-theme/components'
 import baseTheme from '../../native-base-theme/variables/platform'
 import { iOSColors } from 'react-native-typography'
 import { translate } from 'react-i18next'
-import { ios } from '../utils/platform'
+import { android, ios } from '../utils/platform'
 import CookieManager from 'react-native-cookies'
 import { removeToken } from '../services/accountService'
 
-class AccountScreen extends Component {
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
+
+class AccountScreen extends PureComponent {
     state = {
         scrollY: new Animated.Value(0)
     }
@@ -23,7 +26,7 @@ class AccountScreen extends Component {
     // TODO this:
     goToAppStore = () => alert('Go to App Store')
 
-    goToGooglePlay = () => alert('Go to Google Play')
+    goToGooglePlay = () => Linking.openURL('https://play.google.com/store/apps/details?id=com.motivemobileapp')
 
     render() {
         const { t } = this.props
@@ -34,7 +37,7 @@ class AccountScreen extends Component {
                     <Header transparent={ios()}>
                         <Right>
                             <Button small transparent onPress={this.logout}>
-                                <Text style={{ color: iOSColors.gray, fontSize: 14 }}>{t('labels.logout').toLocaleUpperCase()}</Text>
+                                <Text style={{ color: android() ? iOSColors.white : iOSColors.gray, fontSize: 14 }}>{t('labels.logout').toLocaleUpperCase()}</Text>
                             </Button>
                         </Right>
                     </Header>
@@ -42,8 +45,9 @@ class AccountScreen extends Component {
                         <Card>
                             <CardItem>
                                 <Body style={{ alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-                                    <Image source={{ uri: 'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png' }}
-                                        style={{ marginBottom: 16, width: '50%', aspectRatio: 1.5, resizeMode: 'contain' }}/>
+                                    <Image source={require('../assets/images/list.png')}
+                                        style={{ width: windowWidth * 0.2, height: windowHeight * 0.2, resizeMode: 'contain', marginVertical: 16 }}
+                                    />
                                     <Text style={{ textAlignVertical: 'center', textAlign: 'center' }}>
                                         {t('labels.rateUsBigText')}
                                     </Text>

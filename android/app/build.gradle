@@ -95,15 +95,15 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 26
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.motivemobileapp"
         minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 26
+        versionCode 7
+        versionName "7.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -116,10 +116,21 @@ android {
             include "armeabi-v7a", "x86"
         }
     }
+    signingConfigs {
+            release {
+                if (project.hasProperty('MOTIVE_RELEASE_STORE_FILE')) {
+                    storeFile file(MOTIVE_RELEASE_STORE_FILE)
+                    storePassword MOTIVE_RELEASE_STORE_PASSWORD
+                    keyAlias MOTIVE_RELEASE_KEY_ALIAS
+                    keyPassword MOTIVE_RELEASE_KEY_PASSWORD
+                }
+            }
+        }
     buildTypes {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release

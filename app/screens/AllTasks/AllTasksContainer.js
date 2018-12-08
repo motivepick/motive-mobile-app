@@ -8,65 +8,35 @@ import {
     undoCloseTaskAction,
     updateUserTasksAction
 } from '../../actions/tasksActions'
-import { closeTask, doDeleteTask, fetchTasks, undoCloseTask } from '../../services/taskService'
-import { fetchToken } from '../../services/accountService'
-import request from 'superagent'
-import { API_URL } from '../../const'
-import moment from 'moment'
+import { closeTask, doCreateTask, doDeleteTask, fetchTasks, undoCloseTask } from '../../services/taskService'
 import connect from 'react-redux/es/connect/connect'
 import { translate } from 'react-i18next'
 import { AllTasksView } from './AllTasksView'
+import { orderTasksByClosingDate, orderTasksByCreated } from '../../utils/order'
 
-const open = (tasks) => tasks.filter(t => !t.closed)
+const open = (tasks) => orderTasksByCreated(tasks.filter(t => !t.closed))
 
-const closed = (tasks) => tasks.filter(t => t.closed)
+const closed = (tasks) => orderTasksByClosingDate(tasks.filter(t => t.closed))
 
 const mapStateToProps = state => {
-    const closedTasks = closed(state.tasks.tasks, state.tasks.totalClosedTasksShown)
+    const { tasks, totalClosedTasksShown } = state.tasks
+    const closedTasks = closed(tasks)
     return ({
-        tasks: open(state.tasks.tasks),
-        closedTasks: closedTasks.slice(0, state.tasks.totalClosedTasksShown),
+        tasks: open(tasks),
+        closedTasks: closedTasks.slice(0, totalClosedTasksShown),
         totalClosedTasks: closedTasks.length
     })
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
-    updateUserTasks: () => async (dispatch) => {
-        dispatch(updateUserTasksAction(await fetchTasks('all')))
-    },
+    updateUserTasks: () => async (dispatch) => dispatch(updateUserTasksAction(await fetchTasks())),
 
-    createTask: task => async (dispatch, getState) => {
-        const { tasks } = getState()
-        const { listFilter } = tasks
-        const token = await fetchToken()
-        if (listFilter === 'today') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({
-                ...task,
-                dueDate: moment().endOf('day')
-            })
-            dispatch(createTask(body))
-        } else if (listFilter === 'thisWeek') {
-            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send({
-                ...task,
-                dueDate: moment().endOf('week')
-            })
-            dispatch(createTask(body))
-        } else {
-            const { body } = await request.post(`${API_URL}/tasks`).set('Cookie', token).send(task)
-            dispatch(createTask(body))
-        }
-    },
+    createTask: task => async (dispatch) => dispatch(createTask(await doCreateTask(task))),
 
-    closeTask: id => async dispatch => {
-        const task = await closeTask(id)
-        dispatch(closeTaskAction(task.id))
-    },
+    closeTask: id => async dispatch => dispatch(closeTaskAction(await closeTask(id))),
 
-    undoCloseTask: id => async dispatch => {
-        const task = await undoCloseTask(id)
-        dispatch(undoCloseTaskAction(task.id))
-    },
+    undoCloseTask: id => async dispatch => dispatch(undoCloseTaskAction(await undoCloseTask(id))),
 
     deleteTask: id => async dispatch => {
         await doDeleteTask(id)

@@ -1,34 +1,32 @@
-import React, { Component } from 'react'
-import { Button, Form, Icon, Input, Item, Text } from 'native-base'
+import React, { PureComponent } from 'react'
+import { Button, Form, Icon, Input, Item } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 import { View } from 'react-native'
-import { translate } from 'react-i18next'
 
 // animate clear button
-class QuickInput extends Component {
+class QuickInput extends PureComponent {
 
     state = { value: '' }
 
     render() {
-        const { placeholder, t } = this.props
+        const { placeholder } = this.props
         const { value } = this.state
 
         return (
             <View style={{ flexDirection: 'row', marginHorizontal: 16, marginTop: 8 }}>
                 <Form style={{ flex: 1 }}>
                     <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
-                        <Icon active name='add'/>
                         <Input
                             onChangeText={value => this.setState({ value })}
                             value={value}
                             onSubmitEditing={this.onSubmitEditing}
                             returnKeyType={'done'}
                             placeholder={placeholder}/>
+                        {Boolean(value) && <Button transparent rounded danger onPress={this.clearValue} style={{ alignSelf: 'center' }}>
+                            <Icon type='MaterialCommunityIcons' name='close-circle-outline'/>
+                        </Button>}
                     </Item>
                 </Form>
-                {Boolean(value) && <Button small transparent onPress={this.clearValue}>
-                    <Text>{t('labels.clear').toLocaleUpperCase()}</Text>
-                </Button>}
             </View>
         )
     }
@@ -40,11 +38,12 @@ class QuickInput extends Component {
     onSubmitEditing = () => {
         const { onSubmitEditing } = this.props
         const { value } = this.state
-        if (value !== '') {
-            onSubmitEditing(value.trim())
-            this.clearValue()
+        const trimmed = value.trim()
+        if (trimmed !== '') {
+            onSubmitEditing(trimmed)
         }
+        this.clearValue()
     }
 }
 
-export default translate('translations')(QuickInput)
+export default QuickInput

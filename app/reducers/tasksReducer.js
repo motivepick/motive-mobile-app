@@ -1,6 +1,5 @@
 import {
     CHANGE_TASK_DESCRIPTION,
-    CHANGE_TASK_NAME,
     CLOSE_TASK,
     CREATE_TASK,
     DELETE_TASK,
@@ -8,7 +7,6 @@ import {
     SET_TASK,
     SHOW_MORE_TASKS,
     UNDO_CLOSE_TASK,
-    UPDATE_CLOSED_USER_TASKS,
     UPDATE_TASK,
     UPDATE_USER_TASKS
 } from '../actions/tasksActions'
@@ -16,39 +14,34 @@ import {
 const INITIAL_STATE = {
     task: {},
     tasks: [],
-    totalClosedTasksShown: 10,
-    listFilter: 'all'
+    totalClosedTasksShown: 10
 }
 
 export default function (state = INITIAL_STATE, action) {
-    const { type } = action
+    const { type, payload } = action
     if (type === SET_TASK) {
-        return { ...state, task: action.payload }
-    } else if (type === CHANGE_TASK_NAME) {
-        const task = { ...state.task, name: action.payload }
-        return { ...state, task }
+        return { ...state, task: payload }
     } else if (type === CHANGE_TASK_DESCRIPTION) {
-        const task = { ...state.task, description: action.payload }
+        const task = { ...state.task, description: payload }
         return { ...state, task }
     } else if (type === CREATE_TASK) {
-        return { ...state, tasks: [action.payload, ...state.tasks] }
+        return { ...state, tasks: [payload, ...state.tasks] }
     } else if (type === UPDATE_USER_TASKS) {
-        return { ...state, tasks: action.payload }
-    } else if (type === UPDATE_CLOSED_USER_TASKS) {
-        return { ...state, closedTasks: action.payload }
+        return { ...state, tasks: payload }
     } else if (type === CLOSE_TASK) {
-        return { ...state, tasks: state.tasks.map(t => t.id === action.payload ? { ...t, closed: true } : t) }
+        const { id, closingDate } = payload
+        return { ...state, tasks: state.tasks.map(t => t.id === id ? { ...t, closed: true, closingDate } : t) }
     } else if (type === UNDO_CLOSE_TASK) {
-        return { ...state, tasks: state.tasks.map(t => t.id === action.payload ? { ...t, closed: false } : t) }
+        const { id, created } = payload
+        return { ...state, tasks: state.tasks.map(t => t.id === id ? { ...t, closed: false, created } : t) }
     } else if (type === UPDATE_TASK) {
-        const { payload } = action
         const tasks = []
         for (const task of state.tasks) {
             tasks.push(task.id === payload.id ? { ...task, ...payload } : task)
         }
-        return { ...state, tasks }
+        return { ...state, tasks, task: { ...state.task, ...payload } }
     } else if (type === DELETE_TASK) {
-        return { ...state, tasks: state.tasks.filter(t => t.id !== action.payload) }
+        return { ...state, tasks: state.tasks.filter(t => t.id !== payload) }
     } else if (type === SHOW_MORE_TASKS) {
         return { ...state, totalClosedTasksShown: state.totalClosedTasksShown + 10 }
     } else if (type === RESET_CLOSED_TASKS) {

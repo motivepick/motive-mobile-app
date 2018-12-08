@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { View } from 'react-native'
 import { Button, Icon } from 'native-base'
 import { translate } from 'react-i18next'
@@ -21,7 +21,7 @@ const palette = {
     magenta: '#f032e6'
 }
 
-class ColorPicker extends Component {
+class ColorPicker extends PureComponent {
 
     constructor(props) {
         super(props)

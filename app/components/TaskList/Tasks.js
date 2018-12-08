@@ -1,19 +1,15 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Button, Text } from 'native-base'
-import { ListView } from 'react-native'
+import { View } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import CheckboxListItem from '../common/CheckboxListItem/CheckboxListItem'
-import List from '../common/List/List'
+import SwipeListView from 'react-native-swipe-list-view/components/SwipeListView'
 import { translate } from 'react-i18next'
 import { iOSColors } from 'react-native-typography'
 import EmptyStateTemplate from '../common/EmptyStateTemplate'
+import SubSectionHeader from '../common/SubSectionHeader'
 
-class Tasks extends Component {
-
-    constructor(props) {
-        super(props)
-        this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
-    }
+class Tasks extends PureComponent {
 
     render() {
         const { tasks, total, onMoreTasksRequested } = this.props
@@ -22,64 +18,98 @@ class Tasks extends Component {
 
     renderEmptyState = () => (
         <EmptyStateTemplate
-            imageUrl={'https://cdn.pixabay.com/photo/2013/07/12/14/10/list-147904_1280.png'}
+            imagePath={require('../../assets/images/list.png')}
             content={<Text style={{ textAlign: 'center' }}>{this.props.t('emptyStates.noTasks')}</Text>}
         />
     )
 
+    renderFlatList = (tasks) => (
+        <SwipeListView
+            useFlatList
+            showsVerticalScrollIndicator={false}
+            data={tasks}
+            keyExtractor={item => `${item.id}`}
+            renderItem={(data, rowMap) => this.renderRow(data, rowMap)}
+            renderHiddenItem={(data, rowMap) => this.renderRightHiddenRow(data.item.id, rowMap)}
+            rightOpenValue={-100}
+            disableRightSwipe={true}
+            closeOnRowBeginSwipe={true}
+        />
+    )
+
+    renderSectionList = (tasks) => (
+        <SwipeListView
+            useSectionList
+            showsVerticalScrollIndicator={false}
+            sections={tasks}
+            keyExtractor={item => `${item.id}`}
+            renderItem={(data, rowMap) => this.renderRow(data, rowMap)}
+            renderHiddenItem={(data, rowMap) => this.renderRightHiddenRow(data.item.id, rowMap)}
+            rightOpenValue={-100}
+            disableRightSwipe={true}
+            closeOnRowBeginSwipe={true}
+            renderSectionHeader={({ section }) => section.data && section.data.length > 0 ? <SubSectionHeader leftText={section.title}/> : null}
+        />
+    )
+
     list = (tasks, total, onMoreTasksRequested) => {
-        const { t } = this.props
+        const { t, useSectionList = false } = this.props
         return <React.Fragment>
-            <List
-                data={tasks}
-                renderRow={this.renderRow}
-                renderRightHiddenRow={this.renderRightHiddenRow}
-            />
+            {
+                useSectionList && this.renderSectionList(tasks)
+            }
+            {
+                !useSectionList && this.renderFlatList(tasks)
+            }
             {total && tasks.length < total && <Button small transparent full onPress={onMoreTasksRequested || Function.prototype}>
                 <Text style={{ color: iOSColors.gray, fontSize: 14 }}>{t('labels.showMoreTasks').toLocaleUpperCase()}</Text>
             </Button>}
         </React.Fragment>
     }
 
-    renderRow = (task, secId, rowId, rowMap) => {
-        const { closed, dueDate, name, goal } = task
+    renderRow = (data, rowMap) => {
+        const { id, closed, dueDate, name } = data.item
 
         return (
             <CheckboxListItem
-                key={task.id}
+                key={`${id}`}
                 isCompleted={closed}
-                onComplete={() => this.onComplete(task, secId, rowId, rowMap)}
-                onBodyClick={() => this.onItemClick(task)}
+                onComplete={() => this.onComplete(data.item.id, rowMap)}
+                onBodyClick={() => this.onItemClick(data.item)}
                 text={name}
-                noteText={goal && goal.name}
                 date={dueDate}
-                checkboxColor={goal && goal.colorTag}
             />
         )
     }
 
-    renderRightHiddenRow = (task, secId, rowId, rowMap) =>
-        <Button transparent onPress={() => this.onDelete(task, secId, rowId, rowMap)} style={{ backgroundColor: '#f0f0f0' }}>
-            <Text>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
-        </Button>
+    renderRightHiddenRow = (rowKey, rowMap) =>
+        <View style={{ backgroundColor: '#f0f0f0', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Button transparent onPress={() => this.onDelete(rowKey, rowMap)} style={{ width: 100, height: '100%', alignSelf: 'flex-end' }}>
+                <Text style={{ textAlign: 'center', flex: 1 }}>{this.props.t('labels.delete').toLocaleUpperCase()}</Text>
+            </Button>
+        </View>
 
-    onDelete = (task, secId, rowId, rowMap) => {
+    onDelete = (rowKey, rowMap) => {
         const { onDeleteTask } = this.props
-        const { id } = task
-        onDeleteTask(id)
-        rowMap[`${secId}${rowId}`].props.closeRow()
+        onDeleteTask(rowKey)
+        this.closeRow(rowKey, rowMap)
     }
 
-    onComplete = (task, secId, rowId, rowMap) => {
+    onComplete = (rowKey, rowMap) => {
         const { onCloseTask } = this.props
-        const { id } = task
-        onCloseTask(id)
-        rowMap[`${secId}${rowId}`].props.closeRow()
+        onCloseTask(rowKey)
+        this.closeRow(rowKey, rowMap)
     }
 
     onItemClick = task => {
         const { navigation } = this.props
         navigation.navigate('TaskEditScreen', { task })
+    }
+
+    closeRow(rowKey, rowMap) {
+        if (rowMap[rowKey]) {
+            rowMap[rowKey].closeRow()
+        }
     }
 }
 

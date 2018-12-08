@@ -9,7 +9,7 @@ import Line from '../../components/common/Line'
 import { handleDueDateOf } from '../../utils/parser'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import Tasks from '../../components/TaskList/Tasks'
-import { NavigationEvents } from 'react-navigation'
+import { tasksChanged } from '../../utils/comparison'
 
 export class AllTasksView extends Component {
 
@@ -23,6 +23,11 @@ export class AllTasksView extends Component {
         updateUserTasks()
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return tasksChanged(this.props.tasks, nextProps.tasks) || tasksChanged(this.props.closedTasks, nextProps.closedTasks)
+            || this.props.totalClosedTasks !== nextProps.totalClosedTasks || this.state !== nextState
+    }
+
     render() {
         const {
             tasks,
@@ -31,7 +36,6 @@ export class AllTasksView extends Component {
             totalClosedTasks,
             deleteTask,
             undoCloseTask,
-            resetClosedTasks,
             t
         } = this.props
 
@@ -49,7 +53,6 @@ export class AllTasksView extends Component {
                 if (_scrollView) {
                     _scrollView.scrollTo({ y: headerHeight })
                 }
-
             }
         }
 
@@ -58,9 +61,7 @@ export class AllTasksView extends Component {
         return (
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
-                    <NavigationEvents onDidBlur={() => resetClosedTasks()}/>
-                    <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY} rightButtonLabel={t('labels.editGoal')}
-                        onRightButtonPress={this.handleGoalClick}/>
+                    <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY}/>
                     <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                     <Line/>
                     <Animated.ScrollView contentContainerStyle={{ flexGrow: 1 }}
@@ -77,15 +78,15 @@ export class AllTasksView extends Component {
                             </Text>
                             <Line/>
                             <View style={styles.sectionHeader}>
-                                <Button transparent noIndent onPress={this.toggleByStatus} style={{ alignSelf: 'flex-end' }}>
+                                <Button transparent onPress={this.toggleByStatus} style={{ alignSelf: 'flex-end' }}>
                                     <Text>{openTasksAreShown ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
                                 </Button>
                             </View>
                         </React.Fragment>
-                        {openTasksAreShown && <Tasks tasks={tasks} total={tasks.length} onCloseTask={id => closeTask(id)} onDeleteTask={id => deleteTask(id)}/>}
+                        {openTasksAreShown && <Tasks tasks={tasks} total={tasks.length} onCloseTask={closeTask} onDeleteTask={deleteTask}/>}
                         {!openTasksAreShown &&
-                        <Tasks tasks={closedTasks} total={totalClosedTasks} onCloseTask={id => undoCloseTask(id)}
-                            onDeleteTask={id => deleteTask(id)} onMoreTasksRequested={() => this.handleMoreTasksRequested()}/>}
+                        <Tasks tasks={closedTasks} total={totalClosedTasks} onCloseTask={undoCloseTask}
+                            onDeleteTask={deleteTask} onMoreTasksRequested={this.handleMoreTasksRequested}/>}
                     </Animated.ScrollView>
                 </Container>
             </StyleProvider>
@@ -99,10 +100,8 @@ export class AllTasksView extends Component {
     }
 
     toggleByStatus = () => {
-        const { resetClosedTasks } = this.props
         const { openTasksAreShown } = this.state
         this.setState({ openTasksAreShown: !openTasksAreShown })
-        resetClosedTasks()
     }
 
     handleMoreTasksRequested = () => {
@@ -114,8 +113,7 @@ export class AllTasksView extends Component {
 const styles = StyleSheet.create({
     sectionHeader: {
         flexDirection: 'row',
-        justifyContent: 'flex-end',
-        marginHorizontal: 16
+        justifyContent: 'flex-end'
     },
     subHeader: {
         ...iOSUIKit.footnoteEmphasizedObject,

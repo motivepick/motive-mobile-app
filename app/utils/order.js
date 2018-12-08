@@ -1,19 +1,22 @@
-import moment from 'moment'
+import type { Task } from './schedule'
 
-export const orderTasksByDate = (tasks) => {
-    const dueDateOf = task => moment(task.dueDate, moment.ISO_8601)
-    const absent = value => !value
-    const present = value => !absent(value)
+const absent = value => !value
+const present = value => !absent(value)
 
+const orderTasksByDate = (tasks: Array<Task>, field: string): Array<Task> => {
     return tasks.sort((a, b) => {
-        if (absent(a.dueDate) && absent(b.dueDate)) {
+        if (absent(a[field]) && absent(b[field])) {
             return 0
-        } else if (absent(a.dueDate) && present(b.dueDate)) {
+        } else if (absent(a[field]) && present(b[field])) {
             return 1
-        } else if (present(a.dueDate) && absent(b.dueDate)) {
+        } else if (present(a[field]) && absent(b[field])) {
             return -1
         } else {
-            return dueDateOf(a).isAfter(dueDateOf(b)) ? 1 : -1
+            return a[field].isAfter(b[field]) ? -1 : 1
         }
     })
 }
+
+export const orderTasksByCreated = (tasks: Array<Task>): Array<Task> => orderTasksByDate(tasks, 'created')
+
+export const orderTasksByClosingDate = (tasks: Array<Task>): Array<Task> => orderTasksByDate(tasks, 'closingDate')

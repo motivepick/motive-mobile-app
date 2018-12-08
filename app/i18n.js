@@ -15,12 +15,8 @@ i18n.use(languageDetector).init({
                 headings: {
                     slogan: 'Defeat your laziness',
                     tasks: 'Tasks',
-                    goals: 'Goals',
-                    editGoal: 'Edit Goal',
-                    newGoal: 'New Goal',
                     editTask: 'Edit Task',
                     editNotes: 'Edit Notes',
-                    pickGoal: 'Pick A Goal',
                     schedule: 'Schedule',
                     account: 'Motive'
                 },
@@ -29,13 +25,9 @@ i18n.use(languageDetector).init({
                     loginFB: 'Login With Facebook',
                     logout: 'Logout',
                     seeAll: 'See All',
-                    addGoal: 'New goal',
                     all: 'All Tasks',
                     today: 'Today',
                     thisWeek: 'This Week',
-                    newGoal: 'New Goal',
-                    editGoal: 'Edit',
-                    goal: 'Goal',
                     task: 'Task',
                     description: 'Notes',
                     set: 'Set',
@@ -48,14 +40,12 @@ i18n.use(languageDetector).init({
                     newTaskForToday: 'New Task For Today',
                     editTask: 'Task',
                     showClosedTasks: 'Show Completed Tasks',
-                    showClosedGoals: 'See completed goals',
                     hideClosedTasks: 'Hide Closed Tasks',
                     dueDate: 'Due date',
                     color: 'Color',
                     itemStatusInProgress: 'Show Closed Tasks',
                     itemStatusCompleted: 'Show Open Tasks',
                     totalTasks: '{{totalTasks}} tasks',
-                    totalGoals: '{{totalGoals}} goals',
                     sortByRecent: 'Recent',
                     sortByOverdue: 'Overdue',
                     sortByTasks: 'By tasks',
@@ -73,19 +63,14 @@ i18n.use(languageDetector).init({
                 placeholders: {
                     taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
-                    goalName: 'What is your goal?',
                     whenIsItDue: 'When is it due?',
                     description: 'A place for your notes',
                     sortBy: 'Sort by',
-                    taskIsPartOfGoal: 'Specify a goal'
                 },
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',
                     allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
                     noTasks: 'There are no tasks!',
-                    noCompletedGoals: 'No completed goals yet',
-                    allGoalsCompleted: 'Way to go! \nYou have completed all your goals!',
-                    noGoals: 'There are no goals! \nBut you can set one :)'
                 }
             }
         },
@@ -94,12 +79,8 @@ i18n.use(languageDetector).init({
                 headings: {
                     slogan: 'Победи лень',
                     tasks: 'Задачи',
-                    goals: 'Цели',
-                    editGoal: 'Изменить цель',
-                    newGoal: 'Новая цель',
                     editTask: 'Изменить задачу',
                     editNotes: 'Заметки',
-                    pickGoal: 'Указать цель',
                     schedule: 'График',
                     account: 'Motive'
                 },
@@ -108,13 +89,9 @@ i18n.use(languageDetector).init({
                     loginFB: 'Войти с Facebook',
                     logout: 'Выйти',
                     seeAll: 'Смотреть все',
-                    addGoal: 'Новая цель',
                     all: 'Все задачи',
                     today: 'Сегодня',
                     thisWeek: 'На неделе',
-                    newGoal: 'Новая цель',
-                    editGoal: 'Изменить',
-                    goal: 'Цель',
                     task: 'Задача',
                     description: 'Заметки',
                     set: 'Сохранить',
@@ -127,14 +104,12 @@ i18n.use(languageDetector).init({
                     newTaskForToday: 'Новая задача на сегодня',
                     editTask: 'Задача',
                     showClosedTasks: 'Показать закрытые задачи',
-                    showClosedGoals: 'Показать закрытые цели',
                     hideClosedTasks: 'Скрыть закрытые задачи',
                     dueDate: 'Дата выполнения',
                     color: 'Цвет',
                     itemStatusInProgress: 'Показать закрытые',
                     itemStatusCompleted: 'Показать открытые',
                     totalTasks: 'Задач: {{totalTasks}}',
-                    totalGoals: 'Целей: {{totalGoals}}',
                     sortByRecent: 'Недавние',
                     sortByOverdue: 'Просроченные',
                     sortByTasks: 'По задачам',
@@ -152,19 +127,14 @@ i18n.use(languageDetector).init({
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
                     firstTaskName: 'Как насчёт первой мега-задачи?',
-                    goalName: 'На что вы нацелились?',
                     whenIsItDue: 'Когда?',
                     description: 'Место для заметок',
                     sortBy: 'Сортировать',
-                    taskIsPartOfGoal: 'Указать цель'
                 },
                 emptyStates: {
                     noCompletedTasks: 'Ещё нет закрытых задач',
                     allTasksCompleted: 'Вы закрыли все свои задачи! \nКонечно, всегда можно добавить ещё задач... :)',
                     noTasks: 'Задач нет!',
-                    noCompletedGoals: 'Ещё нет закрытых целей',
-                    allGoalsCompleted: 'Так держать! \nВсе поставленные цели достигнуты!',
-                    noGoals: 'Целей нет! \nНо можно поставить :)'
                 }
             }
         },
@@ -173,12 +143,8 @@ i18n.use(languageDetector).init({
                 headings: {
                     slogan: 'Defeat your laziness',
                     tasks: 'Tasks',
-                    goals: 'Goals',
-                    editGoal: 'Edit Goal',
-                    newGoal: 'New Goal',
                     editTask: 'Edit Task',
                     editNotes: 'Edit Notes',
-                    pickGoal: 'Pick A Goal',
                     schedule: 'Schedule',
                     account: 'Motive'
                 },
@@ -187,13 +153,9 @@ i18n.use(languageDetector).init({
                     loginFB: 'Login With Facebook',
                     logout: 'Logout',
                     seeAll: 'See All',
-                    addGoal: 'New goal',
                     all: 'All Tasks',
                     today: 'Today',
                     thisWeek: 'This Week',
-                    newGoal: 'New Goal',
-                    editGoal: 'Edit',
-                    goal: 'Goal',
                     task: 'Task',
                     description: 'Notes',
                     set: 'Set',
@@ -206,14 +168,12 @@ i18n.use(languageDetector).init({
                     newTaskForToday: 'New Task For Today',
                     editTask: 'Task',
                     showClosedTasks: 'Show Completed Tasks',
-                    showClosedGoals: 'See completed goals',
                     hideClosedTasks: 'Hide Closed Tasks',
                     dueDate: 'Due date',
                     color: 'Color',
                     itemStatusInProgress: 'Show Closed Tasks',
                     itemStatusCompleted: 'Show Open Tasks',
                     totalTasks: '{{totalTasks}} tasks',
-                    totalGoals: '{{totalGoals}} goals',
                     sortByRecent: 'Recent',
                     sortByOverdue: 'Overdue',
                     sortByTasks: 'By tasks',
@@ -231,25 +191,20 @@ i18n.use(languageDetector).init({
                 placeholders: {
                     taskName: 'What needs to be done?',
                     firstTaskName: 'How about a fresh hot task?',
-                    goalName: 'What is your goal?',
                     whenIsItDue: 'When is it due?',
                     description: 'A place for your notes',
                     sortBy: 'Sort by',
-                    taskIsPartOfGoal: 'Specify a goal'
                 },
                 emptyStates: {
                     noCompletedTasks: 'No completed tasks yet',
                     allTasksCompleted: 'You have completed all your tasks! \nOf course, you can always add more... :)',
                     noTasks: 'There are no tasks!',
-                    noCompletedGoals: 'No completed goals yet',
-                    allGoalsCompleted: 'Way to go! \nYou have completed all your goals!',
-                    noGoals: 'There are no goals! \nBut you can set one :)'
                 }
             }
         }
     },
     fallbackLng: 'en',
-    debug: true,
+    debug: false,
 
     ns: ['translations'],
     defaultNS: 'translations',

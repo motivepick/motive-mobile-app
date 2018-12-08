@@ -1,5 +1,7 @@
 # Motive Mobile App
 
+Try it out on https://motivepick.com.
+
 ## To Run This Application Locally
 
 1. Make sure `react-native` is installed. If it is not, install it with `npm install -g react-native-cli`. See details [here](https://facebook.github.io/react-native/docs/getting-started.html).
@@ -12,3 +14,19 @@
     * Go to `Product`. Then `Clean`. Then `Build`.
     * Make sure back end is running (see host and port in `.env.development`).
     * Press the `Run` button.
+
+## To Release This Application
+
+### iOS
+
+To be described.
+
+### Android
+
+1. Make sure the back end URLs are updated in `.env.development`, `.env.production` and `const.js`.
+2. Increase the values of `versionCode` and `versionName` in `./android/app/build.gradle`.
+3. Specify values for `MOTIVE_RELEASE_STORE_PASSWORD` and `MOTIVE_RELEASE_KEY_PASSWORD` in `./android/gradle.properties`. If you do not have the signature file, you can use e.g. Android Studio to generate it.
+4. Go to `./android` and run `./gradlew clean assembleRelease`
+5. The signed assembly should appear in `./android/app/build/outputs/apk/release`
+
+See details [here](https://facebook.github.io/react-native/docs/signed-apk-android).

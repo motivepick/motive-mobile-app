@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Text } from 'native-base'
 import { iOSColors, iOSUIKit } from 'react-native-typography'
 import { View } from 'react-native'
 
-class FormLabel extends Component {
+class FormLabel extends PureComponent {
 
     render() {
         const { labelText } = this.props

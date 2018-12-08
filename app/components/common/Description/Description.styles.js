@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         fontSize: 17
     },
-    goalNotes: {
+    notes: {
         marginTop: 4,
         padding: 12,
         flexDirection: 'column',

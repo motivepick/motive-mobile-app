@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Image, Linking, StyleSheet, View } from 'react-native'
 import { navigateWithReset } from './navigationWithReset'
 import { API_URL } from '../const'
@@ -8,12 +8,13 @@ import { Button, Container, Content, Icon, StyleProvider, Text } from 'native-ba
 import { human, iOSUIKit } from 'react-native-typography'
 import { translate } from 'react-i18next'
 import { storeToken } from '../services/accountService'
+import { fromUrl } from '../utils/token'
 
-class LoginScreen extends Component {
+class LoginScreen extends PureComponent {
 
     handleOpenURL = event => {
         const url = event.url || event
-        const token = url.replace('motive://', '')
+        const token = fromUrl(url)
         storeToken(token, () => navigateWithReset(this.props.navigation, 'Splash'))
     }
 

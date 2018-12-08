@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Icon, Picker } from 'native-base'
 import { iOSColors } from 'react-native-typography'
 import { translate } from 'react-i18next'
 
-class SortPicker extends Component {
+class SortPicker extends PureComponent {
 
     render() {
         const { selectedValue, onValueChange, t } = this.props
