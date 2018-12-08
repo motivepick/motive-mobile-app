@@ -3,6 +3,7 @@ import {
     CLOSE_TASK,
     CREATE_TASK,
     DELETE_TASK,
+    RESET,
     RESET_CLOSED_TASKS,
     SET_TASK,
     SHOW_MORE_TASKS,
@@ -46,6 +47,8 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, totalClosedTasksShown: state.totalClosedTasksShown + 10 }
     } else if (type === RESET_CLOSED_TASKS) {
         return { ...state, totalClosedTasksShown: 10 }
+    } else if (type === RESET) {
+        return { ...state, ...INITIAL_STATE }
     } else {
         return state
     }

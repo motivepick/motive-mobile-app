@@ -12,7 +12,7 @@ import { I18nextProvider } from 'react-i18next'
 import i18n from './i18n'
 import TaskDescriptionEditScreen from './screens/DescriptionEdit/TaskDescriptionEdit'
 import AllTasksScreen from './screens/AllTasks'
-import AccountScreen from './screens/AccountScreen'
+import AccountScreen from './screens/Account'
 import FooterComponent from './components/common/Footer'
 
 const RootStack = createStackNavigator(

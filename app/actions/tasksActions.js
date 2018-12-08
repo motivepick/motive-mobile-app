@@ -8,6 +8,7 @@ export const UPDATE_TASK = 'UPDATE_TASK'
 export const DELETE_TASK = 'DELETE_TASK'
 export const SHOW_MORE_TASKS = 'SHOW_MORE_TASKS'
 export const RESET_CLOSED_TASKS = 'RESET_CLOSED_TASKS'
+export const RESET = 'RESET'
 
 export const setTaskAction = task => ({ type: SET_TASK, payload: task })
 
@@ -28,3 +29,5 @@ export const deleteTaskAction = id => ({ type: DELETE_TASK, payload: id })
 export const showMoreTasksAction = () => ({ type: SHOW_MORE_TASKS })
 
 export const resetClosedTasksAction = () => ({ type: RESET_CLOSED_TASKS })
+
+export const resetAction = () => ({ type: RESET })
