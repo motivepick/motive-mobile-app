@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import { Button, Form, Icon, Input, Item } from 'native-base'
-import { iOSColors } from 'react-native-typography'
 import { View } from 'react-native'
 
 // animate clear button
@@ -14,8 +13,8 @@ class QuickInput extends PureComponent {
 
         return (
             <View style={{ flexDirection: 'row', marginHorizontal: 16, marginTop: 8 }}>
-                <Form style={{ flex: 1 }}>
-                    <Item rounded style={{ backgroundColor: iOSColors.customGray }}>
+                <Form style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Item rounded>
                         <Input
                             onChangeText={value => this.setState({ value })}
                             value={value}
