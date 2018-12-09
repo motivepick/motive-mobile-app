@@ -22,7 +22,7 @@ export class AccountView extends PureComponent {
         const { reset } = this.props
         reset()
         await CookieManager.clearAll()
-        removeToken(() => navigateWithReset(this.props.navigation, 'Login'))
+        removeToken(() => navigateWithReset(this.props.navigation, 'Login', { userLoggedOut: true }))
     }
 
     // TODO this:

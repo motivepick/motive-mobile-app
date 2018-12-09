@@ -27,12 +27,18 @@ class LoginScreen extends PureComponent {
     }
 
     componentDidMount() {
-        // android handler
-        Linking.getInitialURL().then((url) => {
-            if (url) {
-                this.handleOpenURL(url)
-            }
-        }).catch(err => console.error(err))
+        const { navigation } = this.props
+        const userLoggedOut = navigation.getParam('userLoggedOut')
+
+        // android handler; note that if on the Android emulator you logout and then refresh the app (double "R"), the handler will log you in again
+        // using the initial URL; however, that should not happen on a physical device as there is no way to refresh without loosing the initial URL there
+        if (!userLoggedOut) {
+            Linking.getInitialURL().then((url) => {
+                if (url) {
+                    this.handleOpenURL(url)
+                }
+            }).catch(err => console.error(err))
+        }
 
         // ios handler
         Linking.addEventListener('url', this.handleOpenURL)
