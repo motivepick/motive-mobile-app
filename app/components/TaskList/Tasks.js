@@ -53,14 +53,9 @@ class Tasks extends PureComponent {
     )
 
     list = (tasks, total, onMoreTasksRequested) => {
-        const { t, useSectionList = false } = this.props
+        const { t, useSectionList } = this.props
         return <React.Fragment>
-            {
-                useSectionList && this.renderSectionList(tasks)
-            }
-            {
-                !useSectionList && this.renderFlatList(tasks)
-            }
+            {useSectionList ? this.renderSectionList(tasks) : this.renderFlatList(tasks)}
             {total && tasks.length < total && <Button small transparent full onPress={onMoreTasksRequested || Function.prototype}>
                 <Text style={{ color: iOSColors.gray, fontSize: 14 }}>{t('labels.showMoreTasks').toLocaleUpperCase()}</Text>
             </Button>}
@@ -74,7 +69,7 @@ class Tasks extends PureComponent {
             <CheckboxListItem
                 key={`${id}`}
                 isCompleted={closed}
-                onComplete={() => this.onComplete(data.item.id, rowMap)}
+                onComplete={(newStateOfTaskIsClosed) => this.onComplete(data.item.id, rowMap, newStateOfTaskIsClosed)}
                 onBodyClick={() => this.onItemClick(data.item)}
                 text={name}
                 date={dueDate}
@@ -95,9 +90,9 @@ class Tasks extends PureComponent {
         this.closeRow(rowKey, rowMap)
     }
 
-    onComplete = (rowKey, rowMap) => {
+    onComplete = (rowKey, rowMap, newStateOfTaskIsClosed) => {
         const { onCloseTask } = this.props
-        onCloseTask(rowKey)
+        onCloseTask(rowKey, newStateOfTaskIsClosed)
         this.closeRow(rowKey, rowMap)
     }
 

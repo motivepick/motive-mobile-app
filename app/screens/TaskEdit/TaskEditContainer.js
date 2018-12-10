@@ -14,8 +14,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     setTask: task => dispatch => dispatch(setTaskAction(task)),
 
     saveTask: task => async dispatch => {
-        const { id, name, description, dueDate } = task
-        dispatch(updateTaskAction(await updateTask(id, { name, description, dueDate })))
+        const { id, name, description, dueDate, deleteDueDate } = task
+        dispatch(updateTaskAction(await updateTask(id, { name, description, dueDate, deleteDueDate })))
     },
 
     deleteTask: id => async dispatch => {

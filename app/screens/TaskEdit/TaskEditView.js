@@ -31,14 +31,14 @@ export class TaskEditView extends PureComponent {
                     {/* TODO: what this the best place for the style? */}
                     <Content style={android() ? { marginTop: 10 } : {}}>
                         <Form style={{ marginHorizontal: 16 }}>
-                            <Item roundedInputWithLabel >
+                            <Item roundedInputWithLabel>
                                 <Label>{t('labels.task').toLocaleUpperCase()}</Label>
-                                <Input style={{  flex: 1, alignSelf: 'stretch' }} value={taskName} onChangeText={taskName => this.setState({ taskName })}
+                                <Input style={{ flex: 1, alignSelf: 'stretch' }} value={taskName} onChangeText={taskName => this.setState({ taskName })}
                                     onSubmitEditing={this.handleSubmitTaskNameEditing} returnKeyType={'done'}/>
                             </Item>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>
-                                <DueDatePicker value={dueDate} onChangeDate={dueDate => saveTask({ id, dueDate })}/>
+                                <DueDatePicker value={dueDate} onChangeDate={dueDate => saveTask({ id, dueDate, deleteDueDate: !dueDate })}/>
                             </Item>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.description').toLocaleUpperCase()}</Label>
@@ -54,12 +54,12 @@ export class TaskEditView extends PureComponent {
     handleSubmitTaskNameEditing = () => {
         const { task, saveTask } = this.props
         const { taskName } = this.state
-        const { id, name, dueDate } = task
+        const { id, name } = task
         const trimmed = taskName.trim()
         if (trimmed === '') {
             this.setState({ taskName: name })
         } else {
-            saveTask({ id, name: trimmed, dueDate })
+            saveTask({ id, name: trimmed })
             this.setState({ taskName: trimmed })
         }
     }

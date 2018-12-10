@@ -32,10 +32,9 @@ export class AllTasksView extends Component {
         const {
             tasks,
             closedTasks,
-            closeTask,
+            closeOrUndoCloseTask,
             totalClosedTasks,
             deleteTask,
-            undoCloseTask,
             t
         } = this.props
 
@@ -83,9 +82,9 @@ export class AllTasksView extends Component {
                                 </Button>
                             </View>
                         </React.Fragment>
-                        {openTasksAreShown && <Tasks tasks={tasks} total={tasks.length} onCloseTask={closeTask} onDeleteTask={deleteTask}/>}
+                        {openTasksAreShown && <Tasks tasks={tasks} total={tasks.length} onCloseTask={closeOrUndoCloseTask} onDeleteTask={deleteTask}/>}
                         {!openTasksAreShown &&
-                        <Tasks tasks={closedTasks} total={totalClosedTasks} onCloseTask={undoCloseTask}
+                        <Tasks tasks={closedTasks} total={totalClosedTasks} onCloseTask={closeOrUndoCloseTask}
                             onDeleteTask={deleteTask} onMoreTasksRequested={this.handleMoreTasksRequested}/>}
                     </Animated.ScrollView>
                 </Container>

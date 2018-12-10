@@ -34,9 +34,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
     createTask: task => async (dispatch) => dispatch(createTask(await doCreateTask(task))),
 
-    closeTask: id => async dispatch => dispatch(closeTaskAction(await closeTask(id))),
-
-    undoCloseTask: id => async dispatch => dispatch(undoCloseTaskAction(await undoCloseTask(id))),
+    closeOrUndoCloseTask: (id: number, newStateOfTaskIsClosed: boolean) => async dispatch => {
+        if (newStateOfTaskIsClosed) {
+            dispatch(closeTaskAction(await closeTask(id)))
+        } else {
+            dispatch(undoCloseTaskAction(await undoCloseTask(id)))
+        }
+    },
 
     deleteTask: id => async dispatch => {
         await doDeleteTask(id)

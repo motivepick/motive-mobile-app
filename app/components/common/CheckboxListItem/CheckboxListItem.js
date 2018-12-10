@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react'
-import { StyleSheet, TouchableOpacity, TouchableNativeFeedback, View, Platform } from 'react-native'
+import { StyleSheet, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native'
 import { getDateAsStr, getDateColor } from '../../../utils/dateUtils'
 import { Body, Icon, ListItem, Right, Text } from 'native-base'
 import { human, iOSColors } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
 import { palette } from '../Palette'
 import variables from '../../../../native-base-theme/variables/platform'
+import { ios } from '../../../utils/platform'
 
 class CheckboxListItem extends PureComponent {
 
@@ -13,7 +14,7 @@ class CheckboxListItem extends PureComponent {
 
     renderProgressIos = (progress, checkboxBgColor, checked, checkboxMarkColor) => {
         return (
-            <TouchableOpacity onPress={(entity, secId, rowId, rowMap) => this.handleComplete(entity, secId, rowId, rowMap)}>
+            <TouchableOpacity onPress={this.handleComplete}>
                 <ProgressCircle
                     percent={progress}
                     radius={13}
@@ -30,10 +31,9 @@ class CheckboxListItem extends PureComponent {
 
     renderProgressAndroid = (progress, checkboxBgColor, checked, checkboxMarkColor) => {
         return (
-
             <View style={{ borderRadius: 17, borderWidth: 1, borderColor: 'transparent', width: 34, height: 34, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                 <TouchableNativeFeedback
-                    onPress={(entity, secId, rowId, rowMap) => this.handleComplete(entity, secId, rowId, rowMap)}
+                    onPress={this.handleComplete}
                     background={TouchableNativeFeedback.Ripple(variables.androidRippleColorDark)} delayPressIn={0}>
                     <View pointerEvents='box-only'
                         style={{ width: 32, height: 32, alignItems: 'center', justifyContent: 'center' }}>
@@ -64,7 +64,7 @@ class CheckboxListItem extends PureComponent {
         return (
             <ListItem noIndent noBorder style={{ backgroundColor: iOSColors.white }} onPress={onBodyClick}>
                 {
-                    Platform.OS === 'ios' ? this.renderProgressIos(progress, checkboxBgColor, checked, checkboxMarkColor) :
+                    ios() ? this.renderProgressIos(progress, checkboxBgColor, checked, checkboxMarkColor) :
                         this.renderProgressAndroid(progress, checkboxBgColor, checked, checkboxMarkColor)
                 }
                 <Body style={{ marginLeft: 4 }}>
@@ -79,11 +79,11 @@ class CheckboxListItem extends PureComponent {
         )
     }
 
-    handleComplete = (entity, secId, rowId, rowMap) => {
+    handleComplete = () => {
         const { onComplete } = this.props
         const { completed } = this.state
         this.setState({ completed: !completed })
-        onComplete(entity, secId, rowId, rowMap)
+        onComplete(!completed)
     }
 }
 
