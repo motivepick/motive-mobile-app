@@ -119,7 +119,7 @@ i18n.use(languageDetector).init({
                     future: 'Дальше',
                     overdue: 'Просроченные',
                     rateUs: 'Оцените нас в {{store}}',
-                    rateUsBigText: 'Мы будем рады услышать как Motive помог Вам!',
+                    rateUsBigText: 'Мы будем рады услышать, как Motive помог Вам!',
                     showMoreTasks: 'Показать ещё'
                 },
                 placeholders: {
