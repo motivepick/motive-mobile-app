@@ -4,7 +4,7 @@ import { getDateAsStr, getDateColor } from '../../../utils/dateUtils'
 import { Body, Icon, ListItem, Right, Text } from 'native-base'
 import { human, iOSColors } from 'react-native-typography'
 import ProgressCircle from 'react-native-progress-circle'
-import { palette } from '../Palette'
+import palette from '../Palette'
 import variables from '../../../../native-base-theme/variables/platform'
 import { ios } from '../../../utils/platform'
 
