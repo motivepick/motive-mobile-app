@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react'
-import { Container, Content, Form, Icon, Input, Item, Label, StyleProvider } from 'native-base'
+import { Container, Content, Form, Icon, Item, Label, StyleProvider } from 'native-base'
 import DueDatePicker from '../../components/common/DueDatePicker/DueDatePicker'
 import Header from '../../components/common/Header/Header'
 import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
 import Description from '../../components/common/Description/Description'
 import { android } from '../../utils/platform'
+import { UniversalInput } from '../../components/common/UniversalInput'
 
 export class TaskEditView extends PureComponent {
 
@@ -33,8 +34,8 @@ export class TaskEditView extends PureComponent {
                         <Form style={{ marginHorizontal: 16 }}>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.task').toLocaleUpperCase()}</Label>
-                                <Input style={{ flex: 1, alignSelf: 'stretch' }} value={taskName} onChangeText={taskName => this.setState({ taskName })}
-                                    onSubmitEditing={this.handleSubmitTaskNameEditing} returnKeyType={'done'}/>
+                                <UniversalInput value={taskName} returnKeyType='done' onChangeText={taskName => this.setState({ taskName })}
+                                    onSubmitEditing={this.handleSubmitTaskNameEditing}/>
                             </Item>
                             <Item roundedInputWithLabel>
                                 <Label>{t('labels.dueDate').toLocaleUpperCase()}</Label>
