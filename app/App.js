@@ -6,6 +6,7 @@ import SplashScreen from './screens/SplashScreen'
 import ScheduleScreen from './screens/Schedule'
 import { Provider } from 'react-redux'
 import rootReducer from './reducers'
+import { Root } from 'native-base'
 import { applyMiddleware, createStore } from 'redux'
 import TaskEditScreen from './screens/TaskEdit'
 import { I18nextProvider } from 'react-i18next'
@@ -55,6 +56,6 @@ const AppNav = createAppContainer(RootStack)
 
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 
-const App = () => <Provider store={store}><I18nextProvider i18n={i18n}><AppNav/></I18nextProvider></Provider>
+const App = () => <Provider store={store}><I18nextProvider i18n={i18n}><Root><AppNav/></Root></I18nextProvider></Provider>
 
 export default App

@@ -57,7 +57,8 @@ i18n.use(languageDetector).init({
                     overdue: 'Overdue',
                     rateUs: 'Rate us in {{store}}',
                     rateUsBigText: 'It would be lovely to hear what Your experience with Motive is!',
-                    showMoreTasks: 'Show More Tasks'
+                    showMoreTasks: 'Show More Tasks',
+                    error: 'Something went wrong...'
                 },
                 placeholders: {
                     taskName: 'What needs to be done?',
@@ -120,7 +121,8 @@ i18n.use(languageDetector).init({
                     overdue: 'Просроченные',
                     rateUs: 'Оцените нас в {{store}}',
                     rateUsBigText: 'Мы будем рады услышать, как Motive помог Вам!',
-                    showMoreTasks: 'Показать ещё'
+                    showMoreTasks: 'Показать ещё',
+                    error: 'Что-то пошло не так...'
                 },
                 placeholders: {
                     taskName: 'О чём нужно не забыть?',
@@ -183,7 +185,8 @@ i18n.use(languageDetector).init({
                     overdue: '過期',
                     rateUs: '在 {{store}} 給我們個評價吧',
                     rateUsBigText: '讓我們聽聽你對Motive的想法!',
-                    showMoreTasks: '顯示更多事項'
+                    showMoreTasks: '顯示更多事項',
+                    error: 'Something went wrong...'
                 },
                 placeholders: {
                     taskName: '有什麼事要完成的?',

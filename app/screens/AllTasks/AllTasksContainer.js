@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import {
     closeTaskAction,
-    createTask,
+    createTaskAction,
     deleteTaskAction,
     resetClosedTasksAction,
     showMoreTasksAction,
@@ -13,6 +13,7 @@ import connect from 'react-redux/es/connect/connect'
 import { translate } from 'react-i18next'
 import { AllTasksView } from './AllTasksView'
 import { orderTasksByClosingDate, orderTasksByCreated } from '../../utils/order'
+import { toast } from '../../utils/toast'
 
 const open = (tasks) => orderTasksByCreated(tasks.filter(t => !t.closed))
 
@@ -28,23 +29,43 @@ const mapStateToProps = state => {
     })
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
 
-    updateUserTasks: () => async (dispatch) => dispatch(updateUserTasksAction(await fetchTasks())),
+    updateUserTasks: () => async (dispatch) => {
+        try {
+            return dispatch(updateUserTasksAction(await fetchTasks()))
+        } catch (e) {
+            toast()
+        }
+    },
 
-    createTask: task => async (dispatch) => dispatch(createTask(await doCreateTask(task))),
+    createTask: task => async (dispatch) => {
+        try {
+            return dispatch(createTaskAction(await doCreateTask(task)))
+        } catch (e) {
+            toast()
+        }
+    },
 
-    closeOrUndoCloseTask: (id: number, newStateOfTaskIsClosed: boolean) => async dispatch => {
-        if (newStateOfTaskIsClosed) {
-            dispatch(closeTaskAction(await closeTask(id)))
-        } else {
-            dispatch(undoCloseTaskAction(await undoCloseTask(id)))
+    closeOrUndoCloseTask: (id: number, newStateOfTaskIsClosed: boolean) => async (dispatch) => {
+        try {
+            if (newStateOfTaskIsClosed) {
+                dispatch(closeTaskAction(await closeTask(id)))
+            } else {
+                dispatch(undoCloseTaskAction(await undoCloseTask(id)))
+            }
+        } catch (e) {
+            toast()
         }
     },
 
     deleteTask: id => async dispatch => {
-        await doDeleteTask(id)
-        dispatch(deleteTaskAction(id))
+        try {
+            await doDeleteTask(id)
+            dispatch(deleteTaskAction(id))
+        } catch (e) {
+            toast()
+        }
     },
 
     onMoreTasksRequested: () => dispatch => dispatch(showMoreTasksAction()),

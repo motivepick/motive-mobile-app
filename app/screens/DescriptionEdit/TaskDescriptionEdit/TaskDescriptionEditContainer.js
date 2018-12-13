@@ -4,6 +4,7 @@ import { changeTaskDescriptionAction, setTaskAction, updateTaskAction } from '..
 import { translate } from 'react-i18next'
 import { DescriptionEditView } from '../DescriptionEditView'
 import { updateTask } from '../../../services/taskService'
+import { toast } from '../../../utils/toast'
 
 const mapStateToProps = state => ({
     editableEntity: state.tasks.task
@@ -19,9 +20,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     setDescription: description => dispatch => dispatch(changeTaskDescriptionAction(description)),
 
     saveEditableEntity: entity => async dispatch => {
-        const { id, description } = entity
-        const task = await updateTask(id, { description })
-        dispatch(updateTaskAction(task))
+        try {
+            const { id, description } = entity
+            const task = await updateTask(id, { description })
+            dispatch(updateTaskAction(task))
+        } catch {
+            toast()
+        }
     }
 }, dispatch)
 

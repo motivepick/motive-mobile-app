@@ -16,7 +16,7 @@ export const changeTaskDescriptionAction = description => ({ type: CHANGE_TASK_D
 
 export const updateUserTasksAction = tasks => ({ type: UPDATE_USER_TASKS, payload: tasks })
 
-export const createTask = task => ({ type: CREATE_TASK, payload: task })
+export const createTaskAction = task => ({ type: CREATE_TASK, payload: task })
 
 export const closeTaskAction = task => ({ type: CLOSE_TASK, payload: task })
 

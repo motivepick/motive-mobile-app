@@ -4,6 +4,7 @@ import { deleteTaskAction, setTaskAction, updateTaskAction } from '../../actions
 import { translate } from 'react-i18next'
 import { TaskEditView } from './TaskEditView'
 import { doDeleteTask, updateTask } from '../../services/taskService'
+import { toast } from '../../utils/toast'
 
 const mapStateToProps = state => ({
     task: state.tasks.task
@@ -14,13 +15,21 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     setTask: task => dispatch => dispatch(setTaskAction(task)),
 
     saveTask: task => async dispatch => {
-        const { id, name, description, dueDate, deleteDueDate } = task
-        dispatch(updateTaskAction(await updateTask(id, { name, description, dueDate, deleteDueDate })))
+        try {
+            const { id, name, description, dueDate, deleteDueDate } = task
+            dispatch(updateTaskAction(await updateTask(id, { name, description, dueDate, deleteDueDate })))
+        } catch {
+            toast()
+        }
     },
 
     deleteTask: id => async dispatch => {
-        await doDeleteTask(id)
-        dispatch(deleteTaskAction(id))
+        try {
+            await doDeleteTask(id)
+            dispatch(deleteTaskAction(id))
+        } catch {
+            toast()
+        }
     },
 }, dispatch)
 

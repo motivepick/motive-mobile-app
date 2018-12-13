@@ -5,6 +5,7 @@ import connect from 'react-redux/es/connect/connect'
 import { translate } from 'react-i18next'
 import { ScheduleView } from './ScheduleView'
 import { schedule } from '../../utils/schedule'
+import { toast } from '../../utils/toast'
 
 const mapStateToProps = state => ({
     schedule: schedule(state.tasks.tasks)
@@ -12,13 +13,29 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 
-    closeTask: id => async dispatch => dispatch(closeTaskAction(await closeTask(id))),
+    closeTask: id => async dispatch => {
+        try {
+            return dispatch(closeTaskAction(await closeTask(id)))
+        } catch {
+            toast()
+        }
+    },
 
-    undoCloseTask: id => async dispatch => dispatch(undoCloseTaskAction(await undoCloseTask(id))),
+    undoCloseTask: id => async dispatch => {
+        try {
+            return dispatch(undoCloseTaskAction(await undoCloseTask(id)))
+        } catch {
+            toast()
+        }
+    },
 
     deleteTask: id => async dispatch => {
-        await doDeleteTask(id)
-        dispatch(deleteTaskAction(id))
+        try {
+            await doDeleteTask(id)
+            dispatch(deleteTaskAction(id))
+        } catch (e) {
+            toast()
+        }
     }
 }, dispatch)
 
