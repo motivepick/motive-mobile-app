@@ -1,69 +1,68 @@
 import React, { PureComponent } from 'react'
 import { Body, Button, Header, Left, Right, Text, Title } from 'native-base'
+import { StyleSheet, View } from 'react-native'
 import { iOSUIKit } from 'react-native-typography'
-import { Animated, StyleSheet, View } from 'react-native'
 
-const HEADER_EXPANDED_HEIGHT = 41.5
-const HEADER_COLLAPSED_HEIGHT = 0
+const HEADER_EXPANDED_LINE_HEIGHT = 34
+
+export const ExpandedHeader = ({ style, ...props }) => (
+    <View style={styles.headerExpandedContainer}>
+        <Text style={[styles.headerExpanded]}>{props.title}</Text>
+    </View>
+)
 
 // If AnimatedHeader is used add onScroll event to ScrollView (a.k.a <Content> from NativeBase)
 class AnimatedHeaderComponent extends PureComponent {
-    render() {
-        const headerHeight = this.props.scrollOffset.interpolate({
-            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
-            outputRange: [HEADER_EXPANDED_HEIGHT, HEADER_COLLAPSED_HEIGHT],
-            extrapolate: 'clamp'
-        })
-        const headerTitleOpacity = this.props.scrollOffset.interpolate({
-            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT - 5, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
-            outputRange: [0, 0, 1],
-            extrapolate: 'clamp'
-        })
-        const heroTitleOpacity = this.props.scrollOffset.interpolate({
-            inputRange: [0, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT - 5, HEADER_EXPANDED_HEIGHT-HEADER_COLLAPSED_HEIGHT],
-            outputRange: [1, 1, 0],
-            extrapolate: 'clamp'
-        })
+    state = {
+        showMiniHeader: false
+    }
 
+    componentDidMount() {
+        this.props.scrollOffset.addListener(this.scrollListener.bind(this))
+    }
+
+    scrollListener (e) {
+        if (e.value >= HEADER_EXPANDED_LINE_HEIGHT && this.state.showMiniHeader === false) {
+            this.setState({ showMiniHeader: true })
+        } else if (e.value <= HEADER_EXPANDED_LINE_HEIGHT && this.state.showMiniHeader === true) {
+            this.setState({ showMiniHeader: false })
+        }
+    }
+
+    render() {
         const { title, rightButtonLabel, leftButtonLabel, onLeftButtonPress, onRightButtonPress, leftIcon, rightIcon } = this.props
         return (
-            <View>
-                <Header transparent>
-                    <Left>
-                        {
-                            Boolean(onLeftButtonPress) &&
-                            <Button transparent onPress={onLeftButtonPress}>
-                                {leftButtonLabel && <Text>{leftButtonLabel}</Text>}
-                                {leftIcon}
-                            </Button>
-                        }
-                    </Left>
-
+            <Header transparent>
+                <Left>
                     {
-                        Boolean(title) &&
-                        <Body>
-                            <Title>
-                                <Animated.Text style={[styles.headerCollapsed, { opacity: headerTitleOpacity }]}>{title}</Animated.Text>
-                            </Title>
-                        </Body>
+                        Boolean(onLeftButtonPress) &&
+                        <Button transparent onPress={onLeftButtonPress}>
+                            {leftButtonLabel && <Text>{leftButtonLabel}</Text>}
+                            {leftIcon}
+                        </Button>
                     }
-                    <Right>
-                        {
-                            Boolean(onRightButtonPress) &&
-                            <Button transparent onPress={onRightButtonPress}>
-                                {rightButtonLabel && <Text>{rightButtonLabel}</Text>}
-                                {rightIcon}
-                            </Button>
-                        }
-                    </Right>
-                </Header>
+                </Left>
+
                 {
                     Boolean(title) &&
-                    <Animated.View style={styles.headerExpandedContainer}>
-                        <Animated.Text style={[styles.headerExpanded, { opacity: heroTitleOpacity, height: headerHeight }]}>{title}</Animated.Text>
-                    </Animated.View>
+                    <Body>
+                        <Title>
+                            {
+                                this.state.showMiniHeader && <Text>{title}</Text>
+                            }
+                        </Title>
+                    </Body>
                 }
-            </View>
+                <Right>
+                    {
+                        Boolean(onRightButtonPress) &&
+                        <Button transparent onPress={onRightButtonPress}>
+                            {rightButtonLabel && <Text>{rightButtonLabel}</Text>}
+                            {rightIcon}
+                        </Button>
+                    }
+                </Right>
+            </Header>
         )
     }
 }
@@ -79,10 +78,5 @@ const styles = StyleSheet.create({
     },
     headerExpanded: {
         ...iOSUIKit.largeTitleEmphasizedObject
-    },
-    headerCollapsed: {
-        textAlign: 'center',
-        fontSize: 18,
-        marginTop: 28
     }
 })

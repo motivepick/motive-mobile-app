@@ -4,7 +4,7 @@ import { Container, StyleProvider, Text } from 'native-base'
 import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
 import { iOSColors } from 'react-native-typography'
-import AnimatedHeader from '../../components/common/AnimatedHeader/AnimatedHeader'
+import AnimatedHeader, { ExpandedHeader } from '../../components/common/AnimatedHeader/AnimatedHeader'
 import Line from '../../components/common/Line'
 import EmptyStateTemplate from '../../components/common/EmptyStateTemplate'
 import { getDateAsStr } from '../../utils/dateUtils'
@@ -69,8 +69,8 @@ export class ScheduleView extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container style={{ backgroundColor: iOSColors.white }}>
                     <AnimatedHeader title={t('headings.schedule')} scrollOffset={this.state.scrollY}/>
-                    <Line/>
                     <Animated.ScrollView contentContainerStyle={{ flexGrow: 1 }}
+                        stickyHeaderIndices={[1]}
                         ref={scrollView => {
                             _scrollView = scrollView ? scrollView._component : null
                         }}
@@ -78,6 +78,10 @@ export class ScheduleView extends Component {
                         onScrollEndDrag={onScrollEndSnapToEdge}
                         onMomentumScrollEnd={onScrollEndSnapToEdge}
                         scrollEventThrottle={16}>
+                        <ExpandedHeader title={t('headings.schedule')}/>
+                        <View style={{ backgroundColor: iOSColors.white }}>
+                            <Line/>
+                        </View>
                         <View style={{ paddingTop: 16 }}/>
                         <View style={{ marginVertical: 4 }}/>
                         {this.isEmpty(schedule) && this.renderEmptyState()}

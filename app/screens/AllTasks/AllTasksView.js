@@ -3,7 +3,7 @@ import { Animated, StyleSheet, View } from 'react-native'
 import { Button, Container, StyleProvider, Text } from 'native-base'
 import getTheme from '../../../native-base-theme/components/index'
 import baseTheme from '../../../native-base-theme/variables/platform'
-import AnimatedHeader from '../../components/common/AnimatedHeader/AnimatedHeader'
+import AnimatedHeader, { ExpandedHeader } from '../../components/common/AnimatedHeader/AnimatedHeader'
 import QuickInput from '../../components/common/QuickInput/QuickInput'
 import Line from '../../components/common/Line'
 import { handleDueDateOf } from '../../utils/parser'
@@ -61,9 +61,8 @@ export class AllTasksView extends Component {
             <StyleProvider style={getTheme(baseTheme)}>
                 <Container>
                     <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY}/>
-                    <QuickInput placeholder={t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
-                    <Line/>
                     <Animated.ScrollView contentContainerStyle={{ flexGrow: 1 }}
+                        stickyHeaderIndices={[1]}
                         ref={scrollView => {
                             _scrollView = scrollView ? scrollView._component : null
                         }}
@@ -71,17 +70,20 @@ export class AllTasksView extends Component {
                         onScrollEndDrag={onScrollEndSnapToEdge}
                         onMomentumScrollEnd={onScrollEndSnapToEdge}
                         scrollEventThrottle={16}>
-                        <React.Fragment>
-                            <Text style={styles.subHeader}>
-                                {t('labels.totalTasks', { totalTasks }).toLocaleUpperCase()}
-                            </Text>
+                        <ExpandedHeader title={t('headings.tasks')}/>
+                        <View style={{ backgroundColor: iOSColors.white }}>
+                            <QuickInput placeholder={this.props.t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>
                             <Line/>
-                            <View style={styles.sectionHeader}>
-                                <Button transparent onPress={this.toggleByStatus} style={{ alignSelf: 'flex-end' }}>
-                                    <Text>{openTasksAreShown ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
-                                </Button>
-                            </View>
-                        </React.Fragment>
+                        </View>
+                        <Text style={styles.subHeader}>
+                            {t('labels.totalTasks', { totalTasks }).toLocaleUpperCase()}
+                        </Text>
+                        <Line/>
+                        <View style={styles.sectionHeader}>
+                            <Button transparent onPress={this.toggleByStatus} style={{ alignSelf: 'flex-end' }}>
+                                <Text>{openTasksAreShown ? t('labels.itemStatusInProgress') : t('labels.itemStatusCompleted')}</Text>
+                            </Button>
+                        </View>
                         {openTasksAreShown && <Tasks tasks={tasks} total={tasks.length} onCloseTask={closeOrUndoCloseTask} onDeleteTask={deleteTask}/>}
                         {!openTasksAreShown &&
                         <Tasks tasks={closedTasks} total={totalClosedTasks} onCloseTask={closeOrUndoCloseTask}
