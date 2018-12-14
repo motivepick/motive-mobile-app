@@ -42,7 +42,7 @@ export class ScheduleView extends Component {
                 }
             } else if (headerHeight / 2 <= y && y < headerHeight) {
                 if (_scrollView) {
-                    _scrollView.scrollTo({ y: headerHeight })
+                    _scrollView.scrollTo({ y: 0 })
                 }
             }
         }
