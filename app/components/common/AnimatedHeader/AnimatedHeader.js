@@ -3,7 +3,7 @@ import { Body, Button, Header, Left, Right, Text, Title } from 'native-base'
 import { StyleSheet, View } from 'react-native'
 import { iOSUIKit } from 'react-native-typography'
 
-const HEADER_EXPANDED_LINE_HEIGHT = 34
+const HEADER_EXPANDED_LINE_HEIGHT = 32.5
 
 export const ExpandedHeader = ({ style, ...props }) => (
     <View style={styles.headerExpandedContainer}>

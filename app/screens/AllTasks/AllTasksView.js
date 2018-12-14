@@ -39,22 +39,6 @@ export class AllTasksView extends Component {
         } = this.props
 
         const { openTasksAreShown } = this.state
-
-        let _scrollView = null
-        const headerHeight = 40
-        const onScrollEndSnapToEdge = event => {
-            const y = event.nativeEvent.contentOffset.y
-            if (0 < y && y < headerHeight / 2) {
-                if (_scrollView) {
-                    _scrollView.scrollTo({ y: 0 })
-                }
-            } else if (headerHeight / 2 <= y && y < headerHeight) {
-                if (_scrollView) {
-                    _scrollView.scrollTo({ y: headerHeight })
-                }
-            }
-        }
-
         const totalTasks = openTasksAreShown ? tasks.length : totalClosedTasks
 
         return (
@@ -63,12 +47,7 @@ export class AllTasksView extends Component {
                     <AnimatedHeader title={t('headings.tasks')} scrollOffset={this.state.scrollY}/>
                     <Animated.ScrollView contentContainerStyle={{ flexGrow: 1 }}
                         stickyHeaderIndices={[1]}
-                        ref={scrollView => {
-                            _scrollView = scrollView ? scrollView._component : null
-                        }}
                         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
-                        onScrollEndDrag={onScrollEndSnapToEdge}
-                        onMomentumScrollEnd={onScrollEndSnapToEdge}
                         scrollEventThrottle={16}>
                         <ExpandedHeader title={t('headings.tasks')}/>
                         <View style={{ backgroundColor: iOSColors.white }}>
