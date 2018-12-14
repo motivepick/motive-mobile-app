@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { Body, Button, Header, Left, Right, Text, Title } from 'native-base'
 import { StyleSheet, View } from 'react-native'
 import { iOSUIKit } from 'react-native-typography'
+import { ios } from '../../../utils/platform'
 
 const HEADER_EXPANDED_LINE_HEIGHT = 32.5
 
@@ -32,7 +33,7 @@ class AnimatedHeaderComponent extends PureComponent {
     render() {
         const { title, rightButtonLabel, leftButtonLabel, onLeftButtonPress, onRightButtonPress, leftIcon, rightIcon } = this.props
         return (
-            <Header transparent>
+            <Header transparent={ios()}>
                 <Left>
                     {
                         Boolean(onLeftButtonPress) &&
@@ -42,14 +43,11 @@ class AnimatedHeaderComponent extends PureComponent {
                         </Button>
                     }
                 </Left>
-
                 {
-                    Boolean(title) &&
+                    Boolean(title) && this.state.showMiniHeader &&
                     <Body>
                         <Title>
-                            {
-                                this.state.showMiniHeader && <Text>{title}</Text>
-                            }
+                            {title}
                         </Title>
                     </Body>
                 }
