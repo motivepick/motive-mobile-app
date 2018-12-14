@@ -48,7 +48,7 @@ export class AllTasksView extends Component {
                     <Animated.ScrollView contentContainerStyle={{ flexGrow: 1 }}
                         stickyHeaderIndices={[1]}
                         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
-                        scrollEventThrottle={16}>
+                        scrollEventThrottle={1}>
                         <ExpandedHeader title={t('headings.tasks')}/>
                         <View style={{ backgroundColor: iOSColors.white }}>
                             <QuickInput placeholder={this.props.t('labels.newTask')} onSubmitEditing={this.onAddNewTask}/>

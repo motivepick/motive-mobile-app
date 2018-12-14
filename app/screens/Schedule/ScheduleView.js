@@ -77,7 +77,7 @@ export class ScheduleView extends Component {
                         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }])}
                         onScrollEndDrag={onScrollEndSnapToEdge}
                         onMomentumScrollEnd={onScrollEndSnapToEdge}
-                        scrollEventThrottle={16}>
+                        scrollEventThrottle={1}>
                         <ExpandedHeader title={t('headings.schedule')}/>
                         <View style={{ backgroundColor: iOSColors.white }}>
                             <Line/>
